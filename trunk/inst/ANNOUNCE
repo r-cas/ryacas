@@ -1,49 +1,46 @@
 
-Introduction.  yacas is a free computer algrebra
+Introduction:  yacas is a free computer algrebra
 system (CAS).  Ryacas is an R interface that
-allows one to send R expressions or unprocessed 
+allows one to send R expressions or unprocessed
 yacas strings to yacas from R and get back the
 result as an S3 object containing an R expression
 (and other formats).
 
 It can be used for exact arithmetic, symbolic
-math, ASCII pretty printing and translating
-R to TeX.  (See examples below.)
+math, ASCII pretty printing and translating R to
+TeX.  (See examples below.)
 
-Technology.  Internally it communicates via
+Technology:  Internally it communicates via
 sockets with a separate yacas process and performs
 a direct translation of R to yacas in one
-direction and uses a yacas XML-based OpenMath format 
-in the other direction.  The output is an S3 object
-usually containing the result in both R expression and 
-XML formats.  The idea of a separate yacas process is that
-eventually it might be possible to have yacas run
-on a remote high power compute server while R runs
-locally on a low powered PC.
+direction and uses a yacas XML-based OpenMath
+format in the other direction.  The output is an
+S3 object usually containing the result in both R
+expression and XML formats.  The idea of a
+separate yacas process is that eventually it might
+be possible to have yacas run on a remote high
+power compute server while R runs locally on a low
+powered PC.
 
-Installation. On Windows the R package distribution 
-contains everything needed.  Just perform a normal
-R package install and run.  On other systems one 
-must install yacas 1.0.62 in the usual way first.
+Installation: On Windows the R package
+distribution contains everything needed.  Just
+perform a normal R package install and run.  On
+other systems one must install yacas 1.0.62 in the
+usual way first.
 
-Status. The package is subject to change.
+Status: The package is subject to change.
 
-WWW. The project home page is at:
+WWW: The project home page is at:
 	http://code.google.com/p/ryacas/
 
-Development of the Ryacas package was by:
+Team:  Development of the Ryacas package was by:
+- Parlamis Franklin, fparlamis dot mac dot com
+- Rob Goedman, goedman at mac dot com
+- Gabor Grothendieck, ggrothendieck at gmail dot com
+- Søren Højsgaard, Soren.Hojsgaard at agrsci dot dk
+- Ayal Pinkus, apinkus at xs4all dot nl
 
-Parlamis Franklin, fparlamis dot mac dot com
-Rob Goedman, goedman at mac dot com
-Gabor Grothendieck, ggrothendieck at gmail dot com
-Soren Hojsgaar, Soren.Hojsgaard at agrsci dot dk
-Ayal Pinkus, apinkus at xs4all dot nl
-
-yacas, itself, was developed by:
-
-Ayal Pinkus with additional contributions from others.
-
-EXAMPLES
+Sample Session:
 
 > library(Ryacas)
 
