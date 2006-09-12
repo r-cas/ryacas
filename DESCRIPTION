@@ -2,7 +2,7 @@ Package: Ryacas
 Version: 0.2-1
 Date: 2006-09-12
 Title: R interface to yacas
-Author: Parlamis Franklin <fparlamis@mac.com>, Rob Goedman <goedman@mac.com>, Gabor Grothendieck <ggrothendieck@gmail.com>, Soren Hojsgaar <Soren.Hojsgaard@agrsci.dk>, Ayal Pinkus <apinkus@xs4all.nl> 
+Author: Parlamis Franklin <fparlamis@mac.com>, Rob Goedman <goedman@mac.com>, Gabor Grothendieck <ggrothendieck@gmail.com>, Søren Højsgaard <Soren.Hojsgaard@agrsci.dk>, Ayal Pinkus <apinkus@xs4all.nl> 
 Maintainer: G Gorthendieck <ggrothendieck@gmail.com>
 Description: An interface to the yacas computer algebra system.
 Depends: R (>= 2.3.1), XML

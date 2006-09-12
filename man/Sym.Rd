@@ -23,6 +23,22 @@
 \alias{yrewrite}
 \alias{yUnlist}
 
+\alias{Sin}
+\alias{Cos}
+\alias{Tan}
+\alias{ArcSin}
+\alias{ArcCos}
+\alias{ArcTan}
+\alias{Log}
+\alias{Exp}
+\alias{Simplify}
+\alias{Factorial}
+\alias{List}
+\alias{Ver}
+\alias{Seq}
+\alias{N}
+\alias{Pi}
+
 \title{ ~~function to do ... ~~ }
 \description{
   ~~ A concise (1-5 lines) description of what the function does. ~~

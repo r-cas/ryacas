@@ -29,9 +29,31 @@ Ops.Sym <- function (e1, e2)
 
 print.Sym <- function(x, ...) print(yacas(unclass(x)))
 
-Deriv <- function(x, y) Sym("Deriv(", y, ")", x)
-Integrate <- function(f, a, b) {
-   if (missing(a) && missing(b)) { Sym("Integrate(x)", f, "(x)")
-   } else Sym("Integrate(x,", a, ",", b, ")", f, "(x)")
+Deriv <- function(x, y) Sym("D(", y, ")", x)
+
+Integrate <- function(f, x, a, b) {
+   if (missing(a) && missing(b)) { Sym("Integrate(", x, ")", f)
+   } else Sym("Integrate(", x, ",", a, ",", b, ")", f)
 }
+
+Eval.Sym <- function(x, env = parent.frame(), ...) 
+	eval(yacas(unclass(x))[[1]], env = env)
+
+Sin <- function(x) Sym("Sin(", x, ")")
+Cos <- function(x) Sym("Cos(", x, ")")
+Tan <- function(x) Sym("Tan(", x, ")")
+
+ArcSin <- function(x) Sym("ArcSin(", x, ")")
+ArcCos <- function(x) Sym("ArcCos(", x, ")")
+ArcTan <- function(x) Sym("ArcTan(", x, ")")
+
+Log <- function(x) Sym("Ln(", x, ")")
+Exp <- function(x) Sym("Exp(", x, ")")
+Simplify <- function(x) Sym("Simplify(", x, ")")
+Factorial <- function(x) Sym("Factorial(", x, ")")
+List <- function(...) Sym("List(", paste(..., sep = ","), ")")
+Seq <- function(...) do.call(List, as.list(seq(...)))
+N <- function(x) Sym("N(", x, ")")
+Pi <- Sym("Pi")
+Ver <- function() Sym("Version()")
 

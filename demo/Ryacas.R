@@ -58,7 +58,7 @@
 	print(yacas(expression(integrate(tan, 1/3, pi/(12%/%3)))))
 	res <- yacas(expression(integrate(tan, 1/3, pi/(12%/%3))))
 	print(res)
-	print(eval(res[[1]]))
+	print(Eval(res))
 
 	# get yacas version
 	yacas("Version()")

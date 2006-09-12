@@ -336,3 +336,8 @@ yacas.function <- function(x, verbose = FALSE, method = c("socket", "system"), .
 	NextMethod(x)
 }
 
+Eval <- function(x, ...) UseMethod("Eval")
+
+Eval.yacas <- function(x, env = parent.frame(), ...) 
+	eval(x[[1]], env = env)
+
