@@ -17,7 +17,7 @@
 
 Sym <- function(...) {
    args <- list(...)
-   value <- if (length(args) > 1) paste("(", ..., ")") else args[[1]]
+   value <- if (length(args) > 1) paste("(", ..., ")") else paste(args[[1]])
    class(value) <- "Sym"
    value
 }
@@ -29,7 +29,7 @@ Ops.Sym <- function (e1, e2)
 
 print.Sym <- function(x, ...) print(yacas(unclass(x)))
 
-Deriv <- function(x, y) Sym("D(", y, ")", x)
+D <- Deriv <- function(x, y = "x", n = 1) Sym("D(", y, ",", n, ")", x)
 
 Integrate <- function(f, x, a, b) {
    if (missing(a) && missing(b)) { Sym("Integrate(", x, ")", f)
@@ -47,13 +47,45 @@ ArcSin <- function(x) Sym("ArcSin(", x, ")")
 ArcCos <- function(x) Sym("ArcCos(", x, ")")
 ArcTan <- function(x) Sym("ArcTan(", x, ")")
 
-Log <- function(x) Sym("Ln(", x, ")")
+Ln <- Log <- function(x) Sym("Ln(", x, ")")
 Exp <- function(x) Sym("Exp(", x, ")")
 Simplify <- function(x) Sym("Simplify(", x, ")")
 Factorial <- function(x) Sym("Factorial(", x, ")")
 List <- function(...) Sym("List(", paste(..., sep = ","), ")")
 Seq <- function(...) do.call(List, as.list(seq(...)))
-N <- function(x) Sym("N(", x, ")")
+N <- function(...) Sym("N(", paste(..., sep = ","), ")")
 Pi <- Sym("Pi")
 Ver <- function() Sym("Version()")
+
+Clear <- function(x) Sym("Clear(", x, ")")
+Factor <- function(x) Sym("Factor(", x, ")")
+Expand <- function(x) Sym("Expand(", x, ")")
+Taylor <- function(f, x, a, n) Sym("Taylor(", x, ",", a, ",", n, ")", f) 
+InverseTaylor <- function(f, x, a, n) 
+	Sym("InverseTaylor(", x, ",", a, ",", n, ")", f) 
+PrettyForm <- function(x) Sym("PrettyForm(", x, ")")
+TeXForm <- function(x) Sym("TeXForm(", x, ")")
+Precision <- function(x) Sym("Precision(", x, ")")
+Conjugate <- function(x) Sym("Conjugate(", x, ")")
+PrettyPrinter <- function(x) {
+	if (missing(x)) Sym("PrettyPrinter()")
+	else Sym("PrettyPrinter(", dQuote(x), ")")
+}
+Solve <- function(x, y) Sym("Solve(", x, ",", y, ")")
+Newton <- function(...) Sym("Newton(", paste(..., sep = ","), ")")
+
+Set <- ":=" <- function(x, value) Sym(deparse(substitute(x)), ":=", value)
+
+Infinity <- Sym("Infinity")
+I <- Sym("I")
+for(i in 0:10) assign(paste("x", i, sep = ""), Sym(i))
+
+Limit <- function(f, x, a) Sym("Limit(", x, ",", a, ")", f)
+
+Subst <- function(expr, x, replacement) 
+	Sym("Subst(", x, ",", replacement, ")", expr)
+
+Inverse <- function(x) Sym("Inverse(", x, ")")
+Determinant <- function(x) Sym("Determinant(", x, ")")
+
 
