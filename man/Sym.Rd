@@ -38,49 +38,55 @@
 \alias{Seq}
 \alias{N}
 \alias{Pi}
+\alias{Clear}
+\alias{Factor}
+\alias{Expand}
+\alias{Taylor}
+\alias{InverseTaylor}
+\alias{PrettyForm}
+\alias{TeXForm}
+\alias{Precision}
+\alias{Conjugate}
+\alias{PrettyPrinter}
+\alias{Solve}
+\alias{Newton}
+\alias{Set}
+\alias{Infinity}
+\alias{I}
+\alias{x0}
+\alias{x1}
+\alias{x2}
+\alias{x3}
+\alias{x4}
+\alias{x5}
+\alias{x6}
+\alias{x7}
+\alias{x8}
+\alias{x9}
+\alias{x10}
+\alias{Limit}
+\alias{Subst}
+\alias{Inverse}
+\alias{Determinant}
 
-\title{ ~~function to do ... ~~ }
+\title{ Sym }
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+  The Symbol interface to yacas.
 }
 \usage{
 Sym(...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{\dots}{ ~~Describe \code{\dots} here~~ }
+  \item{\dots}{ An R character string or object that can be coerced to
+a character string.}
 }
 \details{
-  ~~ If necessary, more details than the description above ~~
+  See the vignette, Ryacas-Sym, for numerous examples.
 }
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+Returns a yacas \code{Sym} object.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
-
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (...) 
-{
-    args <- list(...)
-    value <- if (length(args) > 1) 
-        paste("(", ..., ")")
-    else args[[1]]
-    class(value) <- "Sym"
-    value
-  }
 }
 \keyword{ symbolmath }% at least one, from doc/KEYWORDS
