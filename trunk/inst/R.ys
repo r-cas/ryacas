@@ -1,0 +1,4 @@
+
+// Start with the default initialization, R-specific initialization to follow
+Use("yacasinit.ys");
+PrettyPrinter("OMForm");
