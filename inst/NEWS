@@ -1,0 +1,81 @@
+Changes in version 0.2-1
+
+o \dontrun{...} on all examples to avoid Rcmd check problems
+
+o new Ryacas-prettyPrinter demo
+
+Changes in version 0.1-11
+
+o yacas now starts up when the first time the yacas command is given for
+  method = "socket" rather than at package startup (or if the user
+  explicitly invokes the optional yacasStart() function).
+
+o new yacas method = "system" argument which uses the R "system" command 
+  to spawn a new instance of yacas each time yacas is called and so does 
+  not require sockets.  The default continues to be method = "socket".
+
+o new command yacasInvokeString which outputs the invocation string for
+  yacas (with no trailing &).
+
+o yacasStop has a verbose argument (like yacasStart).
+
+o yacas.character has an addSemi argument that defaults to TRUE.
+
+o WISHLIST updated
+
+Changes in version 0.1-10
+
+o yacas is now a generic with character and expression methods
+
+o added method= argument to yacas (currently unused)
+
+o yacasStop now closes (and on Windows XP Pro kills) yacas.  Previously 
+  it was only done on detaching the yacas package.
+
+o minor improvements in help file (more are needed)
+
+Changes in version 0.1-9
+
+o bug fixes
+
+Changes in version 0.1-5
+
+o yacmode function from yacasR added
+
+o yacas.start renamed and yacas.stop renamed to yacasStart and yacasStop.
+  yacasStart has a verbose argument that defaults to FALSE.  yacasStart
+  is used in the yacas example.
+
+o yacas now has verbose = FALSE by default but returns yac.res
+
+o WISHLIST updated
+
+Changes in version 0.1-4
+
+o taskkill used instead of pskill for Windows.  Now no auxilliary process
+  termination utility is used but only XP Pro will get its yacas process 
+  terminated on exit.
+
+Changes in version 0.1-3
+
+o yparse and associcated routines added
+
+o windows now kills process using pskill.exe which is included
+
+o yacas binary 1.0.57 for Windows now included 
+
+o bracket counting rewritten
+
+o yacas now has a verbose= argument (defaults to TRUE)
+
+Changes in version 0.1-0
+
+o expression processing rewritten
+
+o translation of expressions moved to Yacas (R.ys, Rtrans.ys)
+
+o ported to UNIX (previously Windows only)
+
+o environment variables YACAS_HOME, YACAS_SCRIPTS and YACAS_INIT can be
+  used to override default locations of yacas, scripts.dat and R.ys .
+

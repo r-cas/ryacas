@@ -1,0 +1,104 @@
+
+Introduction.  yacas is a free computer algrebra
+system (CAS).  Ryacas is an R interface that
+allows one to send R expressions or unprocessed 
+yacas strings to yacas from R and get back the
+result as an S3 object containing an R expression
+(and other formats).
+
+It can be used for exact arithmetic, symbolic
+math, ASCII pretty printing and translating
+R to TeX.  (See examples below.)
+
+Technology.  Internally it communicates via
+sockets with a separate yacas process and performs
+a direct translation of R to yacas in one
+direction and uses a yacas XML-based OpenMath format 
+in the other direction.  The output is an S3 object
+usually containing the result in both R expression and 
+XML formats.  The idea of a separate yacas process is that
+eventually it might be possible to have yacas run
+on a remote high power compute server while R runs
+locally on a low powered PC.
+
+Installation. On Windows the R package distribution 
+contains everything needed.  Just perform a normal
+R package install and run.  On other systems one 
+must install yacas 1.0.62 in the usual way first.
+
+Status. The package is subject to change.
+
+Development of the Ryacas package was by:
+
+Parlamis Franklin, fparlamis dot mac dot com
+Rob Goedman, goedman at mac dot com
+Gabor Grothendieck, ggrothendieck at gmail dot com
+Soren Hojsgaar, Soren.Hojsgaard at agrsci dot dk
+Ayal Pinkus, apinkus at xs4all dot nl
+
+yacas, itself, was developed by:
+
+Ayal Pinkus with additional contributions from others.
+
+EXAMPLES
+
+> library(Ryacas)
+
+> package?Ryacas # various sources of info on Ryacas
+
+> # exact arithmetic
+> # first time yacas is called, yacas automatically starts
+> yacas(expression(444/1476))
+expression(37/123)
+
+> # symbolic math
+
+> yacas(expression(integrate(x+tan(x), x)))
+expression(x^2/2 - log(cos(x)))
+
+> yacas(expression(Simplify((1+x)^2 - 2*x)))
+expression(x^2 + 1)
+
+> yacas(expression(deriv(tan(x), x)))
+expression(1/cos(x)^2)
+
+> yacas("OdeSolve(y''==4*y)") # yacas string
+expression(C218 * exp(2 * x) + C222 * exp(-2 * x))
+
+> # ASCII pretty printing
+
+> yacas('PrettyPrinter("PrettyForm")')
+True
+
+> yacas(expression(exp(-x^2)/(cos(x) + exp(x))))
+     /  /  2 \ \   
+  Exp\ -\ x  / /   
+-------------------
+Cos( x ) + Exp( x )
+
+> yacas('A:={{1,2},{a,6}}')
+/              \
+| ( 1 ) ( 2 )  |
+|              |
+| ( a ) ( 6 )  |
+\              /
+
+> # reset PrettyPrinter
+> yacas('PrettyPrinter("OMForm")') 
+
+> yacas(expression(x+x))
+expression(2 * x)
+
+> yacas("Solve(x/(1+x) == a, x)")
+expression(list(x == a/(1 - a)))
+
+> # emit one line of TeX code
+> yacas("x1 := (1+x)^2 + k^3")
+expression((x + 1)^2 + k^3)
+> yacas("TexForm(x1)")$PrettyForm[[1]]
+$\left( x + 1\right)  ^{2} + k ^{3}$
+
+> # On Windows XP Pro detaching Ryacas terminates yacas process.
+> # On other systems process must be terminated manually.
+> detach() 
+

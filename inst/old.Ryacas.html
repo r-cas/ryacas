@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1st April 2002), see www.w3.org">
+
+    <title>Ryacas Home Page</title>
+  </head>
+
+  <body>
+	  <!--- copy to wiki from this point to end copy comment !>
+    <table>
+      <tr>
+        <td width="250">
+    <A href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/">
+          <h1>Ryacas</h1>
+    </a>
+        </td>
+
+        <td><a href="http://www.r-project.org"><img alt="R Home Page" src=
+        "http://www.r-project.org/Rlogo.jpg"></a></td>
+
+        <td><a href="http://yacas.sourceforge.net"><img alt="Yacas Home Page"
+        src="http://yacas.sourceforge.net/yacaslogo.gif"></a></td>
+      </tr>
+    </table>
+
+    <h2>About</h2>
+    Ryacas is an <a href="http://www.r-project.org">R</a> <a href=
+    "http://en.wikipedia.org/wiki/R_programming_language">[Wikipedia]</a>
+    package that provides an interface to the <a href=
+    "http://yacas.sourceforge.net">Yacas</a> <a href=
+    "http://en.wikipedia.org/wiki/Yacas">[Wikipedia]</a> computer algebra
+    system. Rycacas allows one to work entirely within R sending mathematical
+    expressions, written either as R expressions or Yacas strings, to Yacas
+    getting back the result from Yacas as an R expression or Yacas string,
+    respectively. 
+
+    Ryacas also has additional uses other than computer algebra.  It can
+    be used for arbitary precision arithmetic. It can also be used 
+    for converting R expressions
+    to a pretty text form, to Latex, to C expressions, to a lisp-like
+    form and to OpenMath.
+
+    <h2>Features</h2>
+    Ryacas is object-oriented (employing the S3 class system of R), uses 
+    <a href="http://www.openmath.org">OpenMath</a> 
+    <a href="http://en.wikipedia.org/wiki/OpenMath">[Wikipedia]</a>
+    XML 
+    <a href="http://en.wikipedia.org/wiki/XML">[Wikipedia]</a>
+    standards for the
+    underlying yacas to R transfer and uses yacas command strings
+    for the R to yacas transfer.  It uses socket communication between the
+    R process and the yacas process so that, in the future 
+    it will be possible to run R on a local machine
+    communicating with yacas on a remote high power compute server
+    across the internet.
+
+    <h2>Example</h2>
+<pre>
+&gt; library(Ryacas)
+&gt; yacas(expression(Factor(x^2-1))) 
+expression((x + 1) * (x - 1))
+&gt; yacas(expression(integrate(tan, 0, pi/4))) # can accept R expression
+expression(log(x))
+&gt; yacas("Integrate(x)1/x") # or Yacas input string
+expression(log(x))
+&gt; detach()
+</pre>
+
+    <h2>Installation</h2>
+    Ryacas runs on all platforms for which R supports sockets. 
+    That includes Microsoft Windows, Mac OS X, Linux and most other
+    systems.  
+    Assuming the reader is familiar with R, the package conforms to R standards and is built and
+    installed like any R package. On Windows <a href=
+    "http://en.wikipedia.org/wiki/Microsoft_windows">[Wikipedia]</a> the
+    package includes a binary distribution of Yacas so nothing else need be
+    done. On other operating systems Yacas must also be installed. (For
+    non-standard installations, a number of environment variables are
+    available. Most users will not need to use these and can ignore them.) 
+
+    <h2>Help</h2>
+    Additional information on usage is provided with the package and can be
+    accessed like this: 
+<pre>
+&gt; library(Ryacas)
+&gt; library(help = Ryacas)
+&gt; ?yacas
+&gt; example(yacas)
+&gt; demo("Ryacas")
+&gt; seeRyacas &lt;- function(x) file.show(system.file(x, package = "Ryacas"))
+&gt; seeRyacas("NEWS")
+&gt; seeRyacas("WISHLIST")
+&gt; seeRyacas("yacdir/R.ys") # review translation file
+</pre>
+
+
+    <a name="svn">
+    <h2>Getting Ryacas from the Subversion (svn) repository through the command line</h2>
+    </a>
+    Ryacas is currently not under svn control.  This section is out of date.
+    To get the latest version of Ryacas from the command line, type
+<pre>
+svn checkout http://OpenSVN.csie.org/Ryacas
+</pre>
+
+    You might have to pass an additional username and password on the command line with the command line directives --username and --password, like
+
+<pre>
+svn checkout http://OpenSVN.csie.org/Ryacas --username myname --password mypassword
+</pre>
+
+    This should get you a directory Ryacas in the current directory.
+    You can install Ryacas in the usual way, by typing
+
+<pre>
+R CMD INSTALL Ryacas
+</pre>
+
+    At a later stage, you can always get the latest version by going
+    in to the Ryacas directory and typing
+
+<pre>
+svn update
+</pre>
+
+    After having made a change, one can always check that change in with:
+
+<pre>
+svn commit --message "This is a message describing the change."
+</pre>
+
+    Svn provides additional help if you type 
+
+<pre>
+svn help
+</pre>
+
+    but the above should be enough in general to get started.
+
+    <h2>Viewing and Creating Tickets using Trac</h2>
+    Issues (bugs, feature requests, wish items, ...) are
+    known as tickets.  
+    This web site uses Trac software for this purpose.  The
+    Trac software has been configured so that any user, 
+    not just Ryacas developers, can view and create tickets.
+    <p>
+    To view tickets
+    click on View Tickets in the black banner near the top
+    of this page 
+
+    and then click on Active Tickets (or else click 
+<a href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/report/1">here</a>).
+    You can click on any ticket to view it.
+    <p>
+    To create a new ticket, just click on
+    New Ticket in the black banner near the top of this page or 
+    <A href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/newticket">here</a>
+    and then
+    fill out the "Your email or username:", "Short summary:",
+    "Full description:" and "Keyword:" fields.  The Trac
+    system has been configured to notify all Ryacas 
+    developers via email whenever a new ticket is created.
+    <p>
+    (If you are an Ryacas developer then the procedure
+    is the same as just described except that before performing 
+    the above you should login,
+    using the Login link near the top right of this page 
+    or 
+    <a href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/login">here</a>
+    and your svn username and password,
+    so that your session is associated with yourself.)
+
+    <h2>History</h2>
+
+    <p>Ryacas is based on merging the <a href=
+    "http://genetics.agrsci.dk/~sorenh/misc/">yacasR</a> package of
+    S&oslash;ren H&oslash;jsgaard with the yacaspipe R code of Ayal Pinkus and
+    <a href="http://www.geocities.com/CapeCanaveral/Lab/5735/">Serge
+    Winitzki</a> and adding further features and enhancements. The Ryacas
+    package is currently in development. Links to the latest source are given
+    in the Links section near the end of this page. A log of changes in Ryacas
+    is given in the <a href=
+    "https://opensvn.csie.org/viewcvs.cgi/inst/NEWS?root=Ryacas&amp;view=markup">
+    NEWS</a> file in the Ryacas distribution. Possible future changes are
+    listed in the <a href=
+    "https://opensvn.csie.org/viewcvs.cgi/inst/WISHLIST?root=Ryacas&amp;view=markup">
+    WISHLIST</a>.</p>
+
+    <p>In addition to the Ryacas development, Erich Neuwirth is writing a COM
+    <a href=
+    "http://en.wikipedia.org/wiki/Component_Object_Model">[Wikipedia]</a>
+    server for Yacas that will provide an interface from Yacas to R, Microsoft
+    Excel <a href=
+    "http://en.wikipedia.org/wiki/Microsoft_Excel">[Wikipedia]</a> and other
+    Microsoft Windows <a href=
+    "http://en.wikipedia.org/wiki/Microsoft_windows">[Wikipedia]</a> programs
+    that support COM.</p>
+
+    <h2><a name="Links">Links</a></h2>
+    svn client access:
+    <a href="http://en.wikipedia.org/wiki/Subversion_%28software%29"> [Wikipedia]</a>
+    <br>
+    - <a href="http://opensvn.csie.org/Ryacas">svn client</a>
+    <a href="https://opensvn.csie.org/Ryacas"> - https</a> - use either of these links from your svn client.
+    See <a href="#svn">Getting Ryacas from SubVersion</a> above for use of svn client software.
+    <br><br>
+    View Ryacas source via web browser:
+    <br>
+    - <a href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/browser/">Trac</a> - online site using Trac software
+    <br>
+    - <a href="https://opensvn.csie.org/viewcvs.cgi/?root=Ryacas">ViewCVS</a> - online site using ViewCVS software
+    <br><br>
+    Trac ticket tracking.  Tickets are issues such as bugs or features:
+    <br>
+    - <a href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/log/">svn change log</a> - list of changes that were committed through svn clients
+    <br>
+    - <a href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/report">Tickets menu</a> 
+    - <a href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/report/1">Active tickets</a>
+- <a href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/query">Search</a>
+    - list of tickets that were entered through next link
+    <br>
+    - <A href="https://opensvn.csie.org/traccgi/Ryacas/trac.cgi/newticket">Enter new ticket</a>
+    <br><br>
+    Other:
+    <br>
+    - <a href="http://www.r-project.org">R</a> <a href=
+    "http://en.wikipedia.org/wiki/R_programming_language">[Wikipedia]</a> <br>
+    - <a href="http://yacas.sourceforge.net">Yacas</a> <a href=
+    "http://en.wikipedia.org/wiki/Yacas">[Wikipedia]</a> 
+
+    <h2>Team</h2>
+     Rob Goedman - goedman at mac dot com <br>
+     Gabor Grothendieck - ggrothendieck at gmail dot com <br>
+     <a href="http://genetics.agrsci.dk/~sorenh/">S&oslash;ren
+    H&oslash;jsgaard</a> - sorenh at argisci dot dk <br>
+     Parlamis Franklin - fparlamis at mac dot com <br>
+     Ayal Pinkus - apinkus at xs4all dot nl <br>
+     <h2>Thanks for discussions</h2>
+     Alberto González Palomo - Alberto dot Gonzalez at matracas dot org
+     <a href="http://homepage.univie.ac.at/erich.neuwirth/index.htm">Erich
+    Neuwirth</a> - erich.neuwirth at univie dot ac dot at <br>
+    <p>Page updated August 23, 2006</p>
+  <!--- end copy !>
+  </body>
+</html>
+

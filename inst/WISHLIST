@@ -1,0 +1,40 @@
+WISHLIST
+
+o debug the S4 interface
+
+o check out the following in case there is something useful for us:
+	http://alphatcl.sourceforge.net/wikit/182
+
+o echo x*x | yacas -pc does not seem to work on Windows preventing
+  method = "system" from working.  This needs to be fixed,
+  at least on Windows.
+
+o ensure examples work at http://yacas.sourceforge.net/intromanual.html
+
+o There is some 'syntax mapping' yet to be done, e.g.
+        atan2
+
+o do not work:
+
+       yacas(expression((x+y)^3-(x-y)^3))
+       yacas(expression(Simplify(%))) 
+       # yacas("Simplify(%)") does work, is that sufficient?
+
+       yacas(expression(20!))  
+       # yacas(expression(factorial(10))) does work, is that sufficient?
+
+o non-R syntax expressions: e.g. 20! is not a valid R expression (however, yacas(expression(factorial(10))) works, is that not good enough?).
+ a yepression() function which does not try to evaluate its argument
+  as R expression but simply checks if the argument is a valid yacas
+  expression?
+
+o a function like deriv which exists in yacas and R but with different
+  syntax??
+
+o documentation: vignette
+
+o documentation: help
+
+
+
+
