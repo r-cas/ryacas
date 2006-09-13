@@ -69,7 +69,7 @@ Precision <- function(x) Sym("Precision(", x, ")")
 Conjugate <- function(x) Sym("Conjugate(", x, ")")
 PrettyPrinter <- function(x) {
 	if (missing(x)) Sym("PrettyPrinter()")
-	else Sym("PrettyPrinter(", dQuote(x), ")")
+	else Sym(paste('PrettyPrinter("', x, '")', sep = ""))
 }
 Solve <- function(x, y) Sym("Solve(", x, ",", y, ")")
 Newton <- function(...) Sym("Newton(", paste(..., sep = ","), ")")
