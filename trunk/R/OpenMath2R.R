@@ -15,9 +15,11 @@ OpenMath2R <- function(x) {
 			out <<- c(out, xmlValue(x), "(")
 	}
 	# if (xmlName(x) == "OMS") out <<- c(out, "(")
-	if (xmlName(x) == "OMSTR")
-		out <<- c(out, sQuote(gsub("'", "\\\\'", xmlValue(x))))
-	else if ( length( xmlChildren(x) ) > 0 )
+
+	if (xmlName(x) == "OMSTR") {
+	# out <<- c(out, sQuote(gsub("'", "\\\\'", xmlValue(x))))
+	out <<- c(out, paste("'", gsub("'", "\\\\'", xmlValue(x)), "'", sep=""))
+	} else if ( length( xmlChildren(x) ) > 0 )
 		for( i in seq( along = xmlChildren(x) ) ) {
 			Recall( x[[i]] )
 			if (i > 1 && i < length(xmlChildren(x))) 
