@@ -29,7 +29,7 @@ Ops.Sym <- function (e1, e2)
 
 print.Sym <- function(x, ...) print(yacas(unclass(x)))
 
-D <- Deriv <- function(x, y = "x", n = 1) Sym("D(", y, ",", n, ")", x)
+D. <- Deriv <- function(x, y = "x", n = 1) Sym("D(", y, ",", n, ")", x)
 
 Integrate <- function(f, x, a, b) {
    if (missing(a) && missing(b)) { Sym("Integrate(", x, ")", f)
