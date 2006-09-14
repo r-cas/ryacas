@@ -98,7 +98,7 @@ yacas <- function(x, verbose = FALSE, method = c("socket", "system"), ...)
   UseMethod("yacas")
 
 
-yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character"), addSemi = TRUE, ...) {
+yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...) {
 
     addSemiFn <- function(x) {
       x <- sub(";[[:blank:]]*$", "", x)
@@ -162,9 +162,20 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
     chunk1 <- yac.res[seq(1, length = w[1]-1)]
     chunk2 <- yac.res[seq(w[1]+1, length = diff(w)-1)]
     if (yac.res[1] == "<OMOBJ>") {
-	result <- list(parse(text = OpenMath2R(chunk1)), OMForm = chunk1)
-    } else if (length(chunk1) > 0) result <- list(NULL, PrettyForm = chunk1)
-    else result <- list(NULL, YacasForm = chunk2)
+	text <- OpenMath2R(chunk1)
+	if (retclass == "expression") text <- parse(text = text)
+	if (retclass == "unquote") text <- sub("^['\"](.*)['\"]", "\\1", text)
+	result <- list(text = text, OMForm = chunk1)
+    } else {
+	if (length(chunk1) > 0) { # PrettyForm
+		# k is index of <OMOBJ> in chunk1
+		k <- grep("<OMOBJ>", chunk1)
+		# only keep first k-1 elements of chunk1
+		if (length(k) > 0) chunk1 <- chunk1[seq(length = k-1)]
+		result <- list(NULL, PrettyForm = chunk1)
+	} else result <- list(NULL, YacasForm = chunk2)
+    }
+
     class(result) <- "yacas"
     result
 }
@@ -177,7 +188,7 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
 as.language <- function(x) parse(text=paste(deparse(x)))[[1]]
 bodyAsExpression <- function(x) as.expression(as.language(body(x)))
 	
-yacas.expression <- function(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character"), ...) {
+yacas.expression <- function(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character", "unquote"), ...) {
     x <- deparse(yparse(x), width.cutoff = 200)
     x <- gsub("\"","", x)
     .Class <- "character"
@@ -336,7 +347,7 @@ yacas.function <- function(x, verbose = FALSE, method = c("socket", "system"), .
 	NextMethod(x)
 }
 
-Eval <- function(x, ...) UseMethod("Eval")
+Eval <- function(x, env = parent.frame(), ...) UseMethod("Eval")
 
 Eval.yacas <- function(x, env = parent.frame(), ...) 
 	eval(x[[1]], env = env)

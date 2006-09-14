@@ -19,8 +19,8 @@
 }
 \usage{
 \method{yacas}{character}(x, verbose = FALSE, method = c("socket", "system"), 
-retclass = c("expression", "character"), addSemi = TRUE, ...)
-\method{yacas}{expression}(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character"), ...)
+retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
+\method{yacas}{expression}(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character", "unquote"), ...)
 \method{yacas}{function}(x, verbose = FALSE, method = c("socket", "system"), ...)
 }
 \arguments{
@@ -35,7 +35,15 @@ retclass = c("expression", "character"), addSemi = TRUE, ...)
    character string sent to yacas.  This can be set to \code{FALSE} if
    its known that the character string already has a trailing 
    semicolon.  It is ignored if \code{retclass="expression"}.}
-  \item{retclass}{The class of the returned value. Currently ignored.}
+  \item{retclass}{The class of the first component of the yacas structure.
+   It defaults to \code{"expression"" but may be specified as  
+   \code{"character"} or \code{"unquote"}.  \code{"unquote"} is the 
+   same as \code{"character"} except that if the character string
+   returned would have otherwise had quotes in the first and 
+   and last positions then they are stripped.}
+  
+
+If }
   \item{...}{Other arguments.  Not currently used.}
 }
 \details{

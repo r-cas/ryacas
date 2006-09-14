@@ -30,6 +30,7 @@
 \alias{ArcCos}
 \alias{ArcTan}
 \alias{Log}
+\alias{Ln}
 \alias{Exp}
 \alias{Simplify}
 \alias{Factorial}
@@ -68,6 +69,7 @@
 \alias{Subst}
 \alias{Inverse}
 \alias{Determinant}
+\alias{D.}
 
 \title{ Sym }
 \description{

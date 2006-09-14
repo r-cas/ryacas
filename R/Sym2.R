@@ -22,7 +22,7 @@ Sym <- function(...) {
    value
 }
 
-as.character.Sym <- function(obj) as.character(unclass(obj))
+as.character.Sym <- function(x, ...) as.character(unclass(x))
 Ops.Sym <- function (e1, e2) 
     if (missing(e2)) { Sym(.Generic, e1)
     } else Sym(e1, .Generic, e2)
@@ -74,11 +74,14 @@ PrettyPrinter <- function(x) {
 Solve <- function(x, y) Sym("Solve(", x, ",", y, ")")
 Newton <- function(...) Sym("Newton(", paste(..., sep = ","), ")")
 
-Set <- ":=" <- function(x, value) Sym(deparse(substitute(x)), ":=", value)
+Set <- function(x, value) 
+	yacas(unclass(Sym(deparse(substitute(x)), ":=", value)))
 
 Infinity <- Sym("Infinity")
 I <- Sym("I")
-for(i in 0:10) assign(paste("x", i, sep = ""), Sym(i))
+ x0 <- Sym(0); x1 <- Sym(1); x2 <- Sym(2); x3 <- Sym(3); x4 <- Sym(4)
+ x5 <- Sym(5); x6 <- Sym(6); x7 <- Sym(7); x8 <- Sym(8); x9 <- Sym(9)
+ x10 <- Sym(10)
 
 Limit <- function(f, x, a) Sym("Limit(", x, ",", a, ")", f)
 
