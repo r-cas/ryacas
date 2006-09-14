@@ -463,8 +463,5 @@ Simplify(E4i)
 Simplify(Determinant(E4i))
 @ %def 
 
-<<echo=FALSE, results=hide>>=
-detach()
-@
 
 \end{document}

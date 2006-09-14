@@ -439,9 +439,6 @@ yacas("Simplify(E4i)")
 yacas("Simplify(Determinant(E4i))")
 @ %def 
 
-<<echo=FALSE, results=hide>>=
-detach()
-@
 
 
 
