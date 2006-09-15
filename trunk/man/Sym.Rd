@@ -67,17 +67,25 @@
 \usage{
 Sym(...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{\dots}{ An R character string or object that can be coerced to
 a character string.}
 }
 \details{
-  See the vignette, Ryacas-Sym, for numerous examples.
+A \code{"Sym"} object is a yacas character string with class \code{"Sym"}.
+One can combine such objects using arithmetic and other operators to build
+up more complex objects.  
+See \code{vignette("Rycas-Sym")} for many examples.
 }
 \value{
-Returns a yacas \code{Sym} object.
+Return a yacas \code{"Sym"} object.
 }
 \examples{
+\dontrun{
+x <- Sym("x")
+x*x
+Integrate(x*x, x)
+Sym("12/24")
 }
-\keyword{ symbolmath }% at least one, from doc/KEYWORDS
+}
+\keyword{ symbolmath }
