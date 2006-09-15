@@ -17,10 +17,11 @@ and startup.
 The following are sources of information on \code{"Ryacas"}:
 \tabular{ll}{
 List of demo files\tab demo(package = "Ryacas")\cr
-Invoking a demo file\tab demo("Ryacas")\cr
+Invoking first demo file\tab demo("Ryacas")\cr
 Second demo\tab demo("Ryacas-PrettyPrinter")\cr
 Third demo\tab demo("Ryacas-Function")\cr
-Vignette\tab vignette("Ryacas")\cr
+List of Vignettes\tab vignette(package = "Ryacas")\cr
+Invoke First Vignette\tab vignette("Ryacas")\cr
 This File\tab package?Ryacas\cr
 Help files\tab ?yacas, ?yacasTranslations, ?yacmode\cr
 News\tab file.show(system.file("NEWS", package = "Ryacas"))\cr
