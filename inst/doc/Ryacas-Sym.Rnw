@@ -49,7 +49,7 @@ within \rlan. (\yacas{} is short for ``Yet Another Computer Algebra
 System''). 
 
 This document is based on the yacas Sym interface and is similar
-to another document based on the yacas yacas interface.
+to another document based on the interface provided by R yacas function.
 
 \yacas{} is developed by Ayal Pinkhuis (who is also the maintainer)
 and others, and is available at
@@ -61,6 +61,14 @@ documentation contains many examples.  The examples given here are
 largely taken from the \yacas{} documentation (especially from the
 introductory chapter) but are organised differently.
 
+A Sym object is a yacas character string that has the "Sym" class.
+Using +, - and other similar R operators.
+One can combine Sym objects with other Sym objects as well as to
+other R objects.  Sym(x) coerces object x to a Sym object by
+first coercing it to character and then changing its class to "Sym".
+One can also apply Sin, Cos, Tan, Deriv, Integrate
+and other provided functions to Sym objects as shown in the examples below.
+
 
 \section{A sample session} 
 \label{sec:samplesession}
@@ -68,8 +76,9 @@ introductory chapter) but are organised differently.
 Algebraic calculations:
 @ 
 <<>>=
-
-
+(Sym(10) + Sym(2)) * Sym(5) + Sym(7) ^ Sym(7)
+Sym("10 * 2") * 5 + Sym(7) ^ 7
+(Sym(10) + 2) * 5 + Sym(7) ^ 7
 Sym("(10+2)*5 + 7^7")
 Sym("1/14 + 5/21 * (30 - 1+1/2)")
 
@@ -78,6 +87,7 @@ Sym("1/14 + 5/21 * (30 - 1+1/2)")
 Numerical evaluations:
 @ 
 <<>>=
+Sym("-12/2")
 Eval(Sym("-12/2"))
 @ %def 
 
