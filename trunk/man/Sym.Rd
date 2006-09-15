@@ -54,17 +54,6 @@
 \alias{Set}
 \alias{Infinity}
 \alias{I}
-\alias{x0}
-\alias{x1}
-\alias{x2}
-\alias{x3}
-\alias{x4}
-\alias{x5}
-\alias{x6}
-\alias{x7}
-\alias{x8}
-\alias{x9}
-\alias{x10}
 \alias{Limit}
 \alias{Subst}
 \alias{Inverse}

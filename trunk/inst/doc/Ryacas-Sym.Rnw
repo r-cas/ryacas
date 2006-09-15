@@ -70,26 +70,27 @@ Algebraic calculations:
 <<>>=
 
 
-(x10 + x2) * x5 + (x1 * x7) ^ x7
-x1/14 + x5/21 * (x1*30 - (x1 + x1/x2))
+Sym("(10+2)*5 + 7^7")
+Sym("1/14 + 5/21 * (30 - 1+1/2)")
 
 @ %def 
 
 Numerical evaluations:
 @ 
 <<>>=
-Eval(-x1*12/2)
+Eval(Sym("-12/2"))
 @ %def 
 
 Working with symbolic expressions:
 <<>>=
+
 x <- Sym("x")
 Factor(x^2-1)
 exp1 <- x^2 + 2 * x^2
 exp0 <- Sym("exp0")
-exp2 <- x2 * Sym(exp0)
-exp3 <- x6 * Pi * x
-exp4 <- exp1 * (x1 - Sin(exp3)) / exp2
+exp2 <- 2 * Sym(exp0)
+exp3 <- 6 * Pi * x
+exp4 <- exp1 * (1 - Sin(exp3)) / exp2
 exp4
 @ 
 
@@ -123,7 +124,7 @@ Integrate(Sin(x), x, a, b)
 Expanding polynomials:
 @ 
 <<>>=
-Expand((x1+x)^3)
+Expand((1+x)^3)
 @ %def 
 
 Taylor expansion:
@@ -150,9 +151,11 @@ The function Set() command can both be used to assign
 values to global variables. 
 @ 
 <<>>=
-Set(n, (x10 + x2) * x5)
+Set(n, "(10 + 2) * 5")
 n <- Sym("n")
 Set(n, n+n)
+
+a <- Sym("a")
 Set(z, Cos(a))
 z <- Sym("z")
 z + z
@@ -179,7 +182,7 @@ Evaluations are generally exact:
 Exp(0)
 Exp(1)
 Sin(Pi/4)
-x1*355/113
+Sym("355/113")
 @ %def 
 
  To obtain a numerical evaluation
@@ -203,7 +206,7 @@ fixed precision of n digits:
 @ 
 <<>>=
 Precision(5)
-N(x1*355/113)
+N("355/113")
 @ %def 
 
 
@@ -213,7 +216,7 @@ Rational numbers will stay rational as long as the numerator and
 denominator are integers:
 @ 
 <<>>=
-x1 * 55 / 10
+Sym("55 / 10")
 @ %def 
 
 
@@ -223,10 +226,11 @@ x1 * 55 / 10
 Some exact manipulations :
 @ 
 <<>>=
-x1/14+x5/21*(x1*30-(x1+x1/2)*5^2)
-x0+x
+Sym("1/14+5/21*(1*30-(1+1/2)*5^2)")
+x <- Sym("x")
+0+x
 y <- Sym("y")
-x+x1*y
+x+y
 Sin(ArcSin(x))+Tan(ArcTan(y))
 @ %def 
 
@@ -237,9 +241,9 @@ as either expressions involving I or explicitly Complex(a,b) for a+ib.
 @ 
 <<>>=
 I^2
-x7+x3*I
+7+3*I
 Conjugate("%")
-Exp(x3*I)
+Exp(3*I)
 @ %def 
 
 \subsection{Recall the most recent line -- the \texttt{\%} operator}
@@ -248,7 +252,7 @@ The operator \texttt{\%} automatically recalls the result from the
 previous line. 
 @ 
 <<>>=
-(x1+x)^3
+(1+x)^3
 z <- Sym("%")
 z
 @ %def 
@@ -265,7 +269,7 @@ yacas form is:
 a <- Sym("a"); b <- Sym("b"); c <- Sym("c"); d <- Sym("d")
 A <- List(List(a,b), List(c,d))
 k <- Sym("k")
-B <- (x1+x)^2+k^3
+B <- (1+x)^2+k^3
 A
 B
 @ %def 

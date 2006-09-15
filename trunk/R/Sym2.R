@@ -79,9 +79,6 @@ Set <- function(x, value)
 
 Infinity <- Sym("Infinity")
 I <- Sym("I")
- x0 <- Sym(0); x1 <- Sym(1); x2 <- Sym(2); x3 <- Sym(3); x4 <- Sym(4)
- x5 <- Sym(5); x6 <- Sym(6); x7 <- Sym(7); x8 <- Sym(8); x9 <- Sym(9)
- x10 <- Sym(10)
 
 Limit <- function(f, x, a) Sym("Limit(", x, ",", a, ")", f)
 
