@@ -10,6 +10,9 @@ It can be used for exact arithmetic, symbolic
 math, ASCII pretty printing and translating R to
 TeX.  (See examples below.)
 
+The Ryacas home page is at:
+http://code.google.com/p/ryacas/
+
 Technology:  Internally it communicates via
 sockets with a separate yacas process and performs
 a direct translation of R to yacas in one
@@ -52,6 +55,13 @@ interface such that, e.g. x <- Sym('x'), produces
 a Sym variable. Such Sym variables can be
 processed with the usual +, -, *, / etc. operators
 as well as a variety of commands that mimic yacas.
+There is a vignette with examples of the R yacas
+function interface:
+http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas.pdf
+and an analogous vignette that redoes all the same
+examples using the Sym interface:
+http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas-Sym.pdf
+A few examples are also shown below.
 
 Sample Session:
 
