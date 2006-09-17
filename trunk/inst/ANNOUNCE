@@ -23,10 +23,11 @@ power compute server while R runs locally on a low
 powered PC.
 
 Installation: On Windows the R package
-distribution contains everything needed.  Just
-perform a normal R package install and run.  On
-other systems one must install yacas 1.0.62 in the
-usual way first.
+distribution contains everything needed including
+a copy of yacas 1.0.61.  Just perform a normal R
+package install and run.  On other systems one
+must install yacas 1.0.61 or 1.0.62 in the usual 
+way first.
 
 Status: The package is subject to change.
 
@@ -40,65 +41,85 @@ Team:  Development of the Ryacas package was by:
 - Søren Højsgaard, Soren.Hojsgaard at agrsci dot dk
 - Ayal Pinkus, apinkus at xs4all dot nl
 
+R Interface: The yacas R function will accept a
+raw yacas input string, an R expression or a one
+line R function. If the input is not already a raw
+yacas input string it is converted prior to
+sending it to yacas. The yacas function outputs
+the result as an R expression or in various other
+formats. The Sym function provides an alternate
+interface such that, e.g. x <- Sym('x'), produces
+a Sym variable. Such Sym variables can be
+processed with the usual +, -, *, / etc. operators
+as well as a variety of commands that mimic yacas.
+
 Sample Session:
 
 > library(Ryacas)
 
+Attaching package: 'Ryacas'
+
 > package?Ryacas # various sources of info on Ryacas
 
-> # exact arithmetic
+> # algebra and calculus
 > # first time yacas is called, yacas automatically starts
-> yacas(expression(444/1476))
-expression(37/123)
+> ###
 
-> # symbolic math
+> # 1. using raw yacas string
+> yacas('Integrate(x)x+Tan(x)')
+[1] 'Starting Yacas!'
+expression(x^2/2 - log(cos(x)))
 
+> # 2. R expression
 > yacas(expression(integrate(x+tan(x), x)))
 expression(x^2/2 - log(cos(x)))
 
-> yacas(expression(Simplify((1+x)^2 - 2*x)))
-expression(x^2 + 1)
+> # 3. Sym variables
+> x <- Sym('x')
+> Integrate(x+Tan(x), x)
+expression(x^2/2 - log(cos(x)))
 
-> yacas(expression(deriv(tan(x), x)))
-expression(1/cos(x)^2)
+> # another example
+> a <- Sym("a")
+> Solve(x/(1+x) == a, x)
+expression(list(x == a/(1 - a)))
 
-> yacas("OdeSolve(y''==4*y)") # yacas string
-expression(C218 * exp(2 * x) + C222 * exp(-2 * x))
+> # exact arithmetic
+> ###
+> yacas('12/24')
+expression(1/2)
+
 
 > # ASCII pretty printing
+> ###
 
-> yacas('PrettyPrinter("PrettyForm")')
+> PrettyPrinter('PrettyForm')
 True
-
-> yacas(expression(exp(-x^2)/(cos(x) + exp(x))))
+> # x was defined to be a Sym object above
+> Exp(-x^2)/(Cos(x)+Exp(x))
      /  /  2 \ \   
   Exp\ -\ x  / /   
 -------------------
 Cos( x ) + Exp( x )
 
-> yacas('A:={{1,2},{a,6}}')
+> # matrices are stored as row-wise nested lists
+> # a was defined to be a Sym object above
+> List(List(1,2),List(a,6))
 /              \
 | ( 1 ) ( 2 )  |
 |              |
 | ( a ) ( 6 )  |
 \              /
 
-> # reset PrettyPrinter
-> yacas('PrettyPrinter("OMForm")') 
-
-> yacas(expression(x+x))
-expression(2 * x)
-
-> yacas("Solve(x/(1+x) == a, x)")
-expression(list(x == a/(1 - a)))
-
-> # emit one line of TeX code
-> yacas("x1 := (1+x)^2 + k^3")
-expression((x + 1)^2 + k^3)
-> yacas("TexForm(x1)")$PrettyForm[[1]]
-$\left( x + 1\right)  ^{2} + k ^{3}$
+> # emit TeX code
+> ###
+> k <- Sym("k")
+> TeXForm((x+1)^2 + k^3)
+'$\left( x + 1\right) ^{2} + k ^{3}$'
 
 > # On Windows XP Pro detaching Ryacas terminates yacas process.
 > # On other systems process must be terminated manually.
-> detach() 
+> detach()
+Thank you for using yacas
+
 
