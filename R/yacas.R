@@ -141,6 +141,7 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
 
     yac.res <- c()
 #	print(x)
+    if (verbose) cat("Sending to yacas:", x, "", sep = "\n")
     writeLines(x, .yacCon)
 
     delim <- "]"
