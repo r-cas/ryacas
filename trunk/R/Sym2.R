@@ -27,9 +27,16 @@ Ops.Sym <- function (e1, e2)
     if (missing(e2)) { Sym(.Generic, e1)
     } else Sym(e1, .Generic, e2)
 
+Math.Sym <- function(x) {
+	idx <- match(.Generic, transtab[,1], nomatch = 0)
+	fn <- if (idx > 0) transtab[idx, 3] else .Generic
+	Sym(fn, "(", x, ")")
+}
+
 print.Sym <- function(x, ...) print(yacas(unclass(x)))
 
-D. <- Deriv <- function(x, y = "x", n = 1) Sym("D(", y, ",", n, ")", x)
+deriv.Sym <- function(expr, name = "x", n = 1, ...) 
+	Sym("D(", name, ",", n, ")", expr)
 
 Integrate <- function(f, x, a, b) {
    if (missing(a) && missing(b)) { Sym("Integrate(", x, ")", f)
@@ -39,16 +46,6 @@ Integrate <- function(f, x, a, b) {
 Eval.Sym <- function(x, env = parent.frame(), ...) 
 	eval(yacas(unclass(x))[[1]], env = env)
 
-Sin <- function(x) Sym("Sin(", x, ")")
-Cos <- function(x) Sym("Cos(", x, ")")
-Tan <- function(x) Sym("Tan(", x, ")")
-
-ArcSin <- function(x) Sym("ArcSin(", x, ")")
-ArcCos <- function(x) Sym("ArcCos(", x, ")")
-ArcTan <- function(x) Sym("ArcTan(", x, ")")
-
-Ln <- Log <- function(x) Sym("Ln(", x, ")")
-Exp <- function(x) Sym("Exp(", x, ")")
 Simplify <- function(x) Sym("Simplify(", x, ")")
 Factorial <- function(x) Sym("Factorial(", x, ")")
 List <- function(...) Sym("List(", paste(..., sep = ","), ")")
@@ -86,6 +83,6 @@ Subst <- function(expr, x, replacement)
 	Sym("Subst(", x, ",", replacement, ")", expr)
 
 Inverse <- function(x) Sym("Inverse(", x, ")")
-Determinant <- function(x) Sym("Determinant(", x, ")")
+determinant.Sym <- function(x, ...) Sym("Determinant(", x, ")")
 
 
