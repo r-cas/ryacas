@@ -101,7 +101,10 @@ transtab <- matrix( c(
 
 	"list",		"List", 	"List",
 	"TRUE",		"true", 	"True",
-	"<-",		"?",		":="
+	"<-",		"?",		":=",
+	"Expr",		"?",		"",
+	"Exprq", 	"?",		"",
+	"expression", 	"?", 		""
 	
 ), byrow = TRUE, ncol = 3)
 colnames(transtab) <- c("R", "OM", "yacas")
