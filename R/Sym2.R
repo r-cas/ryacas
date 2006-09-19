@@ -33,7 +33,7 @@ Math.Sym <- function(x) {
 	Sym(fn, "(", x, ")")
 }
 
-print.Sym <- function(x, ...) print(yacas(unclass(x)))
+print.Sym <- function(x, ...) print(yacas(unclass(x), ...))
 
 deriv.Sym <- function(expr, name = "x", n = 1, ...) 
 	Sym("D(", name, ",", n, ")", expr)

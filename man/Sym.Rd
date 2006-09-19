@@ -4,6 +4,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 
 \alias{Expr}
+\alias{Exprq}
 \alias{Ops.Expr}
 \alias{Math.Expr}
 \alias{deriv.Expr}
@@ -125,6 +126,10 @@ x <- Sym("x")
 x*x
 Integrate(x*x, x)
 acos(Sym("1/2"))
+
+y <- Exprq(x)
+y*y
+deriv(y*y, y)
 }
 }
 \keyword{ symbolmath }
