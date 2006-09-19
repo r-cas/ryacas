@@ -16,17 +16,22 @@ and startup.
 \details{
 The following are sources of information on \code{"Ryacas"}:
 \tabular{ll}{
+DESCRIPTION file\tab library(help = Ryacas)\cr
 List of demo files\tab demo(package = "Ryacas")\cr
-Invoking first demo file\tab demo("Ryacas")\cr
-Second demo\tab demo("Ryacas-PrettyPrinter")\cr
-Third demo\tab demo("Ryacas-Function")\cr
-List of Vignettes\tab vignette(package = "Ryacas")\cr
-Invoke First Vignette\tab vignette("Ryacas")\cr
+Demo file\tab demo("Ryacas")\cr
+Demo\tab demo("Ryacas-PrettyPrinter")\cr
+Demo\tab demo("Ryacas-Function")\cr
+Demo\tab demo("Ryacas-Sym")\cr
+Demo\tab demo("Ryacas-Expr")\cr
+List Vignettes\tab vignette(package = "Ryacas")\cr
+Vignette\tab vignette("Ryacas")\cr
+Vignette\tab vignette("Ryacas-Sym")\cr
 This File\tab package?Ryacas\cr
-Help files\tab ?yacas, ?yacasTranslations, ?yacmode\cr
+Help files\tab ?yacas, ?yacasTranslations, ?yacmode, ?Sym\cr
 News\tab file.show(system.file("NEWS", package = "Ryacas"))\cr
 Acknowledgements\tab file.show(system.file("THANKS", package = "Ryacas"))\cr
 Wish List\tab file.show(system.file("WISHLIST", package = "Ryacas"))\cr
+Home page\tab http://code.google.com/p/ryacas/\cr
 }
 }
 
@@ -34,6 +39,8 @@ Wish List\tab file.show(system.file("WISHLIST", package = "Ryacas"))\cr
 \dontrun{
 print(yacas(expression(integrate(x, 1/x))))
 print(yacas("Integrate(x)1/x"))
+x <- Sym("x"); Integrate(1/x, x)
+acos(Sym("1/2"))
 }
 }
 \keyword{programming}

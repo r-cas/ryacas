@@ -124,7 +124,7 @@ as.character.Expr, deriv.Expr, Math.Expr, Ops.Expr and print.Expr.}
 x <- Sym("x")
 x*x
 Integrate(x*x, x)
-Sym("12/24")
+acos(Sym("1/2"))
 }
 }
 \keyword{ symbolmath }
