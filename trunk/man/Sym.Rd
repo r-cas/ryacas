@@ -130,7 +130,7 @@ acos(Sym("1/2"))
 y <- Exprq(x)
 y*y
 deriv(y*y, y)
-acos(Expr(1/2))
+Exprq(acos(1/2))
 }
 }
 \keyword{ symbolmath }
