@@ -22,19 +22,18 @@ For more info see:
   http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas.pdf
   http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas-Sym.pdf
 
-- included documentation (man pages, demos, vignettes):
+- overview of all sources of info
 
   # Install yacas first if on UNIX/Linux or Mac.
   # yacas is already included in Ryacas package on Windows.
   install.packages("Ryacas", dep = TRUE)
   library(Ryacas)
-  package?Ryacas # sources of info
+  package?Ryacas
 
 ---
-
-Parlamis Franklin, fparlamis dot mac dot com
 Rob Goedman, goedman at mac dot com
 Gabor Grothendieck, ggrothendieck at gmail dot com
 Søren Højsgaard, Soren.Hojsgaard at agrsci dot dk
+Franklin Parlamis, fparlamis dot mac dot com
 Ayal Pinkus, apinkus at xs4all dot nl
 

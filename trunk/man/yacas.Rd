@@ -5,6 +5,8 @@
 \alias{yacas.function} 
 \alias{yacasInvokeString}
 \alias{yacas}
+\alias{as.expression.yacas}
+\alias{as.character.yacas}
 \alias{addSemi}
 \alias{haveYacas}
 \alias{yacasStart}

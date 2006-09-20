@@ -18,11 +18,17 @@
 Sym <- function(...) {
    args <- list(...)
    value <- if (length(args) > 1) paste("(", ..., ")") else paste(args[[1]])
-   class(value) <- "Sym"
+   class(value) <- c("Sym", "character")
    value
 }
 
 as.character.Sym <- function(x, ...) as.character(unclass(x))
+as.expression.Sym <- function(x, ...) yacas(x, ...)[[1]]
+
+as.Sym <- function(x, ...) UseMethod("as.Sym")
+as.Sym.yacas <- function(x, ...) Sym(format(yparse(x[[1]])))
+as.Sym.Expr <- function(x, ...) Sym(format(yparse(x)))
+
 Ops.Sym <- function (e1, e2) 
     if (missing(e2)) { Sym(.Generic, e1)
     } else Sym(e1, .Generic, e2)
