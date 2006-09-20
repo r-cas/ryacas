@@ -10,8 +10,12 @@
 \alias{deriv.Expr}
 \alias{print.Expr}
 \alias{as.character.Expr}
+\alias{as.Sym}
+\alias{as.Sym.Expr}
+\alias{as.Sym.yacas}
 
 \alias{as.character.Sym}
+\alias{as.expression.Sym}
 \alias{deriv.Sym}
 \alias{Integrate}
 \alias{OpenMath2R}

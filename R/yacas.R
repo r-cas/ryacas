@@ -353,3 +353,5 @@ Eval <- function(x, env = parent.frame(), ...) UseMethod("Eval")
 Eval.yacas <- function(x, env = parent.frame(), ...) 
 	eval(x[[1]], env = env)
 
+as.expression.yacas <- function(x, ...) x[[1]]
+as.character.yacas <- function(x, ...) as.character(x[[1]])
