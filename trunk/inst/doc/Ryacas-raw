@@ -1,0 +1,444 @@
+\documentclass[]{article} \usepackage{inputenc,hyperref,a4,color,boxedminipage,Sweave}
+%\VignetteIndexEntry{Introduction to Ryacas}
+%\VignettePackage{Ryacas}
+%\VignetteDepends{XML}
+
+% Definitions
+\newcommand{\slan}{{\tt S}}
+\newcommand{\rlan}{{\tt R}}
+\newcommand{\ryacas}{{\tt Ryacas}}
+\newcommand{\yacas}{{\tt yacas}}
+\newcommand{\code}[1]{{\tt #1}}
+\def\yac{\texttt{Yacas}}
+
+
+\setlength{\parindent}{0in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
+
+\title{\ryacas{} -- an \rlan{} interface to the \yacas{} computer
+  algebra system}
+\author{Rob Goedman, \and
+Gabor Grothendieck,  \and
+Søren Højsgaard,  \and
+Ayal Pinkus}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+<<echo=FALSE, results=hide>>=
+library(Ryacas)
+options(width=60)
+@
+
+\renewenvironment{Schunk}{\begin{center}
+    \small
+    \begin{boxedminipage}{0.95\textwidth}}{
+    \end{boxedminipage}\end{center}}
+
+
+
+\section{Introduction} 
+\label{sec:introduction}
+
+\ryacas{} makes the \yacas{} computer algebra system available from
+within \rlan. (\yacas{} is short for ``Yet Another Computer Algebra
+System''). 
+
+\yacas{} is developed by Ayal Pinkhuis (who is also the maintainer)
+and others, and is available at
+\href{yacas.sourceforge.org}{yacas.sourceforge.org} for various
+platforms. There is a comprehensive documentation (300+ pages) of
+\yacas{} (also available at
+\href{yacas.sourceforge.org}{yacas.sourceforge.org}) and the
+documentation contains many examples.  The examples given here are
+largely taken from the \yacas{} documentation (especially from the
+introductory chapter) but are organised differently.
+
+
+\section{A sample session} 
+\label{sec:samplesession}
+
+Algebraic calculations:
+@ 
+<<>>=
+yacas(expression((10 + 2) * 5 + 7^7))
+yacas(expression(1/14+5/21*(30-(1+1/2)*5^2)))
+@ %def 
+
+Numerical evaluations:
+@ 
+<<>>=
+yacas(expression(N(-12/2)))
+@ %def 
+
+Working with symbolic expressions:
+<<>>=
+yacas(expression(Factor(x^2-1)))
+exp1 <- expression(x^2 + 2 * x^2)
+exp2 <- expression(2 * exp0)
+exp3 <- expression(6 * pi * x)
+exp4 <- expression((exp1 * (1 - sin(exp3))) / exp2)
+yacas(exp4)
+@ 
+
+Working with numerical expressions:
+....
+
+Combining symbolic and numerical expressions:
+@ 
+<<>>=
+yacas("N(Sin(1)^2 + Cos(x)^2)")
+yacas("N(Sin(1)^2 + Cos(x)^2)", retclass="character")
+@ %def 
+
+
+Differentiation:
+<<>>=
+yacas("D(x)Sin(x)")
+@
+
+Integration: [!!! This is odd: I thought yacas was case sensitive...]]]
+@ 
+<<>>=
+yacas("A")
+yacas("A:='ssss'")
+yacas("a")
+yacas("Integrate(x,a,b)Sin(x)")
+yacas("Clear(A)")
+yacas("A")
+yacas("Integrate(x,a,b)Sin(x)")
+@ %def 
+
+Expanding polynomials:
+@ 
+<<>>=
+yacas("Expand((1+x)^3)")
+@ %def 
+
+Taylor expansion:
+@ 
+<<>>=
+yacas("texp := Taylor(x,0,3) Exp(x)")
+@ %def 
+
+Printing the result in nice forms:
+@ 
+<<>>=
+yacas("PrettyForm(texp)") 
+yacas("TeXForm(texp)", retclass = "unquote")
+@ %def 
+
+
+
+\section{Simple \yac\ calculations}
+
+
+\subsection{Setting and clearing a variable}
+
+The function Set() and the operator := can both be used to assign
+values to global variables. 
+@ 
+<<>>=
+yacas("n := (10 + 2) * 5")
+yacas("n := n+n")
+yacas("Set(z, Cos(a))")
+yacas("z+z")
+@ %def 
+
+
+To clear a variable
+binding execute Clear():
+@ 
+<<>>=
+yacas(expression(n))
+yacas("Clear(n)")
+yacas(expression(n))
+@ %def 
+
+\subsection{Symbolic and numerical evaluations, precision}
+
+Evaluations are generally exact:
+@ 
+<<>>=
+yacas("Exp(0)")
+yacas("Exp(1)")
+yacas("Sin(Pi/4)")
+yacas("355/113")
+@ %def 
+
+ To obtain a numerical evaluation
+(approximation), the N() function can be used:
+@ 
+<<>>=
+yacas("N(Exp(1))")
+yacas("N(Sin(Pi/4))")
+yacas("N(355/113)")
+@ %def 
+
+The N() function has an optional second argument, the required precision:
+@ 
+<<>>=
+yacas("N(355/133,20)")
+@ %def 
+
+The command Precision(n)
+can be used to specify that all floating point numbers should have a
+fixed precision of n digits:
+@ 
+<<>>=
+yacas("Precision(5)")
+yacas("N(355/113)")
+@ %def 
+
+
+\subsection{Rational numbers}
+
+Rational numbers will stay rational as long as the numerator and
+denominator are integers:
+@ 
+<<>>=
+yacas(expression(55/10))
+@ %def 
+
+
+\subsection{Symbolic calculation}
+\label{sec:symbolicCalculation}
+
+Some exact manipulations :
+@ 
+<<>>=
+yacas("1/14+5/21*(30-(1+1/2)*5^2)")
+yacas("0+x")
+yacas("x+1*y")
+yacas("Sin(ArcSin(alpha))+Tan(ArcTan(beta))")
+@ %def 
+
+\subsection{Complex numbers and the imaginary unit} 
+
+The imaginary unit $i$ is denoted I and complex numbers can be entered
+as either expressions involving I or explicitly Complex(a,b) for a+ib.
+@ 
+<<>>=
+yacas("I^2")
+yacas("7+3*I")
+yacas("Conjugate(%)")
+yacas("Exp(3*I)")
+@ %def 
+
+\subsection{Recall the most recent line -- the \texttt{\%} operator}
+
+The operator \texttt{\%} automatically recalls the result from the
+previous line. 
+@ 
+<<>>=
+yacas("(1+x)^3")
+yacas("%")
+yacas("z:= %")
+@ %def 
+
+
+
+\subsection{Printing with PrettyForm, PrettyPrint, TexForm and  TeXForm} 
+\label{sec:printing}
+
+There are different ways of displaying the output. The (standard)
+yacas form is:
+@ 
+<<>>=
+yacas("A:={{a,b},{c,d}}")
+yacas("B:= (1+x)^2+k^3")
+yacas("A")
+yacas("B")
+@ %def 
+
+The Pretty form is:
+@ 
+<<>>=
+yacas("PrettyForm(A)")
+yacas("PrettyForm(B)")
+@ %def 
+
+An alternative is the PrettyPrinter [!!! Why does this give the same
+result as before??? Earlier I got XML output as well... Is something
+not reset???]
+@ 
+<<>>=
+yacas('PrettyPrinter("PrettyForm")')
+yacas("A")
+yacas('PrettyPrinter()')
+yacas("A")
+@ %def 
+
+The output can be displayed in TeX form as well:
+@ 
+<<>>=
+yacas("TeXForm(B)")
+yacas("TexForm(B)")
+@ %def 
+
+
+
+\section{Commands} 
+\label{sec:commands}
+
+
+\subsection{Factorial}
+
+@ 
+<<>>=
+yacas("40!")
+@ %def 
+
+\subsection{Taylor expansions} 
+
+Expand Exp(x) in three terms
+around 0 and a:
+@ 
+<<>>=
+yacas("Taylor(x,0,3) Exp(x)")
+yacas("Taylor(x,a,3) Exp(x)")
+@ %def 
+
+The InverseTaylor() function builds the Taylor series expansion of the
+inverse of an expression. For example, the Taylor expansion in two
+terms of the inverse of Exp(x) around x=0 (which is the Taylor
+expansion of Ln(y) around y=1):
+@ 
+<<>>=
+yacas("InverseTaylor(x,0,2)Exp(x)")
+yacas("Taylor(y,1,2)Ln(y)")
+@ %def 
+
+\subsection{Solving equations}
+
+
+\subsubsection{Solving equations symbolically}
+
+Solve equations symbolically with:
+@ 
+<<>>=
+yacas("Solve(x/(1+x) == a, x)")
+yacas("Solve(x^2+x == 0, x)")
+@ %def 
+(Note the use of the == operator, which does not evaluate to anything,
+to denote an "equation" object.) Solve() is rather limited.
+
+\subsubsection{Solving equations numerically}
+To solve an equation (in one variable) like Sin(x)-Exp(x)=0 numerically taking 0.5
+as initial guess and an accuracy of 0.0001 do:
+@ 
+<<>>=
+yacas("Newton(Sin(x)-Exp(x),x, 0.5, 0.0001)")
+@ %def 
+
+\subsection{Expanding polynomials} 
+@ 
+<<>>=
+yacas("Expand((1+x)^3)")
+@ %def 
+
+
+
+\subsection{Simplifying an expression}
+
+The function Simplify() attempts to reduce an expression
+to a simpler form. 
+@ 
+<<>>=
+yacas("(x+y)^3-(x-y)^3")
+yacas("Simplify(%)")
+@ %def 
+
+
+\subsection{Analytical derivatives}
+
+Analytical derivatives of functions can be evaluated:
+@ 
+<<>>=
+yacas("D(x) Sin(x)")
+yacas("D(x) D(x) Sin(x)")
+@ %def 
+
+The D function also accepts an argument specifying how often the
+derivative has to be taken, e.g:
+@ 
+<<>>=
+yacas("D(x,2)Sin(x)")
+@ %def 
+
+\subsection{Integration}
+
+!!! Problem arises because A was defined above (a is not defined, though)
+@ 
+<<>>=
+yacas("Integrate(x,a,b)Sin(x)")
+yacas("Integrate(x,a,b)Ln(x)+x")
+yacas("Integrate(x)1/(x^2-1)")
+yacas("Integrate(x)Sin(a*x)^2*Cos(b*x)")
+@ %def 
+
+
+\subsection{Limits}
+@ 
+<<>>=
+yacas("Limit(x,0)Sin(x)/x")
+yacas("Limit(n,Infinity)(1+(1/n))^n")
+yacas("Limit(h,0) (Sin(x+h)-Sin(x))/h")
+@ %def 
+
+
+\subsection{Variable substitution}
+
+@ 
+<<>>=
+yacas("Subst(x,Cos(a))x+x")
+@ %def 
+
+\subsection{Solving ordinary differential equations}
+
+@ 
+<<>>=
+yacas("OdeSolve(y''==4*y)")
+yacas("OdeSolve(y'==8*y)")
+@ %def 
+
+
+
+
+\section{Matrices}
+\label{sec:matrices}
+@ 
+<<>>=
+yacas("E4:={ {u1,u1,0},{u1,0,u2},{0,u2,0} }")
+yacas("PrettyForm(E4)")
+@ %def 
+
+
+
+\subsection{Inverse} 
+
+@ 
+<<>>=
+yacas("E4i:=Inverse(E4)")
+yacas("Simplify(E4i)")
+yacas("PrettyForm(Simplify(E4i))")
+@ %def 
+
+
+\subsection{Determinant}
+
+@ 
+<<>>=
+yacas("Determinant(E4)")
+yacas("Determinant(E4i)")
+yacas("Simplify(E4i)")
+yacas("Simplify(Determinant(E4i))")
+@ %def 
+
+
+
+
+
+\end{document}
