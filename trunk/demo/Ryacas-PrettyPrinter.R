@@ -22,5 +22,5 @@ yacas(expression(x+x))
 
 # emit one line of TeX code
 yacas("x1 := (1+x)^2 + k^3")
-yacas("TeXForm(x1)")
+yacas("TeXForm(x1)", retclass = "unquote")
 
