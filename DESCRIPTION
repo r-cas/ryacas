@@ -1,6 +1,6 @@
 Package: Ryacas
 Version: 0.2-1
-Date: 2006-09-21
+Date: 2006-09-22
 Title: R interface to yacas
 Author: Rob Goedman <goedman@mac.com>, Gabor Grothendieck <ggrothendieck@gmail.com>, Søren Højsgaard <Soren.Hojsgaard@agrsci.dk>, Ayal Pinkus <apinkus@xs4all.nl> 
 Maintainer: G Gorthendieck <ggrothendieck@gmail.com>
