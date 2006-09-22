@@ -111,8 +111,6 @@ exp2 <- expression(2 * exp0)
 exp3 <- expression(6 * pi * x)
 exp4 <- expression((exp1 * (1 - sin(exp3))) / exp2)
 print(yacas(exp4))
-print(yacas("N(Sin(1)^2 + Cos(x)^2)"))
-print(yacas("N(Sin(1)^2 + Cos(x)^2)", retclass="character"))
 
 print(yacas("Version()") # yacas version
 
