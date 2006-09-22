@@ -164,7 +164,8 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
     chunk2 <- yac.res[seq(w[1]+1, length = diff(w)-1)]
     if (yac.res[1] == "<OMOBJ>") {
 	text <- OpenMath2R(chunk1)
-	if (retclass == "expression") text <- parse(text = text)
+	text <- parse(text = text)
+	if (!retclass == "expression") text <- format(text)[[1]]
 	if (retclass == "unquote") text <- sub("^['\"](.*)['\"]", "\\1", text)
 	result <- list(text = text, OMForm = chunk1)
     } else {

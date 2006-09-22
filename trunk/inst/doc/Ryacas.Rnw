@@ -1,5 +1,4 @@
-\documentclass[]{article}
-\usepackage{inputenc,hyperref,a4,color,boxedminipage,Sweave}
+\documentclass[]{article} \usepackage{inputenc,hyperref,a4,color,boxedminipage,Sweave}
 %\VignetteIndexEntry{Introduction to Ryacas}
 %\VignettePackage{Ryacas}
 %\VignetteDepends{XML}
@@ -19,8 +18,7 @@
 
 \title{\ryacas{} -- an \rlan{} interface to the \yacas{} computer
   algebra system}
-\author{Parlamis Franklin, \and
-Rob Goedman, \and
+\author{Rob Goedman, \and
 Gabor Grothendieck,  \and
 Søren Højsgaard,  \and
 Ayal Pinkus}

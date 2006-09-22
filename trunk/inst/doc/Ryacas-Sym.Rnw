@@ -19,8 +19,7 @@
 
 \title{\ryacas{} -- an \rlan{} interface to the \yacas{} computer
   algebra system -- Sym version}
-\author{Parlamis Franklin, \and
-Rob Goedman, \and
+\author{Rob Goedman, \and
 Gabor Grothendieck,  \and
 Søren Højsgaard,  \and
 Ayal Pinkus}
