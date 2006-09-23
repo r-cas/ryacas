@@ -22,7 +22,7 @@ Eval(yacas(expression(x*x)), list(x=2))
 
 # same
 x <- 2
-Eval(yacas(expression(x*x))))
+Eval(yacas(expression(x*x)))
 }
 }
 \keyword{ symbolmath }%

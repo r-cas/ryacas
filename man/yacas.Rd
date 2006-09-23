@@ -112,7 +112,7 @@ exp3 <- expression(6 * pi * x)
 exp4 <- expression((exp1 * (1 - sin(exp3))) / exp2)
 print(yacas(exp4))
 
-print(yacas("Version()") # yacas version
+print(yacas("Version()")) # yacas version
 
 # see demo("Ryacas-Function")
 

@@ -6,7 +6,7 @@
   Interactive interface to the yacas
 }
 \usage{
-\method{yacmode}{character}()
+yacmode()
 }
 %- maybe also 'usage' for other objects documented here.
 \details{
