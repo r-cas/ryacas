@@ -3,6 +3,7 @@
 \alias{yacas.character} 
 \alias{yacas.expression} 
 \alias{yacas.function} 
+\alias{yacas.formula} 
 \alias{yacasInvokeString}
 \alias{yacas}
 \alias{as.expression.yacas}
@@ -24,6 +25,7 @@
 retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
 \method{yacas}{expression}(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character", "unquote"), ...)
 \method{yacas}{function}(x, verbose = FALSE, method = c("socket", "system"), ...)
+\method{yacas}{formula}(x, verbose = FALSE, method = c("socket", "system"), ...)
 }
 \arguments{
   \item{x}{ A yacas character string or an R 
@@ -49,8 +51,10 @@ If }
   \item{...}{Other arguments.  Not currently used.}
 }
 \details{
-  The user supplies an R expression, an R function with a single line body 
-  or a yacas input string.
+  The user supplies an R expression, an R function with a single line body,
+  a formula or a yacas input string.  In the case of a formula it is
+  regarded as an expression represented by the right hand side of the
+  formula and the left hand side, if any, is ignored.
 }
 \value{
   An R object of class \code{"yacas"} is returned.  If 
