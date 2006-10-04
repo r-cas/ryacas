@@ -51,10 +51,11 @@ If }
   \item{...}{Other arguments.  Not currently used.}
 }
 \details{
-  The user supplies an R expression, an R function with a single line body,
+  The user supplies an R expression, an R function name corresponding to
+  a function with a single line body,
   a formula or a yacas input string.  In the case of a formula it is
   regarded as an expression represented by the right hand side of the
-  formula and the left hand side, if any, is ignored.
+  formula while the left hand side, if any, is ignored.
 }
 \value{
   An R object of class \code{"yacas"} is returned.  If 
