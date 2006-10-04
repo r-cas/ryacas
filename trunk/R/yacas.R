@@ -340,12 +340,13 @@ yAssignFunction <- function(x) {
 }
 
 yacas.function <- function(x, verbose = FALSE, method = c("socket", "system"), ...) {
-	funname <- deparse(substitute(x), collapse = " ")
+	funname <- deparse(substitute(x))
 	a <- paste( "(", paste(names(formals(x)), collapse = ","), ")" )
 	b <- format(body(x))
-	s <- paste(funname, a, ":=", b, sep = "")
-	x <- as.expression(parse(text = s))
-	.Class <- "expression"
+	x <- paste(funname, a, ":=", b, sep = "")
+	# x <- as.expression(parse(text = s))
+	# .Class <- "expression"
+	.Class <- "character"
 	NextMethod(x)
 }
 
