@@ -343,9 +343,9 @@ yacas.function <- function(x, verbose = FALSE, method = c("socket", "system"), .
 	funname <- deparse(substitute(x))
 	a <- paste( "(", paste(names(formals(x)), collapse = ","), ")" )
 	b <- format(body(x))
-	x <- paste(funname, a, ":=", b, sep = "")
-	# x <- as.expression(parse(text = s))
-	# .Class <- "expression"
+	e <- as.expression(parse(text = b))
+	s <- yparse(e)
+	x <- paste(funname, a, ":=", format(s), sep = "")
 	.Class <- "character"
 	NextMethod(x)
 }
