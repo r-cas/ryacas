@@ -1,34 +1,23 @@
 
-Ryacas is an R interface to the free yacas
-computer algebra system. Ryacas allows one to send
-R expressions or unprocessed yacas strings to a
-separate yacas process from R and get back the
-result.  It also has facilities for manipulating
-yacas strings and R expressions destined for yacas
-processing.
+Ryacas is an R interface to the free yacas computer algebra
+system.  Ryacas allows one to send R expressions or
+unprocessed yacas strings to a separate yacas process from R
+and get back the result.  It also has facilities for
+manipulating yacas strings and R expressions destined for
+yacas processing.
 
-It can be used for exact arithmetic, symbolic
-math, ASCII pretty printing and translating R to
-TeX.
+It can be used for exact arithmetic, symbolic math, ASCII
+pretty printing and translating R to TeX. 
 
-For more info see:
-
-- overview and examples on home page:
+For overview, pointers to additional information and 
+sample session see:
 
     http://code.google.com/p/ryacas/
 
-- vignettes:
+The vignettes are available online at:
 
-  http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas.pdf
-  http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas-Sym.pdf
-
-- overview of all sources of info
-
-  # Install yacas first if on UNIX/Linux or Mac.
-  # yacas is already included in Ryacas package on Windows.
-  install.packages("Ryacas", dep = TRUE)
-  library(Ryacas)
-  package?Ryacas
+    http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas.pdf
+    http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas-Sym.pdf
 
 ---
 Rob Goedman, goedman at mac dot com

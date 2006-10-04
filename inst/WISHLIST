@@ -20,3 +20,7 @@ o create a symbolic matrix class?
 o consolidate/improve vignettes
 
 o interface to a second CAS -- which ones support OpenMath?
+
+o check whether this works in yacas 1.0.62
+Solve({mean==(A/(A+B)),variance==((A*B)/(((A+B)^2) * (A+B+1)))}, {A,B})
+
