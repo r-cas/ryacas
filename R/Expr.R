@@ -25,8 +25,80 @@ deriv.Expr <- function(expr, name = Exprq(x), n = 1, ...)
 
 print.Expr <- function(x, ...) print(yacas(x, ...))
 
-# test
-# x <- Expr(expression(x))
-# x*x
-# deriv(x*x + cos(x), x)
+Integrate.Expr <- function(f, x, a, b, ...) {
+   if (missing(a) && missing(b)) { 
+      Expr(substitute(integrate(f, x), as.list(match.call())[-1]))
+   } else Expr(substitute(integrate(f, a, b, x), as.list(match.call())[-1]))
+}
+
+Eval.Expr <- function(x, env = parent.frame(), ...) 
+	eval(yacas(x, ...)[[1]], env = env)
+
+Simplify.Expr <- function(x, ...) 
+   Expr(substitute(Simplify(x), as.list(match.call())[-1]))
+
+Factorial.Expr <- function(x) 
+   Expr(substitute(Factorial(x), as.list(match.call())[-1]))
+
+List.Expr <- function(x, ...) 
+   Expr(substitute(List(x, ...), as.list(match.call())[-1]))
+
+Seq.Expr <- function(x, ...) 
+   Expr(substitute(Seq(x, ...), as.list(match.call())[-1]))
+
+N.Expr <- function(x, ...)
+   Expr(substitute(N(x, ...), as.list(match.call())[-1]))
+
+Ver.Expr <- function() Exprq(Version())
+
+Clear.Expr <- function(x, ...)
+   Expr(substitute(Clear(x, ...), as.list(match.call())[-1]))
+
+Factor.Expr <- function(x, ...)
+   Expr(substitute(Factor(x), as.list(match.call())[-1]))
+
+Expand.Expr <- function(x, ...)
+   Expr(substitute(Expand(x), as.list(match.call())[-1]))
+
+Taylor.Expr <- function(f, x, a, n, ...) 
+   Expr(substitute(Taylor(f, x, a, n, ...), as.list(match.call())[-1]))
+
+PrettyForm.Expr <- function(x, ...) 
+   Expr(substitute(PrettyForm(x), as.list(match.call())[-1]))
+
+TeXForm.Expr <- function(x, ...)
+   Expr(substitute(TeXForm(x), as.list(match.call())[-1]))
+
+Precision.Expr <- function(x, ...)
+   Expr(substitute(Precision(x, ...), as.list(match.call())[-1]))
+
+Conjugate.Expr <- function(x, ...) 
+   Expr(substitute(Conjugate(x, ...), as.list(match.call())[-1]))
+
+PrettyPrinter.Expr <- function(x, ...) {
+   if (missing(x)) Exprq(PrettyPrinter())
+   else Expr(substitute(PrettyPrinter(x, ...), as.list(match.call())[-1]))
+}
+
+Solve.Expr <- function(x, y, ...) 
+   Expr(substitute(Solve(x, ...), as.list(match.call())[-1]))
+
+Newton.Expr <- function(x, ...)
+   Expr(substitute(Newton(x, ...), as.list(match.call())[-1]))
+
+Set.Expr <- function(x, ..., value) 
+   yacas(substitute(Set(x, value, as.list(match.call())[-1])))
+
+Limit.Expr <- function(f, x, a, ...) 
+   Expr(substitute(Limit(x, ...), as.list(match.call())[-1]))
+
+Subst.Expr <- function(f, x, a, ...) 
+   Expr(substitute(Subst(x, ...), as.list(match.call())[-1]))
+
+Inverse.Expr <- function(x, ...) 
+   Expr(substitute(Inverse(x, ...), as.list(match.call())[-1]))
+
+determinant.Expr <- function(x, ...)
+   Expr(substitute(Determinant(x, ...), as.list(match.call())[-1]))
+
 
