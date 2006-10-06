@@ -356,6 +356,8 @@ yacas.formula <- function(x, verbose = FALSE, method = c("socket", "system"), ..
 	NextMethod(x)
 }
 
+as.Expr.formula <- function(x) as.expression(as.language(x[[length(x)]]))
+
 Eval <- function(x, env = parent.frame(), ...) UseMethod("Eval")
 
 Eval.yacas <- function(x, env = parent.frame(), ...) 
