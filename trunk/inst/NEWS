@@ -1,3 +1,11 @@
+Changes in version 0.2-2
+
+o fixed bug in yacas.function
+
+o added yacas.formula
+
+o new runYacas function
+
 Changes in version 0.2-1
 
 o \dontrun{...} on all examples to avoid Rcmd check problems

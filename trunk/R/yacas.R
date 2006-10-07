@@ -13,7 +13,8 @@
 # package if not specified.  If YACAS_INIT is a directory, filename 
 # is assumed to be R.ys.
 
-yacasInvokeString <- function(method = c("socket", "system")) {
+yacasInvokeString <- function(method = c("socket", "system"), 
+   yacas.init, yacas.args = "-pc") {
    method <- match.arg(method)
    whole.path <- function(path, defpath, deffile) {
       if (path == "") path <- defpath
@@ -21,28 +22,34 @@ yacasInvokeString <- function(method = c("socket", "system")) {
    }
 
    if (.Platform$OS.type == "windows") {
-      yacas.args <- "-pc"
+      # yacas.args <- "-pc"
       yacas <- whole.path(Sys.getenv("YACAS_HOME"),
       	 system.file(package = "Ryacas"), "yacdir/yacas.exe")
-      yacas.init <- whole.path(Sys.getenv("YACAS_INIT"),
-        system.file(package = "Ryacas"), "yacdir/R.ys")
+      if (missing(yacas.init))
+        yacas.init <- whole.path(Sys.getenv("YACAS_INIT"),
+          system.file(package = "Ryacas"), "yacdir/R.ys")
       yacas.post <- ""
       yacas.scripts <- whole.path(Sys.getenv("YACAS_SCRIPTS"), 
         dirname(yacas), "scripts.dat")
       yacas.scripts <- paste("--archive", shQuote(yacas.scripts))
    } else {
-      yacas.args <- "-pc"
+      # yacas.args <- "-pc"
       yacas <- "yacas"
-      yacas.init <- file.path(system.file(package = "Ryacas"), "yacdir/R.ys")
+      if (missing(yacas.init))
+        yacas.init <- file.path(system.file(package = "Ryacas"), "yacdir/R.ys")
       yacas.post <- "  "
       yacas.scripts <- ""
    }
 
    server.string <- if(method == "socket") "--server 9734" else ""
-   paste(yacas, "--init", shQuote(yacas.init), 
+   if (yacas.init != "") yacas.init <- paste("--init", shQuote(yacas.init))
+   paste(yacas, yacas.init, 
                             yacas.scripts, yacas.args,
                             server.string, yacas.post)
 }
+
+runYacas <- function()
+   system(yacasInvokeString(method = "system", yacas.args = "", yacas.init = ""))
 
 haveYacas <- function () 
   !suppressWarnings(yacas("quit", method = "system", 

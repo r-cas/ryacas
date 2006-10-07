@@ -1,10 +1,10 @@
 
 Ryacas is an R interface to the free yacas computer algebra
-system.  Ryacas allows one to send R expressions or
-unprocessed yacas strings to a separate yacas process from R
-and get back the result.  It also has facilities for
-manipulating yacas strings and R expressions destined for
-yacas processing.
+system.  Ryacas allows one to send R expressions,
+unprocessed yacas strings and certain other R objects to a
+separate yacas process from R and get back the result.  It
+also has facilities for manipulating yacas strings and R
+expressions destined for yacas processing.
 
 It can be used for exact arithmetic, symbolic math, ASCII
 pretty printing and translating R to TeX. 
@@ -18,6 +18,10 @@ The vignettes are available online at:
 
     http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas.pdf
     http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas-Sym.pdf
+
+The Ryacas is distributed from the Omegahat R repository:
+
+    http://www.omegahat.org/Ryacas/
 
 ---
 Rob Goedman, goedman at mac dot com
