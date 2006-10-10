@@ -15,7 +15,6 @@ OpenMath2R <- function(x) {
 			out <<- c(out, xmlValue(x), "(")
 	}
 	# if (xmlName(x) == "OMS") out <<- c(out, "(")
-
 	if (xmlName(x) == "OMSTR") {
 	# out <<- c(out, sQuote(gsub("'", "\\\\'", xmlValue(x))))
 	out <<- c(out, paste("'", gsub("'", "\\\\'", xmlValue(x)), "'", sep=""))
@@ -91,8 +90,10 @@ transtab <- matrix( c(
 	"<=", 		"leq",		"<=",
 	"<", 		"lt",		"<",
 	"!=", 		"neq",		"!=",
+	":", 		"seq",		"sequence",
 	":", 		"seq",		"..",
 	
+	"factorial","factorial","factorial",
 	"factorial","factorial","!",
 	"limit", 	"lim", 		"Limit",
 	"deriv", 	"deriv", 	"Deriv",
@@ -114,6 +115,7 @@ colnames(transtab) <- c("R", "OM", "yacas")
 root <- function(x, y) {
 	(x)^(1/(y))
 }
+
 
 
 

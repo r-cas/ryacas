@@ -63,9 +63,6 @@ Factorial.Sym <- function(x) Sym("Factorial(", x, ")")
 List <- function(x, ...) UseMethod("List")
 List.Sym <- function(x, ...) Sym("List(", paste(x, ..., sep = ","), ")")
 
-Seq <- function(x, ...) UseMethod("Seq")
-Seq.Sym <- function(x, ...) do.call(List, as.list(seq(x, ...)))
-
 N <- function(x, ...) UseMethod("N")
 N.Sym <- function(x, ...) Sym("N(", paste(x, ..., sep = ","), ")")
 
@@ -124,9 +121,9 @@ I <- Sym("I")
 Limit <- function(f, ...) UseMethod("Limit")
 Limit.Sym <- function(f, x, a, ...) Sym("Limit(", x, ",", a, ")", f)
 
-Subst <- function(expr, ...) UseMethod("Subst")
-Subst.Sym <- function(expr, x, replacement, ...) 
-	Sym("Subst(", x, ",", replacement, ")", expr)
+# Subst <- function(expr, ...) UseMethod("Subst")
+# Subst.Sym <- function(expr, x, replacement, ...) 
+#    Sym("Subst(", x, ",", replacement, ")", expr)
 
 Inverse <- function(x, ...) UseMethod("Inverse")
 Inverse.Sym <- function(x, ...) Sym("Inverse(", x, ")")

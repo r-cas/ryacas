@@ -215,12 +215,20 @@ yparse <- function(x) {
 }
 
 ynext <- function(x) {
-    if (length(x) == 1)
-            x <- ysub(x)
-    else
-        for (i in 1:length(x)) 
-            if (length(x[[i]]) >= 1) 
-                x[[i]] <- ynext(x[[i]])
+    if (length(x) == 1) {
+	    x <- ysub(x)
+#		print(paste("1:", x))
+	} else
+        for (i in 1:length(x)) {
+			if (length(x[[i]]) >= 1) {		
+#				print(paste("x[[", i, "]]->", x[[i]]))
+#				x[[i]] <- ynext(x[[i]]) 
+				# Added yrewrite to make ynext really recursive
+				x[[i]] <- yrewrite(ynext(x[[i]]))
+#				print(paste("x[[", i, "]]->", x[[i]]))
+#				print(paste(length(x), ":", x))
+			}
+		}
     x
 }
 
@@ -255,8 +263,11 @@ yrewrite <- function(x) {
 		if (x[[1]] == quote(Limit)) {
 	    	x <- yLimit(x)
 	    }
-		if (x[[1]] == quote(Factorial)) {
+		if (x[[1]] == quote(factorial)) {
 	    	x <- yFactorial(x)
+	    }	    
+		if (x[[1]] == quote(sequence)) {
+	    	x <- ySequence(x)
 	    }	    
 		if (x[[1]] == as.name(":=") && length(x) == 3 && 
 			length(x[[3]]) > 2 &&
@@ -277,7 +288,13 @@ yUnlist <- function(x) {
 }
 
 yFactorial <- function(x) {
+#	print(paste("factorial:", x))
 	paste("Eval(",yUnlist(x[[2]]), ")!", sep="")
+}
+
+ySequence <- function(x) {
+#	print(paste("sequence:", x))
+	paste("Eval(",yUnlist(x[[2]]) ," .. ",yUnlist(x[[3]]) ,")", sep="")
 }
 
 yLimit <- function(x) {
@@ -372,3 +389,4 @@ Eval.yacas <- function(x, env = parent.frame(), ...)
 
 as.expression.yacas <- function(x, ...) x[[1]]
 as.character.yacas <- function(x, ...) as.character(x[[1]])
+

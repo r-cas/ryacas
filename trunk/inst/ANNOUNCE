@@ -14,12 +14,12 @@ sample session see:
 
     http://code.google.com/p/ryacas/
 
-The vignettes are available online at:
+The vignettes are available from within the package or online at:
 
     http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas.pdf
     http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas-Sym.pdf
 
-The Ryacas is distributed from the Omegahat R repository:
+The Ryacas package is distributed from the Omegahat R repository:
 
     http://www.omegahat.org/Ryacas/
 

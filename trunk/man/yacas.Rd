@@ -13,6 +13,7 @@
 \alias{yacasStart}
 \alias{yacasStop}
 \alias{ynext}
+\alias{ySequence}
 \alias{ysub}
 \alias{yparse}
 \alias{yAssignFunction}
