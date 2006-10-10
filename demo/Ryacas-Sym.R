@@ -15,8 +15,7 @@ plot(x., Eval(sym5, list(x = x.)), type = "l", col = "red")
 lines(x., .1 + Eval(sym5, list(x = x.)), type = "l", col = "blue")
 
 sym6 <- deriv(sin(x), x)
-print(Factorial(10))
-print(x^Seq(3))
+print(Factorial(Sym(10)))
 print(deriv(List(cos(x), sin(x)), x))
 print(exp(Sym(1)))
 print(N(sin(1)^2+cos(x)^2))
@@ -26,4 +25,5 @@ y <- Sym("y")
 print(deriv(cos(x)+sin(y), List(x,y)))
 print(Integrate(sin(x), x))
 print(Integrate(sin(x), x, 0, Pi))
+
 

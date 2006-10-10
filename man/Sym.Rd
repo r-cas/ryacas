@@ -41,7 +41,6 @@
 \alias{Factorial}
 \alias{List}
 \alias{Ver}
-\alias{Seq}
 \alias{N}
 \alias{Pi}
 \alias{Clear}
@@ -60,8 +59,52 @@
 \alias{Infinity}
 \alias{I}
 \alias{Limit}
-\alias{Subst}
 \alias{Inverse}
+
+\alias{as.Expr.formula }
+\alias{Clear.Expr }
+\alias{Clear.Sym }
+\alias{Conjugate.Expr }
+\alias{Conjugate.Sym}
+\alias{determinant.Expr }
+\alias{Eval.Expr }
+\alias{Expand.Expr }
+\alias{Expand.Sym }
+\alias{Factor.Expr}
+\alias{Factor.Sym }
+\alias{Factorial.Expr }
+\alias{Factorial.Sym }
+\alias{Integrate.Expr }
+\alias{Integrate.Sym}
+\alias{Inverse.Expr }
+\alias{Inverse.Sym }
+\alias{InverseTaylor.Sym }
+\alias{Limit.Expr }
+\alias{Limit.Sym}
+\alias{List.Expr }
+\alias{List.Sym }
+\alias{N.Expr }
+\alias{N.Sym }
+\alias{Newton.Expr }
+\alias{Newton.Sym }
+\alias{Precision.Expr}
+\alias{Precision.Sym }
+\alias{PrettyForm.Expr }
+\alias{PrettyForm.Sym }
+\alias{PrettyPrinter.Expr}
+\alias{PrettyPrinter.Sym }
+\alias{Set.Expr }
+\alias{Set.Sym }
+\alias{Simplify.Expr}
+\alias{Simplify.Sym}
+\alias{Solve.Expr }
+\alias{Solve.Sym }
+\alias{Taylor.Expr }
+\alias{Taylor.Sym }
+\alias{TeXForm.Expr }
+\alias{TeXForm.Sym }
+\alias{Ver.Expr }
+\alias{Ver.Sym}
 
 \title{ Sym }
 \description{
@@ -106,11 +149,9 @@ Pi,
 Precision, 
 PrettyForm, 
 PrettyPrinter, 
-Seq, 
 Set, 
 Simplify, 
 Solve, 
-Subst, 
 Taylor, 
 TeXForm,
 and Ver

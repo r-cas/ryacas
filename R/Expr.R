@@ -43,9 +43,6 @@ Factorial.Expr <- function(x)
 List.Expr <- function(x, ...) 
    Expr(substitute(List(x, ...), as.list(match.call())[-1]))
 
-Seq.Expr <- function(x, ...) 
-   Expr(substitute(Seq(x, ...), as.list(match.call())[-1]))
-
 N.Expr <- function(x, ...)
    Expr(substitute(N(x, ...), as.list(match.call())[-1]))
 
@@ -91,9 +88,6 @@ Set.Expr <- function(x, ..., value)
 
 Limit.Expr <- function(f, x, a, ...) 
    Expr(substitute(Limit(x, ...), as.list(match.call())[-1]))
-
-Subst.Expr <- function(f, x, a, ...) 
-   Expr(substitute(Subst(x, ...), as.list(match.call())[-1]))
 
 Inverse.Expr <- function(x, ...) 
    Expr(substitute(Inverse(x, ...), as.list(match.call())[-1]))

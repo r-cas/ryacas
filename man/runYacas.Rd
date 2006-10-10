@@ -25,4 +25,5 @@ runYacas(method = "system", yacas.args = "", yacas.init = "")
 \dontrun{
 yacasRun()
 }
+}
 \keyword{ symbolmath }

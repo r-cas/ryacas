@@ -1,6 +1,6 @@
 Changes in version 0.2-2
 
-o fixed bug in yacas.function
+o bug fixes in R to yacas parser
 
 o added yacas.formula
 
