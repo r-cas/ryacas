@@ -9,21 +9,28 @@ expressions destined for yacas processing.
 It can be used for exact arithmetic, symbolic math, ASCII
 pretty printing and translating R to TeX. 
 
-For overview, pointers to additional information and 
-sample session see:
+
+Online info.  For overview, pointers to additional
+information, installation instructions and a sample session
+see:
 
     http://code.google.com/p/ryacas/
 
-The vignettes are available from within the package or online at:
+The vignettes can be viewed online here:
 
     http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas.pdf
     http://ryacas.googlecode.com/svn/trunk/inst/doc/Ryacas-Sym.pdf
 
-The Ryacas package is distributed from the Omegahat R repository:
 
-    http://www.omegahat.org/Ryacas/
+More. Once Ryacas is installed, pointers to additional
+information can be found with these R commands:
+
+    library(Ryacas)
+    package?Ryacas
+
 
 ---
+
 Rob Goedman, goedman at mac dot com
 Gabor Grothendieck, ggrothendieck at gmail dot com
 Søren Højsgaard, Soren.Hojsgaard at agrsci dot dk
