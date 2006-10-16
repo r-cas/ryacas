@@ -15,4 +15,4 @@
 %\VignetteDepends{XML}
 
 
-\input{Ryacas-raw}
+\input{Ryacas-Sym-raw}
