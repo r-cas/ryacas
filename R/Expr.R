@@ -83,8 +83,7 @@ Solve.Expr <- function(x, y, ...)
 Newton.Expr <- function(x, ...)
    Expr(substitute(Newton(x, ...), as.list(match.call())[-1]))
 
-Set.Expr <- function(x, ..., value) 
-   yacas(substitute(Set(x, value, as.list(match.call())[-1])))
+# Set -- see Sym2.R
 
 Limit.Expr <- function(f, x, a, ...) 
    Expr(substitute(Limit(x, ...), as.list(match.call())[-1]))

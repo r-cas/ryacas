@@ -1,6 +1,7 @@
 \name{Eval}
 \alias{Eval}
 \alias{Eval.Sym}
+\alias{Eval.Expr}
 \alias{Eval.yacas}
 \title{ Evaluate a yacas expression. }
 \description{
