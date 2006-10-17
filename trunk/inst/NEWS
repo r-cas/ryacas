@@ -1,3 +1,13 @@
+Changes in version 0.2-3
+
+o Ryacas-Sym vignette fixed
+
+o fixed home page INSTALLATION-MAC section
+
+o most .Sym methods have been made .default methods
+
+o Identity, Identity.default added
+
 Changes in version 0.2-2
 
 o bug fixes in R to yacas parser

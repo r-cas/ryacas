@@ -63,48 +63,49 @@
 
 \alias{as.Expr.formula }
 \alias{Clear.Expr }
-\alias{Clear.Sym }
+\alias{Clear.default}
 \alias{Conjugate.Expr }
-\alias{Conjugate.Sym}
+\alias{Conjugate.default}
 \alias{determinant.Expr }
-\alias{Eval.Expr }
 \alias{Expand.Expr }
-\alias{Expand.Sym }
+\alias{Expand.default}
 \alias{Factor.Expr}
-\alias{Factor.Sym }
+\alias{Factor.default}
 \alias{Factorial.Expr }
-\alias{Factorial.Sym }
+\alias{Factorial.default }
 \alias{Integrate.Expr }
-\alias{Integrate.Sym}
+\alias{Integrate.default}
 \alias{Inverse.Expr }
-\alias{Inverse.Sym }
-\alias{InverseTaylor.Sym }
+\alias{Inverse.default }
+\alias{InverseTaylor.default }
 \alias{Limit.Expr }
-\alias{Limit.Sym}
+\alias{Limit.default}
 \alias{List.Expr }
-\alias{List.Sym }
+\alias{List.default }
 \alias{N.Expr }
-\alias{N.Sym }
+\alias{N.default }
 \alias{Newton.Expr }
-\alias{Newton.Sym }
+\alias{Newton.default }
 \alias{Precision.Expr}
-\alias{Precision.Sym }
+\alias{Precision.default }
 \alias{PrettyForm.Expr }
-\alias{PrettyForm.Sym }
+\alias{PrettyForm.default }
 \alias{PrettyPrinter.Expr}
-\alias{PrettyPrinter.Sym }
-\alias{Set.Expr }
-\alias{Set.Sym }
+\alias{PrettyPrinter.default }
 \alias{Simplify.Expr}
-\alias{Simplify.Sym}
+\alias{Simplify.default}
 \alias{Solve.Expr }
-\alias{Solve.Sym }
+\alias{Solve.default }
 \alias{Taylor.Expr }
-\alias{Taylor.Sym }
+\alias{Taylor.default }
 \alias{TeXForm.Expr }
-\alias{TeXForm.Sym }
+\alias{TeXForm.default }
 \alias{Ver.Expr }
-\alias{Ver.Sym}
+\alias{Ver.default}
+\alias{Identity.default}
+\alias{Identity}
+\alias{Subst}
+\alias{Subst.default}
 
 \title{ Sym }
 \description{
@@ -126,17 +127,18 @@ One can combine such objects using the Math and Ops R operators (see
 help(Math) and help(Ops) for a list).  Also there are methods for a
 number of R generics: 
 \code{as.character.Sym},
+\code{as.expression.Sym},
 \code{determinant.Sym},
 \code{deriv.Sym} and
 \code{print.Sym}
 and yacas-oriented functions:
 Clear,
 Conjugate, 
-Determinant 
 Expand, 
 Factor, 
 Factorial, 
 I, 
+Identity,
 Infinity,
 Integrate, 
 Inverse,
@@ -152,6 +154,7 @@ PrettyPrinter,
 Set, 
 Simplify, 
 Solve, 
+Subst,
 Taylor, 
 TeXForm,
 and Ver

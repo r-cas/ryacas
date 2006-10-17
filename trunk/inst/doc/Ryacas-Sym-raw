@@ -119,7 +119,6 @@ Integration: [!!! This is odd: I thought yacas was case sensitive...]]]
 @ 
 <<>>=
 Set(A, 'ssss')
-A <- Sym("A")
 a <- Sym("a")
 b <- Sym("b")
 Integrate(sin(x), x, a, b)

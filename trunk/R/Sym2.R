@@ -45,89 +45,93 @@ deriv.Sym <- function(expr, name = "x", n = 1, ...)
 	Sym("D(", name, ",", n, ")", expr)
 
 Integrate <- function(f, ...) UseMethod("Integrate")
-Integrate.Sym <- function(f, x, a, b, ...) {
+Integrate.default <- function(f, x, a, b, ...) {
    if (missing(a) && missing(b)) { Sym("Integrate(", x, ")", f)
    } else Sym("Integrate(", x, ",", a, ",", b, ")", f)
 }
 
-Eval <- function(x, ...) UseMethod("Eval")
 Eval.Sym <- function(x, env = parent.frame(), ...) 
 	eval(yacas(unclass(x))[[1]], env = env)
 
 Simplify <- function(x, ...) UseMethod("Simplify")
-Simplify.Sym <- function(x, ...) Sym("Simplify(", x, ")")
+Simplify.default <- function(x, ...) Sym("Simplify(", x, ")")
 
 Factorial <- function(x) UseMethod("Factorial")
-Factorial.Sym <- function(x) Sym("Factorial(", x, ")")
+Factorial.default <- function(x) Sym("Factorial(", x, ")")
 
 List <- function(x, ...) UseMethod("List")
-List.Sym <- function(x, ...) Sym("List(", paste(x, ..., sep = ","), ")")
+List.default <- function(x, ...) Sym("List(", paste(x, ..., sep = ","), ")")
 
 N <- function(x, ...) UseMethod("N")
-N.Sym <- function(x, ...) Sym("N(", paste(x, ..., sep = ","), ")")
+N.default <- function(x, ...) Sym("N(", paste(x, ..., sep = ","), ")")
 
 Pi <- Sym("Pi")
 
-Ver.Sym <- function() Sym("Version()")
+Ver.default <- function() Sym("Version()")
 
 Clear <- function(x, ...) UseMethod("Clear")
-Clear.Sym <- function(x, ...) Sym("Clear(", x, ")")
+Clear.default <- function(x, ...) Sym("Clear(", x, ")")
 
 Factor <- function(x) UseMethod("Factor")
-Factor.Sym <- function(x) Sym("Factor(", x, ")")
+Factor.default <- function(x) Sym("Factor(", x, ")")
 
 Expand <- function(x, ...) UseMethod("Expand")
-Expand.Sym <- function(x, ...) Sym("Expand(", x, ")")
+Expand.default <- function(x, ...) Sym("Expand(", x, ")")
 
 Taylor <- function(f, ...) UseMethod("Taylor")
-Taylor.Sym <- function(f, x, a, n, ...) 
+Taylor.default <- function(f, x, a, n, ...) 
 	Sym("Taylor(", x, ",", a, ",", n, ")", f) 
 
 InverseTaylor <- function(x, ...) UseMethod("Taylor")
-InverseTaylor.Sym <- function(f, x, a, n, ...) 
+InverseTaylor.default <- function(f, x, a, n, ...) 
 	Sym("InverseTaylor(", x, ",", a, ",", n, ")", f) 
 
 PrettyForm <- function(x, ...) UseMethod("PrettyForm")
-PrettyForm.Sym <- function(x, ...) Sym("PrettyForm(", x, ")")
+PrettyForm.default <- function(x, ...) Sym("PrettyForm(", x, ")")
 
 TeXForm <- function(x, ...) UseMethod("TeXForm")
-TeXForm.Sym <- function(x, ...) Sym("TeXForm(", x, ")")
+TeXForm.default <- function(x, ...) Sym("TeXForm(", x, ")")
 
 Precision <- function(x, ...) UseMethod("Precision")
-Precision.Sym <- function(x, ...) Sym("Precision(", x, ")")
+Precision.default <- function(x, ...) Sym("Precision(", x, ")")
 
 Conjugate <- function(x, ...) UseMethod("Conjugate")
-Conjugate.Sym <- function(x, ...) Sym("Conjugate(", x, ")")
+Conjugate.default <- function(x, ...) Sym("Conjugate(", x, ")")
 
 PrettyPrinter <- function(x, ...) UseMethod("PrettyPrinter")
-PrettyPrinter.Sym <- function(x, ...) {
+PrettyPrinter.default <- function(x, ...) {
 	if (missing(x)) Sym("PrettyPrinter()")
 	else Sym(paste('PrettyPrinter("', x, '")', sep = ""))
 }
 
 Solve <- function(x, ...) UseMethod("Solve")
-Solve.Sym <- function(x, y, ...) Sym("Solve(", x, ",", y, ")")
+Solve.default <- function(x, y, ...) Sym("Solve(", x, ",", y, ")")
 
 Newton <- function(x, ...) UseMethod("Newton")
-Newton.Sym <- function(x, ...) Sym("Newton(", paste(x, ..., sep = ","), ")")
+Newton.default <- function(x, ...) Sym("Newton(", paste(x, ..., sep = ","), ")")
 
-Set <- function(x, ..., value) UseMethod("Set")
-Set.Sym <- function(x, ..., value) 
-	yacas(unclass(Sym(deparse(substitute(x)), ":=", value)))
+Set <- function(x, value) {
+	if (inherits(value, "expression")) 
+		yacas(substitute(Set(x, value, as.list(match.call())[-1])))
+	else
+		yacas(unclass(Sym(deparse(substitute(x)), ":=", value)))
+}
 
 Infinity <- Sym("Infinity")
 I <- Sym("I")
 
 Limit <- function(f, ...) UseMethod("Limit")
-Limit.Sym <- function(f, x, a, ...) Sym("Limit(", x, ",", a, ")", f)
+Limit.default <- function(f, x, a, ...) Sym("Limit(", x, ",", a, ")", f)
 
-# Subst <- function(expr, ...) UseMethod("Subst")
-# Subst.Sym <- function(expr, x, replacement, ...) 
-#    Sym("Subst(", x, ",", replacement, ")", expr)
+Subst <- function(expr, ...) UseMethod("Subst")
+Subst.default <- function(expr, x, replacement, ...) 
+	Sym("Subst(", x, ",", replacement, ")", expr)
 
 Inverse <- function(x, ...) UseMethod("Inverse")
-Inverse.Sym <- function(x, ...) Sym("Inverse(", x, ")")
+Inverse.default <- function(x, ...) Sym("Inverse(", x, ")")
 
 determinant.Sym <- function(x, ...) Sym("Determinant(", x, ")")
 
+Identity <- function(x) UseMethod("Identity")
+Identity.default <- function(x) Sym("Identity(", x, ")")
 
