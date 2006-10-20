@@ -2,11 +2,24 @@ Changes in version 0.2-3
 
 o Ryacas-Sym vignette fixed
 
-o fixed home page INSTALLATION-MAC section
+o revised home page.  Fixed INSTALLATION-MAC section and added a
+  TROUBLESHOOTING-UNIX section.
 
 o most .Sym methods have been made .default methods
 
 o Identity, Identity.default added
+
+o new YACAS_INVOCATION_STRING environment variable can be set to
+  override the default yacas invocation string.  (It also overrides
+  the settings of the other YACAS_ environment variables which are
+  only available on Windows.)  Thanks to Simon Blomberg for 
+  discovering certain possible startup problems.  This should provide
+  a general "out" for these on systems that need it.
+
+o method = "system" in yacas command now works at least on Windows
+
+o yacas method argument defaults to getOption("yacas.method")
+  and to "socket" if that is not set.
 
 Changes in version 0.2-2
 
