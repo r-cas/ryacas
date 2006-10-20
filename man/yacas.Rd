@@ -81,16 +81,17 @@ three of these.
 
 All OS Installation.  The \code{YACAS_INVOKE_STRING} environmental variable
 can be used to override the invocation string for yacas.   Normally it is 
-not used.  If it does need to be used then 
-a typical value might be:
+not used.  If it does need to be used then a typical use might be:
 
-   \code{Sys.putenv(YACAS_INVOKE_STRING = "yacas -pc --server 9734")}
+\code{
+   library(Ryacas)
+   # only need to do the file.copy command once
+   file.copy(system.file("yacdir/R.ys", package = "Ryacas"), "~/.yacsrc")
+   # this needs to be done once per session
+   Sys.putenv(YACAS_INVOKE_STRING = "yacas -pc --server 9734")
+   demo(Ryacas) # test it out
+}
 
-in which case make sure that \code{"R.ys"} (which is normally found in
-
-   \code{system.file("yacdir/R.ys", package = "Ryacas")} 
-
-is placed in your home directory.
 
 yacmode. There is also
 a utility yacmode which is called without arguments and
