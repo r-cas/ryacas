@@ -34,6 +34,8 @@ Wish List\tab file.show(system.file("WISHLIST", package = "Ryacas"))\cr
 Home page\tab http://code.google.com/p/ryacas/\cr
 }
 }
+\note{See the note in the help file of the \link{yacas} command
+that discusses a number of installation and startup issues.}
 
 \examples{
 \dontrun{
