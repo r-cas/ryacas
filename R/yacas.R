@@ -15,6 +15,8 @@
 
 yacasInvokeString <- function(method = c("socket", "system"), 
    yacas.init, yacas.args = "-pc") {
+   yacas.invoke.string <- Sys.getenv("YACAS_INVOKE_STRING")
+   if (Sys.getenv("YACAS_INVOKE_STRING") != "") return(yacas.invoke.string)
    method <- match.arg(method)
    whole.path <- function(path, defpath, deffile) {
       if (path == "") path <- defpath
@@ -125,7 +127,7 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
     if (method == "system")
         if (.Platform$OS.type == "windows")
             return(system(yacasInvokeString(method = "system"), 
-		          input = x, invisible = TRUE))
+		          input = x, intern = TRUE, invisible = TRUE))
 		else {
             f.tmp = file.path(tempdir(), ".R/yacas.tmp")
             if (!file.create(f.tmp)) {

@@ -68,13 +68,29 @@ If }
 }
 \references{ \url{http://yacas.sourceforge.net} }
 
-\note{ Installation. The Windows version of this software includes a
+\note{ Windows Installation. The Windows version of this software includes a
 binary version of yacas but on other platforms the user must
 install yacas 1.0.62 as well as installing this package.  Normally
 the default locations of yacas, its initialization file and
 the scripts file are sufficient but, if necessary, they can
 be overridden via the environment variables: \code{YACAS_HOME},
-\code{YACAS_INIT} and \code{YACAS_SCRIPTS}.  
+\code{YACAS_INIT} and \code{YACAS_SCRIPTS}. The \code{YACAS_INVOKE_STRING}
+environment variable discussed in the next section overrides all
+three of these. 
+
+
+All OS Installation.  The \code{YACAS_INVOKE_STRING} environmental variable
+can be used to override the invocation string for yacas.   Normally it is 
+not used.  If it does need to be used then 
+a typical value might be:
+
+   \code{Sys.putenv(YACAS_INVOKE_STRING = "yacas -pc --server 9734")}
+
+in which case make sure that \code{"R.ys"} (which is normally found in
+
+   \code{system.file("yacdir/R.ys", package = "Ryacas")} 
+
+is placed in your home directory.
 
 yacmode. There is also
 a utility yacmode which is called without arguments and
