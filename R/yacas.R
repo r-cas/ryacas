@@ -105,11 +105,11 @@ yacasStop <- function(verbose = TRUE)
 
 # proper counting of lines read in, and proper handling of them.
 
-yacas <- function(x, verbose = FALSE, method = c("socket", "system"), ...)
+yacas <- function(x, ...)
   UseMethod("yacas")
 
 
-yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...) {
+yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...) {
 
     addSemiFn <- function(x) {
       x <- sub(";[[:blank:]]*$", "", x)
@@ -117,8 +117,9 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
       return(x)
     }
 
-    retclass = match.arg(retclass)
-    method <- match.arg(method)
+    retclass <- match.arg(retclass)
+    if (missing(method)) method <- getOption("yacas.method")
+    method <- match.arg(method, c("socket", "system"))
 
     if (retclass == "expression") {
     	x <- paste("Eval(",x,");")
@@ -208,7 +209,7 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
 as.language <- function(x) parse(text=paste(deparse(x)))[[1]]
 bodyAsExpression <- function(x) as.expression(as.language(body(x)))
 	
-yacas.expression <- function(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character", "unquote"), ...) {
+yacas.expression <- function(x, ...) {
     x <- deparse(yparse(x), width.cutoff = 200)
     x <- gsub("\"","", x)
     .Class <- "character"
@@ -374,7 +375,7 @@ yAssignFunction <- function(x) {
 	)
 }
 
-yacas.function <- function(x, verbose = FALSE, method = c("socket", "system"), ...) {
+yacas.function <- function(x, ...) {
 	funname <- deparse(substitute(x))
 	a <- paste( "(", paste(names(formals(x)), collapse = ","), ")" )
 	b <- format(body(x))
@@ -385,7 +386,7 @@ yacas.function <- function(x, verbose = FALSE, method = c("socket", "system"), .
 	NextMethod(x)
 }
 
-yacas.formula <- function(x, verbose = FALSE, method = c("socket", "system"), ...) {
+yacas.formula <- function(x, ...) {
 	x <- as.expression(as.language(x[[length(x)]]))
 	.Class <- "expression"
 	NextMethod(x)

@@ -22,11 +22,11 @@
   Interface to the yacas computer algebra system.
 }
 \usage{
-\method{yacas}{character}(x, verbose = FALSE, method = c("socket", "system"), 
+\method{yacas}{character}(x, verbose = FALSE, method, 
 retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
-\method{yacas}{expression}(x, verbose = FALSE, method = c("socket", "system"), retclass = c("expression", "character", "unquote"), ...)
-\method{yacas}{function}(x, verbose = FALSE, method = c("socket", "system"), ...)
-\method{yacas}{formula}(x, verbose = FALSE, method = c("socket", "system"), ...)
+\method{yacas}{expression}(x, ...)
+\method{yacas}{function}(x, ...)
+\method{yacas}{formula}(x, ...)
 }
 \arguments{
   \item{x}{ A yacas character string or an R 
@@ -35,7 +35,11 @@ retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
   \item{method}{ method used to communicate with yacas.  If \code{"socket"} is
    specified then the same yacas session is used on a sequence of calls.
    If \code{"system"} is specified then a new instance of yacas is used just
-   for the period of that call.}
+   for the period of that call. \code{"system"} does not require that the
+   system be configured to support telnet/sockets and so may be useful in
+   some instances.  If no value is specified the default is taken from
+   \code{getOption("yacas.method")} and if that is not specified "socket" is 
+   used.  \code{"socket"} and \code{"system"} may be abbreviated.}
   \item{addSemi}{If \code{TRUE} a semicolon is added to the
    character string sent to yacas.  This can be set to \code{FALSE} if
    its known that the character string already has a trailing 
@@ -46,6 +50,8 @@ retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
    same as \code{"character"} except that if the character string
    returned would have otherwise had quotes in the first and 
    and last positions then they are stripped.}
+  \item{\dots}{Additional arguments ultimately passed down to 
+   \code{yacas.character}.}
   
 
 If }
