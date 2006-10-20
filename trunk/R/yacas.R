@@ -57,11 +57,13 @@ haveYacas <- function ()
   !suppressWarnings(yacas("quit", method = "system", 
     retclass = "character"))
 
-yacasStart <- function(verbose = FALSE)
+yacasStart <- function(verbose = FALSE, method = c("socket", "system"))
 {
+  method <- match.arg(method)
+  if (method == "system") return()
   if (!capabilities("sockets")) stop("no socket capabilties")
   yacasStop(verbose = FALSE)
-  cmd.str <- yacasInvokeString()
+  cmd.str <- yacasInvokeString(method = method)
   print("Starting Yacas!")
    # return path using defpath and deffile as fill-in defaults
 
@@ -124,10 +126,10 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
 		if (addSemi) x <- addSemiFn(x)
 	}
 	
-    if (method == "system")
-        if (.Platform$OS.type == "windows")
-            return(system(yacasInvokeString(method = "system"), 
-		          input = x, intern = TRUE, invisible = TRUE))
+    if (method == "system") {
+        chunk1 <- if (.Platform$OS.type == "windows")
+            system(yacasInvokeString(method = "system"), 
+		          input = x, intern = TRUE, invisible = TRUE)
 		else {
             f.tmp = file.path(tempdir(), ".R/yacas.tmp")
             if (!file.create(f.tmp)) {
@@ -138,8 +140,13 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
 #            cat(paste("Echo('Executing :'", x, ");"))
             cat(x, file=out)
             close(out)
-            return(system(paste(yacasInvokeString(method = "system"), f.tmp))) 
+            system(paste(yacasInvokeString(method = "system"), f.tmp)) 
         }
+	chunk1 <- sub("^(In> *| +)", "", chunk1)
+	chunk1 <- head(tail(chunk1, -6), -3)
+	yac.res <- chunk1
+        chunk2 <- ""
+    } else {
 
     # if connection does not exist or its not a connection
     # or its closed, startup Yacas.
@@ -171,6 +178,8 @@ yacas.character <- function(x, verbose = FALSE, method = c("socket", "system"), 
     w <- which(is.delim)[1:2]
     chunk1 <- yac.res[seq(1, length = w[1]-1)]
     chunk2 <- yac.res[seq(w[1]+1, length = diff(w)-1)]
+    }
+
     if (yac.res[1] == "<OMOBJ>") {
 	text <- OpenMath2R(chunk1)
 	text <- parse(text = text)
