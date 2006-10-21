@@ -183,8 +183,8 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 
     if (yac.res[1] == "<OMOBJ>") {
 	text <- OpenMath2R(chunk1)
-	text <- parse(text = text)
-	if (!retclass == "expression") text <- format(text)[[1]]
+	if (retclass == "expression") text <- parse(text = text)
+	# text <- format(text)[[1]]
 	if (retclass == "unquote") text <- sub("^['\"](.*)['\"]", "\\1", text)
 	result <- list(text = text, OMForm = chunk1)
     } else {
