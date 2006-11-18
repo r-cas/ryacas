@@ -1,9 +1,12 @@
+Changes in version 0.2-4
+
+o yacas.exe and scripts.dat no longer included in Ryacas distribution
+
+o new yacasInstall command to download yacas.exe and scripts.dat (Windows only)
+
 Changes in version 0.2-3
 
 o Ryacas-Sym vignette fixed
-
-o revised home page.  Fixed INSTALLATION-MAC section and added a
-  TROUBLESHOOTING-UNIX section.
 
 o most .Sym methods have been made .default methods
 

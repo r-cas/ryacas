@@ -74,9 +74,22 @@ If }
 }
 \references{ \url{http://yacas.sourceforge.net} }
 
-\note{ Windows Installation. The Windows version of this software includes a
-binary version of yacas but on other platforms the user must
-install yacas 1.0.62 as well as installing this package.  Normally
+\note{ 
+Windows Installation.  On Windows one can install \code{Ryacas}
+by issuing the commands:
+
+\tabular{l}{
+   \code{install.packages("Ryacas", dep = TRUE)}\cr
+   \code{yacasInstall()}\cr
+}
+
+or by using the \code{Packages | Install package(s)} menu in place 
+of the first command.  The second command downloads \code{scripts.dat}
+and \code{yacas.exe} from the internet and installs them into 
+\code{R_HOME/library/Ryacas/yacdir} where \code{R_HOME} is the
+location of your \code{R} installation.
+
+Normally
 the default locations of yacas, its initialization file and
 the scripts file are sufficient but, if necessary, they can
 be overridden via the environment variables: \code{YACAS_HOME},

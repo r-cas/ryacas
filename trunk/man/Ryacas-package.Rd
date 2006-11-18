@@ -28,13 +28,14 @@ Vignette\tab vignette("Ryacas")\cr
 Vignette\tab vignette("Ryacas-Sym")\cr
 This File\tab package?Ryacas\cr
 Help files\tab ?yacas, ?yacasTranslations, ?yacmode, ?Sym\cr
+Help files - Windows\tab ?yacasInstall\cr
 News\tab file.show(system.file("NEWS", package = "Ryacas"))\cr
 Acknowledgements\tab file.show(system.file("THANKS", package = "Ryacas"))\cr
 Wish List\tab file.show(system.file("WISHLIST", package = "Ryacas"))\cr
 Home page\tab http://code.google.com/p/ryacas/\cr
 }
 }
-\note{See the note in the help file of the \link{yacas} command
+\note{There is a note in the help file of the \link{yacas} command
 that discusses a number of installation and startup issues.}
 
 \examples{
