@@ -3,6 +3,7 @@ Changes in version 0.2-4
 o yacas.exe and scripts.dat no longer included in Ryacas distribution
 
 o new yacasInstall command to download yacas.exe and scripts.dat (Windows only)
+  .First.lib reminds Windows users to use it if yacas.exe not found.
 
 Changes in version 0.2-3
 
