@@ -6,11 +6,14 @@
   by \code{Ryacas}.
 }
 \usage{
-yacasInstall(showonly = FALSE, ...)
+yacasInstall(showonly = FALSE, ..., filesize = 376832)
 }
 \arguments{
 \item{showonly}{If \code{TRUE} then no download is performed but instead
 command simplfy shows what it would download and to where.}
+\item{filesize}{The file size of \code{yacas.exe} is compared to this value
+and if not the same then a warning is issued.  If this argument is specified
+as \code{NA} then no comparison is done.}
 \item{...}{Additional arguments passed to \code{download.file}.  In most cases
 this is not used.}
 }
