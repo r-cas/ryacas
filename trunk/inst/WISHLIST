@@ -29,3 +29,6 @@ o improved yacmode:
   -- tcl-based?
   -- based on Soren's mini commander?
 
+o add remaining yacas commands to Sym interface
+
+o add remaining yacas commands to Expr interface
