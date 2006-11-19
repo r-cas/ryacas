@@ -25,14 +25,10 @@ yacasInvokeString <- function(method = c("socket", "system"),
 
    if (.Platform$OS.type == "windows") {
       # yacas.args <- "-pc"
-      yacas <- whole.path(Sys.getenv("YACAS_HOME"),
-      	 system.file(package = "Ryacas"), "yacdir/yacas.exe")
-      if (missing(yacas.init))
-        yacas.init <- whole.path(Sys.getenv("YACAS_INIT"),
-          system.file(package = "Ryacas"), "yacdir/R.ys")
+      yacas <- yacasFile("yacas.exe")
+      yacas.init <- yacasFile("R.ys", "/")
       yacas.post <- ""
-      yacas.scripts <- whole.path(Sys.getenv("YACAS_SCRIPTS"), 
-        dirname(yacas), "scripts.dat")
+      yacas.scripts <- yacasFile("scripts.dat", "/")
       yacas.scripts <- paste("--archive", shQuote(yacas.scripts))
    } else {
       # yacas.args <- "-pc"
