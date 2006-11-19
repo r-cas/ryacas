@@ -1,9 +1,12 @@
 Changes in version 0.2-4
 
-o yacas.exe and scripts.dat no longer included in Ryacas distribution
+o new Windows only features
+  - yacas.exe, scripts.dat no longer included in Ryacas distribution
+  - new Windows-only yacasInstall, yacasFile and yacasCheck commands
+    to facilitate installation of yacas
+  - .First.lib reminds Windows users to install yacas if yacas not found
 
-o new yacasInstall command to download yacas.exe and scripts.dat (Windows only)
-  .First.lib reminds Windows users to use it if yacas.exe not found.
+o windows-only yacasCheck and yacasFile functions added
 
 Changes in version 0.2-3
 
