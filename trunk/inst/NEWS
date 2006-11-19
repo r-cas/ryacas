@@ -6,8 +6,6 @@ o new Windows only features
     to facilitate installation of yacas
   - .First.lib reminds Windows users to install yacas if yacas not found
 
-o windows-only yacasCheck and yacasFile functions added
-
 Changes in version 0.2-3
 
 o Ryacas-Sym vignette fixed
