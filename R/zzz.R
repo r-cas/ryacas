@@ -1,10 +1,21 @@
 
 .First.lib <- function(lib, pkg, ...) {
    # library.dynam("Ryacas", pkg, lib)
-   yacdir <- system.file(package = "Ryacas", "yacdir")
-   yacas.exe <- file.path(yacdir, "yacas.exe")
-   if (.Platform$OS.type == "windows" && !file.exists(yacas.exe)) {
-      cat("Issue this command to install yacas: yacasInstall()\n")
+   chk <- yacasCheck()
+   if (is.na(chk)) return()
+   if (chk == 1) cat("Wrong version of yacas installed.\n")
+   if (chk == -1) cat("yacas not found.\n")
+   if (.Platform$OS.type == "windows" && 
+      Sys.getenv("YACAS_INVOKE_STRING") == "") {
+         if (is.na(chk)) return()
+         if (chk != 0) {
+              urlbase <- "http://ryacas.googlecode.com/svn/trunk/inst/yacdir"
+              cat("Run yacasInstall() without arguments to install yacas\n")
+	      cat(" from", file.path(urlbase, "yacas.exe"), "\n")
+	      cat(" and", file.path(urlbase, "scripts.dat"), "\n")
+	      cat(" to", yacasFile("yacas.exe"), "and", 
+                yacasFile("scripts.dat"), "\n")
+          }
    }
    invisible()
 }
