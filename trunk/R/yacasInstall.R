@@ -44,5 +44,11 @@ yacasInstall <- function(showonly = FALSE, ...) {
          download.file(file.path(urlbase, f), yacasFile(f), mode = "wb", ...) 
       }
    )
+   result <- yacasCheck()
+   if (is.na(result)) 
+      warning("The checks for yacas existence and version were bypassed.\n")
+   if (result == -1) warning("yacas was not found.\n")
+   if (result == 1) warning("Different version of yacas found than expected.\n")
+   invisible()
 }
 
