@@ -11,7 +11,7 @@
 yacasInstall(showonly = FALSE, ...)
 yacasFile(filename = c("yacas.exe", "scripts.dat", "R.ys"),
 slash = c("\\", "/"))
-yacasCheck(yacas.size = 376832, scripts.size = 219678)
+yacasCheck(yacas.size = 368640, scripts.size = 224035)
 }
 \arguments{
 \item{showonly}{If \code{TRUE} then no download is performed but instead

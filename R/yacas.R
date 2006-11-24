@@ -14,7 +14,7 @@
 # is assumed to be R.ys.
 
 yacasInvokeString <- function(method = c("socket", "system"), 
-   yacas.init, yacas.args = "-pc") {
+   yacas.init, yacas.args = "-pc --single-user-server") {
    yacas.invoke.string <- Sys.getenv("YACAS_INVOKE_STRING")
    if (Sys.getenv("YACAS_INVOKE_STRING") != "") return(yacas.invoke.string)
    method <- match.arg(method)
@@ -86,10 +86,14 @@ isConnection <- function(x) {
 yacasStop <- function(verbose = TRUE) 
 {
   if (exists(".yacCon", .GlobalEnv)) {
-      if (isConnection(get(".yacCon", .GlobalEnv))) try(close(.yacCon))
+      # if (isConnection(get(".yacCon", .GlobalEnv))) try(close(.yacCon))
+      if (isConnection(get(".yacCon", .GlobalEnv))) {
+         writeLines("Exit();", .yacCon)
+         try(close(.yacCon))
+      }
       rm(.yacCon, envir = .GlobalEnv)
   }
-  if (.Platform$OS.type == "windows") system("taskkill /im yacas.exe")
+  # if (.Platform$OS.type == "windows") system("taskkill /im yacas.exe")
   if (verbose) cat("Thank you for using yacas\n")
   return(invisible(0))
 }
