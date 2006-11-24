@@ -19,7 +19,7 @@ yacasFile <- function(filename = c("yacas.exe", "scripts.dat", "R.ys"),
    chartr(setdiff(c("/", "\\"), slash), slash, fullname)
 }
 
-yacasCheck <- function(yacas.size = 376832, scripts.size = 219678) {
+yacasCheck <- function(yacas.size = 368640, scripts.size = 224035) {
    # return: NA = dont know, -1 = not found, 0 = ok, 1 = found but wrong version
    stopifnot(.Platform$OS.type == "windows")
    yacas.invoke.string <- Sys.getenv("YACAS_INVOKE_STRING")
