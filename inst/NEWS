@@ -12,6 +12,10 @@ o Ryacas now uses yacas 1.0.62 on all platforms (previously Windows used
 o yacas is now started in single user server mode (new mode added available
   in yacas 1.0.62)
 
+o runYacas now uses wait = FALSE on Windows
+
+o fixed bug in yacasInvokeString (it was ignoring init.args)
+
 Changes in version 0.2-3
 
 o Ryacas-Sym vignette fixed
