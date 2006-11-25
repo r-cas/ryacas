@@ -106,6 +106,8 @@
 \alias{Identity}
 \alias{Subst}
 \alias{Subst.default}
+\alias{%Where%}
+\alias{%Where%.default}
 
 \title{ Sym }
 \description{
@@ -157,7 +159,7 @@ Solve,
 Subst,
 Taylor, 
 TeXForm,
-and Ver
+Ver and "%Where%"
 all of which have
 the same meaning as the corresponding yacas commands.
 Try \code{vignette("Rycas-Sym")} for many examples.
@@ -173,6 +175,8 @@ as.character.Expr, deriv.Expr, Math.Expr, Ops.Expr and print.Expr.}
 x <- Sym("x")
 x*x
 Integrate(x*x, x)
+Sym("%") %Where% list(x = 10)
+
 acos(Sym("1/2"))
 
 y <- Exprq(x)
