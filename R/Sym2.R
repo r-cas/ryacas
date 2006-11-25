@@ -135,3 +135,9 @@ determinant.Sym <- function(x, ...) Sym("Determinant(", x, ")")
 Identity <- function(x) UseMethod("Identity")
 Identity.default <- function(x) Sym("Identity(", x, ")")
 
+"%Where%" <- function(x, y) UseMethod("%Where%")
+"%Where%.default" <- function(x, y) {
+	Sym(x, "Where", paste("{", names(y)[[1]], "==", Sym(y[[1]]), "}"))
+}
+
+
