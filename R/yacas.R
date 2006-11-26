@@ -157,11 +157,12 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
     if (!exists(".yacCon", .GlobalEnv) ||
 	!isConnection(get(".yacCon", .GlobalEnv)) ||
 	summary(get(".yacCon", .GlobalEnv))$opened == "closed")
-	    yacasStart(verbose = verbose)
+	    yacasStart(verbose = isTRUE(verbose))
 
     yac.res <- c()
 #	print(x)
-    if (verbose) cat("Sending to yacas:", x, "", sep = "\n")
+    if (!is.na(pmatch(verbose, c(TRUE, "input")))) 
+       cat("Sending to yacas:", x, "", sep = "\n")
     writeLines(x, .yacCon)
 
     delim <- "]"
@@ -177,7 +178,8 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
     # print all non-delims in verbose mode
     is.delim <- yac.res == delim
     # print non-delims
-    if (any(!is.delim) && verbose) print(yac.res[!is.delim]) 
+    if (any(!is.delim) && !is.na(pmatch(verbose, c(TRUE, "output")))) 
+       print(yac.res[!is.delim]) 
 
     w <- which(is.delim)[1:2]
     chunk1 <- yac.res[seq(1, length = w[1]-1)]

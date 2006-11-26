@@ -106,8 +106,8 @@
 \alias{Identity}
 \alias{Subst}
 \alias{Subst.default}
-\alias{%Where%}
-\alias{%Where%.default}
+\alias{\%Where\%}
+\alias{\%Where\%.default}
 
 \title{ Sym }
 \description{
