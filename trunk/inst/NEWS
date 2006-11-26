@@ -16,6 +16,11 @@ o runYacas now uses wait = FALSE on Windows
 
 o fixed bug in yacasInvokeString (it was ignoring init.args)
 
+o fixed latex bug in Sym.Rd
+
+o verbose= argument of yacas command can now take not only TRUE and FALSE
+  but also "input" and "output"
+
 Changes in version 0.2-3
 
 o Ryacas-Sym vignette fixed

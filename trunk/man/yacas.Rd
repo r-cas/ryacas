@@ -31,7 +31,10 @@ retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
 \arguments{
   \item{x}{ A yacas character string or an R 
   expression without terminating semicolon to be processed by yacas. }
-  \item{verbose}{ A logical value indicating verbosity of output. }
+  \item{verbose}{ A logical value indicating verbosity of output or 
+  \code{"input"} to only show input to yacas but not output from yacas or
+  \code{"output"} to only show output from yacas but not input to yacas.
+}
   \item{method}{ method used to communicate with yacas.  If \code{"socket"} is
    specified then the same yacas session is used on a sequence of calls.
    If \code{"system"} is specified then a new instance of yacas is used just
