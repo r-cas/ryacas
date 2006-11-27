@@ -397,6 +397,13 @@ yacas.formula <- function(x, ...) {
 	NextMethod(x)
 }
 
+yacas.yacas <- function(x, ...) {
+	x <- x[[1]]
+	stopifnot(is.expression(x))
+	.Class <- "expression"
+	NextMethod(x)
+}
+
 as.Expr.formula <- function(x) as.expression(as.language(x[[length(x)]]))
 
 Eval <- function(x, env = parent.frame(), ...) UseMethod("Eval")
