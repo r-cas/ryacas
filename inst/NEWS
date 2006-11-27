@@ -21,6 +21,8 @@ o fixed latex bug in Sym.Rd
 o verbose= argument of yacas command can now take not only TRUE and FALSE
   but also "input" and "output"
 
+o added "yacas" method for the yacas generic
+
 Changes in version 0.2-3
 
 o Ryacas-Sym vignette fixed

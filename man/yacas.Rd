@@ -4,6 +4,7 @@
 \alias{yacas.expression} 
 \alias{yacas.function} 
 \alias{yacas.formula} 
+\alias{yacas.yacas} 
 \alias{yacasInvokeString}
 \alias{yacas}
 \alias{as.expression.yacas}
@@ -27,6 +28,7 @@ retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
 \method{yacas}{expression}(x, ...)
 \method{yacas}{function}(x, ...)
 \method{yacas}{formula}(x, ...)
+\method{yacas}{yacas}(x, ...)
 }
 \arguments{
   \item{x}{ A yacas character string or an R 
