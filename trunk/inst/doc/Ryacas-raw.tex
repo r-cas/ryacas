@@ -1,4 +1,6 @@
-\documentclass[]{article} \usepackage{inputenc,hyperref,a4,color,boxedminipage,Sweave}
+\documentclass[]{article} 
+
+\usepackage{inputenc,hyperref,a4,color,boxedminipage,Sweave}
 %\VignetteIndexEntry{Introduction to Ryacas}
 %\VignettePackage{Ryacas}
 %\VignetteDepends{XML}
@@ -10,7 +12,8 @@
 \newcommand{\yacas}{{\tt yacas}}
 \newcommand{\code}[1]{{\tt #1}}
 \def\yac{\texttt{Yacas}}
-
+\def\R{\texttt{R}}
+\def\sym{\texttt{Sym}}
 
 \setlength{\parindent}{0in}
 \setlength{\textwidth}{140mm}
@@ -27,30 +30,173 @@ Ayal Pinkus}
 \begin{document}
 \maketitle
 \tableofcontents
+\parskip5pt
+
 
 \renewenvironment{Schunk}{\begin{center}
     \small
     \begin{boxedminipage}{0.95\textwidth}}{
     \end{boxedminipage}\end{center}}
 
+%     \RecustomVerbatimEnvironment{Sinput}{Verbatim}%
+%         {fontsize=\small,frame=single,framerule=1pt,
+%           rulecolor=\color{red},   fillcolor=\color{yellow} }
+%     \RecustomVerbatimEnvironment{Soutput}{Verbatim}%
+%         {fontsize=\scriptsize, frame=single,framerule=0.1pt}
 
 
 \section{Introduction} 
 \label{sec:introduction}
 
 \ryacas{} makes the \yacas{} computer algebra system available from
-within \rlan. (\yacas{} is short for ``Yet Another Computer Algebra
-System''). 
-
-\yacas{} is developed by Ayal Pinkhuis (who is also the maintainer)
+within \rlan. The name \yacas{} is short for ``Yet Another Computer Algebra
+System''. The \yacas{} program 
+is developed by Ayal Pinkhuis (who is also the maintainer)
 and others, and is available at
-\href{yacas.sourceforge.org}{yacas.sourceforge.org} for various
+\href{http://yacas.sourceforge.org}{http://yacas.sourceforge.org} for various
 platforms. There is a comprehensive documentation (300+ pages) of
 \yacas{} (also available at
-\href{yacas.sourceforge.org}{yacas.sourceforge.org}) and the
-documentation contains many examples.  The examples given here are
-largely taken from the \yacas{} documentation (especially from the
-introductory chapter) but are organised differently.
+\href{http://yacas.sourceforge.org}{http://yacas.sourceforge.org}) and the
+documentation contains many examples.
+
+% The examples given here are largely taken from the \yacas{}
+% documentation (especially from the introductory chapter) but are
+% organised differently.
+
+
+
+\section{\R\ expressions,  \yacas\ expressions and \sym\ objects} 
+\label{sec:hood}
+
+The \ryacas{} package works by sending ``commands''
+to \yacas{} which makes the calculations and returns the result
+to \R{}. There are various different formats of the return value as well
+
+\subsection{\R\ expressions}
+
+A call to \yacas\ may be in the form of an \R\ expression which
+involves valid R calls, symbols or constants (though not all valid \R\
+expressions are valid). For example:
+\begin{Schunk}
+\begin{Sinput}
+> exp1 <- yacas(expression(Factor(x^2 - 1)))
+\end{Sinput}
+\begin{Soutput}
+[1] "Starting Yacas!"
+expression((x + 1) * (x - 1))
+\end{Soutput}
+\end{Schunk}
+
+The result \code{exp1} is not an expression in the \R\ sense but an
+object of class \code{"yacas"}. 
+To evaluate the resulting expression numerically, we can do
+\begin{Schunk}
+\begin{Sinput}
+> Eval(exp1, list(x = 4))
+\end{Sinput}
+\begin{Soutput}
+[1] 15
+\end{Soutput}
+\end{Schunk}
+
+\subsection{\yacas\ expressions}
+
+Some commands are not proper \R\ expressions. For example, 
+typing 
+\begin{verbatim}
+  yacas(expression(D(x)Sin(x)))
+\end{verbatim}
+produces an error. 
+For such cases we can make
+a specification using the \yacas{} syntax:
+\begin{Schunk}
+\begin{Sinput}
+> yacas("D(x)Sin(x)")
+\end{Sinput}
+\begin{Soutput}
+expression(cos(x))
+\end{Soutput}
+\end{Schunk}
+
+
+\subsection{\sym\ objects}
+
+Probably the most elegant way of working with \yacas\ is by using
+\sym\ objects.
+A \sym\ object is a \yacas\ character string that has the "Sym" class.
+One can combine \sym\ objects with other \sym\ objects as well as to
+other \R\ objects using \code{+}, \code{-} and other similar \R\
+operators.
+
+The function \code{Sym(x)} coerces an object \code{x} to a \sym\ object by
+first coercing it to character and then changing its class to "Sym":
+\begin{Schunk}
+\begin{Sinput}
+> x <- Sym("x")
+\end{Sinput}
+\begin{Soutput}
+expression(x)
+\end{Soutput}
+\end{Schunk}
+
+Operations on \sym\ objects lead to new \sym\ objects:
+\begin{Schunk}
+\begin{Sinput}
+> x + 4
+\end{Sinput}
+\begin{Soutput}
+expression(x + 4)
+\end{Soutput}
+\end{Schunk}
+
+One can apply \code{sin}, \code{cos}, \code{tan}, \code{deriv}, \code{Integrate}
+and other provided functions to \sym\ objects. For example:
+\begin{Schunk}
+\begin{Sinput}
+> Integrate(sin(x), x)
+\end{Sinput}
+\begin{Soutput}
+expression(-cos(x))
+\end{Soutput}
+\end{Schunk}
+In this way the communication with \yacas\ is ``tacit''.
+
+It is important to note the difference between the \R\ name \code{x}
+and the symbol \code{"x"} as illustrated below:
+\begin{Schunk}
+\begin{Sinput}
+> x <- Sym("xs")
+\end{Sinput}
+\begin{Soutput}
+expression(xs)
+\end{Soutput}
+\begin{Sinput}
+> x
+\end{Sinput}
+\begin{Soutput}
+expression(xs)
+\end{Soutput}
+\begin{Sinput}
+> x + 4
+\end{Sinput}
+\begin{Soutput}
+expression(xs + 4)
+\end{Soutput}
+\begin{Sinput}
+> Eval(x + 4, list(xs = 5))
+\end{Sinput}
+\begin{Soutput}
+[1] 9
+\end{Soutput}
+\end{Schunk}
+
+The convention in the following is 1) that \sym\ objects match with
+their names that they end with an 's', e.g.
+\begin{Schunk}
+\begin{Sinput}
+> xs <- Sym("xs")
+\end{Sinput}
+\end{Schunk}
 
 
 \section{A sample session} 
@@ -65,13 +211,28 @@ Algebraic calculations:
 expression(823603)
 \end{Soutput}
 \begin{Sinput}
-> yacas(expression(1/14 + 5/21 * (30 - (1 + 1/2) * 
-+     5^2)))
+> yacas(expression(1/14 + 5/21 * (30 - 1 + 1/2)))
 \end{Sinput}
 \begin{Soutput}
-expression(-12/7)
+expression(149/21)
 \end{Soutput}
 \end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Sym("10 * 2") * 5 + Sym(7)^7
+\end{Sinput}
+\begin{Soutput}
+expression(823643)
+\end{Soutput}
+\begin{Sinput}
+> Sym("1/14 + 5/21 * (30 - 1+1/2)")
+\end{Sinput}
+\begin{Soutput}
+expression(149/21)
+\end{Soutput}
+\end{Schunk}
+
 
 Numerical evaluations:
 \begin{Schunk}
@@ -82,8 +243,17 @@ Numerical evaluations:
 expression(-6)
 \end{Soutput}
 \end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
+> Sym("-12/2")
+\end{Sinput}
+\begin{Soutput}
+expression(-6)
+\end{Soutput}
+\end{Schunk}
 
-Working with symbolic expressions:
+
+Symbolic expressions:
 \begin{Schunk}
 \begin{Sinput}
 > yacas(expression(Factor(x^2 - 1)))
@@ -103,22 +273,44 @@ expression(3 * x^2 * (1 - sin(6 * x * pi))/(2 * exp0))
 \end{Soutput}
 \end{Schunk}
 
-Working with numerical expressions:
-....
+\begin{Schunk}
+\begin{Sinput}
+> Factor(xs^2 - 1)
+\end{Sinput}
+\begin{Soutput}
+expression((xs + 1) * (xs - 1))
+\end{Soutput}
+\begin{Sinput}
+> exp1 <- xs^2 + 2 * xs^2
+> exp0 <- Sym("exp0")
+> exp2 <- 2 * Sym(exp0)
+> exp3 <- 6 * Pi * xs
+> exp4 <- exp1 * (1 - sin(exp3))/exp2
+> exp4
+\end{Sinput}
+\begin{Soutput}
+expression(3 * xs^2 * (1 - sin(6 * xs * pi))/(2 * exp0))
+\end{Soutput}
+\end{Schunk}
+
+
 
 Combining symbolic and numerical expressions:
 \begin{Schunk}
 \begin{Sinput}
-> yacas("N(Sin(1)^2 + Cos(x)^2)")
+> yacas(expression(N(Sin(1)^2 + Cos(x)^2)))
 \end{Sinput}
 \begin{Soutput}
-expression(cos(x)^2 + 0.70807)
+expression(cos(x)^2 + 0.7080734182)
 \end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
 \begin{Sinput}
-> yacas("N(Sin(1)^2 + Cos(x)^2)", retclass = "character")
+> N(sin(1)^2 + cos(xs)^2)
 \end{Sinput}
 \begin{Soutput}
-expression(cos(x)^2 + 0.70807)
+expression(cos(xs)^2 + 0.708073418273571)
 \end{Soutput}
 \end{Schunk}
 
@@ -132,45 +324,18 @@ Differentiation:
 expression(cos(x))
 \end{Soutput}
 \end{Schunk}
-
-Integration: [!!! This is odd: I thought yacas was case sensitive...]]]
 \begin{Schunk}
 \begin{Sinput}
-> yacas("A")
+> deriv(sin(xs), xs)
 \end{Sinput}
 \begin{Soutput}
-expression(A)
+expression(cos(xs))
 \end{Soutput}
-\begin{Sinput}
-> yacas("A:='ssss'")
-\end{Sinput}
-\begin{Soutput}
-expression("'ssss'")
-\end{Soutput}
-\begin{Sinput}
-> yacas("a")
-\end{Sinput}
-\begin{Soutput}
-expression(a)
-\end{Soutput}
-\begin{Sinput}
-> yacas("Integrate(x,a,b)Sin(x)")
-\end{Sinput}
-\begin{Soutput}
-In function "Check" : CommandLine(1) : "Found bound variable A which should have been unbound, in MatchLinear: 'ssss' ='ssss' "
-\end{Soutput}
-\begin{Sinput}
-> yacas("Clear(A)")
-\end{Sinput}
-\begin{Soutput}
-expression(TRUE)
-\end{Soutput}
-\begin{Sinput}
-> yacas("A")
-\end{Sinput}
-\begin{Soutput}
-expression(A)
-\end{Soutput}
+\end{Schunk}
+
+Integration: 
+
+\begin{Schunk}
 \begin{Sinput}
 > yacas("Integrate(x,a,b)Sin(x)")
 \end{Sinput}
@@ -179,6 +344,18 @@ expression(cos(a) - cos(b))
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> as <- Sym("as")
+> bs <- Sym("bs")
+> Integrate(sin(xs), xs, as, bs)
+\end{Sinput}
+\begin{Soutput}
+expression(cos(as) - cos(bs))
+\end{Soutput}
+\end{Schunk}
+
+
 Expanding polynomials:
 \begin{Schunk}
 \begin{Sinput}
@@ -186,6 +363,15 @@ Expanding polynomials:
 \end{Sinput}
 \begin{Soutput}
 expression(x^3 + 3 * x^2 + 3 * x + 1)
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Expand((1 + xs)^3)
+\end{Sinput}
+\begin{Soutput}
+expression(xs^3 + 3 * xs^2 + 3 * xs + 1)
 \end{Soutput}
 \end{Schunk}
 
@@ -198,6 +384,16 @@ Taylor expansion:
 expression(x + x^2/2 + x^3/6 + 1)
 \end{Soutput}
 \end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> texp <- Taylor(exp(xs), xs, 0, 3)
+\end{Sinput}
+\begin{Soutput}
+expression(xs + xs^2/2 + xs^3/6 + 1)
+\end{Soutput}
+\end{Schunk}
+
 
 Printing the result in nice forms:
 \begin{Schunk}
@@ -214,7 +410,25 @@ x + -- + -- + 1
 > yacas("TeXForm(texp)", retclass = "unquote")
 \end{Sinput}
 \begin{Soutput}
-expression("$x + \frac{x ^{2}}{2}  + \frac{x ^{3}}{6}  + 1$")
+$x + \frac{x ^{2}}{2}  + \frac{x ^{3}}{6}  + 1$
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> PrettyForm(texp)
+\end{Sinput}
+\begin{Soutput}
+       2     3    
+     xs    xs     
+xs + --- + --- + 1
+      2     6     
+\end{Soutput}
+\begin{Sinput}
+> TeXForm(texp)
+\end{Sinput}
+\begin{Soutput}
+expression("$xs + \frac{xs ^{2}}{2}  + \frac{xs ^{3}}{6}  + 1$")
 \end{Soutput}
 \end{Schunk}
 
@@ -225,7 +439,7 @@ expression("$x + \frac{x ^{2}}{2}  + \frac{x ^{3}}{6}  + 1$")
 
 \subsection{Setting and clearing a variable}
 
-The function Set() and the operator := can both be used to assign
+The function \code{Set()} and the operator \code{:=} can both be used to assign
 values to global variables. 
 \begin{Schunk}
 \begin{Sinput}
@@ -240,23 +454,71 @@ expression(60)
 \begin{Soutput}
 expression(120)
 \end{Soutput}
+\end{Schunk}
+
+The same can be achieved with \sym\ objects: Consider:
+\begin{Schunk}
 \begin{Sinput}
-> yacas("Set(z, Cos(a))")
+> Set(ns, (10 + 2) * 5)
 \end{Sinput}
 \begin{Soutput}
-expression(TRUE)
+expression(60)
+\end{Soutput}
+\end{Schunk}
+
+Now \code{ns} exists as a variable in \yacas (and we
+can make computations on this variable as above).
+However we have no handle on
+this variable in \R. Such a handle is obtained with
+\begin{Schunk}
+\begin{Sinput}
+> ns <- Sym("ns")
+\end{Sinput}
+\end{Schunk}
+Now the \R\ variable \code{ns} refers to the \yacas\ variable
+\code{ns} and we can make  calculations directly from \R, e.g:
+\begin{Schunk}
+\begin{Sinput}
+> Set(ns, 123)
+\end{Sinput}
+\begin{Soutput}
+expression(123)
 \end{Soutput}
 \begin{Sinput}
-> yacas("z+z")
+> ns
 \end{Sinput}
 \begin{Soutput}
-expression(2 * cos(a))
+expression(123)
+\end{Soutput}
+\begin{Sinput}
+> ns^2
+\end{Sinput}
+\begin{Soutput}
+expression(15129)
+\end{Soutput}
+\end{Schunk}
+
+Likewise:
+\begin{Schunk}
+\begin{Sinput}
+> as <- Sym("as")
+> zs <- Sym("zs")
+> Set(zs, cos(as))
+\end{Sinput}
+\begin{Soutput}
+expression(cos(as))
+\end{Soutput}
+\begin{Sinput}
+> zs + zs
+\end{Sinput}
+\begin{Soutput}
+expression(2 * cos(as))
 \end{Soutput}
 \end{Schunk}
 
 
-To clear a variable
-binding execute Clear():
+o clear a variable
+binding execute \code{Clear()}:
 \begin{Schunk}
 \begin{Sinput}
 > yacas(expression(n))
@@ -277,6 +539,35 @@ expression(TRUE)
 expression(n)
 \end{Soutput}
 \end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Set(ns, 1)
+\end{Sinput}
+\begin{Soutput}
+expression(1)
+\end{Soutput}
+\begin{Sinput}
+> ns <- Sym("ns")
+> ns
+\end{Sinput}
+\begin{Soutput}
+expression(1)
+\end{Soutput}
+\begin{Sinput}
+> Clear(ns)
+\end{Sinput}
+\begin{Soutput}
+expression(TRUE)
+\end{Soutput}
+\begin{Sinput}
+> ns
+\end{Sinput}
+\begin{Soutput}
+expression(ns)
+\end{Soutput}
+\end{Schunk}
+
 
 \subsection{Symbolic and numerical evaluations, precision}
 
@@ -308,30 +599,78 @@ expression(355/113)
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> exp(Sym(0))
+\end{Sinput}
+\begin{Soutput}
+expression(1)
+\end{Soutput}
+\begin{Sinput}
+> exp(Sym(1))
+\end{Sinput}
+\begin{Soutput}
+expression(exp(1))
+\end{Soutput}
+\begin{Sinput}
+> sin(Pi/4)
+\end{Sinput}
+\begin{Soutput}
+expression(root(1/2, 2))
+\end{Soutput}
+\begin{Sinput}
+> Sym("355/113")
+\end{Sinput}
+\begin{Soutput}
+expression(355/113)
+\end{Soutput}
+\end{Schunk}
+
  To obtain a numerical evaluation
-(approximation), the N() function can be used:
+(approximation), the \code{N()} function can be used:
 \begin{Schunk}
 \begin{Sinput}
 > yacas("N(Exp(1))")
 \end{Sinput}
 \begin{Soutput}
-expression(2.71828)
+expression(2.7182818284)
 \end{Soutput}
 \begin{Sinput}
 > yacas("N(Sin(Pi/4))")
 \end{Sinput}
 \begin{Soutput}
-expression(0.707134)
+expression(0.70710678118)
 \end{Soutput}
 \begin{Sinput}
 > yacas("N(355/113)")
 \end{Sinput}
 \begin{Soutput}
-expression(3.14159)
+expression(3.1415929203)
 \end{Soutput}
 \end{Schunk}
 
-The N() function has an optional second argument, the required precision:
+\begin{Schunk}
+\begin{Sinput}
+> N(exp(1))
+\end{Sinput}
+\begin{Soutput}
+expression(2.71828182845905)
+\end{Soutput}
+\begin{Sinput}
+> N(sin(Pi/4))
+\end{Sinput}
+\begin{Soutput}
+expression(0.70710678118)
+\end{Soutput}
+\begin{Sinput}
+> N(355/113)
+\end{Sinput}
+\begin{Soutput}
+expression(3.14159292035398)
+\end{Soutput}
+\end{Schunk}
+
+The \code{N()} function has an optional second argument, the required precision:
 \begin{Schunk}
 \begin{Sinput}
 > yacas("N(355/133,20)")
@@ -341,7 +680,17 @@ expression(2.66917293233083)
 \end{Soutput}
 \end{Schunk}
 
-The command Precision(n)
+\begin{Schunk}
+\begin{Sinput}
+> N("355/113", 20)
+\end{Sinput}
+\begin{Soutput}
+expression(3.14159292035398)
+\end{Soutput}
+\end{Schunk}
+
+
+The command \code{Precision(n)}
 can be used to specify that all floating point numbers should have a
 fixed precision of n digits:
 \begin{Schunk}
@@ -359,6 +708,21 @@ expression(3.14159)
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> Precision(5)
+\end{Sinput}
+\begin{Soutput}
+expression(TRUE)
+\end{Soutput}
+\begin{Sinput}
+> N("355/113")
+\end{Sinput}
+\begin{Soutput}
+expression(3.14159)
+\end{Soutput}
+\end{Schunk}
+
 
 \subsection{Rational numbers}
 
@@ -367,6 +731,15 @@ denominator are integers:
 \begin{Schunk}
 \begin{Sinput}
 > yacas(expression(55/10))
+\end{Sinput}
+\begin{Soutput}
+expression(11/2)
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Sym("55 / 10")
 \end{Sinput}
 \begin{Soutput}
 expression(11/2)
@@ -405,6 +778,35 @@ expression(alpha + beta)
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> Sym("1/14+5/21*(1*30-(1+1/2)*5^2)")
+\end{Sinput}
+\begin{Soutput}
+expression(-12/7)
+\end{Soutput}
+\begin{Sinput}
+> xs <- Sym("xs")
+> ys <- Sym("ys")
+> 0 + xs
+\end{Sinput}
+\begin{Soutput}
+expression(xs)
+\end{Soutput}
+\begin{Sinput}
+> xs + 1 * ys
+\end{Sinput}
+\begin{Soutput}
+expression(xs + ys)
+\end{Soutput}
+\begin{Sinput}
+> sin(asin(xs)) + tan(atan(ys))
+\end{Sinput}
+\begin{Soutput}
+expression(xs + ys)
+\end{Soutput}
+\end{Schunk}
+
 \subsection{Complex numbers and the imaginary unit} 
 
 The imaginary unit $i$ is denoted I and complex numbers can be entered
@@ -436,6 +838,34 @@ expression(complex_cartesian(cos(3), sin(3)))
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> I^2
+\end{Sinput}
+\begin{Soutput}
+expression(-1)
+\end{Soutput}
+\begin{Sinput}
+> 7 + 3 * I
+\end{Sinput}
+\begin{Soutput}
+expression(complex_cartesian(7, 3))
+\end{Soutput}
+\begin{Sinput}
+> Conjugate(7 + 3 * I)
+\end{Sinput}
+\begin{Soutput}
+expression(complex_cartesian(7, -3))
+\end{Soutput}
+\begin{Sinput}
+> exp(3 * I)
+\end{Sinput}
+\begin{Soutput}
+expression(complex_cartesian(cos(3), sin(3)))
+\end{Soutput}
+\end{Schunk}
+
+
 \subsection{Recall the most recent line -- the \texttt{\%} operator}
 
 The operator \texttt{\%} automatically recalls the result from the
@@ -461,12 +891,32 @@ expression((x + 1)^3)
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> (1 + x)^3
+\end{Sinput}
+\begin{Soutput}
+expression((xs + 1)^3)
+\end{Soutput}
+\begin{Sinput}
+> zs <- Sym("%")
+> zs
+\end{Sinput}
+\begin{Soutput}
+expression((xs + 1)^3)
+\end{Soutput}
+\end{Schunk}
+
 
 
 \subsection{Printing with PrettyForm, PrettyPrint, TexForm and  TeXForm} 
 \label{sec:printing}
 
-There are different ways of displaying the output. The (standard)
+There are different ways of displaying the output. 
+
+
+\subsubsection{Standard form}
+The (standard)
 yacas form is:
 \begin{Schunk}
 \begin{Sinput}
@@ -495,6 +945,30 @@ expression((x + 1)^2 + k^3)
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> as <- Sym("as")
+> bs <- Sym("bs")
+> cs <- Sym("cs")
+> ds <- Sym("ds")
+> A <- List(List(as, bs), List(cs, ds))
+> ks <- Sym("ks")
+> B <- (1 + xs)^2 + ks^3
+> A
+\end{Sinput}
+\begin{Soutput}
+expression(list(list(as, bs), list(cs, ds)))
+\end{Soutput}
+\begin{Sinput}
+> B
+\end{Sinput}
+\begin{Soutput}
+expression((xs + 1)^2 + ks^3)
+\end{Soutput}
+\end{Schunk}
+
+
+\subsubsection{Pretty form}
 The Pretty form is:
 \begin{Schunk}
 \begin{Sinput}
@@ -516,56 +990,48 @@ The Pretty form is:
 \end{Soutput}
 \end{Schunk}
 
-An alternative is the PrettyPrinter [!!! Why does this give the same
-result as before??? Earlier I got XML output as well... Is something
-not reset???]
 \begin{Schunk}
 \begin{Sinput}
-> yacas("PrettyPrinter(\"PrettyForm\")")
+> PrettyForm(A)
 \end{Sinput}
 \begin{Soutput}
-True
+/                \
+| ( as ) ( bs )  |
+|                |
+| ( cs ) ( ds )  |
+\                /
 \end{Soutput}
 \begin{Sinput}
-> yacas("A")
+> PrettyForm(B)
 \end{Sinput}
 \begin{Soutput}
-/              \
-| ( a ) ( b )  |
-|              |
-| ( c ) ( d )  |
-\              /
-\end{Soutput}
-\begin{Sinput}
-> yacas("PrettyPrinter()")
-\end{Sinput}
-\begin{Soutput}
-True;
-\end{Soutput}
-\begin{Sinput}
-> yacas("A")
-\end{Sinput}
-\begin{Soutput}
-{{a,b},{c,d}};
+          2     3
+( xs + 1 )  + ks 
 \end{Soutput}
 \end{Schunk}
 
-The output can be displayed in TeX form as well:
+
+
+\subsubsection{TeX form}
+
+The output can be displayed in TeX form:
 \begin{Schunk}
 \begin{Sinput}
 > yacas("TeXForm(B)")
 \end{Sinput}
 \begin{Soutput}
-"$\left( x + 1\right)  ^{2} + k ^{3}$";
-\end{Soutput}
-\begin{Sinput}
-> yacas("TexForm(B)")
-\end{Sinput}
-\begin{Soutput}
-$\left( x + 1\right)  ^{2} + k ^{3}$
+expression("$left( x + 1\right)  ^{2} + k ^{3}$")
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> TeXForm(B)
+\end{Sinput}
+\begin{Soutput}
+expression("$left( xs + 1\right)  ^{2} + ks ^{3}$")
+\end{Soutput}
+\end{Schunk}
 
 
 \section{Commands} 
@@ -579,45 +1045,88 @@ $\left( x + 1\right)  ^{2} + k ^{3}$
 > yacas("40!")
 \end{Sinput}
 \begin{Soutput}
-815915283247897734345611269596115894272000000000;
+expression(8.15915283247898e+47)
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Factorial(40)
+\end{Sinput}
+\begin{Soutput}
+expression(Factorial(40))
 \end{Soutput}
 \end{Schunk}
 
 \subsection{Taylor expansions} 
 
-Expand Exp(x) in three terms
-around 0 and a:
+Expand $\exp(x)$ in three terms
+around $0$ and $a$:
 \begin{Schunk}
 \begin{Sinput}
 > yacas("Taylor(x,0,3) Exp(x)")
 \end{Sinput}
 \begin{Soutput}
-x+x^2/2+x^3/6+1;
+expression(x + x^2/2 + x^3/6 + 1)
 \end{Soutput}
 \begin{Sinput}
 > yacas("Taylor(x,a,3) Exp(x)")
 \end{Sinput}
 \begin{Soutput}
-Exp(a)+Exp(a)*(x-a)+((x-a)^2*Exp(a))/2+((x-a)^3*Exp(a))/6;
+expression(exp(a) + exp(a) * (x - a) + (x - a)^2 * exp(a)/2 + 
+    (x - a)^3 * exp(a)/6)
 \end{Soutput}
 \end{Schunk}
 
-The InverseTaylor() function builds the Taylor series expansion of the
+\begin{Schunk}
+\begin{Sinput}
+> xs <- Sym("xs")
+> Taylor(exp(xs), xs, 0, 3)
+\end{Sinput}
+\begin{Soutput}
+expression(xs + xs^2/2 + xs^3/6 + 1)
+\end{Soutput}
+\begin{Sinput}
+> as <- Sym("as")
+> Taylor(exp(x), x, as, 3)
+\end{Sinput}
+\begin{Soutput}
+expression(exp(as) + exp(as) * (xs - as) + (xs - as)^2 * exp(as)/2 + 
+    (xs - as)^3 * exp(as)/6)
+\end{Soutput}
+\end{Schunk}
+
+The \code{InverseTaylor()} function builds the Taylor series expansion of the
 inverse of an expression. For example, the Taylor expansion in two
-terms of the inverse of Exp(x) around x=0 (which is the Taylor
-expansion of Ln(y) around y=1):
+terms of the inverse of $\exp(x)$ around $x=0$ (which is the Taylor
+expansion of $Ln(y)$ around $y=1$):
 \begin{Schunk}
 \begin{Sinput}
 > yacas("InverseTaylor(x,0,2)Exp(x)")
 \end{Sinput}
 \begin{Soutput}
-x-1-(x-1)^2/2;
+expression(x - 1 - (x - 1)^2/2)
 \end{Soutput}
 \begin{Sinput}
 > yacas("Taylor(y,1,2)Ln(y)")
 \end{Sinput}
 \begin{Soutput}
-y-1-(y-1)^2/2;
+expression(y - 1 - (y - 1)^2/2)
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> InverseTaylor(exp(xs), xs, 0, 2)
+\end{Sinput}
+\begin{Soutput}
+expression(xs + xs^2/2 + 1)
+\end{Soutput}
+\begin{Sinput}
+> Taylor(log(ys), ys, 1, 2)
+\end{Sinput}
+\begin{Soutput}
+expression(ys - 1 - (ys - 1)^2/2)
 \end{Soutput}
 \end{Schunk}
 
@@ -626,43 +1135,77 @@ y-1-(y-1)^2/2;
 
 \subsubsection{Solving equations symbolically}
 
-Solve equations symbolically with:
+Solve equations symbolically with the \code{Solve()} function:
 \begin{Schunk}
 \begin{Sinput}
 > yacas("Solve(x/(1+x) == a, x)")
 \end{Sinput}
 \begin{Soutput}
-{x==a/(1-a)};
+expression(list(x == a/(1 - a)))
 \end{Soutput}
 \begin{Sinput}
 > yacas("Solve(x^2+x == 0, x)")
 \end{Sinput}
 \begin{Soutput}
-{x==0,x==(-1)};
+expression(list(x == 0, x == -1))
 \end{Soutput}
 \end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Solve(xs/(1 + xs) == as, xs)
+\end{Sinput}
+\begin{Soutput}
+expression(list(xs == as/(1 - as)))
+\end{Soutput}
+\begin{Sinput}
+> Solve(xs^2 + xs == 0, xs)
+\end{Sinput}
+\begin{Soutput}
+expression(list(xs == 0, xs == -1))
+\end{Soutput}
+\end{Schunk}
+
 (Note the use of the == operator, which does not evaluate to anything,
-to denote an "equation" object.) Solve() is rather limited.
+to denote an "equation" object.) 
 
 \subsubsection{Solving equations numerically}
-To solve an equation (in one variable) like Sin(x)-Exp(x)=0 numerically taking 0.5
-as initial guess and an accuracy of 0.0001 do:
+To solve an equation (in one variable) like $sin(x)-exp(x)=0$ numerically taking $0.5$
+as initial guess and an accuracy of $0.0001$ do:
 \begin{Schunk}
 \begin{Sinput}
 > yacas("Newton(Sin(x)-Exp(x),x, 0.5, 0.0001)")
 \end{Sinput}
 \begin{Soutput}
--3.18306;
+expression(-3.18306)
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Newton(sin(xs) - exp(xs), xs, 0.5, 1e-04)
+\end{Sinput}
+\begin{Soutput}
+expression(-3.18306)
 \end{Soutput}
 \end{Schunk}
 
 \subsection{Expanding polynomials} 
 \begin{Schunk}
 \begin{Sinput}
-> yacas("Expand((1+x)^3)")
+> yacas(expression(Expand((1 + x)^3)))
 \end{Sinput}
 \begin{Soutput}
-x^3+3*x^2+3*x+1;
+expression(x^3 + 3 * x^2 + 3 * x + 1)
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Expand((x + 1)^3)
+\end{Sinput}
+\begin{Soutput}
+expression(xs^3 + 3 * xs^2 + 3 * xs + 1)
 \end{Soutput}
 \end{Schunk}
 
@@ -674,76 +1217,100 @@ The function Simplify() attempts to reduce an expression
 to a simpler form. 
 \begin{Schunk}
 \begin{Sinput}
+> y <- Sym("y")
 > yacas("(x+y)^3-(x-y)^3")
 \end{Sinput}
 \begin{Soutput}
-(x+y)^3-(x-y)^3;
+expression((x + y)^3 - (x - y)^3)
 \end{Soutput}
 \begin{Sinput}
 > yacas("Simplify(%)")
 \end{Sinput}
 \begin{Soutput}
-6*x^2*y+2*y^3;
+expression(6 * (x^2 * y) + 2 * y^3)
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> (x + y)^3 - (x - y)^3
+\end{Sinput}
+\begin{Soutput}
+expression((xs + y)^3 - (xs - y)^3)
+\end{Soutput}
+\begin{Sinput}
+> Simplify("%")
+\end{Sinput}
+\begin{Soutput}
+expression(6 * (xs^2 * y) + 2 * y^3)
 \end{Soutput}
 \end{Schunk}
 
 
 \subsection{Analytical derivatives}
 
-Analytical derivatives of functions can be evaluated:
+Analytical derivatives of functions can be evaluated with the
+\code{D()} and \code{deriv()} functions:
 \begin{Schunk}
 \begin{Sinput}
 > yacas("D(x) Sin(x)")
 \end{Sinput}
 \begin{Soutput}
-Cos(x);
-\end{Soutput}
-\begin{Sinput}
-> yacas("D(x) D(x) Sin(x)")
-\end{Sinput}
-\begin{Soutput}
--Sin(x);
+expression(cos(x))
 \end{Soutput}
 \end{Schunk}
 
-The D function also accepts an argument specifying how often the
+\begin{Schunk}
+\begin{Sinput}
+> deriv(sin(xs), xs)
+\end{Sinput}
+\begin{Soutput}
+expression(cos(xs))
+\end{Soutput}
+\end{Schunk}
+
+These functions also accepts an argument specifying how often the
 derivative has to be taken, e.g:
 \begin{Schunk}
 \begin{Sinput}
-> yacas("D(x,2)Sin(x)")
+> yacas("D(x,4)Sin(x)")
 \end{Sinput}
 \begin{Soutput}
--Sin(x);
+expression(sin(x))
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> deriv(sin(xs), xs, 4)
+\end{Sinput}
+\begin{Soutput}
+expression(sin(xs))
 \end{Soutput}
 \end{Schunk}
 
 \subsection{Integration}
 
-!!! Problem arises because A was defined above (a is not defined, though)
+
 \begin{Schunk}
-\begin{Sinput}
-> yacas("Integrate(x,a,b)Sin(x)")
-\end{Sinput}
-\begin{Soutput}
-In function "Check" : CommandLine(1) : "Found bound variable A which should have been unbound, in MatchLinear: {{a,b},{c,d}} ={{a,b},{c,d}} "
-\end{Soutput}
-\begin{Sinput}
-> yacas("Integrate(x,a,b)Ln(x)+x")
-\end{Sinput}
-\begin{Soutput}
-In function "Check" : CommandLine(1) : "Found bound variable A which should have been unbound, in MatchLinear: {{a,b},{c,d}} ={{a,b},{c,d}} "
-\end{Soutput}
-\begin{Sinput}
-> yacas("Integrate(x)1/(x^2-1)")
-\end{Sinput}
-\begin{Soutput}
-In function "Check" : CommandLine(1) : "Found bound variable A which should have been unbound, in MatchLinear: {{a,b},{c,d}} ={{a,b},{c,d}} "
-\end{Soutput}
 \begin{Sinput}
 > yacas("Integrate(x)Sin(a*x)^2*Cos(b*x)")
 \end{Sinput}
 \begin{Soutput}
-In function "Check" : CommandLine(1) : "Found bound variable A which should have been unbound, in MatchLinear: {{a,b},{c,d}} ={{a,b},{c,d}} "
+expression((2 * sin(b * x)/b - (sin(-2 * x * a - b * x)/(-2 * 
+    a - b) + sin(-2 * x * a + b * x)/(-2 * a + b)))/4)
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> a <- Sym("a")
+> b <- Sym("b")
+> Integrate(sin(a * x)^2 * cos(b * x), x)
+\end{Sinput}
+\begin{Soutput}
+expression((2 * sin(b * xs)/b - (sin(-2 * xs * a - b * xs)/(-2 * 
+    a - b) + sin(-2 * xs * a + b * xs)/(-2 * a + b)))/4)
 \end{Soutput}
 \end{Schunk}
 
@@ -751,25 +1318,35 @@ In function "Check" : CommandLine(1) : "Found bound variable A which should have
 \subsection{Limits}
 \begin{Schunk}
 \begin{Sinput}
-> yacas("Limit(x,0)Sin(x)/x")
-\end{Sinput}
-\begin{Soutput}
-1;
-\end{Soutput}
-\begin{Sinput}
 > yacas("Limit(n,Infinity)(1+(1/n))^n")
 \end{Sinput}
 \begin{Soutput}
-Exp(1);
+expression(exp(1))
 \end{Soutput}
 \begin{Sinput}
 > yacas("Limit(h,0) (Sin(x+h)-Sin(x))/h")
 \end{Sinput}
 \begin{Soutput}
-Cos(x);
+expression(cos(x))
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> ns <- Sym("ns")
+> Limit((1 + (1/ns))^ns, ns, Infinity)
+\end{Sinput}
+\begin{Soutput}
+expression(exp(1))
+\end{Soutput}
+\begin{Sinput}
+> hs <- Sym("hs")
+> Limit((sin(xs + hs) - sin(xs))/hs, hs, 0)
+\end{Sinput}
+\begin{Soutput}
+expression(cos(xs))
+\end{Soutput}
+\end{Schunk}
 
 \subsection{Variable substitution}
 
@@ -778,7 +1355,16 @@ Cos(x);
 > yacas("Subst(x,Cos(a))x+x")
 \end{Sinput}
 \begin{Soutput}
-2*Cos(a);
+expression(2 * cos(a))
+\end{Soutput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+> Subst(xs + xs, xs, cos(as))
+\end{Sinput}
+\begin{Soutput}
+expression(2 * cos(as))
 \end{Soutput}
 \end{Schunk}
 
@@ -789,15 +1375,19 @@ Cos(x);
 > yacas("OdeSolve(y''==4*y)")
 \end{Sinput}
 \begin{Soutput}
-C991*Exp(2*x)+C995*Exp((-2)*x);
+expression(C345 * exp(2 * x) + C349 * exp(-2 * x))
 \end{Soutput}
 \begin{Sinput}
 > yacas("OdeSolve(y'==8*y)")
 \end{Sinput}
 \begin{Soutput}
-C1025*Exp(8*x);
+expression(C379 * exp(8 * x))
 \end{Soutput}
 \end{Schunk}
+
+
+
+
 
 
 
@@ -809,7 +1399,8 @@ C1025*Exp(8*x);
 > yacas("E4:={ {u1,u1,0},{u1,0,u2},{0,u2,0} }")
 \end{Sinput}
 \begin{Soutput}
-{{u1,u1,0},{u1,0,u2},{0,u2,0}};
+expression(list(list(u1, u1, 0), list(u1, 0, u2), list(0, u2, 
+    0)))
 \end{Soutput}
 \begin{Sinput}
 > yacas("PrettyForm(E4)")
@@ -825,6 +1416,23 @@ C1025*Exp(8*x);
 \end{Soutput}
 \end{Schunk}
 
+\begin{Schunk}
+\begin{Sinput}
+> u1 <- Sym("u1")
+> u2 <- Sym("u2")
+> E4 <- List(List(u1, u1, 0), List(u1, 0, u2), List(0, u2, 0))
+> PrettyForm(E4)
+\end{Sinput}
+\begin{Soutput}
+/                       \
+| ( u1 ) ( u1 ) ( 0 )   |
+|                       |
+| ( u1 ) ( 0 )  ( u2 )  |
+|                       |
+| ( 0 )  ( u2 ) ( 0 )   |
+\                       /
+\end{Soutput}
+\end{Schunk}
 
 
 \subsection{Inverse} 
@@ -834,16 +1442,50 @@ C1025*Exp(8*x);
 > yacas("E4i:=Inverse(E4)")
 \end{Sinput}
 \begin{Soutput}
-{{u2^2/(u1*u2^2),0,(-u1*u2)/(u1*u2^2)},{0,0,(u1*u2)/(u1*u2^2)},{(-u1*u2)/(u1*u2^2),(u1*u2)/(u1*u2^2),u1^2/(u1*u2^2)}};
+expression(list(list(u2^2/(u1 * u2^2), 0, -(u1 * u2)/(u1 * u2^2)), 
+    list(0, 0, u1 * u2/(u1 * u2^2)), list(-(u1 * u2)/(u1 * u2^2), 
+        u1 * u2/(u1 * u2^2), u1^2/(u1 * u2^2))))
 \end{Soutput}
 \begin{Sinput}
 > yacas("Simplify(E4i)")
 \end{Sinput}
 \begin{Soutput}
-{{1/u1,0,(-1)/u2},{0,0,1/u2},{(-1)/u2,1/u2,u1/u2^2}};
+expression(list(list(1/u1, 0, -1/u2), list(0, 0, 1/u2), list(-1/u2, 
+    1/u2, u1/u2^2)))
 \end{Soutput}
 \begin{Sinput}
 > yacas("PrettyForm(Simplify(E4i))")
+\end{Sinput}
+\begin{Soutput}
+/                        \
+| / 1  \ ( 0 )  / -1 \   |
+| | -- |        | -- |   |
+| \ u1 /        \ u2 /   |
+|                        |
+| ( 0 )  ( 0 )  / 1  \   |
+|               | -- |   |
+|               \ u2 /   |
+|                        |
+| / -1 \ / 1  \ / u1  \  |
+| | -- | | -- | | --- |  |
+| \ u2 / \ u2 / |   2 |  |
+|               \ u2  /  |
+\                        /
+\end{Soutput}
+\end{Schunk}
+
+
+\begin{Schunk}
+\begin{Sinput}
+> E4i <- Inverse(E4)
+> Simplify(E4i)
+\end{Sinput}
+\begin{Soutput}
+expression(list(list(1/u1, 0, -1/u2), list(0, 0, 1/u2), list(-1/u2, 
+    1/u2, u1/u2^2)))
+\end{Soutput}
+\begin{Sinput}
+> PrettyForm(Simplify(E4i))
 \end{Sinput}
 \begin{Soutput}
 /                        \
@@ -871,30 +1513,82 @@ C1025*Exp(8*x);
 > yacas("Determinant(E4)")
 \end{Sinput}
 \begin{Soutput}
--u1*u2^2;
+expression(-(u1 * u2^2))
 \end{Soutput}
 \begin{Sinput}
 > yacas("Determinant(E4i)")
 \end{Sinput}
 \begin{Soutput}
-(-u1*u2*u1*u2^3)/(u1*u2^2)^3;
+expression(-(u1 * u2 * (u1 * u2^3))/(u1 * u2^2)^3)
 \end{Soutput}
 \begin{Sinput}
 > yacas("Simplify(E4i)")
 \end{Sinput}
 \begin{Soutput}
-{{1/u1,0,(-1)/u2},{0,0,1/u2},{(-1)/u2,1/u2,u1/u2^2}};
+expression(list(list(1/u1, 0, -1/u2), list(0, 0, 1/u2), list(-1/u2, 
+    1/u2, u1/u2^2)))
 \end{Soutput}
 \begin{Sinput}
 > yacas("Simplify(Determinant(E4i))")
 \end{Sinput}
 \begin{Soutput}
-(-1)/(u1*u2^2);
+expression(-1/(u1 * u2^2))
+\end{Soutput}
+\end{Schunk}
+
+
+\begin{Schunk}
+\begin{Sinput}
+> determinant(E4)
+\end{Sinput}
+\begin{Soutput}
+expression(-(u1 * u2^2))
+\end{Soutput}
+\begin{Sinput}
+> determinant(E4i)
+\end{Sinput}
+\begin{Soutput}
+expression(-(u1 * u2 * (u1 * u2^3))/(u1 * u2^2)^3)
+\end{Soutput}
+\begin{Sinput}
+> Simplify(E4i)
+\end{Sinput}
+\begin{Soutput}
+expression(list(list(1/u1, 0, -1/u2), list(0, 0, 1/u2), list(-1/u2, 
+    1/u2, u1/u2^2)))
+\end{Soutput}
+\begin{Sinput}
+> Simplify(determinant(E4i))
+\end{Sinput}
+\begin{Soutput}
+expression(-1/(u1 * u2^2))
 \end{Soutput}
 \end{Schunk}
 
 
 
+%%% -------------------------------------------------------------
+\section{Miscellaneous} 
+\label{sec:misc}
+
+
+
+Note that the value returned by \yacas\ can be of different types:
+\begin{Schunk}
+\begin{Sinput}
+> yacas(expression(Factor(x^2 - 1)), retclass = "unquote")
+\end{Sinput}
+\begin{Soutput}
+*" ("+" (x ,1 ),"- (x ,1 ))
+\end{Soutput}
+\begin{Sinput}
+> yacas(expression(Factor(x^2 - 1)), retclass = "character")
+\end{Sinput}
+\begin{Soutput}
+"*" ("+" (x ,1 ),"-" (x ,1 ))
+\end{Soutput}
+\end{Schunk}
 
 
 \end{document}
+
