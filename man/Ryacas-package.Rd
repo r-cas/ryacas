@@ -25,7 +25,6 @@ Demo\tab demo("Ryacas-Sym")\cr
 Demo\tab demo("Ryacas-Expr")\cr
 List Vignettes\tab vignette(package = "Ryacas")\cr
 Vignette\tab vignette("Ryacas")\cr
-Vignette\tab vignette("Ryacas-Sym")\cr
 This File\tab package?Ryacas\cr
 Help files\tab ?yacas, ?yacasTranslations, ?yacmode, ?Sym\cr
 Help files - Windows\tab ?yacasInstall\cr
