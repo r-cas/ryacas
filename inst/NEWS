@@ -23,6 +23,10 @@ o verbose= argument of yacas command can now take not only TRUE and FALSE
 
 o added "yacas" method for the yacas generic
 
+o yacas.print now displays [[1]] prior to expression(...whatever...)
+  to make it clear that the expression is first component of returned
+  structure
+
 Changes in version 0.2-3
 
 o Ryacas-Sym vignette fixed

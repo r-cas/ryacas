@@ -12,8 +12,10 @@ print.yacas <- function(x, ...) {
 		YacasForm = catn(x$YacasForm),
 		expression = if (inherits(x[[1]], "character"))
 				for(s in x[[1]]) catn(s)
-			     else
-				print(x[[1]]),
+			     else {
+				cat("[[1]]\n")
+				print(x[[1]])
+			     },
 		OMForm = for(s in x$OMForm) catn(s))
 	invisible()
 }
