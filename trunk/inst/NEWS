@@ -27,6 +27,8 @@ o yacas.print now displays [[1]] prior to expression(...whatever...)
   to make it clear that the expression is first component of returned
   structure
 
+o the two vignettes are combined into one
+
 Changes in version 0.2-3
 
 o Ryacas-Sym vignette fixed
