@@ -1,0 +1,65 @@
+#summary Sample session
+#labels session
+
+= Sample Session =
+
+{{{
+> library(Ryacas)
+> # calculus
+> ###
+> # 1. yacas.character
+> yacas('Integrate(x)x+Tan(x)')
+[1] "Starting Yacas!"
+expression(x^2/2 - log(cos(x)))
+> # 2. yacas.expression
+> yacas(expression(integrate(x+tan(x), x)))
+expression(x^2/2 - log(cos(x)))
+> # 3. yacas.function - only works in development version of Ryacas
+> # f <- function(x) integrate(x+tan(x), x)
+> # yacas(f)
+> # 4. yacas.formula - only works in development version of Ryacas
+> # yacas(~ integrate(x+tan(x), x))
+> # 5. Sym variables
+> x <- Sym('x')
+> Integrate(x+tan(x), x)
+expression(x^2/2 - log(cos(x)))
+> # 6. Expr variables -- not yet fully developed
+> y <- Exprq(y)
+> deriv(y*y+cos(y), y)
+expression(2 * y - sin(y))
+> # algebra
+> a <- Sym('a')
+> Solve(x/(1+x) == a, x)
+expression(list(x == a/(1 - a)))
+> # exact arithmetic
+> ###
+> yacas('12/24')
+expression(1/2)
+> # ASCII pretty printing
+> #(on this web page the spacing is off but
+> PrettyForm(exp(-x^2)/(cos(x)+exp(x)))
+     /  /  2 \ \   
+  Exp\ -\ x  / /   
+-------------------
+Cos( x ) + Exp( x )
+> # matrices are stored as row-wise nested lists
+> List(List(1,2),List(a,6))
+expression(list(list(1, 2), list(a, 6)))
+> # (on this web page the spacing is off
+/              \
+| ( 1 ) ( 2 )  |
+|              |
+| ( a ) ( 6 )  |
+\              /
+> # emit TeX code
+> ###
+> k <- Sym('k')
+> yacas(TeXForm((x+1)^2 + k^3), retclass = 'unquote')
+$\left( x + 1\right)  ^{2} + k ^{3}$
+> # On Windows XP Pro detaching Ryacas terminates yacas process.
+> # On other systems process must be terminated manually.
+> detach()
+Thank you for using yacas
+> 
+}}}
+
