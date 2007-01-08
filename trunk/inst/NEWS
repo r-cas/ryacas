@@ -6,10 +6,10 @@ o new Windows only features
     to facilitate installation of yacas
   - .First.lib reminds Windows users to install yacas if yacas not found
 
-o Ryacas now uses yacas 1.0.62 on all platforms (previously Windows used
-  1.0.62)
+o Ryacas now uses yacas 1.0.63 on all platforms. (The yacas Windows binary 
+  is available under Downloads tab on Ryacas home page.)
 
-o yacas is now started in single user server mode (new mode added available
+o yacas is now started in single user server mode (new mode was added
   in yacas 1.0.62)
 
 o runYacas now uses wait = FALSE on Windows
