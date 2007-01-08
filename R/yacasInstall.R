@@ -19,7 +19,8 @@ yacasFile <- function(filename = c("yacas.exe", "scripts.dat", "R.ys"),
    chartr(setdiff(c("/", "\\"), slash), slash, fullname)
 }
 
-yacasCheck <- function(yacas.size = 368640, scripts.size = 224035) {
+# yacasCheck <- function(yacas.size = 368640, scripts.size = 224035) {
+yacasCheck <- function(yacas.size = 372736, scripts.size = 224017) {
    # return: NA = dont know, -1 = not found, 0 = ok, 1 = found but wrong version
    stopifnot(.Platform$OS.type == "windows")
    yacas.invoke.string <- Sys.getenv("YACAS_INVOKE_STRING")
@@ -35,7 +36,8 @@ yacasCheck <- function(yacas.size = 368640, scripts.size = 224035) {
    
 yacasInstall <- function(showonly = FALSE, ...) {
    stopifnot(.Platform$OS.type == "windows")
-   urlbase <- "http://ryacas.googlecode.com/svn/trunk/inst/yacdir"
+   # urlbase <- "http://ryacas.googlecode.com/svn/trunk/inst/yacdir"
+   urlbase <- "http://ryacas.googlecode.com/files"
    # yacdir <- system.file(package = "Ryacas", "yacdir")
    files <- c("scripts.dat", "yacas.exe")
    lapply(files, function(f) {
