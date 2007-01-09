@@ -11,15 +11,16 @@
 yacasInstall(showonly = FALSE, ...)
 yacasFile(filename = c("yacas.exe", "scripts.dat", "R.ys"),
 slash = c("\\", "/"))
-yacasCheck(yacas.size = 372736, scripts.size = 224017)
+yacasCheck(yacas.sha1 = "47bdf170e48dead5dd2ee4a5c141599eafa12528", 
+     scripts.sha1 = "3e0ac30e898ca278ec507e501fda41f450fef934")
 }
 \arguments{
 \item{showonly}{If \code{TRUE} then no download is performed but instead
 command simplfy shows what it would download and to where.}
 \item{filename}{Name of file whose full path is wanted.}
 \item{slash}{slash style to use on output pathname.}
-\item{yacas.size}{Expected size of \code{yacas.exe} in characters.}
-\item{scripts.size}{Expected size of \code{scripts.dat} in characters.}
+\item{yacas.sha1}{sha1 checksum of \code{yacas.exe}.}
+\item{scripts.sha1}{sha1 checksum of \code{scripts.dat}.}
 \item{...}{Additional arguments passed to \code{download.file}.  In most cases
 this is not used.}
 }

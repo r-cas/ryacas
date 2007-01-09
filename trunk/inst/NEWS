@@ -6,6 +6,10 @@ o new Windows only features
     to facilitate installation of yacas
   - .First.lib reminds Windows users to install yacas if yacas not found
 
+o Ryacas now depends on the digest package (in addition to the XML package).
+  digest provides SHA1 checksums which are used to check the downloads
+  of yacas.exe and scripts.dat .
+
 o Ryacas now uses yacas 1.0.63 on all platforms. (The yacas Windows binary 
   is available under Downloads tab on Ryacas home page.)
 

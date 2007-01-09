@@ -20,7 +20,8 @@ yacasFile <- function(filename = c("yacas.exe", "scripts.dat", "R.ys"),
 }
 
 # yacasCheck <- function(yacas.size = 368640, scripts.size = 224035) {
-yacasCheck <- function(yacas.size = 372736, scripts.size = 224017) {
+yacasCheck <- function(yacas.sha1 = "47bdf170e48dead5dd2ee4a5c141599eafa12528", 
+     scripts.sha1 = "3e0ac30e898ca278ec507e501fda41f450fef934") {
    # return: NA = dont know, -1 = not found, 0 = ok, 1 = found but wrong version
    stopifnot(.Platform$OS.type == "windows")
    yacas.invoke.string <- Sys.getenv("YACAS_INVOKE_STRING")
@@ -28,8 +29,8 @@ yacasCheck <- function(yacas.size = 372736, scripts.size = 224017) {
    yacas.exe <- yacasFile("yacas.exe")
    scripts.dat <- yacasFile("scripts.dat")
    if (file.exists(yacas.exe) && file.exists(scripts.dat)) {
-      if (file.info(scripts.dat) == scripts.size &&
-         file.info(yacas.exe)$size == yacas.size) 0
+      if (digest(scripts.dat, alg = "sha1", file = TRUE) == scripts.sha1 &&
+         digest(yacas.exe, alg = "sha1", file = TRUE) == yacas.sha1) 0
       else 1
    } else -1
 }
