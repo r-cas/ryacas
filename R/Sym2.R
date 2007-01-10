@@ -67,7 +67,8 @@ N.default <- function(x, ...) Sym("N(", paste(x, ..., sep = ","), ")")
 
 Pi <- Sym("Pi")
 
-Ver.default <- function() Sym("Version()")
+Ver <- function(x) UseMethod("Ver")
+Ver.default <- function(x) Sym("Version()")
 
 Clear <- function(x, ...) UseMethod("Clear")
 Clear.default <- function(x, ...) Sym("Clear(", x, ")")

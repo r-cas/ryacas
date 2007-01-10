@@ -46,7 +46,7 @@ List.Expr <- function(x, ...)
 N.Expr <- function(x, ...)
    Expr(substitute(N(x, ...), as.list(match.call())[-1]))
 
-Ver.Expr <- function() Exprq(Version())
+Ver.Expr <- function(x) Exprq(Version())
 
 Clear.Expr <- function(x, ...)
    Expr(substitute(Clear(x, ...), as.list(match.call())[-1]))
