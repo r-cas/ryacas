@@ -2,19 +2,17 @@ Changes in version 0.2-4
 
 o new Windows only features
   - yacas.exe, scripts.dat no longer included in Ryacas distribution
-  - new Windows-only yacasInstall, yacasFile and yacasCheck commands
+  - new Windows-only yacasInstall and yacasFile commands
     to facilitate installation of yacas
   - .First.lib reminds Windows users to install yacas if yacas not found
 
-o Ryacas now depends on the digest package (in addition to the XML package).
-  digest provides SHA1 checksums which are used to check the downloads
-  of yacas.exe and scripts.dat .
-
 o Ryacas now uses yacas 1.0.63 on all platforms. (The yacas Windows binary 
-  is available under Downloads tab on Ryacas home page.)
+  is available in the relevant zip file under Downloads tab on Ryacas 
+  home page. On Windows yacasInstall() will download it, extract yacas.exe and
+  scripts.dat and place them both in ...\Ryacas\yacdir.)
 
-o yacas is now started in single user server mode (new mode was added
-  in yacas 1.0.62)
+o yacas is now started in single user server mode (this new mode was added
+  to yacas as of yacas version 1.0.62)
 
 o runYacas now uses wait = FALSE on Windows
 

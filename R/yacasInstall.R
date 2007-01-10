@@ -19,39 +19,23 @@ yacasFile <- function(filename = c("yacas.exe", "scripts.dat", "R.ys"),
    chartr(setdiff(c("/", "\\"), slash), slash, fullname)
 }
 
-# yacasCheck <- function(yacas.size = 368640, scripts.size = 224035) {
-yacasCheck <- function(yacas.sha1 = "47bdf170e48dead5dd2ee4a5c141599eafa12528", 
-     scripts.sha1 = "3e0ac30e898ca278ec507e501fda41f450fef934") {
-   # return: NA = dont know, -1 = not found, 0 = ok, 1 = found but wrong version
+yacasInstall <- function(url = 
+   "http://ryacas.googlecode.com/files/yacas-1.0.63.zip",
+   overwrite = FALSE) {
    stopifnot(.Platform$OS.type == "windows")
-   yacas.invoke.string <- Sys.getenv("YACAS_INVOKE_STRING")
-   if (yacas.invoke.string != "") return(NA)
-   yacas.exe <- yacasFile("yacas.exe")
-   scripts.dat <- yacasFile("scripts.dat")
-   if (file.exists(yacas.exe) && file.exists(scripts.dat)) {
-      if (digest(scripts.dat, alg = "sha1", file = TRUE) == scripts.sha1 &&
-         digest(yacas.exe, alg = "sha1", file = TRUE) == yacas.sha1) 0
-      else 1
-   } else -1
-}
-   
-yacasInstall <- function(showonly = FALSE, ...) {
-   stopifnot(.Platform$OS.type == "windows")
-   # urlbase <- "http://ryacas.googlecode.com/svn/trunk/inst/yacdir"
-   urlbase <- "http://ryacas.googlecode.com/files"
-   # yacdir <- system.file(package = "Ryacas", "yacdir")
+   tmpd <- tempdir()
+   tmpz <- file.path(tmpd, basename(url))
+   download.file(url, tmpz, mode = "wb")
+   zip.unpack(tmpz, tmpd)
    files <- c("scripts.dat", "yacas.exe")
-   lapply(files, function(f) {
-      cat("Download", file.path(urlbase, f), "\nto", yacasFile(f), "\n")
-      if (!showonly)
-         download.file(file.path(urlbase, f), yacasFile(f), mode = "wb", ...) 
-      }
-   )
-   result <- yacasCheck()
-   if (is.na(result)) 
-      warning("The checks for yacas existence and version were bypassed.\n")
-   if (result == -1) warning("yacas was not found.\n")
-   if (result == 1) warning("Different version of yacas found than expected.\n")
+   lf <- function(f) list.files(path = tmpd, pattern = f,
+      all.files = FALSE, full.names = TRUE, recursive = TRUE)
+   for (f in files)
+      if (length(lf(f)) ==0) stop(paste(f, "not found in", url))
+   for (f in files) if (!file.copy(lf(f), yacasFile(f), overwrite = overwrite))
+      warning(paste(yacasFile(f), "already exists.\n  Use overwrite = TRUE"))
    invisible()
 }
+
+
 
