@@ -1,6 +1,5 @@
 \name{yacasInstall}
 \alias{yacasInstall}
-\alias{yacasCheck}
 \alias{yacasFile}
 \title{ Install yacas files needed by Ryacas }
 \description{
@@ -8,27 +7,24 @@
   by \code{Ryacas}.
 }
 \usage{
-yacasInstall(showonly = FALSE, ...)
+yacasInstall(url = "http://ryacas.googlecode.com/files/yacas-1.0.63.zip",
+   overwrite = FALSE)
 yacasFile(filename = c("yacas.exe", "scripts.dat", "R.ys"),
-slash = c("\\", "/"))
-yacasCheck(yacas.sha1 = "47bdf170e48dead5dd2ee4a5c141599eafa12528", 
-     scripts.sha1 = "3e0ac30e898ca278ec507e501fda41f450fef934")
+   slash = c("\\", "/"))
 }
 \arguments{
-\item{showonly}{If \code{TRUE} then no download is performed but instead
-command simplfy shows what it would download and to where.}
+\item{url}{URL of a zip file containing 
+    \code{yacas.exe} and \code{scripts.dat}.}
+\item{overwrite}{If \code{TRUE} then existing files are overwritten.}
 \item{filename}{Name of file whose full path is wanted.}
 \item{slash}{slash style to use on output pathname.}
-\item{yacas.sha1}{sha1 checksum of \code{yacas.exe}.}
-\item{scripts.sha1}{sha1 checksum of \code{scripts.dat}.}
 \item{...}{Additional arguments passed to \code{download.file}.  In most cases
 this is not used.}
 }
 \details{
-\code{yacasInstall} installs the \code{yacas} files, \code{yacas.exe} and 
-\code{scripts.dat} needed by \code{Ryacas}.  \code{yacas.exe} is
-installed into \code{yacasFile("yacas.exe")} and \code{scripts.dat} is
-installed into \code{yacasFile("scripts.dat")}.
+\code{yacasInstall} downloads a zip file and extracts \code{yacas.exe} and 
+\code{scripts.dat} installing them into 
+\code{yacasFile("yacas.exe")} and \code{yacasFile("scripts.dat")}.
 
 }
 \value{
@@ -72,8 +68,7 @@ Sys.getenv("YACAS_SCRIPTS")
 system.file(package = "Ryacas", "yacdir")
 yacasFile("yacas.exe")
 yacasFile("scripts.dat")
-yacasCheck()
-yacasInstall(showonly = TRUE)
+yacasInstall()
 }
 }
 \keyword{ symbolmath }
