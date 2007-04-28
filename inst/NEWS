@@ -1,3 +1,8 @@
+Changes in version 0.2-5
+
+o srcfile= added to parse call in yacas() and Sys.putenv replaced with
+  Sys.setenv so yacas works with R 2.5.0
+
 Changes in version 0.2-4
 
 o new Windows only features

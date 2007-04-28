@@ -112,7 +112,7 @@ not used.  If it does need to be used then a typical use might be:
    \code{# only need to do the file.copy command once}\cr
    \code{file.copy(system.file("yacdir/R.ys", package = "Ryacas"), "~/.yacsrc")}\cr
    \code{# this needs to be done once per session}\cr
-   \code{Sys.putenv(YACAS_INVOKE_STRING = "yacas -pc --server 9734")}\cr
+   \code{Sys.setenv(YACAS_INVOKE_STRING = "yacas -pc --server 9734")}\cr
    \code{demo(Ryacas) # test it out}\cr
 }
 

@@ -33,7 +33,7 @@ Ops.Sym <- function (e1, e2)
     if (missing(e2)) { Sym(.Generic, e1)
     } else Sym(e1, .Generic, e2)
 
-Math.Sym <- function(x) {
+Math.Sym <- function(x, ...) {
 	idx <- match(.Generic, transtab[,1], nomatch = 0)
 	fn <- if (idx > 0) transtab[idx, 3] else .Generic
 	Sym(fn, "(", x, ")")
