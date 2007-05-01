@@ -29,7 +29,9 @@ expression(1/2)
 >
 > # ASCII pretty printing
 > 
-> PrettyForm(exp(-x^2)/(cos(x)+exp(x)))
+> exp(-x^2)/(cos(x)+exp(x))
+expression(exp(-x^2)/(cos(x) + exp(x)))
+> PrettyForm("%")
      /  /  2 \ \   
   Exp\ -\ x  / /   
 -------------------
@@ -59,4 +61,3 @@ $\left( x + 1\right)  ^{2} + k ^{3}$
 > detach()
 >
 }}}
-
