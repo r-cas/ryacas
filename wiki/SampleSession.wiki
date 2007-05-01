@@ -11,8 +11,13 @@
 >
 > library(Ryacas)
 > x <- Sym('x')
-> x*x
-expression(x^2)
+> (x+1) * (x-1)
+expression((x + 1) * (x - 1))
+> Simplify("%")
+expression(x^2 - 1)
+> PrettyForm("%")
+ 2    
+x  - 1
 
 >
 > # calculus
