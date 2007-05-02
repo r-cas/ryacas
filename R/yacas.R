@@ -52,9 +52,8 @@ runYacas <- function() {
    else system(cmd)
 }
 
-haveYacas <- function () 
-  !suppressWarnings(yacas("quit", method = "system", 
-    retclass = "character"))
+haveYacas <- function()
+   !inherits(try(yacas("1", method = "system"), silent = TRUE), "try-error")  
 
 yacasStart <- function(verbose = FALSE, method = c("socket", "system"))
 {
