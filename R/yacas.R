@@ -48,9 +48,9 @@ yacasInvokeString <- function(method = c("socket", "system"),
 
 runYacas <- function() {
    cmd <- yacasInvokeString(method = "system", yacas.args = "", yacas.init = "")
-   # if (.Platform$OS.type == "windows") system(cmd, wait = TRUE)
-   # else system(cmd)
-   system(cmd, wait = FALSE, invisible = FALSE)
+   if (.Platform$OS.type == "windows") 
+      system(cmd, wait = FALSE, invisible = FALSE)
+   else system(cmd, wait = FALSE)
 }
 
 haveYacas <- function()
@@ -147,8 +147,11 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 #            close(out)
 #            system(paste(yacasInvokeString(method = "system"), f.tmp)) 
 #       }
-        chunk1 <- system(yacasInvokeString(method = "system"), 
+        chunk1 <- if (.Platform$OS.type == "windows")
+		system(yacasInvokeString(method = "system"), 
 	          input = x, intern = TRUE, invisible = TRUE)
+		else system(yacasInvokeString(method = "system"), 
+	          input = x, intern = TRUE)
 	chunk1 <- sub("^(In> *| +)", "", chunk1)
 	chunk1 <- head(tail(chunk1, -6), -3)
 	yac.res <- chunk1
