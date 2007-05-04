@@ -147,10 +147,7 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 #            close(out)
 #            system(paste(yacasInvokeString(method = "system"), f.tmp)) 
 #       }
-        chunk1 <- if (.Platform$OS.type == "windows")
-		system(yacasInvokeString(method = "system"), 
-	          input = x, intern = TRUE, invisible = TRUE)
-		else system(yacasInvokeString(method = "system"), 
+	chunk1 <- system(yacasInvokeString(method = "system"), 
 	          input = x, intern = TRUE)
 	chunk1 <- sub("^(In> *| +)", "", chunk1)
 	chunk1 <- head(tail(chunk1, -6), -3)
