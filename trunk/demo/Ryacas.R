@@ -66,7 +66,7 @@
 	print(yacas(expression(integrate(x*x,x))))
 
 	# get yacas version
-	yacas("Version()")
+	Ver()
 
 
 
