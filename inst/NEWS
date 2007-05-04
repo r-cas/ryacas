@@ -2,6 +2,14 @@ Changes in version 0.2-6
 
 o fixed bug in haveYacas
 
+o fixed bug in runYacas
+
+o removed platform dependencies from yacasStart and yacas.character
+  using new unified system function in R 2.5.0.  invokeYacasString 
+  is the only function remaining in yacas.R that still has a platform 
+  dependency.  (zzz.R and yacasInstall.R are only other .R files with 
+  platform dependencies.)
+
 Changes in version 0.2-5
 
 o srcfile= added to parse call in yacas() and Sys.putenv replaced with

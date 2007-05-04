@@ -48,8 +48,9 @@ yacasInvokeString <- function(method = c("socket", "system"),
 
 runYacas <- function() {
    cmd <- yacasInvokeString(method = "system", yacas.args = "", yacas.init = "")
-   if (.Platform$OS.type == "windows") system(cmd, wait = TRUE)
-   else system(cmd)
+   # if (.Platform$OS.type == "windows") system(cmd, wait = TRUE)
+   # else system(cmd)
+   system(cmd, wait = FALSE, invisible = FALSE)
 }
 
 haveYacas <- function()
@@ -67,11 +68,12 @@ yacasStart <- function(verbose = FALSE, method = c("socket", "system"))
 
   if (verbose)
      cat("Invoking Yacas with command line:\n   ", cmd.str, "\n")
-  if (.Platform$OS.type == "windows") {
-    system(cmd.str, wait = FALSE)
-  } else {
-    system(paste(cmd.str, "&"))
-  }
+  system(cmd.str, wait = FALSE)
+  # if (.Platform$OS.type == "windows") {
+  #  system(cmd.str, wait = FALSE)
+  #} else {
+  #  system(paste(cmd.str, "&"))
+  #}
 
   .yacCon<<-socketConnection(host = "127.0.0.1", port=9734, server = FALSE,
                       blocking = FALSE, open = "a+",
@@ -130,21 +132,23 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 	}
 	
     if (method == "system") {
-        chunk1 <- if (.Platform$OS.type == "windows")
-            system(yacasInvokeString(method = "system"), 
-		          input = x, intern = TRUE, invisible = TRUE)
-		else {
-            f.tmp = file.path(tempdir(), ".R/yacas.tmp")
-            if (!file.create(f.tmp)) {
-                warning("cannot create tmp yacas input file")
-                return(FALSE)
-            }
-            out <- file(f.tmp, open = "a")
-#            cat(paste("Echo('Executing :'", x, ");"))
-            cat(x, file=out)
-            close(out)
-            system(paste(yacasInvokeString(method = "system"), f.tmp)) 
-        }
+#       chunk1 <- if (.Platform$OS.type == "windows")
+#            system(yacasInvokeString(method = "system"), 
+#		          input = x, intern = TRUE, invisible = TRUE)
+#		else {
+#            f.tmp = file.path(tempdir(), ".R/yacas.tmp")
+#            if (!file.create(f.tmp)) {
+#                warning("cannot create tmp yacas input file")
+#                return(FALSE)
+#            }
+#            out <- file(f.tmp, open = "a")
+##            cat(paste("Echo('Executing :'", x, ");"))
+#            cat(x, file=out)
+#            close(out)
+#            system(paste(yacasInvokeString(method = "system"), f.tmp)) 
+#       }
+        chunk1 <- system(yacasInvokeString(method = "system"), 
+	          input = x, intern = TRUE, invisible = TRUE)
 	chunk1 <- sub("^(In> *| +)", "", chunk1)
 	chunk1 <- head(tail(chunk1, -6), -3)
 	yac.res <- chunk1
