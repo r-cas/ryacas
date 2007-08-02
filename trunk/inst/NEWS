@@ -1,10 +1,14 @@
 Changes in version 0.2-6
 
+o fixed some documentation bugs
+
+Changes in version 0.2-6
+
 o fixed bug in haveYacas
 
 o fixed bug in runYacas
 
-o removed some platform dependencies from yacas.R
+o removed some, but not all, platform dependencies from yacas.R
 
 Changes in version 0.2-5
 

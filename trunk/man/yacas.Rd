@@ -85,6 +85,7 @@ by issuing the commands:
 
 \tabular{l}{
    \code{install.packages("Ryacas", dep = TRUE)}\cr
+   \code{library(Ryacas)}\cr
    \code{yacasInstall()}\cr
 }
 
