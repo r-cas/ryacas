@@ -75,10 +75,10 @@ yacasStart <- function(verbose = FALSE, method = c("socket", "system"))
   #  system(paste(cmd.str, "&"))
   #}
 
+  Sys.sleep(1)
   .yacCon<<-socketConnection(host = "127.0.0.1", port=9734, server = FALSE,
                       blocking = FALSE, open = "a+",
                       encoding = getOption("encoding"))
-  Sys.sleep(1)
   invisible(0)
 }
 
