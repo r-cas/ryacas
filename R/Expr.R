@@ -20,7 +20,7 @@ Math.Expr <- function(x, ...) {
 }
 
 
-deriv.Expr <- function(expr, name = Exprq(x), n = 1, ...)
+deriv.Expr <- function(expr, name = Expr(as.name("x")), n = 1, ...)
 	Expr(substitute(deriv(expr,name,n), as.list(match.call())[-1]))
 
 print.Expr <- function(x, ...) print(yacas(x, ...))

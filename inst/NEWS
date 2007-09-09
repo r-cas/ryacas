@@ -4,6 +4,8 @@ o socket timeout improvement from Petr Savicky
 
 o added Encoding: line to DESCRIPTION file
 
+o minor changes to satisfy R 2.6.0
+
 Changes in version 0.2-6
 
 o fixed some documentation bugs

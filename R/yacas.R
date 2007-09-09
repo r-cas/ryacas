@@ -1,4 +1,5 @@
 
+
 #
 # yacas is in YACAS_HOME. If unset then on Windows the yacas
 # distributed with R is used and otherwise the yacas on the
@@ -76,9 +77,10 @@ yacasStart <- function(verbose = FALSE, method = c("socket", "system"))
   #}
 
   Sys.sleep(1)
-  .yacCon<<-socketConnection(host = "127.0.0.1", port=9734, server = FALSE,
+  assign(".yacCon", socketConnection(host = "127.0.0.1", port=9734, 
+			server = FALSE,
                       blocking = FALSE, open = "a+",
-                      encoding = getOption("encoding"))
+                      encoding = getOption("encoding")), .GlobalEnv)
   invisible(0)
 }
 
@@ -91,7 +93,8 @@ yacasStop <- function(verbose = TRUE)
 {
   if (exists(".yacCon", .GlobalEnv)) {
       # if (isConnection(get(".yacCon", .GlobalEnv))) try(close(.yacCon))
-      if (isConnection(get(".yacCon", .GlobalEnv))) {
+      .yacCon <- get(".yacCon", .GlobalEnv)
+      if (isConnection(.yacCon)) {
          writeLines("Exit();", .yacCon)
          try(close(.yacCon))
       }
@@ -166,6 +169,7 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 #	print(x)
     if (!is.na(pmatch(verbose, c(TRUE, "input")))) 
        cat("Sending to yacas:", x, "", sep = "\n")
+    .yacCon <- get(".yacCon", .GlobalEnv)
     writeLines(x, .yacCon)
 
     delim <- "]"
