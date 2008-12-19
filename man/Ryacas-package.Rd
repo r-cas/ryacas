@@ -28,9 +28,9 @@ Vignette\tab vignette("Ryacas")\cr
 This File\tab package?Ryacas\cr
 Help files\tab ?yacas, ?yacasTranslations, ?yacmode, ?Sym\cr
 Help files - Windows\tab ?yacasInstall\cr
-News\tab file.show(system.file("NEWS", package = "Ryacas"))\cr
-Acknowledgements\tab file.show(system.file("THANKS", package = "Ryacas"))\cr
-Wish List\tab file.show(system.file("WISHLIST", package = "Ryacas"))\cr
+News\tab RShowDoc("NEWS", package = "Ryacas")\cr
+Acknowledgements\tab RShowDoc("THANKS", package = "Ryacas")\cr
+Wish List\tab RShowDoc("WISHLIST", package = "Ryacas")\cr
 Home page\tab http://code.google.com/p/ryacas/\cr
 }
 }
