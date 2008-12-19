@@ -619,11 +619,19 @@ yacas("Solve(x/(1+x) == a, x)")
 yacas("Solve(x^2+x == 0, x)")
 @ %def 
 
-@ 
 <<>>=
 Solve(xs/(1+xs) == as, xs)
 Solve(xs^2+xs == 0, xs)
 @ %def 
+
+<<>>=
+Solve(List(xs^2+ys^2==6, xs-ys==3), List(xs,ys))
+@ %def
+
+<<>>=
+Solve(List(mean==(xs/(xs+ys)), variance==((xs*ys)/(((xs+ys)^2) * (xs+ys+1)))),
+    List(xs,ys))
+@ %def
 
 (Note the use of the == operator, which does not evaluate to anything,
 to denote an "equation" object.) 

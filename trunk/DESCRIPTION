@@ -1,12 +1,12 @@
 Package: Ryacas
-Version: 0.2-8
-Date: 2007-08-22
+Version: 0.2-9
+Date: 2008-12-19
 Title: R interface to the yacas computer algebra system 
 Author: Rob Goedman <goedman@mac.com>, Gabor Grothendieck <ggrothendieck@gmail.com>, Søren Højsgaard <Soren.Hojsgaard@agrsci.dk>, Ayal Pinkus <apinkus@xs4all.nl> 
 Maintainer: G Grothendieck <ggrothendieck@gmail.com>
 Encoding: latin1
 Description: An interface to the yacas computer algebra system.
-Depends: R (>= 2.5.1), XML
-SystemRequirements: yacas (>= 1.0.63) # instructions on home page
-License: GPL
+Depends: R (>= 2.5.1), XML (<= 1.96-0)
+SystemRequirements: yacas (= 1.0.63) # instructions on home page
+License: GPL-2
 URL: http://ryacas.googlecode.com

@@ -1,3 +1,11 @@
+Changes in version 0.2-9
+
+o DESCRIPTION file specifies XML version 1.96-0 as later versions break Ryacas
+
+Changes in version 0.2-8
+
+o added additional Solve examples to vignette
+
 Changes in version 0.2-7
 
 o socket timeout improvement from Petr Savicky
