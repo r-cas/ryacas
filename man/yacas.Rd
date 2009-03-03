@@ -50,17 +50,13 @@ retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
    its known that the character string already has a trailing 
    semicolon.  It is ignored if \code{retclass="expression"}.}
   \item{retclass}{The class of the first component of the yacas structure.
-   It defaults to \code{"expression"" but may be specified as  
+   It defaults to \code{"expression"} but may be specified as  
    \code{"character"} or \code{"unquote"}.  \code{"unquote"} is the 
    same as \code{"character"} except that if the character string
    returned would have otherwise had quotes in the first and 
    and last positions then they are stripped.}
   \item{\dots}{Additional arguments ultimately passed down to 
    \code{yacas.character}.}
-  
-
-If }
-  \item{...}{Other arguments.  Not currently used.}
 }
 \details{
   The user supplies an R expression, an R function name corresponding to

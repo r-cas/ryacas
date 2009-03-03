@@ -10,7 +10,7 @@
 yacasInstall(url = "http://ryacas.googlecode.com/files/yacas-1.0.63.zip",
    overwrite = FALSE)
 yacasFile(filename = c("yacas.exe", "scripts.dat", "R.ys"),
-   slash = c("\\", "/"))
+   slash = c("\\\\", "/"))
 }
 \arguments{
 \item{url}{URL of a zip file containing 
