@@ -1,6 +1,8 @@
 Changes in version 0.2-10
 
+o fixes to pass R CMD CHECK
 
+o added INSTALL file
 
 Changes in version 0.2-9
 
