@@ -24,7 +24,8 @@ OpenMath2R <- function(x) {
 			if (i > 1 && i < length(xmlChildren(x))) 
 				out <<- c(out, ",")
 		}
-	if (xmlName(x) == "OMA" || xmlName(x) == "OMBIND") out <<- c(out, xmlValue(x), ")")
+	# if (xmlName(x) == "OMA" || xmlName(x) == "OMBIND") out <<- c(out, xmlValue(x), ")")
+	if (xmlName(x) == "OMA" || xmlName(x) == "OMBIND") out <<- c(out, ")")
  }
  x <- paste(x, "\n", collapse = "")
  x <- xmlTreeParse(x, asText = TRUE)

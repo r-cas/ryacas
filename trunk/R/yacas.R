@@ -47,8 +47,8 @@ yacasInvokeString <- function(method = c("socket", "system"),
                             server.string, yacas.post)
 }
 
-runYacas <- function() {
-   cmd <- yacasInvokeString(method = "system", yacas.args = "", yacas.init = "")
+runYacas <- function(method = "system", yacas.args = "", yacas.init = "") {
+   cmd <- yacasInvokeString(method = method, yacas.args = yacas.args, yacas.init = yacas.init)
    if (.Platform$OS.type == "windows") 
       system(cmd, wait = FALSE, invisible = FALSE)
    else system(cmd, wait = FALSE)
@@ -265,7 +265,8 @@ ysub <- function(x)
                 if (match(toString(x), transtab[,"R"], nomatch = 0) >0 ) {
                         x <- trans(toString(x), from="R", to="yacas")
                         if (x == '":="') x <- ":="
-                        mode(x) <- "name"
+                        # mode(x) <- "name"
+						x <- as.name(x)
         } else if (typeof(x) == "symbol") 
             {
                 try(x <- ynext(eval(x)[[1]]))
