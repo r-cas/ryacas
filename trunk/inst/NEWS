@@ -1,3 +1,7 @@
+Changes in version 0.2-11
+
+o modifications needed to work in R 2.14
+
 Changes in version 0.2-10
 
 o fixes to pass R CMD CHECK
