@@ -1,6 +1,7 @@
 Ryacas		Examples of R and yacas working together.
 Ryacas-PrettyPrinter		Example of PrettyPrinter output.
 Ryacas-Function		Differentiate R fn creating another R function.
+Ryacas-gui	Simple graphical user interface
 Ryacas-Sym		Similar to Ryacas demo but using the Sym interface.
 Ryacas-Expr		Expr is like Sym but uses expressions, not strings.
 

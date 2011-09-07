@@ -26,7 +26,8 @@ yacasInstall <- function(url =
    tmpd <- tempdir()
    tmpz <- file.path(tmpd, basename(url))
    download.file(url, tmpz, mode = "wb")
-   zip.unpack(tmpz, tmpd)
+   # zip.unpack(tmpz, tmpd)
+   unzip(tmpz, overwrite = TRUE, junkpaths = TRUE, exdir = tmpd)
    files <- c("scripts.dat", "yacas.exe")
    lf <- function(f) list.files(path = tmpd, pattern = f,
       all.files = FALSE, full.names = TRUE, recursive = TRUE)
