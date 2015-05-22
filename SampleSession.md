@@ -1,0 +1,65 @@
+# Sample Session #
+
+```
+> library(Ryacas)
+
+>
+> # algebra
+>
+> library(Ryacas)
+> x <- Sym('x')
+> (x+1) * (x-1)
+expression((x + 1) * (x - 1))
+> Simplify("%")
+expression(x^2 - 1)
+> PrettyForm("%")
+ 2    
+x  - 1
+
+>
+> # calculus
+>
+> Integrate(x+tan(x), x)
+expression(x^2/2 - log(cos(x)))
+
+>
+> # exact arithmetic
+>
+> yacas('12/24')
+expression(1/2)
+
+>
+> # ASCII pretty printing
+> 
+> exp(-x^2)/(cos(x)+exp(x))
+expression(exp(-x^2)/(cos(x) + exp(x)))
+> PrettyForm("%")
+     /  /  2 \ \   
+  Exp\ -\ x  / /   
+-------------------
+Cos( x ) + Exp( x )
+
+>
+> # matrix - yacas matrices are row-wise
+>
+
+> List(List(1,2),List(x,6))
+expression(list(list(1, 2), list(x, 6)))
+> PrettyForm("%")
+/              \
+| ( 1 ) ( 2 )  |
+|              |
+| ( x ) ( 6 )  |
+\              /
+
+>
+> # output TeX 
+>
+> k <- Sym('k')
+> yacas(TeXForm((x+1)^2 + k^3), retclass = 'unquote')
+$\left( x + 1\right)  ^{2} + k ^{3}$
+
+>
+> detach()
+>
+```
