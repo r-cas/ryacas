@@ -1,120 +1,6 @@
 
-
-#
-# yacas is in YACAS_HOME. If unset then on Windows the yacas
-# distributed with R is used and otherwise the yacas on the
-# path is used.  If YACAS_HOME is a directory, filename
-# is assumed to be yacas.exe on Windows and yacas otherwise.
-#
-# scripts are in YACAS_SCRIPTS or in yacas home directory
-# if not specified.  If YACAS_SCRIPTS is a directory, filename 
-# is assumed to be scripts.dat .
-#
-# init file is in YACAS_INIT or in yacdir within the Ryacas
-# package if not specified.  If YACAS_INIT is a directory, filename 
-# is assumed to be R.ys.
-
-yacasInvokeString <- function(method = c("socket", "system"), 
-   yacas.init , yacas.args = "-pc --single-user-server") {
-   yacas.invoke.string <- Sys.getenv("YACAS_INVOKE_STRING")
-   if (Sys.getenv("YACAS_INVOKE_STRING") != "") return(yacas.invoke.string)
-   method <- match.arg(method)
-   whole.path <- function(path, defpath, deffile) {
-      if (path == "") path <- defpath
-      if (file.info(path)$isdir) file.path(path, deffile) else path
-   }
-
-   if (.Platform$OS.type == "windows") {
-      # yacas.args <- "-pc"
-      yacas <- yacasFile("yacas.exe")
-      if (missing(yacas.init)) yacas.init <- yacasFile("R.ys", "/")
-      yacas.post <- ""
-      yacas.scripts <- yacasFile("scripts.dat", "/")
-      yacas.scripts <- paste("--archive", shQuote(yacas.scripts))
-   } else {
-      # yacas.args <- "-pc"
-      yacas <- "yacas"
-      if (missing(yacas.init))
-        yacas.init <- file.path(system.file(package = "Ryacas"), "yacdir/R.ys")
-      yacas.post <- "  "
-      yacas.scripts <- ""
-   }
-
-   server.string <- if(method == "socket") "--server 9734" else ""
-   if (yacas.init != "") yacas.init <- paste("--init", shQuote(yacas.init))
-   paste(yacas, yacas.init, 
-                            yacas.scripts, yacas.args,
-                            server.string, yacas.post)
-}
-
-runYacas <- function(method = "system", yacas.args = "", yacas.init = "") {
-   cmd <- yacasInvokeString(method = method, yacas.args = yacas.args, yacas.init = yacas.init)
-   if (.Platform$OS.type == "windows") 
-      system(cmd, wait = FALSE, invisible = FALSE)
-   else system(cmd, wait = FALSE)
-}
-
-haveYacas <- function()
-   !inherits(try(yacas("1", method = "system"), silent = TRUE), "try-error")  
-
-yacasStart <- function(verbose = FALSE, method = c("socket", "system"))
-{
-  method <- match.arg(method)
-  if (method == "system") return()
-  if (!capabilities("sockets")) stop("no socket capabilties")
-  yacasStop(verbose = FALSE)
-  cmd.str <- yacasInvokeString(method = method)
-  print("Starting Yacas!")
-   # return path using defpath and deffile as fill-in defaults
-
-  if (verbose)
-     cat("Invoking Yacas with command line:\n   ", cmd.str, "\n")
-  system(cmd.str, wait = FALSE)
-  # if (.Platform$OS.type == "windows") {
-  #  system(cmd.str, wait = FALSE)
-  #} else {
-  #  system(paste(cmd.str, "&"))
-  #}
-
-  Sys.sleep(1)
-  assign(".yacCon", socketConnection(host = "127.0.0.1", port=9734, 
-			server = FALSE,
-                      blocking = FALSE, open = "a+",
-                      encoding = getOption("encoding")), .GlobalEnv)
-  invisible(0)
-}
-
-isConnection <- function(x) {
-	opened <- summary(x)$opened
-	identical(opened, "opened") || identical(opened, "closed")
-}
-
-yacasStop <- function(verbose = TRUE) 
-{
-  if (exists(".yacCon", .GlobalEnv)) {
-      # if (isConnection(get(".yacCon", .GlobalEnv))) try(close(.yacCon))
-      .yacCon <- get(".yacCon", .GlobalEnv)
-      if (isConnection(.yacCon)) {
-         writeLines("Exit();", .yacCon)
-         try(close(.yacCon))
-      }
-      rm(.yacCon, envir = .GlobalEnv)
-  }
-  # if (.Platform$OS.type == "windows") system("taskkill /im yacas.exe")
-  if (verbose) cat("Thank you for using yacas\n")
-  return(invisible(0))
-}
-.Last.lib <- function(lib) 
-{
-  if (exists(".yacCon", .GlobalEnv)) yacasStop()
-  # next statement has no effect except on Windows XP Pro
-}
-
-# proper counting of lines read in, and proper handling of them.
-
 yacas <- function(x, ...)
   UseMethod("yacas")
-
 
 yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...) {
 
@@ -125,88 +11,28 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
     }
 
     retclass <- match.arg(retclass)
-    if (missing(method)) method <- getOption("yacas.method")
-    method <- match.arg(method, c("socket", "system"))
 
-    if (retclass == "expression") {
+    if (retclass == "expression")
     	x <- paste("Eval(",x,");")
+    else
+		if (addSemi)
+            x <- addSemiFn(x)
+
+    yacas.res <- yacas_evaluate(x)
+
+    if (grepl('^<OMOBJ>', yacas.res[1])) {
+        text <- OpenMath2R(yacas.res[1])
+
+        if (retclass == "expression")
+            text <- parse(text = text, srcfile = NULL)
+        else if (retclass == "unquote")
+            text <- sub("^['\"](.*)['\"]", "\\1", text)
+
+        result <- list(text = text, OMForm = yacas.res[1])
+    } else if (nchar(yacas.res[1]) > 0) {
+        result <- list(NULL, PrettyForm = yacas.res[1])
     } else {
-		if (addSemi) x <- addSemiFn(x)
-	}
-	
-    if (method == "system") {
-#       chunk1 <- if (.Platform$OS.type == "windows")
-#            system(yacasInvokeString(method = "system"), 
-#		          input = x, intern = TRUE, invisible = TRUE)
-#		else {
-#            f.tmp = file.path(tempdir(), ".R/yacas.tmp")
-#            if (!file.create(f.tmp)) {
-#                warning("cannot create tmp yacas input file")
-#                return(FALSE)
-#            }
-#            out <- file(f.tmp, open = "a")
-##            cat(paste("Echo('Executing :'", x, ");"))
-#            cat(x, file=out)
-#            close(out)
-#            system(paste(yacasInvokeString(method = "system"), f.tmp)) 
-#       }
-	chunk1 <- system(yacasInvokeString(method = "system"), 
-	          input = x, intern = TRUE)
-	chunk1 <- sub("^(In> *| +)", "", chunk1)
-	chunk1 <- head(tail(chunk1, -6), -3)
-	yac.res <- chunk1
-        chunk2 <- ""
-    } else {
-
-    # if connection does not exist or its not a connection
-    # or its closed, startup Yacas.
-    if (!exists(".yacCon", .GlobalEnv) ||
-	!isConnection(get(".yacCon", .GlobalEnv)) ||
-	summary(get(".yacCon", .GlobalEnv))$opened == "closed")
-	    yacasStart(verbose = isTRUE(verbose))
-
-    yac.res <- c()
-#	print(x)
-    if (!is.na(pmatch(verbose, c(TRUE, "input")))) 
-       cat("Sending to yacas:", x, "", sep = "\n")
-    .yacCon <- get(".yacCon", .GlobalEnv)
-    writeLines(x, .yacCon)
-
-    delim <- "]"
-    yac.res <- c()
-    while (sum(delim == yac.res) < 2)
-    {
-      yac.out <- readLines(.yacCon)
-      yac.res <- c(yac.res, yac.out)
-    }
-    yac.res <- yac.res[yac.res != ""]
-    flush(.yacCon)
-
-    # print all non-delims in verbose mode
-    is.delim <- yac.res == delim
-    # print non-delims
-    if (any(!is.delim) && !is.na(pmatch(verbose, c(TRUE, "output")))) 
-       print(yac.res[!is.delim]) 
-
-    w <- which(is.delim)[1:2]
-    chunk1 <- yac.res[seq(1, length = w[1]-1)]
-    chunk2 <- yac.res[seq(w[1]+1, length = diff(w)-1)]
-    }
-
-    if (yac.res[1] == "<OMOBJ>") {
-	text <- OpenMath2R(chunk1)
-	if (retclass == "expression") text <- parse(text = text, srcfile = NULL)
-	# text <- format(text)[[1]]
-	if (retclass == "unquote") text <- sub("^['\"](.*)['\"]", "\\1", text)
-	result <- list(text = text, OMForm = chunk1)
-    } else {
-	if (length(chunk1) > 0) { # PrettyForm
-		# k is index of <OMOBJ> in chunk1
-		k <- grep("<OMOBJ>", chunk1)
-		# only keep first k-1 elements of chunk1
-		if (length(k) > 0) chunk1 <- chunk1[seq(length = k-1)]
-		result <- list(NULL, PrettyForm = chunk1)
-	} else result <- list(NULL, YacasForm = chunk2)
+        result <- list(NULL, YacasForm = yacas.res[2])
     }
 
     class(result) <- "yacas"

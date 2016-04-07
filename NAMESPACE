@@ -1,0 +1,3 @@
+useDynLib(Ryacas)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)

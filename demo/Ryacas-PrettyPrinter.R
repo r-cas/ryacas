@@ -1,6 +1,6 @@
 
 # ASCII pretty printing
-yacas('PrettyPrinter("PrettyForm")')
+yacas("PrettyPrinter'Set(\"PrettyForm\")")
 yacas("{{a,b},{c,d}}")
 yacas('(x+y)^3-(x-y)^3')
 yacas('Simplify(%)')
@@ -13,11 +13,11 @@ yacas('A:={{1,2},{a,6}}')
 yacas('MatrixPower(A,3)')
 
 # set to yacas form
-yacas('PrettyPrinter()')
+yacas("PrettyPrinter'Set()")
 yacas("A")
 
 # reset back to the default OMForm
-yacas('PrettyPrinter("OMForm")')
+yacas("PrettyPrinter'Set(\"OMForm\")")
 yacas(expression(x+x))
 
 # emit one line of TeX code

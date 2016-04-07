@@ -1,11 +1,9 @@
 WISHLIST
 
-o single user server mode (when yacas 1.0.62 is released for Windows)
-
 o check out the following in case there is something useful for us:
 	http://alphatcl.sourceforge.net/wikit/182
 
-o ensure examples work at http://yacas.sourceforge.net/intromanual.html
+o ensure examples work at https://yacas.readthedocs.org/en/latest/tutorial/index.html
 
 o some 'syntax mapping' yet to be done, e.g.  atan2
 
