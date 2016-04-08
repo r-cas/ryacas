@@ -1,0 +1,14 @@
+/nbproject/
+/build/
+/install/
+*.cmake
+/CMakeFiles/
+/CMakeScripts/
+CMakeCache.txt
+/Release/
+/Debug/
+/Yacas.build/
+/Yacas.xcodeproj/
+/JavaYacas/CVersion.java
+/TEST-net.sf.yacas.YacasTest.xml
+/yacas-logfile.txt

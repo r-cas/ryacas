@@ -4,9 +4,6 @@
 
 #include <sstream>
 
-#define STRINGIFY(s) STRINGIFY_HELPER(s)
-#define STRINGIFY_HELPER(s) #s
-
 namespace {
     static std::stringstream _side_effects;
     static CYacas* _yacas = nullptr;
@@ -15,7 +12,11 @@ namespace {
 void yacas_initialize()
 {
     _yacas = new CYacas(_side_effects);
-    std::string scripts_path = STRINGIFY(YACAS_SCRIPTS_PATH);
+
+    Rcpp::Environment base_env = Rcpp::Environment::base_env();
+    Rcpp::Function system_file = base_env["system.file"];
+    std::string scripts_path = Rcpp::as<std::string>(system_file(Rcpp::Named("package", "Ryacas"), "yacas"));
+
     if (!scripts_path.empty()) {
         if (scripts_path.back() != '/')
             scripts_path.push_back('/');
