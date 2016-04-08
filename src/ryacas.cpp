@@ -7,32 +7,33 @@
 namespace {
     static std::stringstream _side_effects;
     static CYacas* _yacas = nullptr;
-}
 
-void yacas_initialize()
-{
-    _yacas = new CYacas(_side_effects);
+    static
+    void yacas_initialize()
+    {
+        _yacas = new CYacas(_side_effects);
 
-    Rcpp::Environment base_env = Rcpp::Environment::base_env();
-    Rcpp::Function system_file = base_env["system.file"];
-    std::string scripts_path = Rcpp::as<std::string>(system_file(Rcpp::Named("package", "Ryacas"), "yacas"));
+        Rcpp::Environment base_env = Rcpp::Environment::base_env();
+        Rcpp::Function system_file = base_env["system.file"];
+        std::string scripts_path = Rcpp::as<std::string>(system_file(Rcpp::Named("package", "Ryacas"), "yacas"));
 
-    if (!scripts_path.empty()) {
-        if (scripts_path.back() != '/')
-            scripts_path.push_back('/');
-        _yacas->Evaluate(std::string("DefaultDirectory(\"") +  scripts_path + "\");");
-    }
+        if (!scripts_path.empty()) {
+            if (scripts_path.back() != '/')
+                scripts_path.push_back('/');
+            _yacas->Evaluate(std::string("DefaultDirectory(\"") +  scripts_path + "\");");
+        }
 
-    if (!_yacas->IsError())
-        _yacas->Evaluate("Load(\"yacasinit.ys\");");
+        if (!_yacas->IsError())
+            _yacas->Evaluate("Load(\"yacasinit.ys\");");
 
-    if (!_yacas->IsError())
-        _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
+        if (!_yacas->IsError())
+            _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
 
-    if (_yacas->IsError()) {
-        const std::string msg = "Failed to initialize yacas: " + _yacas->Error();
-        _yacas = nullptr;
-        Rcpp::stop(msg);
+        if (_yacas->IsError()) {
+            const std::string msg = "Failed to initialize yacas: " + _yacas->Error();
+            _yacas = nullptr;
+            Rcpp::stop(msg);
+        }
     }
 }
 

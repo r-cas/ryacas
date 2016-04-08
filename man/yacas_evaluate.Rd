@@ -1,0 +1,20 @@
+\name{yacas_evaluate}
+\alias{yacas_evaluate}
+\title{Evaluate yacas expression}
+\usage{
+yacas_evaluate(expr)
+}
+\arguments{
+  \item{expr}{Yacas expression}
+}
+\value{
+Result of evaluating \code{expr} by yacas in OpenMath format and side-effects
+of the evaluation
+}
+\description{
+This is a low-level function for evaluating yacas expression represented as
+string.
+}
+\examples{
+yacas_evaluate("D(x)Sin(x^2)")
+}

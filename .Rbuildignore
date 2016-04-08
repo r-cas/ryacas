@@ -1,3 +1,5 @@
 [.]aux$
 [.]log$
 [.]out$
+\.travis\.yml$
+^src/yacas/new_docs/Makefile$

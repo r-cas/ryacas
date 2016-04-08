@@ -11,3 +11,8 @@ PKG_CPPFLAGS = -Iyacas/include
 
 CXX_STD = CXX11
 PKG_LIBS = `$(R_HOME)/bin/Rscript -e "Rcpp:::LdFlags()"`
+
+all: $(SHLIB)
+
+clean:
+	@rm -f $(OBJECTS)
