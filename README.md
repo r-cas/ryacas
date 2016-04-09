@@ -1,4 +1,5 @@
 # Ryacas #
+[![Build Status](https://travis-ci.org/grzegorzmazur/ryacas.svg?branch=master)](https://travis-ci.org/grzegorzmazur/ryacas)
 
 Ryacas is an [R](https://www.r-project.org/) interface to
 the free [yacas](http://www.yacas.org) Computer Algebra
