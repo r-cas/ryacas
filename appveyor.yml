@@ -1,7 +1,7 @@
 environment:
   R_CHECK_ARGS: --no-build-vignettes --no-manual
   R_ARCH: x64
-  R_VERSION: devel
+  R_VERSION: release
   GCC_PATH: mingw_64
 
 init:
