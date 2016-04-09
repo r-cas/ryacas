@@ -2,4 +2,5 @@
 [.]log$
 [.]out$
 \.travis\.yml$
+^appveyor\.yml$
 ^src/yacas/new_docs/Makefile$
