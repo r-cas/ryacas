@@ -32,7 +32,7 @@ Integrate.Expr <- function(f, x, a, b, ...) {
 }
 
 Eval.Expr <- function(x, env = parent.frame(), ...) 
-	eval(yacas(x, ...)[[1]], env = env)
+	eval(yacas(x, ...)[[1]], envir = env)
 
 Simplify.Expr <- function(x, ...) 
    Expr(substitute(Simplify(x), as.list(match.call())[-1]))
