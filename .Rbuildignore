@@ -1,6 +1,8 @@
 [.]aux$
 [.]log$
 [.]out$
-\.travis\.yml$
+^\.travis\.yml$
 ^appveyor\.yml$
-^src/yacas/new_docs/Makefile$
+^Ryacas_.*\.tar\.gz$
+^Ryacas\.Rcheck$
+

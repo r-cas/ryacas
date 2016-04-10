@@ -1,3 +1,0 @@
-Testing("Calendar");
-
-Verify(Easter(2012),{4,8});

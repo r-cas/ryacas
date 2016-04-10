@@ -1,5 +1,0 @@
-package net.sf.yacas;
-
-class CVersion {
-    static String VERSION = "${YACAS_VERSION}";
-}

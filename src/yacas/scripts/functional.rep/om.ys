@@ -1,6 +1,0 @@
-// From code.ys.def:
-OMDef( ":"        , "yacas","prepend"    );
-OMDef( "@"        , "yacas","apply"      );
-OMDef( "/@"       , "yacas","list_apply" );
-OMDef( ".."       , "interval1","integer_interval" );
-OMDef( "NFunction", "yacas","NFunction" );

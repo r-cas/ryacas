@@ -29,6 +29,10 @@ can be found with these R commands:
     package?Ryacas
 
 
+## Yacas ##
+
+The package contains stripped-down yacas distribution. For the complete yacas source code see https://github.com/grzegorzmazur/yacas/ . For more information on yacas see http://www.yacas.org/
+
 ---
 
 Rob Goedman, goedman at mac dot com  
