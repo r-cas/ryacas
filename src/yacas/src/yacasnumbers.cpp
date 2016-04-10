@@ -888,10 +888,10 @@ LispInt BigNumber::Sign() const
 
 void BigNumber::DumpDebugInfo() const
 {
-    if (!iNumber)
-        std::cout << "No number representation\n";
-    else
-        iNumber->Print("Number:");
+    // if (!iNumber)
+    //     std::cout << "No number representation\n";
+    // else
+    //     iNumber->Print("Number:");
 }
 
 

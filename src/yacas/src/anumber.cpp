@@ -21,34 +21,34 @@ void BaseSubtract(ANumber& aResult, ANumber& a1, ANumber& a2);
 void BaseMultiplyFull(ANumber& aResult, ANumber& a1, ANumber& a2);
 void BaseSqrt(ANumber& aResult, const ANumber& N);
 
-void ANumber::Print(const std::string& prefix) const
+void ANumber::Print(const std::string& /*prefix*/) const
 {
-    std::cout << prefix << "\n";
-    std::cout << size() << " words, " << iExp
-              << " after point (x10^" << iTensExp << "), 10-prec "
-              << iPrecision << "\n";
+    // std::cout << prefix << "\n";
+    // std::cout << size() << " words, " << iExp
+    //           << " after point (x10^" << iTensExp << "), 10-prec "
+    //           << iPrecision << "\n";
 
-    for (int i = size() - 1; i >= 0; --i)
-    {
-        if (iExp == i+1)
-            std::cout << ".\n";
+    // for (int i = size() - 1; i >= 0; --i)
+    // {
+    //     if (iExp == i+1)
+    //         std::cout << ".\n";
 
-        PlatWord w = at(i);
-        PlatWord bit = (WordBase)>>1;
+    //     PlatWord w = at(i);
+    //     PlatWord bit = (WordBase)>>1;
 
-        int k=0;
-        while (bit) {
-            if ((k&3)==0)
-                std::cout << " ";
-            k++;
-            if (w & bit)
-                std::cout << "1";
-            else
-                std::cout << "0";
-            bit>>=1;
-        }
-        std::cout << "\n";
-    }
+    //     int k=0;
+    //     while (bit) {
+    //         if ((k&3)==0)
+    //             std::cout << " ";
+    //         k++;
+    //         if (w & bit)
+    //             std::cout << "1";
+    //         else
+    //             std::cout << "0";
+    //         bit>>=1;
+    //     }
+    //     std::cout << "\n";
+    // }
 }
 
 static LispInt DigitIndex(LispInt c)
