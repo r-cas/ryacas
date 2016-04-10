@@ -6,7 +6,7 @@ Author: Rob Goedman <goedman@mac.com>, Gabor Grothendieck <ggrothendieck@gmail.c
 Maintainer: G. Grothendieck <ggrothendieck@gmail.com>
 Encoding: latin1
 Description: An interface to the yacas computer algebra system.
-Imports: Rcpp (>= 0.12.0), XML
+Imports: Rcpp (>= 0.12.0), XML, stats
 LinkingTo: Rcpp
 Suggests: testthat (>= 0.9.0)
 License: GPL-2
