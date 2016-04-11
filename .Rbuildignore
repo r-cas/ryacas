@@ -1,6 +1,8 @@
 [.]aux$
 [.]log$
 [.]out$
+^\.git$
+^\.gitignore$
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^Ryacas_.*\.tar\.gz$
