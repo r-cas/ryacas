@@ -1,6 +1,8 @@
 [.]aux$
 [.]log$
 [.]out$
+[.]o$
+[.]dll$
 ^\.git$
 ^\.gitignore$
 ^\.travis\.yml$
