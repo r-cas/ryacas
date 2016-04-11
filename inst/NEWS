@@ -1,10 +1,11 @@
-Changes in version 0.3-0
+Changes in version 0.3-1
 
-o technical preview, linux only version
-o requires yacas 1.4+
-o link to yacas library instead of spawning separate yacas process
+o removed external dependency on yacas
+  - yacas is incorporated into the package instead of being spawn as a separate process
+  - interface between R and yacas makes use of Rcpp wrapper generator
 o removed all functions related to downloading, installing and spawning yacas
 o removed runYacas() function, use a separate yacas session instead
+o added simple tests using testthat package
 
 Changes in version 0.2-11
 
