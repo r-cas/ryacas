@@ -1,5 +1,6 @@
 environment:
   R_CHECK_ARGS: --as-cran --no-build-vignettes --no-manual
+  R_BUILD_ARGS: --no-multiarch
   R_ARCH: x64
   R_VERSION: release
   GCC_PATH: mingw_64
