@@ -6,6 +6,7 @@ o removed external dependency on yacas
 o removed all functions related to downloading, installing and spawning yacas
 o removed runYacas() function, use a separate yacas session instead
 o added simple tests using testthat package
+o changed text encoding from latin1 to utf-8
 
 Changes in version 0.2-11
 
