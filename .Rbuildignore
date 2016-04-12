@@ -1,5 +1,12 @@
 [.]aux$
 [.]log$
 [.]out$
-yacas.exe
-scripts.dat
+[.]o$
+[.]dll$
+^\.git$
+^\.gitignore$
+^\.travis\.yml$
+^appveyor\.yml$
+^Ryacas_.*\.tar\.gz$
+^Ryacas\.Rcheck$
+

@@ -1,0 +1,13 @@
+language: r
+
+os:
+  - linux
+  - osx
+
+dist: trusty
+sudo: required
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tlmgr install boxedminipage; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo /usr/texbin/tlmgr install boxedminipage; fi

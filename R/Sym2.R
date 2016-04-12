@@ -51,7 +51,7 @@ Integrate.default <- function(f, x, a, b, ...) {
 }
 
 Eval.Sym <- function(x, env = parent.frame(), ...) 
-	eval(yacas(unclass(x))[[1]], env = env)
+	eval(yacas(unclass(x))[[1]], envir = env)
 
 Simplify <- function(x, ...) UseMethod("Simplify")
 Simplify.default <- function(x, ...) Sym("Simplify(", x, ")")

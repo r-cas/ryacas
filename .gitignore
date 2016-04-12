@@ -1,0 +1,5 @@
+.Rhistory
+.RData
+Ryacas*.tar.gz
+*~
+Ryacas.Rcheck

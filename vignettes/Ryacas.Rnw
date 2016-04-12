@@ -1,0 +1,17 @@
+% To build the vignette:
+% 1. run Sweave("Ryacas-raw") to create Ryacas-raw.tex
+% 2. build as usual using Rcmd build Ryacas
+%
+% To build vignette manually:
+% 1. Sweave("Ryacas-raw") to create Ryacas-raw.tex
+% 2. Sweave("Ryacas.Rnw")
+% 3. pdflatex Ryacas.tex
+
+\SweaveOpts{engine=R,eps=FALSE}
+
+%\VignetteIndexEntry{Introduction to Ryacas}
+%\VignettePackage{Ryacas}
+%\VignetteDepends{XML}
+
+
+\input{Ryacas-raw}
