@@ -13,11 +13,17 @@ destined for yacas processing.
 It can be used for exact arithmetic, symbolic math, ASCII
 pretty printing and translating R to TeX. 
 
+## Install from github ##
+
+To build and install from github using R 3.3.0 (or later) and the R devtools package 1.11.0 (or later) run this command from within R:
+
+    devtools::install_github("ggrothendieck/ryacas")
+
 ## Online info ##
 For overview, pointers to additional information, installation
 instructions and a sample session see http://code.google.com/p/ryacas/
 
-The vignettes can be viewed online at https://github.com/ggrothendieck/ryacas/blob/master/inst/doc/Ryacas.pdf
+The vignette can be viewed online at https://github.com/ggrothendieck/ryacas/blob/master/inst/doc/Ryacas.pdf
 
 Yacas documentation can be found at http://yacas.readthedocs.org/
 
