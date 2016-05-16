@@ -38,11 +38,9 @@ Home page\tab http://code.google.com/p/ryacas/\cr
 that discusses a number of installation and startup issues.}
 
 \examples{
-\dontrun{
 print(yacas(expression(integrate(1/x, x))))
 print(yacas("Integrate(x)1/x"))
 x <- Sym("x"); Integrate(1/x, x)
 acos(Sym("1/2"))
-}
 }
 \keyword{programming}

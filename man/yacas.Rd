@@ -143,7 +143,6 @@ log(x)\tab Ln(x)\cr
 \keyword{ symbolmath }
 
 \examples{
-\dontrun{
 yacas(expression(Factor(x^2-1)))
 exp1 <- expression(x^2 + 2 * x^2)
 exp2 <- expression(2 * exp0)
@@ -156,7 +155,6 @@ print(yacas("Version()")) # yacas version
 # see demo("Ryacas-Function")
 
 
-}
 }
 
 

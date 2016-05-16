@@ -18,12 +18,10 @@
   \item{\dots}{ Not currently used. }
 }
 \examples{
-\dontrun{
 Eval(yacas(expression(x*x)), list(x=2))
 
 # same
 x <- 2
 Eval(yacas(expression(x*x)))
-}
 }
 \keyword{ symbolmath }%

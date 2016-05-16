@@ -21,7 +21,6 @@ an expression usable in Ryacas calculations.
 }
 \seealso{ \code{\link{body}} }
 \examples{
-\dontrun{
 
 # construct an R function for the Burr probability density
 # function (PDF) given the Burr cumulative distribution function (CDF)
@@ -41,5 +40,4 @@ BurrPDF(1)
 
 }
 
-}
 \keyword{ symbolmath }
