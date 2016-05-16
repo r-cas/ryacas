@@ -30,7 +30,7 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 
         result <- list(text = text, OMForm = yacas.res[1])
     } else if (nchar(yacas.res[1]) > 0) {
-        result <- list(NULL, PrettyForm = sub('<OMOBJ>.*</OMOBJ>\n', '', yacas.res[1]))
+        result <- list(NULL, PrettyForm = sub('<OMOBJ>.*</OMOBJ>(\r?\n)', '', yacas.res[1]))
     } else {
         result <- list(NULL, YacasForm = yacas.res[2])
     }
