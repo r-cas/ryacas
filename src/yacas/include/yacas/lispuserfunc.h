@@ -1,7 +1,6 @@
 #ifndef YACAS_LISPUSERFUNC_H
 #define YACAS_LISPUSERFUNC_H
 
-#include "yacasbase.h"
 #include "lispobject.h"
 #include "evalfunc.h"
 
@@ -19,23 +18,21 @@ class LispUserFunction : public EvalFuncBase
 {
 public:
     LispUserFunction() : iFenced(true),iTraced(false) {};
-    virtual void Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,
-                  LispPtr& aArguments)=0;
     virtual void HoldArgument(const LispString* aVariable) = 0;
-    virtual void DeclareRule(LispInt aPrecedence, LispPtr& aPredicate,
+    virtual void DeclareRule(int aPrecedence, LispPtr& aPredicate,
                              LispPtr& aBody) = 0;
-    virtual void DeclareRule(LispInt aPrecedence, LispPtr& aBody) = 0;
-    virtual void DeclarePattern(LispInt aPrecedence, LispPtr& aPredicate,
+    virtual void DeclareRule(int aPrecedence, LispPtr& aBody) = 0;
+    virtual void DeclarePattern(int aPrecedence, LispPtr& aPredicate,
                              LispPtr& aBody) = 0;
     virtual const LispPtr& ArgList() const = 0;
 
 public: //unfencing
     inline void UnFence() {iFenced = false;};
-    inline bool Fenced() {return iFenced;};
+    inline bool Fenced() const {return iFenced;};
 public: //tracing
     inline void Trace() {iTraced = true;};
     inline void UnTrace() {iTraced = false;};
-    inline bool Traced() {return iTraced;};
+    inline bool Traced() const {return iTraced;};
 private:
     bool iFenced;
     bool iTraced;
@@ -49,8 +46,8 @@ private:
 class LispArityUserFunction : public LispUserFunction
 {
 public:
-    virtual LispInt Arity() const = 0;
-    virtual LispInt IsArity(LispInt aArity) const = 0;
+    virtual int Arity() const = 0;
+    virtual int IsArity(int aArity) const = 0;
 };
 
 
@@ -63,8 +60,7 @@ class LispDefFile;
 /// can be selected by providing its name. Additionally, the name of
 /// the file in which the function is defined, can be specified.
 
-class LispMultiUserFunction : public YacasBase
-{
+class LispMultiUserFunction final {
 public:
   /// Constructor.
   LispMultiUserFunction() : iFunctions(),iFileToOpen(nullptr) {};
@@ -91,7 +87,7 @@ public:
   }
 
   /// Return user function with given arity.
-  LispUserFunction* UserFunc(LispInt aArity);
+  LispUserFunction* UserFunc(int aArity);
 
   /// Destructor.
   virtual ~LispMultiUserFunction();
@@ -103,7 +99,7 @@ public:
   virtual void DefineRuleBase(LispArityUserFunction* aNewFunction);
 
   /// Delete tuser function with given arity.
-  virtual void DeleteBase(LispInt aArity);
+  virtual void DeleteBase(int aArity);
 
 private:
   /// Set of LispArityUserFunction's provided by this LispMultiUserFunction.

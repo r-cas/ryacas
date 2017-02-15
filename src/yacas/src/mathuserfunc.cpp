@@ -1,4 +1,3 @@
-#include "yacas/yacasprivate.h"
 #include "yacas/mathuserfunc.h"
 #include "yacas/lispobject.h"
 #include "yacas/lispeval.h"
@@ -17,7 +16,7 @@ bool BranchingUserFunction::BranchRule::Matches(LispEnvironment& aEnvironment, L
     InternalEval(aEnvironment, pred, iPredicate);
     return IsTrue(aEnvironment,pred);
 }
-LispInt BranchingUserFunction::BranchRule::Precedence() const
+int BranchingUserFunction::BranchRule::Precedence() const
 {
     return iPrecedence;
 }
@@ -35,7 +34,7 @@ bool BranchingUserFunction::BranchPattern::Matches(LispEnvironment& aEnvironment
 {
     return iPatternClass->Matches(aEnvironment,aArguments);
 }
-LispInt BranchingUserFunction::BranchPattern::Precedence() const
+int BranchingUserFunction::BranchPattern::Precedence() const
 {
     return iPrecedence;
 }
@@ -65,10 +64,10 @@ BranchingUserFunction::~BranchingUserFunction()
 }
 
 void BranchingUserFunction::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,
-                                     LispPtr& aArguments)
+                                     LispPtr& aArguments) const
 {
-    const LispInt arity = Arity();
-    LispInt i;
+    const int arity = Arity();
+    int i;
 
     if (Traced()) {
         LispPtr tr(LispSubList::New(aArguments));
@@ -165,21 +164,21 @@ void BranchingUserFunction::HoldArgument(const LispString * aVariable)
     }
 }
 
-LispInt BranchingUserFunction::Arity() const
+int BranchingUserFunction::Arity() const
 {
     return iParameters.size();
 }
 
-LispInt BranchingUserFunction::IsArity(LispInt aArity) const
+int BranchingUserFunction::IsArity(int aArity) const
 {
     return (Arity() == aArity);
 }
 
-void BranchingUserFunction::DeclareRule(LispInt aPrecedence, LispPtr& aPredicate,
+void BranchingUserFunction::DeclareRule(int aPrecedence, LispPtr& aPredicate,
                          LispPtr& aBody)
 {
     // New branching rule.
-    BranchRule* newRule = NEW BranchRule(aPrecedence,aPredicate,aBody);
+    BranchRule* newRule = new BranchRule(aPrecedence,aPredicate,aBody);
 
     if (!newRule)
         throw LispErrCreatingRule();
@@ -187,10 +186,10 @@ void BranchingUserFunction::DeclareRule(LispInt aPrecedence, LispPtr& aPredicate
     InsertRule(aPrecedence,newRule);
 }
 
-void BranchingUserFunction::DeclareRule(LispInt aPrecedence, LispPtr& aBody)
+void BranchingUserFunction::DeclareRule(int aPrecedence, LispPtr& aBody)
 {
     // New branching rule.
-    BranchRule* newRule = NEW BranchRuleTruePredicate(aPrecedence,aBody);
+    BranchRule* newRule = new BranchRuleTruePredicate(aPrecedence,aBody);
 
     if (!newRule)
         throw LispErrCreatingRule();
@@ -198,11 +197,11 @@ void BranchingUserFunction::DeclareRule(LispInt aPrecedence, LispPtr& aBody)
     InsertRule(aPrecedence,newRule);
 }
 
-void BranchingUserFunction::DeclarePattern(LispInt aPrecedence, LispPtr& aPredicate,
+void BranchingUserFunction::DeclarePattern(int aPrecedence, LispPtr& aPredicate,
                                            LispPtr& aBody)
 {
     // New branching rule.
-    BranchPattern* newRule = NEW BranchPattern(aPrecedence,aPredicate,aBody);
+    BranchPattern* newRule = new BranchPattern(aPrecedence,aPredicate,aBody);
 
     if (!newRule)
         throw LispErrCreatingRule();
@@ -210,10 +209,10 @@ void BranchingUserFunction::DeclarePattern(LispInt aPrecedence, LispPtr& aPredic
     InsertRule(aPrecedence,newRule);
 }
 
-void BranchingUserFunction::InsertRule(LispInt aPrecedence,BranchRuleBase* newRule)
+void BranchingUserFunction::InsertRule(int aPrecedence,BranchRuleBase* newRule)
 {
     // Find place to insert
-    LispInt low,high,mid;
+    int low,high,mid;
     low=0;
     high=iRules.size();
 
@@ -271,7 +270,7 @@ ListedBranchingUserFunction::ListedBranchingUserFunction(LispPtr& aParameters)
 {
 }
 
-LispInt ListedBranchingUserFunction::IsArity(LispInt aArity) const
+int ListedBranchingUserFunction::IsArity(int aArity) const
 {
     // nr arguments handled is bound by a minimum: the number of arguments
     // to this function.
@@ -279,15 +278,15 @@ LispInt ListedBranchingUserFunction::IsArity(LispInt aArity) const
 }
 
 void ListedBranchingUserFunction::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,
-                                           LispPtr& aArguments)
+                                           LispPtr& aArguments) const
 {
   LispPtr newArgs;
   LispIterator iter(aArguments);
   LispPtr* ptr =  &newArgs;
-  const LispInt arity = Arity();
+  const int arity = Arity();
   // Make a copy of the arguments first
   // TODO: if we were to change the internal representation to a cons cell, this copying would not be needed
-  for (LispInt i = 0; i < arity && iter.getObj(); ++i,++iter)
+  for (int i = 0; i < arity && iter.getObj(); ++i,++iter)
   {
     *ptr = iter.getObj()->Copy();
     ptr = &((*ptr)->Nixed());
@@ -312,7 +311,7 @@ MacroUserFunction::MacroUserFunction(LispPtr& aParameters)
   : BranchingUserFunction(aParameters)
 {
     LispIterator iter(aParameters);
-    for (LispInt i=0; iter.getObj(); i++,++iter)
+    for (int i=0; iter.getObj(); i++,++iter)
     {
         if (!iter.getObj()->String())
             throw LispErrCreatingUserFunction();
@@ -323,10 +322,10 @@ MacroUserFunction::MacroUserFunction(LispPtr& aParameters)
 }
 
 void MacroUserFunction::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,
-              LispPtr& aArguments)
+              LispPtr& aArguments) const
 {
-    const LispInt arity = Arity();
-    LispInt i;
+    const int arity = Arity();
+    int i;
 
     if (Traced()) {
         LispPtr tr(LispSubList::New(aArguments));
@@ -426,19 +425,19 @@ ListedMacroUserFunction::ListedMacroUserFunction(LispPtr& aParameters)
 {
 }
 
-LispInt ListedMacroUserFunction::IsArity(LispInt aArity) const
+int ListedMacroUserFunction::IsArity(int aArity) const
 {
     return Arity() <= aArity;
 }
 
 void ListedMacroUserFunction::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,
-              LispPtr& aArguments)
+              LispPtr& aArguments) const
 {
   LispPtr newArgs;
   LispIterator iter(aArguments);
   LispPtr* ptr =  &newArgs;
-  LispInt arity = Arity();
-  LispInt i=0;
+  int arity = Arity();
+  int i=0;
   // TODO: the code would look a lot easier if we could do with only an iterator
   while (i < arity && iter.getObj())
   {

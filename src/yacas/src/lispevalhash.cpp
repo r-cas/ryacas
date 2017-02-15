@@ -1,6 +1,5 @@
 
 
-#include "yacas/yacasprivate.h"
 #include "yacas/lispevalhash.h"
 #include "yacas/lispenvironment.h"
 #include "yacas/lispatom.h"
@@ -9,7 +8,7 @@
 
 
 
-void YacasEvaluator::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,LispPtr& aArguments)
+void YacasEvaluator::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,LispPtr& aArguments) const
 {
 
   if (!(iFlags & Variable))
@@ -17,16 +16,16 @@ void YacasEvaluator::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,Lis
     CheckNrArgs(iNrArgs+1,aArguments,aEnvironment);
   }
 
-  LispInt stacktop = aEnvironment.iStack.GetStackTop();
+  int stacktop = aEnvironment.iStack.size();
 
   // Push a place holder for the result: push full expression so it is available for error reporting
-  aEnvironment.iStack.PushArgOnStack(aArguments);
+  aEnvironment.iStack.push_back(aArguments);
 
   LispIterator iter(aArguments);
   ++iter;
 
-  LispInt i;
-  LispInt nr = iNrArgs;
+  int i;
+  int nr = iNrArgs;
 
   if (iFlags & Variable) nr--;
 
@@ -38,14 +37,14 @@ void YacasEvaluator::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,Lis
       if (!iter.getObj())
           throw LispErrWrongNumberOfArgs();
 
-      aEnvironment.iStack.PushArgOnStack(iter.getObj()->Copy());
+      aEnvironment.iStack.push_back(LispPtr(iter.getObj()->Copy()));
       ++iter;
     }
     if (iFlags & Variable)
     {
       LispPtr head(aEnvironment.iList->Copy());
       head->Nixed() = (iter.getObj());
-      aEnvironment.iStack.PushArgOnStack(LispSubList::New(head));
+      aEnvironment.iStack.push_back(LispPtr(LispSubList::New(head)));
     }
   }
   else
@@ -57,7 +56,7 @@ void YacasEvaluator::Evaluate(LispPtr& aResult,LispEnvironment& aEnvironment,Lis
           throw LispErrWrongNumberOfArgs();
 
       aEnvironment.iEvaluator->Eval(aEnvironment, arg, *iter);
-      aEnvironment.iStack.PushArgOnStack(arg);
+      aEnvironment.iStack.push_back(arg);
       ++iter;
     }
     if (iFlags & Variable)
@@ -83,14 +82,14 @@ PrintExpression(res, arg,aEnvironment,100);
 printf("after %s\n",res.String());
 */
 
-      aEnvironment.iStack.PushArgOnStack(arg);
+      aEnvironment.iStack.push_back(arg);
 //printf("Leave\n");
     }
   }
 
   iCaller(aEnvironment,stacktop);
-  aResult = (aEnvironment.iStack.GetElement(stacktop));
-  aEnvironment.iStack.PopTo(stacktop);
+  aResult = (aEnvironment.iStack[stacktop]);
+  aEnvironment.iStack.resize(stacktop);
 }
 
 

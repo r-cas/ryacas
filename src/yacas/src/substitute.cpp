@@ -1,5 +1,3 @@
-
-#include "yacas/yacasprivate.h"
 #include "yacas/substitute.h"
 #include "yacas/lispatom.h"
 #include "yacas/standard.h"
@@ -26,7 +24,6 @@ void InternalSubstitute(LispPtr& aTarget, LispPtr& aSource,
             }
 
             aTarget = (LispSubList::New(newList));
-            DBG_( aTarget->SetFileAndLine(object->iFileName,object->iLine); )
         }
         else
         {
@@ -69,16 +66,12 @@ bool LocalSymbolBehaviour::Matches(LispPtr& aResult, LispPtr& aElement)
     if (!name)
         return false;
 
-    const LispInt iNrNames = iOriginalNames.size();
-    for (LispInt i=0;i<iNrNames;i++)
-    {
-        if (name == iOriginalNames[i])
-        {
+    const std::size_t iNrNames = iOriginalNames.size();
+    for (std::size_t i = 0; i < iNrNames; ++i)
+        if (name == iOriginalNames[i]) {
             aResult = LispAtom::New(iEnvironment, *iNewNames[i]);
-            DBG_( aResult->SetFileAndLine(aElement->iFileName,aElement->iLine); )
             return true;
         }
-    }
     return false;
 }
 

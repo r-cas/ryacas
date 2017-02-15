@@ -2,7 +2,8 @@
 #define YACAS_REFCOUNT_H
 
 #include <cassert>
-#include "yacasbase.h"
+
+#include "lisptype.h"
 
 //------------------------------------------------------------------------------
 // RefPtr - Smart pointer for (intrusive) reference counting.
@@ -14,11 +15,8 @@
   One can use RefPtr on any arbitrary object from that moment on.
  */
 
-typedef ReferenceType ReferenceCount;
-
 template<class T>
-class RefPtr : public YacasBase  // derived, so we can 'NEW LispPtr[nnn]'
-{
+class RefPtr {
 public:
   // Default constructor (not explicit, so it auto-initializes)
   inline RefPtr() : iPtr(nullptr) {}

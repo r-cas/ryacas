@@ -1,5 +1,4 @@
 
-#include "yacas/yacasprivate.h"
 #include "yacas/lispatom.h"
 #include "yacas/lisperror.h"
 #include "yacas/numbers.h"
@@ -12,9 +11,9 @@
 LispObject* LispAtom::New(LispEnvironment& aEnvironment, const std::string& aString)
 {
     if (IsNumber(aString.c_str(),true))  // check if aString is a number (int or float)
-        return NEW LispNumber(NEW LispString(aString), aEnvironment.Precision());
+        return new LispNumber(new LispString(aString), aEnvironment.Precision());
 
-    return NEW LispAtom(aEnvironment.HashTable().LookUp(aString));
+    return new LispAtom(aEnvironment.HashTable().LookUp(aString));
 }
 
 LispAtom::LispAtom(const LispString* aString) : iString(aString)
@@ -23,7 +22,7 @@ LispAtom::LispAtom(const LispString* aString) : iString(aString)
     ++aString->iReferenceCount;
 }
 
-LispAtom::LispAtom(const LispAtom& other) : ASuper(other), iString(other.iString)
+LispAtom::LispAtom(const LispAtom& other) : LispObject(other), iString(other.iString)
 {
   ++iString->iReferenceCount;
 }
@@ -45,7 +44,7 @@ const LispString* LispAtom::String()
 
 LispSubList* LispSubList::New(LispObject* aSubList)
 {
-    LispSubList* self = NEW LispSubList(aSubList);
+    LispSubList* self = new LispSubList(aSubList);
 
     if (!self)
       throw LispErrNotEnoughMemory();
@@ -91,7 +90,7 @@ LispSubList::~LispSubList()
 
 LispGenericClass* LispGenericClass::New(GenericClass* aClass)
 {
-    LispGenericClass* self = NEW LispGenericClass(aClass);
+    LispGenericClass* self = new LispGenericClass(aClass);
 
     if (!self)
       throw LispErrNotEnoughMemory();
@@ -126,7 +125,7 @@ LispString * LispNumber::String()
   if (!iString)
   {
     assert(iNumber.ptr());  // either the string is null or the number but not both
-    LispString *str = NEW LispString;
+    LispString *str = new LispString;
     // export the current number to string and store it as LispNumber::iString
     iNumber->ToString(*str, bits_to_digits(std::max(1,iNumber->GetPrecision()),BASE10), BASE10);
     iString = str;
@@ -136,7 +135,7 @@ LispString * LispNumber::String()
 
 /// Return a BigNumber object.
 // Will create a BigNumber object out of a stored string, at given precision (in decimal) - that's why the aPrecision argument must be here - but only if no BigNumber object is already present
-BigNumber* LispNumber::Number(LispInt aBasePrecision)
+BigNumber* LispNumber::Number(int aBasePrecision)
 {
   if (!iNumber)
   {  // create and store a BigNumber out of string
@@ -144,12 +143,12 @@ BigNumber* LispNumber::Number(LispInt aBasePrecision)
     RefPtr<LispString> str;
     str = iString;
     // aBasePrecision is in digits, not in bits, ok
-    iNumber = NEW BigNumber(str->c_str(), aBasePrecision, BASE10);
+    iNumber = new BigNumber(str->c_str(), aBasePrecision, BASE10);
   }
 
   // check if the BigNumber object has enough precision, if not, extend it
   // (applies only to floats). Note that iNumber->GetPrecision() might be < 0
-  else if (!iNumber->IsInt() && iNumber->GetPrecision() < (LispInt)digits_to_bits(aBasePrecision, BASE10))
+  else if (!iNumber->IsInt() && iNumber->GetPrecision() < (int)digits_to_bits(aBasePrecision, BASE10))
   {
     if (iString)
     {// have string representation, can extend precision

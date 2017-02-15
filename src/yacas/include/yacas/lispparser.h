@@ -6,7 +6,6 @@
 #ifndef YACAS_LISPPARSER_H
 #define YACAS_LISPPARSER_H
 
-#include "yacasbase.h"
 #include "lispobject.h"
 #include "tokenizer.h"
 #include "lispio.h"
@@ -14,8 +13,7 @@
 
 #include <ostream>
 
-class LispParser : public YacasBase
-{
+class LispParser {
 public:
     LispParser(LispTokenizer& aTokenizer, LispInput& aInput,
                LispEnvironment& aEnvironment);
@@ -29,27 +27,26 @@ public:
     LispTokenizer& iTokenizer;
     LispInput& iInput;
     LispEnvironment& iEnvironment;
-    LispInt iListed;
+    int iListed;
 };
 
-class LispPrinter : public YacasBase
-{
+class LispPrinter {
 public:
     virtual void Print(
         const LispPtr& aExpression,
         std::ostream& aOutput,
         LispEnvironment& aEnvironment);
 
-    virtual void RememberLastChar(LispChar aChar);
+    virtual void RememberLastChar(char aChar);
 
 private:
     void PrintExpression(
         const LispPtr& aExpression,
         std::ostream& aOutput,
         LispEnvironment& aEnvironment,
-        LispInt aDepth=0);
+        int aDepth=0);
 
-    void Indent(std::ostream& aOutput, LispInt aDepth);
+    void Indent(std::ostream& aOutput, int aDepth);
 };
 
 

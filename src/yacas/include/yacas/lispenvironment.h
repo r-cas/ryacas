@@ -6,15 +6,16 @@
 #ifndef YACAS_LISPENVIRONMENT_H
 #define YACAS_LISPENVIRONMENT_H
 
-#include "yacasbase.h"
 #include "lispobject.h"
 #include "lisphash.h"
 #include "lispevalhash.h"
 #include "lispuserfunc.h"
 #include "deffile.h"
+#include "lisperror.h"
 #include "lispio.h"
 #include "stringio.h"
 #include "lispglobals.h"
+#include "lispoperator.h"
 #include "xmltokenizer.h"
 #include "errors.h"
 #include "noncopyable.h"
@@ -23,6 +24,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <deque>
 
 #include <unordered_set>
 
@@ -34,7 +36,6 @@ class LispDefFiles;
 class LispInput;
 class LispOutput;
 class LispPrinter;
-class LispOperators;
 class LispUserFunction;
 class LispMultiUserFunction;
 class LispEvaluatorBase;
@@ -47,8 +48,7 @@ class LispEnvironment;
 /// This huge class is the central class of the Yacas program. It
 /// implements a dialect of Lisp.
 
-class LispEnvironment : public YacasBase, NonCopyable
-{
+class LispEnvironment: NonCopyable {
 public:
   /// \name Constructor and destructor
   //@{
@@ -63,8 +63,7 @@ public:
                   LispOperators &aPostFixOperators,
                   LispOperators &aBodiedOperators,
                   LispIdentifiers& protected_symbols,
-                  LispInput*    aCurrentInput,
-                  LispInt aStackSize);
+                  LispInput*    aCurrentInput);
   ~LispEnvironment();
   //@}
 
@@ -82,9 +81,6 @@ public:
   /// \a aValue in #iGlobals.
   /// \sa FindLocal
   void SetVariable(const LispString* aString, LispPtr& aValue, bool aGlobalLazyVariable);
-
-  /// In debug mode, DebugModeVerifySettingGlobalVariables raises a warning if a global variable is set.
-  void DebugModeVerifySettingGlobalVariables(LispPtr & aVariable, bool aGlobalLazyVariable);
 
   /// Get the value assigned to a variable.
   /// \param aVariable name of the variable
@@ -116,21 +112,21 @@ public:
   //@{
 
   /// Return the #iCoreCommands attribute.
-  inline YacasCoreCommands& CoreCommands();
+  const YacasCoreCommands& CoreCommands() const;
+  const LispUserFunctions& UserFunctions() const;
 
   /// Add a command to the list of core commands.
   /// \param aEvaluatorFunc C function evaluating the core command
   /// \param aString name of the command
   /// \param aNrArgs number of arguments
   /// \param aFlags flags, see YacasEvaluator::FunctionFlags
-  void SetCommand(YacasEvalCaller aEvaluatorFunc, const LispChar * aString,LispInt aNrArgs,LispInt aFlags);
+  void SetCommand(YacasEvalCaller aEvaluatorFunc, const char* aString,int aNrArgs,int aFlags);
 
-  void RemoveCommand(LispChar * aString);
-  void RemoveCoreCommand(LispChar * aString);
+  void RemoveCoreCommand(char* aString);
 
   inline  LispHashTable& HashTable();
   LispUserFunction* UserFunction(LispPtr& aArguments);
-  LispUserFunction* UserFunction(const LispString* aName,LispInt aArity);
+  LispUserFunction* UserFunction(const LispString* aName,int aArity);
 
   /// Return LispMultiUserFunction with given name.
   /// \param aArguments name of the multi user function
@@ -143,19 +139,19 @@ public:
 
   LispDefFiles& DefFiles();
   void DeclareRuleBase(const LispString* aOperator, LispPtr& aParameters,
-                       LispInt aListed);
+                       int aListed);
   void DeclareMacroRuleBase(const LispString* aOperator, LispPtr& aParameters,
-                       LispInt aListed);
-  void DefineRule(const LispString* aOperator,LispInt aArity,
-                          LispInt aPrecedence, LispPtr& aPredicate,
+                       int aListed);
+  void DefineRule(const LispString* aOperator,int aArity,
+                          int aPrecedence, LispPtr& aPredicate,
                           LispPtr& aBody);
-  void DefineRulePattern(const LispString* aOperator,LispInt aArity,
-                         LispInt aPrecedence, LispPtr& aPredicate,
+  void DefineRulePattern(const LispString* aOperator,int aArity,
+                         int aPrecedence, LispPtr& aPredicate,
                          LispPtr& aBody);
 
 
-  void UnFenceRule(const LispString* aOperator,LispInt aArity);
-  void Retract(const LispString* aOperator,LispInt aArity);
+  void UnFenceRule(const LispString* aOperator,int aArity);
+  void Retract(const LispString* aOperator,int aArity);
   void HoldArgument(const LispString* aOperator, const LispString* aVariable);
 
   void Protect(const LispString*);
@@ -168,9 +164,9 @@ public:
   //@{
 
   /// set precision to a given number of decimal digits
-  void SetPrecision(LispInt aPrecision);
-  LispInt Precision(void) const;
-  LispInt BinaryPrecision(void) const;
+  void SetPrecision(int aPrecision);
+  int Precision(void) const;
+  int BinaryPrecision(void) const;
   //@}
 
 public:
@@ -181,7 +177,7 @@ public:
   const LispString* PrettyReader();
 
 public:
-  LispInt GetUniqueId();
+  int GetUniqueId();
 public:
   LispPrinter& CurrentPrinter();
 
@@ -206,13 +202,13 @@ public:
 
 protected:
   /// current precision for user interaction, in decimal and in binary
-  LispInt iPrecision;
-  LispInt iBinaryPrecision;
+  int iPrecision;
+  int iBinaryPrecision;
 public:
   std::vector<std::string> iInputDirectories;
   //DeletingLispCleanup iCleanup;
-  LispInt iEvalDepth;
-  LispInt iMaxEvalDepth;
+  int iEvalDepth;
+  int iMaxEvalDepth;
 #ifdef YACAS_NO_ATOMIC_TYPES
   volatile bool
 #else
@@ -241,7 +237,7 @@ public: // pre-found
   RefPtr<LispObject> iList;
   RefPtr<LispObject> iProg;
 
-  LispInt iLastUniqueId;
+  int iLastUniqueId;
 
 public: // Error reporting
   std::ostringstream iErrorOutput;
@@ -317,75 +313,30 @@ public:
   XmlTokenizer  iXmlTokenizer;
   LispTokenizer* iCurrentTokenizer;
 
-public:
-  /** YacasArgStack implements a stack of pointers to objects that can be used to pass
-  *  arguments to functions, and receive results back.
-  */
-  class YacasArgStack {
-  public:
-    explicit YacasArgStack(std::size_t aStackSize):
-      iStackCnt(0)
-    {
-      iStack.resize( aStackSize );
-    }
-
-    std::size_t GetStackTop() const
-    {
-        return iStackCnt;
-    }
-
-    void PushArgOnStack(LispObject* aObject)
-    {
-      if (iStackCnt >= iStack.size())
-        RaiseStackOverflowError();
-
-      iStack[iStackCnt++] = aObject;
-    }
-
-    LispPtr& GetElement(std::size_t aPos)
-    {
-      assert(aPos<iStackCnt);
-      return iStack[aPos];
-    }
-
-    void PopTo(std::size_t aTop)
-    {
-      assert(aTop<=iStackCnt);
-      iStackCnt=aTop;
-    }
-
-  private:
-    void RaiseStackOverflowError() const
-    {
-      throw LispErrGeneric("Argument stack reached maximum. Please extend argument stack with --stack argument on the command line.");
-    }
-
-    // Invariants:
-    //    0 <= iStackCnt <= iStack.Size()
-    std::vector<LispPtr> iStack;
-    std::size_t iStackCnt;    // number of items on the stack
-  };
-
-  YacasArgStack iStack;
+  std::deque<LispPtr> iStack;
 };
 
-inline LispInt LispEnvironment::Precision(void) const
+inline int LispEnvironment::Precision(void) const
 {
     return iPrecision;
 }
 
-inline LispInt LispEnvironment::BinaryPrecision(void) const
+inline int LispEnvironment::BinaryPrecision(void) const
 {
   return iBinaryPrecision;
 }
 
 
 
-inline YacasCoreCommands& LispEnvironment::CoreCommands()
+inline const YacasCoreCommands& LispEnvironment::CoreCommands() const
 {
     return iCoreCommands;
 }
 
+inline const LispUserFunctions& LispEnvironment::UserFunctions() const
+{
+    return iUserFunctions;
+}
 
 inline LispHashTable& LispEnvironment::HashTable()
 {

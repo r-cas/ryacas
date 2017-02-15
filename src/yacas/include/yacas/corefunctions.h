@@ -201,9 +201,13 @@ CORE_KERNEL_FUNCTION("Array'Get",GenArrayGet,2,YacasEvaluator::Function | YacasE
 CORE_KERNEL_FUNCTION("Array'Set",GenArraySet,3,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("Association'Create",GenAssociationCreate,0,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("Association'Size",GenAssociationSize,1,YacasEvaluator::Function | YacasEvaluator::Fixed)
+CORE_KERNEL_FUNCTION("Association'Contains",GenAssociationContains,2,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("Association'Get",GenAssociationGet,2,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("Association'Set",GenAssociationSet,3,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("Association'Drop",GenAssociationDrop,2,YacasEvaluator::Function | YacasEvaluator::Fixed)
+CORE_KERNEL_FUNCTION("Association'Keys",GenAssociationKeys,1,YacasEvaluator::Function | YacasEvaluator::Fixed)
+CORE_KERNEL_FUNCTION("Association'ToList",GenAssociationToList,1,YacasEvaluator::Function | YacasEvaluator::Fixed)
+CORE_KERNEL_FUNCTION("Association'Head",GenAssociationHead,1,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("CustomEval",LispCustomEval,4,YacasEvaluator::Macro | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("CustomEval'Expression",LispCustomEvalExpression,0,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("CustomEval'Result",LispCustomEvalResult,0,YacasEvaluator::Function | YacasEvaluator::Fixed)
@@ -238,8 +242,6 @@ CORE_KERNEL_FUNCTION("GarbageCollect",LispGarbageCollect,0,YacasEvaluator::Funct
 CORE_KERNEL_FUNCTION("SetGlobalLazyVariable",LispSetGlobalLazyVariable,2,YacasEvaluator::Macro | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("PatchLoad",LispPatchLoad,1,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("PatchString",LispPatchString,1,YacasEvaluator::Function | YacasEvaluator::Fixed)
-CORE_KERNEL_FUNCTION("ExtraInfo'Set",YacasExtraInfoSet,2,YacasEvaluator::Function | YacasEvaluator::Fixed)
-CORE_KERNEL_FUNCTION("ExtraInfo'Get",YacasExtraInfoGet,1,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("DefaultTokenizer",LispDefaultTokenizer,0,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("XmlTokenizer",LispXmlTokenizer,0,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("XmlExplodeTag",LispExplodeTag,1,YacasEvaluator::Function | YacasEvaluator::Fixed)
@@ -265,6 +267,6 @@ CORE_KERNEL_FUNCTION("DebugLine",LispDebugLine,1,YacasEvaluator::Function | Yaca
 //
 // Information functions
 //
-CORE_KERNEL_FUNCTION("Interpreter",LispInterpreter,0,YacasEvaluator::Function | YacasEvaluator::Fixed)
+CORE_KERNEL_FUNCTION("Interpreter",interpreter,0,YacasEvaluator::Function | YacasEvaluator::Fixed)
 CORE_KERNEL_FUNCTION("Version",LispVersion,0,YacasEvaluator::Function | YacasEvaluator::Fixed)
 

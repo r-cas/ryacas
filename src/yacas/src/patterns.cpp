@@ -1,15 +1,9 @@
-#include "yacas/yacasprivate.h"
-#include "yacas/yacasbase.h"
 #include "yacas/patterns.h"
 #include "yacas/standard.h"
 #include "yacas/mathuserfunc.h"
 #include "yacas/lispobject.h"
 #include "yacas/lispeval.h"
 #include "yacas/standard.h"
-
-#ifdef YACAS_DEBUG
-#include <stdio.h>
-#endif // YACAS_DEBUG
 
 #include <memory>
 
@@ -72,8 +66,8 @@ bool MatchSubList::ArgumentMatches(LispEnvironment& aEnvironment,
 
   iter = *pPtr;
 
-  const LispInt iNrMatchers = iMatchers.size();
-  for (LispInt i=0;i<iNrMatchers;i++,++iter)
+  const int iNrMatchers = iMatchers.size();
+  for (int i=0;i<iNrMatchers;i++,++iter)
   {
     if (!iter.getObj())
       return false;
@@ -85,7 +79,7 @@ bool MatchSubList::ArgumentMatches(LispEnvironment& aEnvironment,
   return true;
 }
 
-LispInt YacasPatternPredicateBase::LookUp(const LispString * aVariable)
+int YacasPatternPredicateBase::LookUp(const LispString * aVariable)
 {
     const std::size_t n = iVariables.size();
     for (std::size_t i = 0; i < n; ++i)
@@ -104,11 +98,11 @@ const YacasParamMatcherBase* YacasPatternPredicateBase::MakeParamMatcher(LispEnv
         return nullptr;
 
     if (aPattern->Number(aEnvironment.Precision()))
-        return NEW MatchNumber(aPattern->Number(aEnvironment.Precision()));
+        return new MatchNumber(aPattern->Number(aEnvironment.Precision()));
 
     // Deal with atoms
     if (aPattern->String())
-        return NEW MatchAtom(aPattern->String());
+        return new MatchAtom(aPattern->String());
 
     // Else it must be a sublist
     if (aPattern->SubList())
@@ -117,7 +111,7 @@ const YacasParamMatcherBase* YacasPatternPredicateBase::MakeParamMatcher(LispEnv
         LispPtr* sublist = aPattern->SubList();
         assert(sublist);
 
-        LispInt num = InternalListLength(*sublist);
+        int num = InternalListLength(*sublist);
 
         // variable matcher here...
         if (num>1)
@@ -128,7 +122,7 @@ const YacasParamMatcherBase* YacasPatternPredicateBase::MakeParamMatcher(LispEnv
                 LispObject* second = head->Nixed();
                 if (second->String())
                 {
-                    LispInt index = LookUp(second->String());
+                    int index = LookUp(second->String());
 
                     // Make a predicate for the type, if needed
                     if (num>2)
@@ -151,12 +145,9 @@ const YacasParamMatcherBase* YacasPatternPredicateBase::MakeParamMatcher(LispEnv
 
                         last->Nixed() = LispAtom::New(aEnvironment, *second->String());
 
-                        LispPtr pred(LispSubList::New(third));
-                        DBG_( third->Nixed()->SetFileAndLine(second->iFileName,second->iLine); )
-                        DBG_( pred->SetFileAndLine(head->iFileName,head->iLine); )
-                        iPredicates.push_back(pred);
+                        iPredicates.push_back(LispPtr(LispSubList::New(third)));
                     }
-                    return NEW MatchVariable(index);
+                    return new MatchVariable(index);
                 }
             }
         }
@@ -164,11 +155,11 @@ const YacasParamMatcherBase* YacasPatternPredicateBase::MakeParamMatcher(LispEnv
         std::vector<const YacasParamMatcherBase*> matchers;
         matchers.reserve(num);
         LispIterator iter(*sublist);
-        for (LispInt i = 0; i < num; ++i, ++iter) {
+        for (int i = 0; i < num; ++i, ++iter) {
             matchers.push_back(MakeParamMatcher(aEnvironment,iter.getObj()));
             assert(matchers[i]);
         }
-        return NEW MatchSubList(std::move(matchers));
+        return new MatchSubList(std::move(matchers));
     }
 
     return nullptr;
@@ -273,14 +264,6 @@ bool YacasPatternPredicateBase::CheckPredicates(LispEnvironment& aEnvironment)
     {
 #define LIM_AL 60
       LispString strout;
-
-#ifdef YACAS_DEBUG
-        if (iPredicates[i]->iFileName)
-        {
-          printf("File %s, line %d\n",iPredicates[i]->iFileName, iPredicates[i]->iLine);
-        }
-#endif
-
 
       aEnvironment.iErrorOutput << "The predicate\n\t";
       PrintExpression(strout, iPredicates[i], aEnvironment, LIM_AL);

@@ -4,14 +4,13 @@
 #ifndef YACAS_YACAS_H
 #define YACAS_YACAS_H
 
-#include "yacasbase.h"
 #include "lispstring.h"
 #include "stringio.h"
 #include "tokenizer.h"
 #include "lisphash.h"
 #include "lispevalhash.h"
 #include "infixparser.h"
-#include "stdfileio.h"
+#include "platfileio.h"
 #include "lispatom.h"
 #include "lispeval.h"
 #include "lispglobals.h"
@@ -31,7 +30,7 @@
 class DefaultYacasEnvironment: NonCopyable
 {
 public:
-  DefaultYacasEnvironment(std::ostream&, LispInt aStackSize);
+  explicit DefaultYacasEnvironment(std::ostream&);
   LispEnvironment& getEnv() {return iEnvironment;}
 
 private:
@@ -70,7 +69,7 @@ public:
 class CYacas {
 public:
     /// Constructor
-    LISPIMPORT CYacas(std::ostream&, LispInt aStackSize = 50000);
+    explicit CYacas(std::ostream&);
 
     /// Return the underlying Yacas environment.
     DefaultYacasEnvironment& getDefEnv() {return environment;}
