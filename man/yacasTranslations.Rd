@@ -60,6 +60,6 @@ on the fly.
 The complete table under development.
 }
 
-\references{ \url{http://yacas.sourceforge.net} }
+\references{ \url{http://www.yacas.org} }
 \author{ Rob J Goedman }
 \keyword{ symbolmath }

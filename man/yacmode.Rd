@@ -22,7 +22,7 @@ Taylor(x,0,12) 1/(1+x) is likely to take too long.
 \value{
   Output of yacas is returned.
 }
-\references{ \url{http://yacas.sourceforge.net} }
+\references{ \url{http://www.yacas.org} }
 
 \examples{
 \dontrun{

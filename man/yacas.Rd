@@ -68,7 +68,7 @@ retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
   component is NULL and the \code{YacasForm} or \code{PrettyForm}
   components have display information.
 }
-\references{ \url{http://yacas.sourceforge.net} }
+\references{ \url{http://www.yacas.org} }
 
 \note{ 
 Windows Installation.  On Windows one can install \code{Ryacas}
