@@ -1,6 +1,6 @@
 Package: Ryacas
 Version: 0.4-0
-Date: 2017-02-19
+Date: 2017-02-21
 Title: R Interface to the Yacas Computer Algebra System 
 Author: Rob Goedman <goedman@mac.com>, Gabor Grothendieck <ggrothendieck@gmail.com>, Søren Højsgaard <sorenh@math.aau.dk>, Ayal Pinkus <apinkus@xs4all.nl>, Grzegorz Mazur <teoretyk@gmail.com>
 Maintainer: G. Grothendieck <ggrothendieck@gmail.com>
