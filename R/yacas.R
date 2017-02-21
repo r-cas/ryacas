@@ -20,17 +20,19 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 
     yacas.res <- yacas_evaluate(x)
 
-    if (grepl('^<OMOBJ>', yacas.res[1])) {
-        text <- OpenMath2R(yacas.res[1])
+    if (grepl('^<RForm>', yacas.res[1])) {
+        #text <- OpenMath2R(yacas.res[1])
+        text <- sub('<RForm>(.*)</RForm>(\r?\n)', '\\1', yacas.res[1])
 
         if (retclass == "expression")
             text <- parse(text = text, srcfile = NULL)
         else if (retclass == "unquote")
             text <- sub("^['\"](.*)['\"]", "\\1", text)
 
-        result <- list(text = text, OMForm = yacas.res[1])
+        #result <- list(text = text, OMForm = yacas.res[1])
+        result <- list(text = text)
     } else if (nchar(yacas.res[1]) > 0) {
-        result <- list(NULL, PrettyForm = sub('<OMOBJ>.*</OMOBJ>(\r?\n)', '', yacas.res[1]))
+        result <- list(NULL, PrettyForm = sub('<RForm>.*</RForm>(\r?\n)', '', yacas.res[1]))
     } else {
         result <- list(NULL, YacasForm = yacas.res[2])
     }

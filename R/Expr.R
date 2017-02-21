@@ -14,7 +14,7 @@ Ops.Expr <- function (e1, e2) {
 
 Math.Expr <- function(x, ...) {
 	idx <- match(.Generic, transtab[,1], nomatch = 0)
-	fn <- if (idx > 0) transtab[idx, 3] else .Generic
+	fn <- if (idx > 0) transtab[idx, 2] else .Generic
 	L <- c(fn = as.name(fn), as.list(match.call())[-1])
 	Expr(substitute(fn(x), L))
 }

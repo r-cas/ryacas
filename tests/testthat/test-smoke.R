@@ -9,7 +9,7 @@ test_that("Solve", {
 
     r <- Solve(Asym/(1+exp((xmid-x)/scal))==y, x)
 
-    expect_that(as.expression(r), equals(expression(list(x == xmid - log(Asym/y - 1) * scal))))
+    expect_that(as.expression(r), equals(expression(c(x == xmid - log(Asym/y - 1) * scal))))
 })
 
 test_that("Limit", {

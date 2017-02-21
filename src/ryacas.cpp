@@ -27,7 +27,11 @@ namespace {
             _yacas->Evaluate("Load(\"yacasinit.ys\");");
 
         if (!_yacas->IsError())
-            _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
+            _yacas->Evaluate("RPrinter(x) := Echo(\"<RForm>\" : RForm(x) : \"</RForm>\");");
+        
+        if (!_yacas->IsError())
+            //_yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
+            _yacas->Evaluate("PrettyPrinter'Set(\"RPrinter\");");
 
         if (_yacas->IsError()) {
             const std::string msg = "Failed to initialize yacas: " + _yacas->Error();
