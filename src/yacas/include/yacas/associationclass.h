@@ -31,36 +31,41 @@
 
 #include <map>
 
-class AssociationClass : public GenericClass
+class AssociationClass final: public GenericClass
 {
 public:
     AssociationClass(const LispEnvironment& env);
-    const LispChar* TypeName() const override;
+    const char* TypeName() const override;
 
     std::size_t Size() const;
     bool Contains(LispObject* k) const;
     LispObject* GetElement(LispObject* k);
     void SetElement(LispObject* k,LispObject* v);
     bool DropElement(LispObject* k);
-
+    LispPtr Keys() const;
+    LispPtr ToList() const;
+    LispPtr Head() const;
+    
 private:
     class Key {
     public:
         Key(const LispEnvironment& env, LispObject* p):
-            env(env), p(p) {}
+            value(p), _env(env) {}
         
         bool operator == (const Key& rhs) const
         {
-            return InternalEquals(env, p, rhs.p);
+            return InternalEquals(_env, value, rhs.value);
         }
         
         bool operator < (const Key& rhs) const
         {
-            return InternalStrictTotalOrder(env, p, rhs.p);
+            return InternalStrictTotalOrder(_env, value, rhs.value);
         }
+
+        LispPtr value;
+
     private:
-        const LispEnvironment& env;
-        LispPtr p;
+        const LispEnvironment& _env;
     };
 
     const LispEnvironment& _env;
@@ -74,7 +79,7 @@ AssociationClass::AssociationClass(const LispEnvironment& env):
 }
 
 inline
-const LispChar* AssociationClass::TypeName() const
+const char* AssociationClass::TypeName() const
 {
     return "\"Association\"";
 }

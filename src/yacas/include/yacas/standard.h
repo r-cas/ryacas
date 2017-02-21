@@ -1,7 +1,6 @@
 #ifndef YACAS_STANDARD_H
 #define YACAS_STANDARD_H
 
-#include "yacasbase.h"
 #include "lispobject.h"
 #include "lispenvironment.h"
 #include "lisphash.h"
@@ -14,17 +13,17 @@ class LispHashTable;
 bool InternalIsList(const LispEnvironment& env, const LispPtr& aPtr);
 bool InternalIsString(const LispString* aOriginal);
 std::string InternalUnstringify(const std::string& s);
-LispInt InternalAsciiToInt(const LispString& aString);
-bool IsNumber(const LispChar * ptr, bool aAllowFloat);
+int InternalAsciiToInt(const LispString& aString);
+bool IsNumber(const char* ptr, bool aAllowFloat);
 
-void InternalNth(LispPtr& aResult, const LispPtr& aArg, LispInt n);
+void InternalNth(LispPtr& aResult, const LispPtr& aArg, int n);
 void InternalTail(LispPtr& aResult, const LispPtr& aArg);
 void InternalAssociate(LispPtr& aResult, const LispPtr& aKey,
                       const LispPtr& aAssociationList);
 
 void InternalReverseList(LispPtr& aResult, const LispPtr& aOriginal);
 void InternalFlatCopy(LispPtr& aResult, const LispPtr& aOriginal);
-LispInt InternalListLength(const LispPtr& aOriginal);
+std::size_t InternalListLength(const LispPtr& aOriginal);
 
 bool InternalStrictTotalOrder(const LispEnvironment& env,
                   const LispPtr& e1,
@@ -35,7 +34,7 @@ bool InternalEquals(const LispEnvironment& aEnvironment,
                     const LispPtr& aExpression2);
 
 
-inline LispPtr& Argument(LispPtr& cur, LispInt n);
+inline LispPtr& Argument(LispPtr& cur, int n);
 
 inline void InternalTrue(const LispEnvironment& aEnvironment, LispPtr& aResult);
 inline void InternalFalse(const LispEnvironment& aEnvironment, LispPtr& aResult);
@@ -53,10 +52,9 @@ void InternalApplyString(LispEnvironment& aEnvironment, LispPtr& aResult,
 void InternalApplyPure(LispPtr& oper,LispPtr& args2,LispPtr& aResult,LispEnvironment& aEnvironment);
 
 void InternalEvalString(LispEnvironment& aEnvironment, LispPtr& aResult,
-                        const LispChar* aString);
+                        const char* aString);
 
-class LispObjectAdder : public YacasBase
-{
+class LispObjectAdder {
 public:
     LispObjectAdder(LispObject* aPtr)
         : iPtr(aPtr) {};
@@ -65,7 +63,7 @@ public:
 
 LispObject* operator+(const LispObjectAdder& left, const LispObjectAdder& right);
 
-void ParseExpression(LispPtr& aResult, const LispChar* aString, LispEnvironment& aEnvironment);
+void ParseExpression(LispPtr& aResult, const char* aString, LispEnvironment& aEnvironment);
 
 void ReturnUnEvaluated(LispPtr& aResult,LispPtr& aArguments,
                        LispEnvironment& aEnvironment);

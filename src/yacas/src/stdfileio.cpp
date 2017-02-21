@@ -1,5 +1,4 @@
-#include "yacas/yacasprivate.h"
-#include "yacas/stdfileio.h"
+#include "yacas/platfileio.h"
 
 #ifdef _WIN32
 #define MAP_TO_WIN32_PATH_SEPARATOR
@@ -103,7 +102,7 @@ void StdFileInput::_get() const
 }
 
 
-std::string InternalFindFile(const LispChar* fname, const std::vector<std::string>& dirs)
+std::string InternalFindFile(const char* fname, const std::vector<std::string>& dirs)
 {
     std::string path(fname);
 

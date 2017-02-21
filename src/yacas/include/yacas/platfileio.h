@@ -1,6 +1,7 @@
 #ifndef YACAS_PLATFILEIO_H
 #define YACAS_PLATFILEIO_H
 
+#include "lispenvironment.h"
 #include "noncopyable.h"
 
 #include <fstream>
@@ -20,7 +21,7 @@ public:
     LispEnvironment& environment;
 };
 
-class StdFileInput : public LispInput {
+class StdFileInput: public LispInput {
 public:
     StdFileInput(std::istream&, InputStatus& aStatus);
     StdFileInput(LispLocalFile& aFile,InputStatus& aStatus);
@@ -41,7 +42,7 @@ private:
     mutable char32_t _cp;
 };
 
-class StdUserInput: public StdFileInput {
+class StdUserInput final: public StdFileInput {
 public:
     StdUserInput(InputStatus& aStatus):
         StdFileInput(std::cin, aStatus)
@@ -50,6 +51,6 @@ public:
 };
 
 
-std::string InternalFindFile(const LispChar* fname, const std::vector<std::string>& dirs);
+std::string InternalFindFile(const char* fname, const std::vector<std::string>& dirs);
 
 #endif

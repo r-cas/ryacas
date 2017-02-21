@@ -1,5 +1,4 @@
 
-#include "yacas/yacasprivate.h"
 #include "yacas/lispeval.h"
 #include "yacas/lispuserfunc.h"
 #include "yacas/standard.h"
@@ -9,6 +8,7 @@
 #include "yacas/infixparser.h"
 #include "yacas/errors.h"
 
+#include <regex>
 #include <sstream>
 
 LispUserFunction* GetUserFunction(LispEnvironment& aEnvironment,
@@ -26,38 +26,8 @@ LispUserFunction* GetUserFunction(LispEnvironment& aEnvironment,
     if (multiUserFunc->iFileToOpen!=nullptr)
     {
       LispDefFile* def = multiUserFunc->iFileToOpen;
-#ifdef YACAS_DEBUG
-      /*Show loading... */
-      {
-        extern int verbose_debug;
-        if (verbose_debug)
-        {
-            std::string msg =
-                std::string("Debug> Loading file ") +
-                std::string(def->iFileName->c_str()) +
-                std::string(" for function ") +
-                std::string(head->String()->c_str()) +
-                std::string("\n");
-            aEnvironment.CurrentOutput()->Write(msg.c_str());
-        }
-      }
-#endif
       multiUserFunc->iFileToOpen=nullptr;
       InternalUse(aEnvironment, def->FileName());
-
-#ifdef YACAS_DEBUG
-      {
-        extern int verbose_debug;
-        if (verbose_debug)
-        {
-            std::string msg =
-                std::string("Debug> Finished loading file ") +
-                std::string(def->iFileName->c_str()) +
-                std::string("\n");
-            aEnvironment.CurrentOutput()->Write(msg.c_str());
-        }
-      }
-#endif
     }
     userFunc = aEnvironment.UserFunction(*subList);
   }
@@ -174,12 +144,8 @@ void ShowExpression(LispString& outString, LispEnvironment& aEnvironment,
   std::ostringstream stream;
   infixprinter.Print(aExpression, stream, aEnvironment);
   outString.append(stream.str());
-  // Escape quotes
-  for (LispInt i = outString.size()-1; i >= 0; --i)
-  {
-    if (outString[i] == '\"')
-      outString.insert(outString.begin() + i, LispChar('\\'));
-  }
+
+  std::regex_replace(outString, std::regex("(^\")|([^\\\\]\")"), std::string("\\\""));
 }
 
 static void TraceShowExpression(LispEnvironment& aEnvironment,
@@ -193,7 +159,7 @@ static void TraceShowExpression(LispEnvironment& aEnvironment,
 void TraceShowArg(LispEnvironment& aEnvironment,LispPtr& aParam,
                   LispPtr& aValue)
 {
-  for (LispInt i=0;i<aEnvironment.iEvalDepth+2;i++)
+  for (int i=0;i<aEnvironment.iEvalDepth+2;i++)
     aEnvironment.CurrentOutput().write("  ", 2);
   aEnvironment.CurrentOutput() << "TrArg(\"";
   TraceShowExpression(aEnvironment, aParam);
@@ -205,11 +171,11 @@ void TraceShowArg(LispEnvironment& aEnvironment,LispPtr& aParam,
 void TraceShowEnter(LispEnvironment& aEnvironment,
                     LispPtr& aExpression)
 {
-  for (LispInt i=0;i<aEnvironment.iEvalDepth;i++)
+  for (int i=0;i<aEnvironment.iEvalDepth;i++)
     aEnvironment.CurrentOutput().write("  ", 2);
   aEnvironment.CurrentOutput() << "TrEnter(\"";
   {
-    const LispChar * function = "";
+    const char* function = "";
     if (aExpression->SubList())
     {
       LispPtr *sub = aExpression->SubList();
@@ -221,22 +187,16 @@ void TraceShowEnter(LispEnvironment& aEnvironment,
   aEnvironment.CurrentOutput() << "\",\"";
   TraceShowExpression(aEnvironment, aExpression);
   aEnvironment.CurrentOutput() << "\",\"";
-#ifdef YACAS_DEBUG
-  aEnvironment.CurrentOutput() << aExpression->iFileName ? aExpression->iFileName : "";
-  aEnvironment.CurrentOutput() << "\",";
-  aEnvironment.CurrentOutput() << aExpression->iLine;
-#else
   aEnvironment.CurrentOutput() << ""; //file
   aEnvironment.CurrentOutput() << "\",";
   aEnvironment.CurrentOutput() << "0"; //line
-#endif
   aEnvironment.CurrentOutput() << ");\n";
 }
 
 void TraceShowLeave(LispEnvironment& aEnvironment, LispPtr& aResult,
                     LispPtr& aExpression)
 {
-  for (LispInt i=0;i<aEnvironment.iEvalDepth;i++)
+  for (int i=0;i<aEnvironment.iEvalDepth;i++)
     aEnvironment.CurrentOutput().write("  ", 2);
   aEnvironment.CurrentOutput().write("TrLeave(\"", 9);
   TraceShowExpression(aEnvironment, aExpression);
@@ -247,7 +207,7 @@ void TraceShowLeave(LispEnvironment& aEnvironment, LispPtr& aResult,
 
 void TracedStackEvaluator::PushFrame()
 {
-  UserStackInformation *op = NEW UserStackInformation;
+  UserStackInformation *op = new UserStackInformation;
   objs.push_back(op);
 }
 
@@ -276,25 +236,16 @@ TracedStackEvaluator::~TracedStackEvaluator()
 
 void TracedStackEvaluator::ShowStack(LispEnvironment& aEnvironment, std::ostream& aOutput)
 {
-  LispLocalEvaluator local(aEnvironment,NEW BasicEvaluator);
+  LispLocalEvaluator local(aEnvironment,new BasicEvaluator);
 
-  LispInt i;
-  LispInt from=0;
-  LispInt upto = objs.size();
+  const std::size_t upto = objs.size();
 
-  for (i=from;i<upto;i++)
+  for (std::size_t i = 0; i < upto; ++i)
   {
-#ifdef YACAS_DEBUG
-    aEnvironment.CurrentOutput() << objs[i]->iFileName;
-    aEnvironment.CurrentOutput() << "(";
-    aEnvironment.CurrentOutput() << objs[i]->iLine;
-    aEnvironment.CurrentOutput() << ") : ";
-    aEnvironment.CurrentOutput() << "Debug> ";
-#endif
     aEnvironment.CurrentOutput() << i << ": ";
     aEnvironment.CurrentPrinter().Print(objs[i]->iOperator, aEnvironment.CurrentOutput(),aEnvironment);
 
-    LispInt internal;
+    int internal;
     internal =
             aEnvironment.CoreCommands().find(objs[i]->iOperator->String()) != aEnvironment.CoreCommands().end();
     if (internal)
@@ -362,13 +313,6 @@ void TracedStackEvaluator::Eval(LispEnvironment& aEnvironment, LispPtr& aResult,
         UserStackInformation& st = StackInformation();
         st.iOperator = LispAtom::New(aEnvironment, *str);
         st.iExpression = aExpression;
-#ifdef YACAS_DEBUG
-        if (aExpression->iFileName)
-        {
-          st.iFileName = aExpression->iFileName;
-          st.iLine = aExpression->iLine;
-        }
-#endif
       }
     }
   }
@@ -432,10 +376,6 @@ REENTER:
       throw LispErrGeneric("");
 }
 
-YacasDebuggerBase::~YacasDebuggerBase()
-{
-}
-
 void DefaultDebugger::Start()
 {
 }
@@ -447,7 +387,7 @@ void DefaultDebugger::Finish()
 void DefaultDebugger::Enter(LispEnvironment& aEnvironment,
                                     LispPtr& aExpression)
 {
-  LispLocalEvaluator local(aEnvironment,NEW BasicEvaluator);
+  LispLocalEvaluator local(aEnvironment,new BasicEvaluator);
   iTopExpr = (aExpression->Copy());
   LispPtr result;
   defaultEval.Eval(aEnvironment, result, iEnter);
@@ -456,7 +396,7 @@ void DefaultDebugger::Enter(LispEnvironment& aEnvironment,
 void DefaultDebugger::Leave(LispEnvironment& aEnvironment, LispPtr& aResult,
                                     LispPtr& aExpression)
 {
-  LispLocalEvaluator local(aEnvironment,NEW BasicEvaluator);
+  LispLocalEvaluator local(aEnvironment,new BasicEvaluator);
   LispPtr result;
   iTopExpr = (aExpression->Copy());
   iTopResult = (aResult);
@@ -470,7 +410,7 @@ bool DefaultDebugger::Stopped()
 
 void DefaultDebugger::Error(LispEnvironment& aEnvironment)
 {
-  LispLocalEvaluator local(aEnvironment,NEW BasicEvaluator);
+  LispLocalEvaluator local(aEnvironment,new BasicEvaluator);
   LispPtr result;
   defaultEval.Eval(aEnvironment, result, iError);
 }

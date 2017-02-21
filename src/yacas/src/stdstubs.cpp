@@ -1,13 +1,12 @@
-
-#include <stdlib.h>
-#include <string.h>
-#include "yacas/yacasprivate.h"
-#include "yacas/lisperror.h"
 #include "yacas/stubs.h"
 
-void * PlatStubAlloc(LispInt aNrBytes)
+#include "yacas/lisperror.h"
+
+#include <cstdlib>
+
+void* PlatStubAlloc(std::size_t n)
 {
-    void * result = malloc(aNrBytes);
+    void* result = malloc(n);
 
     if (!result)
         throw LispErrNotEnoughMemory();
@@ -15,9 +14,9 @@ void * PlatStubAlloc(LispInt aNrBytes)
     return result;
 }
 
-void * PlatStubReAlloc(void * aOrig, LispInt aNrBytes)
+void* PlatStubReAlloc(void *p, std::size_t n)
 {
-    void * result = realloc(aOrig, aNrBytes);
+    void* result = realloc(p, n);
 
     if (!result)
         throw LispErrNotEnoughMemory();
@@ -25,9 +24,9 @@ void * PlatStubReAlloc(void * aOrig, LispInt aNrBytes)
     return result;
 }
 
-void PlatStubFree(void * aOrig)
+void PlatStubFree(void* p)
 {
-    free(aOrig);
+    free(p);
 }
 
 

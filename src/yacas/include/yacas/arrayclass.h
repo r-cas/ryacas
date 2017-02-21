@@ -6,16 +6,16 @@
 
 #include <vector>
 
-class ArrayClass : public GenericClass
+class ArrayClass final: public GenericClass
 {
 public:
     //required
     ArrayClass(std::size_t aSize,LispObject* aInitialItem);
-    const LispChar* TypeName() const override;
+    const char* TypeName() const override;
 
     //array-specific
-    std::size_t Size();
-    LispObject* GetElement(std::size_t aItem);
+    std::size_t Size() const;
+    LispObject* GetElement(std::size_t aItem) const;
     void SetElement(std::size_t aItem,LispObject* aObject);
 
 private:
@@ -29,19 +29,19 @@ ArrayClass::ArrayClass(std::size_t aSize, LispObject* aInitialItem):
 }
 
 inline
-const LispChar* ArrayClass::TypeName() const
+const char* ArrayClass::TypeName() const
 {
     return "\"Array\"";
 }
 
 inline
-std::size_t ArrayClass::Size()
+std::size_t ArrayClass::Size() const
 {
     return iArray.size();
 }
 
 inline
-LispObject* ArrayClass::GetElement(std::size_t aItem)
+LispObject* ArrayClass::GetElement(std::size_t aItem) const
 {
     assert(aItem > 0 && aItem<=iArray.size());
     return iArray[aItem-1];

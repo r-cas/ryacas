@@ -6,65 +6,13 @@
 #ifndef YACAS_INFIXPARSER_H
 #define YACAS_INFIXPARSER_H
 
-#include "yacasbase.h"
 #include "lispparser.h"
+#include "lispoperator.h"
 
 #include <ostream>
 #include <unordered_map>
 
-#ifdef YACAS_NO_CONSTEXPR
-const LispInt KMaxPrecedence = 60000;
-#else
-constexpr LispInt KMaxPrecedence = 60000;
-#endif
-
-class LispInFixOperator {
-public:
-    explicit
-#ifndef YACAS_NO_CONSTEXPR
-    constexpr
-#endif
-    LispInFixOperator(LispInt aPrecedence = KMaxPrecedence):
-        iPrecedence(aPrecedence),
-        iLeftPrecedence(aPrecedence),
-        iRightPrecedence(aPrecedence),
-        iRightAssociative(false)
-    {}
-
-    void SetRightAssociative()
-    {
-        iRightAssociative = true;
-    }
-
-    void SetLeftPrecedence(LispInt aPrecedence)
-    {
-        iLeftPrecedence = aPrecedence;
-    }
-
-    void SetRightPrecedence(LispInt aPrecedence)
-    {
-        iRightPrecedence = aPrecedence;
-    }
-
-    LispInt iPrecedence;
-    LispInt iLeftPrecedence;
-    LispInt iRightPrecedence;
-    bool iRightAssociative;
-};
-
-class LispOperators {
-public:
-    void SetOperator(LispInt aPrecedence, const LispString* aString);
-    void SetRightAssociative(const LispString* aString);
-    void SetLeftPrecedence(const LispString* aString, LispInt aPrecedence);
-    void SetRightPrecedence(const LispString* aString, LispInt aPrecedence);
-    LispInFixOperator* LookUp(const LispString* aString);
-
-private:
-    std::unordered_map<const LispStringSmartPtr, LispInFixOperator, std::hash<const LispString*> > _map;
-};
-
-class InfixParser : public LispParser
+class InfixParser final: public LispParser
 {
 public:
     InfixParser(LispTokenizer& aTokenizer,
@@ -75,7 +23,7 @@ public:
                 LispOperators& aPostfixOperators,
                 LispOperators& aBodiedOperators);
 
-    virtual void Parse(LispPtr& aResult);
+    void Parse(LispPtr& aResult) override;
 
 public:
     LispOperators& iPrefixOperators;
@@ -87,8 +35,7 @@ private:
     void ParseCont(LispPtr& aResult);
 };
 
-class ParsedObject : public YacasBase
-{
+class ParsedObject {
 public:
     ParsedObject(InfixParser& aParser):
         iParser(aParser),
@@ -103,12 +50,12 @@ public:
 private:
     void ReadToken();
     void MatchToken(const LispString * aToken);
-    void ReadExpression(LispInt depth);
+    void ReadExpression(int depth);
     void ReadAtom();
 
 private:
-    void GetOtherSide(LispInt aNrArgsToCombine, LispInt depth);
-    void Combine(LispInt aNrArgsToCombine);
+    void GetOtherSide(int aNrArgsToCombine, int depth);
+    void Combine(int aNrArgsToCombine);
     void InsertAtom(const LispString* aString);
 
 private:
@@ -126,7 +73,7 @@ public:
 };
 
 
-class InfixPrinter : public LispPrinter
+class InfixPrinter final: public LispPrinter
 {
 public:
     InfixPrinter(LispOperators& aPrefixOperators,
@@ -139,18 +86,18 @@ public:
           iBodiedOperators(aBodiedOperators),
           iPrevLastChar(0),iCurrentEnvironment(nullptr){}
 
-    virtual void Print(
+    void Print(
         const LispPtr& aExpression,
         std::ostream& aOutput,
-        LispEnvironment& aEnvironment);
+        LispEnvironment& aEnvironment) override;
 
-    virtual void RememberLastChar(LispChar aChar);
+    void RememberLastChar(char aChar) override;
 
 private:
     void Print(
         const LispPtr& aExpression,
         std::ostream& aOutput,
-        LispInt iPrecedence);
+        int iPrecedence);
 
     void WriteToken(std::ostream& aOutput, const std::string&  aString);
 
@@ -159,7 +106,7 @@ private:
     LispOperators& iInfixOperators;
     LispOperators& iPostfixOperators;
     LispOperators& iBodiedOperators;
-    LispChar iPrevLastChar;
+    char iPrevLastChar;
     LispEnvironment* iCurrentEnvironment;
 };
 

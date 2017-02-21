@@ -1,7 +1,7 @@
 
 
 
-inline LispPtr& Argument(LispPtr& cur, LispInt n)
+inline LispPtr& Argument(LispPtr& cur, int n)
 {
     assert(n>=0);
 
@@ -61,5 +61,3 @@ inline void InternalNot(LispPtr& aResult, LispEnvironment& aEnvironment, LispPtr
         InternalTrue(aEnvironment,aResult);
     }
 }
-
-

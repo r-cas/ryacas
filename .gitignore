@@ -2,4 +2,7 @@
 .RData
 Ryacas*.tar.gz
 *~
+*.o
+*.so
+*.rds
 Ryacas.Rcheck

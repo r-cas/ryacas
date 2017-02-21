@@ -21,7 +21,6 @@
 #ifndef YACAS_LISPATOM_H
 #define YACAS_LISPATOM_H
 
-#include "yacasbase.h"
 #include "lispobject.h"
 #include "lispstring.h"
 #include "numbers.h"  // RefPtr<BigNumber> needs definition of BigNumber
@@ -39,13 +38,13 @@ constexpr int BASE2 = 2;
 
 class LispEnvironment;
 
-class LispAtom : public ObjectHelper<LispAtom>
+class LispAtom: public LispObject
 {
 public:
   static LispObject* New(LispEnvironment& aEnvironment, const std::string& aString);
-  virtual ~LispAtom();
-  virtual const LispString* String();
-  virtual LispObject* Copy() const { return NEW LispAtom(*this); }
+  ~LispAtom() override;
+  const LispString* String() override;
+  LispObject* Copy() const override { return new LispAtom(*this); }
 private:
   LispAtom(const LispString* aString);
   LispAtom& operator=(const LispAtom& aOther)
@@ -63,18 +62,18 @@ private:
 //------------------------------------------------------------------------------
 // LispSublist
 
-class LispSubList : public ObjectHelper<LispSubList>
+class LispSubList: public LispObject
 {
 public:
   static LispSubList* New(LispObject* aSubList);
-  virtual ~LispSubList();
-  virtual LispPtr* SubList() { return &iSubList; }
-  virtual LispObject* Copy() const { return NEW LispSubList(*this); }
+  ~LispSubList() override;
+  LispPtr* SubList() override { return &iSubList; }
+  LispObject* Copy() const override { return new LispSubList(*this); }
 private:
   // Constructor is private -- use New() instead
   LispSubList(LispObject* aSubList) : iSubList(aSubList) {}  // iSubList's constructor is messed up (it's a LispPtr, duh)
 public:
-  LispSubList(const LispSubList& other) : ASuper(other), iSubList(other.iSubList) {}
+  LispSubList(const LispSubList& other): LispObject(other), iSubList(other.iSubList) {}
 private:
   LispPtr iSubList;
 };
@@ -83,18 +82,18 @@ private:
 //------------------------------------------------------------------------------
 // LispGenericClass
 
-class LispGenericClass : public ObjectHelper<LispGenericClass>
+class LispGenericClass: public LispObject
 {
 public:
   static LispGenericClass* New(GenericClass* aClass);
-  virtual ~LispGenericClass();
-  virtual GenericClass* Generic();
-  virtual LispObject* Copy() const { return NEW LispGenericClass(*this); }
+  ~LispGenericClass() override;
+  GenericClass* Generic() override;
+  LispObject* Copy() const override { return new LispGenericClass(*this); }
 private:
   // Constructor is private -- use New() instead
   LispGenericClass(GenericClass* aClass);
 public:
-  LispGenericClass(const LispGenericClass& other) : ASuper(other), iClass(other.iClass) { iClass->iReferenceCount++; }
+  LispGenericClass(const LispGenericClass& other) : LispObject(other), iClass(other.iClass) { iClass->iReferenceCount++; }
 private:
   LispGenericClass& operator=(const LispGenericClass& other)
   {
@@ -106,22 +105,21 @@ private:
     GenericClass* iClass;
 };
 
-class LispNumber : public ObjectHelper<LispNumber>
+class LispNumber: public LispObject
 {
 public:
     /// constructors:
     /// construct from another LispNumber
   LispNumber(BigNumber* aNumber) : iNumber(aNumber), iString(nullptr) {}
-  LispNumber(const LispNumber& other) : ASuper(other), iNumber(other.iNumber), iString(other.iString) {}
+  LispNumber(const LispNumber& other) : LispObject(other), iNumber(other.iNumber), iString(other.iString) {}
   /// construct from a decimal string representation (also create a number object) and use aBasePrecision decimal digits
-  LispNumber(LispString * aString, LispInt aBasePrecision) : iNumber(nullptr), iString(aString) { Number(aBasePrecision); }
+  LispNumber(LispString * aString, int aBasePrecision) : iNumber(nullptr), iString(aString) { Number(aBasePrecision); }
 
-  virtual ~LispNumber() {}
-  virtual LispObject* Copy() const { return NEW LispNumber(*this); }
+  LispObject* Copy() const override { return new LispNumber(*this); }
   /// return a string representation in decimal with maximum decimal precision allowed by the inherent accuracy of the number
-  virtual LispString * String();
+  LispString * String() override;
   /// give access to the BigNumber object; if necessary, will create a BigNumber object out of the stored string, at given precision (in decimal?)
-  virtual BigNumber* Number(LispInt aPrecision);
+  BigNumber* Number(int aPrecision) override;
 private:
   /// number object; nullptr if not yet converted from string
   RefPtr<BigNumber> iNumber;
@@ -131,5 +129,3 @@ private:
 
 
 #endif
-
-
