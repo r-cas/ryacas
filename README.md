@@ -15,7 +15,8 @@ pretty printing and translating R to TeX.
 
 ## Install from github ##
 
-To build and install from github using R 3.3.0 (or later) and the R devtools package 1.11.0 (or later) run this command from within R:
+To build and install from github using R 3.3.0 (or later) and the R
+devtools package 1.11.0 (or later) run this command from within R:
 
     devtools::install_github("ggrothendieck/ryacas")
 
@@ -23,7 +24,8 @@ To build and install from github using R 3.3.0 (or later) and the R devtools pac
 For overview, pointers to additional information, installation
 instructions and a sample session see http://code.google.com/p/ryacas/
 
-The vignette can be viewed online at https://github.com/ggrothendieck/ryacas/blob/master/inst/doc/Ryacas.pdf
+The vignette can be viewed online at
+https://github.com/ggrothendieck/ryacas/blob/master/inst/doc/Ryacas.pdf
 
 Yacas documentation can be found at http://yacas.readthedocs.org/
 
@@ -37,7 +39,9 @@ can be found with these R commands:
 
 ## Yacas ##
 
-The package contains stripped-down yacas distribution. For the complete yacas source code see https://github.com/grzegorzmazur/yacas/ . For more information on yacas see http://www.yacas.org/
+The package contains stripped-down yacas distribution. For the
+complete yacas source code see https://github.com/grzegorzmazur/yacas/
+. For more information on yacas see http://www.yacas.org/
 
 ---
 
