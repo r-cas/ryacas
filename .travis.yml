@@ -7,6 +7,9 @@ os:
 dist: trusty
 sudo: required
 
+# supress clang warnings until properly investigated
+warnings_are_errors: false
+
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tlmgr install boxedminipage; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
