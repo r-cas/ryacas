@@ -17,9 +17,7 @@
 
 Sym<-function (...) 
 {
-  if(is.character(...)){
-    
-  }else{
+  if(!is.character(...)){
     assign(deparse(substitute(...)),Sym(paste(as.character(deparse(substitute(...))),'s',sep = '')),pos = .GlobalEnv)
   }
   args <- list(...)
