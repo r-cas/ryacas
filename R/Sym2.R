@@ -15,11 +15,19 @@
 # giving new Sym objects.
 # - printing a Sym object causes it to be passes to yacas and back
 
-Sym <- function(...) {
-   args <- list(...)
-   value <- if (length(args) > 1) paste("(", ..., ")") else paste(args[[1]])
-   class(value) <- c("Sym", "character")
-   value
+Sym<-function (...) 
+{
+  if(is.character(...)){
+    
+  }else{
+    assign(deparse(substitute(...)),Sym(paste(as.character(deparse(substitute(...))),'s',sep = '')),pos = .GlobalEnv)
+  }
+  args <- list(...)
+  value <- if (length(args) > 1) 
+    paste("(", ..., ")")
+  else paste(args[[1]])
+  class(value) <- c("Sym", "character")
+  value
 }
 
 as.character.Sym <- function(x, ...) as.character(unclass(x))
