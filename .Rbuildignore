@@ -10,3 +10,5 @@
 ^Ryacas_.*\.tar\.gz$
 ^Ryacas\.Rcheck$
 
+^.*\.Rproj$
+^\.Rproj\.user$

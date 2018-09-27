@@ -6,3 +6,4 @@ Ryacas*.tar.gz
 *.so
 *.rds
 Ryacas.Rcheck
+.Rproj.user

@@ -1,4 +1,4 @@
-useDynLib(Ryacas)
+useDynLib(Ryacas, .registration = TRUE)
 exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
 importFrom(stats, deriv)

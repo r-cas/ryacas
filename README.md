@@ -1,6 +1,6 @@
 # Ryacas #
-[![Build Status](https://travis-ci.org/grzegorzmazur/ryacas.svg?branch=master)](https://travis-ci.org/grzegorzmazur/ryacas)
-[![Build status](https://ci.appveyor.com/api/projects/status/60sjx4sxf032kdcg?svg=true)](https://ci.appveyor.com/project/grzegorzmazur/ryacas)
+[![Build Status](https://travis-ci.org/mikldk/ryacas.svg?branch=master)](https://travis-ci.org/mikldk/ryacas)
+[![Build status](https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true)](https://ci.appveyor.com/project/mikldk/ryacas/branch/master)
 
 Ryacas is an [R](https://www.r-project.org/) interface to
 the free [yacas](http://www.yacas.org) Computer Algebra
@@ -17,13 +17,14 @@ pretty printing and translating R to TeX.
 
 To build and install from github using R 3.3.0 (or later) and the R devtools package 1.11.0 (or later) run this command from within R:
 
-    devtools::install_github("ggrothendieck/ryacas")
+    devtools::install_github("mikldk/ryacas")
 
 ## Online info ##
+
 For overview, pointers to additional information, installation
 instructions and a sample session see http://code.google.com/p/ryacas/
 
-The vignette can be viewed online at https://github.com/ggrothendieck/ryacas/blob/master/inst/doc/Ryacas.pdf
+The vignette can be viewed online at https://github.com/mikldk/ryacas/blob/master/inst/doc/Ryacas.pdf
 
 Yacas documentation can be found at http://yacas.readthedocs.org/
 
@@ -43,6 +44,7 @@ The package contains stripped-down yacas distribution. For the complete yacas so
 
 Rob Goedman, goedman at mac dot com  
 Gabor Grothendieck, ggrothendieck at gmail dot com  
-Søren Højsgaard, Soren.Hojsgaard at agrsci dot dk  
+Søren Højsgaard, sorenh at math dot aau dot dk  
 Ayal Pinkus, apinkus at xs4all dot nl  
 Grzegorz Mazur, teoretyk at gmail dot com  
+Mikkel Meyer Andersen, mikl at math dot aau dot dk  
