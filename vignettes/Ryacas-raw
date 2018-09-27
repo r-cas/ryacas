@@ -26,7 +26,8 @@
 \author{Rob Goedman, \and
 Gabor Grothendieck,  \and
 Søren Højsgaard,  \and
-Ayal Pinkus}
+Ayal Pinkus,  \and
+Mikkel Meyer Andersen}
 
 
 \begin{document}
@@ -85,7 +86,7 @@ involves valid R calls, symbols or constants (though not all valid \R\
 expressions are valid). For example:
 @ 
 <<print=T>>=
-exp1<- yacas(expression(Factor(x^2-1)))
+exp1 <- yacas(expression(Factor(x^2-1)))
 @ %def 
 
 The result \code{exp1} is not an expression in the \R\ sense but an
@@ -125,7 +126,7 @@ The function \code{Sym(x)} coerces an object \code{x} to a \sym\ object by
 first coercing it to character and then changing its class to "Sym":
 @ 
 <<print=T>>=
-x<- Sym("x")
+x <- Sym("x")
 @ %def 
 
 Operations on \sym\ objects lead to new \sym\ objects:
@@ -146,7 +147,7 @@ It is important to note the difference between the \R\ name \code{x}
 and the symbol \code{"x"} as illustrated below:
 @ 
 <<print=T>>=
-x<- Sym("xs")
+x <- Sym("xs")
 x
 x+4
 Eval(x+4, list(xs=5))
@@ -550,12 +551,14 @@ PrettyForm(B)
 The output can be displayed in TeX form:
 @ 
 <<>>=
-yacas("TeXForm(B)")
+#FIXME
+#yacas("TeXForm(B)")
 @ %def 
 
 @ 
 <<>>=
-TeXForm(B)
+#FIXME
+#TeXForm(B)
 @ %def 
 
 
@@ -631,8 +634,9 @@ Solve(List(xs^2+ys^2==6, xs-ys==3), List(xs,ys))
 @ %def
 
 <<>>=
-Solve(List(mean==(xs/(xs+ys)), variance==((xs*ys)/(((xs+ys)^2) * (xs+ys+1)))),
-    List(xs,ys))
+# FIXME
+#Solve(List(mean==(xs/(xs+ys)), variance==((xs*ys)/(((xs+ys)^2) * (xs+ys+1)))),
+#    List(xs,ys))
 @ %def
 
 (Note the use of the == operator, which does not evaluate to anything,
