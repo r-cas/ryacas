@@ -6,7 +6,7 @@ Maintainer: Mikkel Meyer Andersen <mikl@math.aau.dk>
 Encoding: UTF-8
 Description: An interface to the yacas computer algebra system.
 Depends: R (>= 3.3.0)
-Imports: Rcpp (>= 0.12.0), XML, stats
+Imports: Rcpp (>= 0.12.0), xml2, stats
 LinkingTo: Rcpp
 Suggests: testthat (>= 0.9.0), devtools (>= 1.11.0)
 License: GPL-2

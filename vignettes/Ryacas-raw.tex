@@ -5,7 +5,7 @@
 \usepackage{hyperref,a4,color,boxedminipage,Sweave}
 %\VignetteIndexEntry{Introduction to Ryacas}
 %\VignettePackage{Ryacas}
-%\VignetteDepends{XML}
+%\VignetteDepends{xml2}
 
 % Definitions
 \newcommand{\slan}{{\tt S}}
@@ -1408,13 +1408,13 @@ expression(2 * cos(as))
 > yacas("OdeSolve(y''==4*y)")
 \end{Sinput}
 \begin{Soutput}
-expression(C1171 * exp(2 * x) + C1175 * exp(-2 * x))
+expression(C545 * exp(2 * x) + C549 * exp(-2 * x))
 \end{Soutput}
 \begin{Sinput}
 > yacas("OdeSolve(y'==8*y)")
 \end{Sinput}
 \begin{Soutput}
-expression(C1205 * exp(8 * x))
+expression(C579 * exp(8 * x))
 \end{Soutput}
 \end{Schunk}
 

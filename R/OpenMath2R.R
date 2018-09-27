@@ -1,35 +1,35 @@
-
 OpenMath2R <- function(x) {
  out <- c()
  recurse <- function( x ) {
-	if ("name" %in% names(xmlAttrs(x))) {
-		out <<- c(out, trans(xmlAttrs(x)[["name"]], from="OM", to="R"), " ")
+	if ("name" %in% names(xml2::xml_attrs(x))) {
+		out <<- c(out, trans(xml2::xml_attr(x, "name"), from="OM", to="R"), " ")
 	}
-	if (xmlName(x) == "text") out <<- c(out, xmlValue(x), " ")
-	if (xmlName(x) == "OMF") out <<- c(out, xmlAttrs(x)[["dec"]], " ")
-	if (xmlName(x) == "OMS") {
-	if (xmlAttrs(x)[["cd"]] == "logic1" && "name" %in% names(xmlAttrs(x))
-		&& xmlAttrs(x)[["name"]] %in% c("true", "false")) {}
-	   else if ((xmlAttrs(x)[["cd"]] != "nums1") ||
-				(xmlAttrs(x)[["name"]] == "rational")) 
-			out <<- c(out, xmlValue(x), "(")
+	if (xml2::xml_name(x) == "text") out <<- c(out, xml2::xml_text(x), " ")
+	if (xml2::xml_name(x) == "OMF") out <<- c(out, xml2::xml_attr(x, "dec"), " ")
+	if (xml2::xml_name(x) == "OMI") out <<- c(out, xml2::xml_text(x), " ")
+	if (xml2::xml_name(x) == "OMS") {
+	if (xml2::xml_attr(x, "cd") == "logic1" && "name" %in% names(xml2::xml_attrs(x))
+		&& xml2::xml_attr(x, "name") %in% c("true", "false")) {}
+	   else if ((xml2::xml_attr(x, "cd") != "nums1") ||
+				(xml2::xml_attr(x, "name") == "rational")) 
+			out <<- c(out, xml2::xml_text(x), "(")
 	}
-	# if (xmlName(x) == "OMS") out <<- c(out, "(")
-	if (xmlName(x) == "OMSTR") {
-	# out <<- c(out, sQuote(gsub("'", "\\\\'", xmlValue(x))))
-	out <<- c(out, paste("'", gsub("'", "\\\\'", xmlValue(x)), "'", sep=""))
-	} else if ( length( xmlChildren(x) ) > 0 )
-		for( i in seq( along = xmlChildren(x) ) ) {
-			Recall( x[[i]] )
-			if (i > 1 && i < length(xmlChildren(x))) 
+	# if (xml2::xml_name(x) == "OMS") out <<- c(out, "(")
+	if (xml2::xml_name(x) == "OMSTR") {
+	# out <<- c(out, sQuote(gsub("'", "\\\\'", xml2::xml_text(x))))
+	out <<- c(out, paste("'", gsub("'", "\\\\'", xml2::xml_text(x)), "'", sep=""))
+	} else if ( length( xml2::xml_children(x) ) > 0 )
+		for( i in seq( along = xml2::xml_children(x) ) ) {
+			Recall( xml2::xml_children(x)[[i]] )
+			if (i > 1 && i < length(xml2::xml_children(x)))
 				out <<- c(out, ",")
 		}
-	# if (xmlName(x) == "OMA" || xmlName(x) == "OMBIND") out <<- c(out, xmlValue(x), ")")
-	if (xmlName(x) == "OMA" || xmlName(x) == "OMBIND") out <<- c(out, ")")
+	# if (xml2::xml_name(x) == "OMA" || xml2::xml_name(x) == "OMBIND") out <<- c(out, xml2::xml_text(x), ")")
+	if (xml2::xml_name(x) == "OMA" || xml2::xml_name(x) == "OMBIND") out <<- c(out, ")")
  }
  x <- paste(x, "\n", collapse = "")
- x <- xmlTreeParse(x, asText = TRUE)
- x <- xmlRoot(x)
+ x <- xml2::read_xml(x)
+ x <- xml2::xml_root(x)
  recurse(x)
  paste(out, collapse = "")
 }

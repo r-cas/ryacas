@@ -11,7 +11,7 @@
 
 %\VignetteIndexEntry{Introduction to Ryacas}
 %\VignettePackage{Ryacas}
-%\VignetteDepends{XML}
+%\VignetteDepends{xml2}
 
 
 \input{Ryacas-raw}

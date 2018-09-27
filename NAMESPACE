@@ -2,7 +2,7 @@ useDynLib(Ryacas, .registration = TRUE)
 exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
 importFrom(stats, deriv)
-import(XML)
+importFrom(xml2, xml_attrs, xml_name, xml_text, read_xml, xml_root)
 
 S3method(Clear, Expr)
 S3method(Clear, default)
