@@ -23,6 +23,8 @@ on_failure:
 
 environment:
   NOT_CRAN: true
+  R_CHECK_ARGS: --as-cran --no-build-vignettes --no-manual
+  _R_CHECK_DOC_SIZES_: 0
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
