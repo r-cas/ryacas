@@ -1,6 +1,7 @@
 Changes in version 0.3-4
 
 o Maintainer changed to Mikkel Meyer Andersen <mikl@math.aau.dk>
+o Changed from using XML to xml2
 
 Changes in version 0.3-3
 
