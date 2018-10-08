@@ -61,7 +61,7 @@ namespace {
     }
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(name = ".yacas_init_force")]]
 void yacas_init_force()
 {
   yacas_initialize();
