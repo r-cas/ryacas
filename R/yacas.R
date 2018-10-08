@@ -23,10 +23,11 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
     if (grepl('^<OMOBJ>', yacas.res[1])) {
         text <- OpenMath2R(yacas.res[1])
 
-        if (retclass == "expression")
+        if (retclass == "expression") {
             text <- parse(text = text, srcfile = NULL)
-        else if (retclass == "unquote")
+        } else if (retclass == "unquote") {
             text <- sub("^['\"](.*)['\"]", "\\1", text)
+        }
 
         result <- list(text = text, OMForm = yacas.res[1])
     } else if (nchar(yacas.res[1]) > 0) {

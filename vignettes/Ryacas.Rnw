@@ -47,6 +47,7 @@ Mikkel Meyer Andersen}
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \maketitle
 \tableofcontents
 \parskip5pt

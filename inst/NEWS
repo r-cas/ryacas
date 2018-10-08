@@ -1,3 +1,10 @@
+Changes in version 0.3-5
+
+o Typo in Description field in DESCRIPTION file
+o Internal
+    - Enable use of devtools::load_all(); requires that a variable called 
+      "ryacas_devel_use_devtools" exists in the global environment.
+
 Changes in version 0.3-4
 
 o Maintainer changed to Mikkel Meyer Andersen <mikl@math.aau.dk>

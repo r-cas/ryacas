@@ -11,10 +11,30 @@ namespace {
     static
     void yacas_initialize()
     {
-        _yacas = new CYacas(_side_effects);
-
-        Rcpp::Environment base_env = Rcpp::Environment::base_env();
-        Rcpp::Function system_file = base_env["system.file"];
+        _yacas = new CYacas(_side_effects);        
+        
+        /* This works for installed packages, but not during development with
+         *   devtools::load_all()
+         */
+        //Rcpp::Environment base_env = Rcpp::Environment::base_env();
+        //Rcpp::Function system_file = base_env["system.file"];
+        /* hence this instead where a global variable called
+         *   ryacas_devel_use_devtools
+         * must be existing
+         */
+        Rcpp::Environment env = Rcpp::Environment::base_env();
+        Rcpp::Function system_file = env["system.file"];
+        
+        try {
+          Rcpp::Environment global_env = Rcpp::Environment::global_env();
+          
+          if (global_env.get("ryacas_devel_use_devtools") != R_NilValue) {
+            env = Rcpp::Environment::namespace_env("devtools");
+            system_file = env["shim_system.file"];
+          }
+        } catch (...) {  }
+        /* <--> */
+        
         std::string scripts_path = Rcpp::as<std::string>(system_file(Rcpp::Named("package", "Ryacas"), "yacas"));
 
         if (!scripts_path.empty()) {
@@ -30,11 +50,21 @@ namespace {
             _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
 
         if (_yacas->IsError()) {
-            const std::string msg = "Failed to initialize yacas: " + _yacas->Error();
+            const std::string msg = "Failed to initialize yacas: " + _yacas->Error() + 
+              "\n" +
+              "If you are using devtools::load_all(), be sure that " + 
+              "a variable called \"ryacas_devel_use_devtools\" exists.";
+            
             _yacas = nullptr;
             Rcpp::stop(msg);
         }
     }
+}
+
+// [[Rcpp::export]]
+void yacas_init_force()
+{
+  yacas_initialize();
 }
 
 // [[Rcpp::export]]

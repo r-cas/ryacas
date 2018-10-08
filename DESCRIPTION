@@ -1,10 +1,10 @@
 Package: Ryacas
-Version: 0.3-4
+Version: 0.3-5
 Title: R Interface to the Yacas Computer Algebra System 
 Author: Rob Goedman <goedman@mac.com>, Gabor Grothendieck <ggrothendieck@gmail.com>, Søren Højsgaard <sorenh@math.aau.dk>, Ayal Pinkus <apinkus@xs4all.nl>, Grzegorz Mazur <teoretyk@gmail.com>, Mikkel Meyer Andersen <mikl@math.aau.dk>
 Maintainer: Mikkel Meyer Andersen <mikl@math.aau.dk>
 Encoding: UTF-8
-Description: An interface to the yacas computer algebra system.
+Description: An interface to the Yacas computer algebra system.
 Depends: R (>= 3.3.0)
 Imports: Rcpp (>= 0.12.0), xml2, stats
 LinkingTo: Rcpp
