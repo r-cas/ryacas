@@ -16,7 +16,6 @@ OpenMath2R <- function(x) {
 	}
 	# if (xml2::xml_name(x) == "OMS") out <<- c(out, "(")
 	if (xml2::xml_name(x) == "OMSTR") {
-	# out <<- c(out, sQuote(gsub("'", "\\\\'", xml2::xml_text(x))))
 	out <<- c(out, paste("'", gsub("'", "\\\\'", xml2::xml_text(x)), "'", sep=""))
 	} else if ( length( xml2::xml_children(x) ) > 0 )
 		for( i in seq( along = xml2::xml_children(x) ) ) {
