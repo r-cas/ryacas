@@ -569,13 +569,15 @@ The output can be displayed in TeX form:
 @ 
 <<>>=
 #FIXME
-#yacas("TeXForm(B)")
+yacas("TeXForm(B)")
+as.character(yacas("TeXForm(B)"))
 @ %def 
 
 @ 
 <<>>=
 #FIXME
-#TeXForm(B)
+TeXForm(B)
+as.character(as.expression(TeXForm(B)))
 @ %def 
 
 

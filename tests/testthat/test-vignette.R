@@ -14,16 +14,37 @@ test_that("Sym", {
   expect_equal(class(xs), c("Sym", "character"))
 })
 
+
 texp <- Taylor(exp(xs), xs, 0, 3)
 
 test_that("Taylor", {
   expect_equal(as.expression(texp), expression(xs + xs^2/2 + xs^3/6 + 1))
 })
-
-if (FALSE) {
-  yacas("PrettyForm(texp)")
-  yacas("TeXForm(texp)", retclass = "unquote")
+test_that("TeXForm", {
+  expect_equal(as.expression(texp), expression(xs + xs^2/2 + xs^3/6 + 1))
   
-  PrettyForm(texp)
-  TeXForm(texp)
-}
+  # yacas does not know texp:
+  expect_equal(as.character(yacas("TeXForm(texp)", retclass = "unquote")), "$\\mathrm{ texp }$")
+})
+
+yacas("texp2 := Taylor(xs, 0, 3) Exp(xs)")
+texp2s <- Sym("texp2")
+test_that("Taylor", {
+  expect_equal(as.expression(texp2s), expression(xs + xs^2/2 + xs^3/6 + 1))
+})
+test_that("TeXForm", {
+  expect_equal(as.expression(texp2s), expression(xs + xs^2/2 + xs^3/6 + 1))
+  
+  # yacas does know texp2s
+  expect_equal(as.character(yacas("TeXForm(texp2)", retclass = "unquote")), 
+               "$xs + \\frac{xs ^{2}}{2}  + \\frac{xs ^{3}}{6}  + 1$")
+})
+test_that("PrettyForm", {
+  o1 <- capture.output(PrettyForm(texp))
+  o2 <- capture.output(PrettyForm(texp2s))
+  o3 <- capture.output(yacas("PrettyForm(texp2)", retclass = "unquote"))
+  
+  expect_equal(o1, o2)
+  expect_equal(o1, o3)
+  expect_equal(o2, o3)
+})

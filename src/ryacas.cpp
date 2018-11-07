@@ -55,6 +55,7 @@ namespace {
 void yacas_init_force()
 {
   yacas_initialize();
+  Rcpp::Rcout << "Yacas was successfully initialised" << std::endl;
 }
 
 // [[Rcpp::export]]

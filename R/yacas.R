@@ -24,6 +24,8 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
         text <- OpenMath2R(yacas.res[1])
 
         if (retclass == "expression") {
+            #text <- parse(text = text, srcfile = NULL)
+            text <- gsub("\\", "\\\\", text, fixed = TRUE)
             text <- parse(text = text, srcfile = NULL)
         } else if (retclass == "unquote") {
             text <- sub("^['\"](.*)['\"]", "\\1", text)
