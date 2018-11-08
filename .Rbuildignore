@@ -11,6 +11,6 @@
 ^appveyor\.yml$
 ^Ryacas_.*\.tar\.gz$
 ^Ryacas\.Rcheck$
-
+tic.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
