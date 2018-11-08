@@ -9,26 +9,20 @@ namespace {
     static CYacas* _yacas = nullptr;
 
     static
-    void yacas_initialize()
+    void yacas_initialize(std::string alternative_path)
     {
         _yacas = new CYacas(_side_effects);        
         
-        /* This works for installed packages, but not during development with
-         *   devtools::load_all()
-         */
-        //Rcpp::Environment base_env = Rcpp::Environment::base_env();
-        //Rcpp::Function system_file = base_env["system.file"];
-        
-        /* Instead, look it up (as a patched system.file()) is provided:
-         * https://github.com/r-lib/devtools/issues/1887#issuecomment-427812413:
-         */
-        // 
-        
-        // either base::system.file or devtools::shim_system
-        Rcpp::Function system_file("system.file");
-        /* <--> */
+        Rcpp::Environment base_env = Rcpp::Environment::base_env();
+        Rcpp::Function system_file = base_env["system.file"];
         
         std::string scripts_path = Rcpp::as<std::string>(system_file(Rcpp::Named("package", "Ryacas"), "yacas"));
+        
+        // During development, the path can be overwritten
+        if (!alternative_path.empty()) {
+          scripts_path = alternative_path;
+          Rcpp::Rcout << " - Searching for yacas at \"" << scripts_path << "\"" << std::endl;
+        }
 
         if (!scripts_path.empty()) {
             if (scripts_path.back() != '/')
@@ -52,17 +46,18 @@ namespace {
 }
 
 // [[Rcpp::export(name = ".yacas_init_force")]]
-void yacas_init_force()
+void yacas_init_force(std::string path)
 {
-  yacas_initialize();
-  Rcpp::Rcout << "Yacas was successfully initialised" << std::endl;
+  Rcpp::Rcout << "Trying to initialise internal yacas: " << std::endl;
+  yacas_initialize(path);
+  Rcpp::Rcout << "Done." << std::endl;
 }
 
 // [[Rcpp::export]]
 std::vector<std::string> yacas_evaluate(std::string expr)
 {
     if (!_yacas)
-        yacas_initialize();
+        yacas_initialize(std::string());
 
     _side_effects.clear();
     _side_effects.str("");

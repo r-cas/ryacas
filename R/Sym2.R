@@ -91,7 +91,8 @@ PrettyForm <- function(x, ...) UseMethod("PrettyForm")
 PrettyForm.default <- function(x, ...) Sym("PrettyForm(", x, ")")
 
 TeXForm <- function(x, ...) UseMethod("TeXForm")
-TeXForm.default <- function(x, ...) Sym("TeXForm(", x, ")")
+#TeXForm.default <- function(x, ...) Sym("TeXForm(", x, ")")
+TeXForm.default <- function(x, ...) as.character(as.expression(Sym("TeXForm(", x, ")")))
 
 Precision <- function(x, ...) UseMethod("Precision")
 Precision.default <- function(x, ...) Sym("Precision(", x, ")")

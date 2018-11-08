@@ -20,7 +20,16 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 
     yacas.res <- yacas_evaluate(x)
 
-    if (grepl('^<OMOBJ>', yacas.res[1])) {
+    if (grepl('^<OMOBJ>.*<OMSTR>', yacas.res[1])) {
+      text <- OpenMath2R(yacas.res[1])
+      #text <- gsub("\\", "\\\\", text, fixed = TRUE)
+      text <- sub("^['\"](.*)['\"]", "\\1", text)
+      #result <- list(text = text, TeXForm = yacas.res[1])
+      return(text)
+      
+      #class(result) <- "yacas"
+      #return(result)
+    } else  if (grepl('^<OMOBJ>', yacas.res[1])) {
         text <- OpenMath2R(yacas.res[1])
 
         if (retclass == "expression") {
@@ -39,7 +48,7 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
     }
 
     class(result) <- "yacas"
-    result
+    return(result)
 }
 
 # test

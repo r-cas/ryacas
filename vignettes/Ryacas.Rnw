@@ -300,7 +300,7 @@ Printing the result in nice forms:
 @ 
 <<>>=
 yacas("PrettyForm(texp)") 
-yacas("TeXForm(texp)", retclass = "unquote")
+yacas("TeXForm(texp)")
 @ %def 
 
 @ 
@@ -568,16 +568,12 @@ PrettyForm(B)
 The output can be displayed in TeX form:
 @ 
 <<>>=
-#FIXME
 yacas("TeXForm(B)")
-as.character(yacas("TeXForm(B)"))
 @ %def 
 
 @ 
 <<>>=
-#FIXME
 TeXForm(B)
-as.character(as.expression(TeXForm(B)))
 @ %def 
 
 

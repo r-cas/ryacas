@@ -63,8 +63,10 @@ Taylor.Expr <- function(f, x, a, n, ...)
 PrettyForm.Expr <- function(x, ...) 
    Expr(substitute(PrettyForm(x), as.list(match.call())[-1]))
 
-TeXForm.Expr <- function(x, ...)
-   Expr(substitute(TeXForm(x), as.list(match.call())[-1]))
+#TeXForm.Expr <- function(x, ...)
+#   Expr(substitute(TeXForm(x), as.list(match.call())[-1]))
+#TeXForm.Expr <- function(x, ...)
+#   Expr(substitute(TeXForm(x), as.list(match.call())[-1]))
 
 Precision.Expr <- function(x, ...)
    Expr(substitute(Precision(x, ...), as.list(match.call())[-1]))

@@ -14,11 +14,11 @@ test_that("Sym", {
 })
 
 test_that("TeXForm", {
-  expect_equal(as.character(yacas("TeXForm(x*x)")), "$x ^{2}$")
-  expect_equal(as.character(as.expression(TeXForm(yacas("x*x")))), "$x ^{2}$")
+  expect_equal(yacas("TeXForm(x*x)"), "$x ^{2}$")
+  expect_equal(TeXForm(yacas("x*x")), "$x ^{2}$")
   
-  expect_equal(as.character(yacas("TeXForm(x*x)", retclass = "unquote")), "$x ^{2}$")
+  expect_equal(yacas("TeXForm(x*x)", retclass = "unquote"), "$x ^{2}$")
   
   x <- Sym("x")
-  expect_equal(as.character(as.expression(TeXForm(x*x))), "$x ^{2}$")
+  expect_equal(TeXForm(x*x), "$x ^{2}$")
 })
