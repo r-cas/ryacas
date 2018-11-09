@@ -40,7 +40,6 @@ body(BurrPDF) <- yacas(expression(deriv(BurrCDF(x,c,k))))[[1]]
 # test out PDF
 BurrPDF(1)
 
-
 }
 \seealso{
 \code{\link{body}}

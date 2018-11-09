@@ -2,12 +2,13 @@
 % Please edit documentation in R/yacas.R
 \name{Eval}
 \alias{Eval}
+\alias{Eval.default}
 \alias{Eval.Sym}
 \alias{Eval.Expr}
 \alias{Eval.yacas}
 \title{Evaluate a yacas expression.}
 \usage{
-\method{Eval}{Expr}(x, env = parent.frame(), ...)
+Eval(x, env = parent.frame(), ...)
 }
 \arguments{
 \item{x}{Object to be evaluated.}

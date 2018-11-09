@@ -108,6 +108,7 @@
 yacas <- function(x, ...)
   UseMethod("yacas")
 
+#' @export
 yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...) {
 
     addSemiFn <- function(x) {
@@ -161,7 +162,7 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 # yacas("Pi+Sin(x)", retclass = "character", OM=TRUE)
 
 
-
+#' @export
 as.language <- function(x) parse(text=paste(deparse(x)))[[1]]
 
 
@@ -197,9 +198,9 @@ as.language <- function(x) parse(text=paste(deparse(x)))[[1]]
 #' # test out PDF
 #' BurrPDF(1)
 #' 
-#' 
 bodyAsExpression <- function(x) as.expression(as.language(body(x)))
-	
+
+#' @export
 yacas.expression <- function(x, ...) {
     x <- deparse(yparse(x), width.cutoff = 200)
     x <- gsub("\"","", x)
@@ -207,7 +208,6 @@ yacas.expression <- function(x, ...) {
     NextMethod(x, ...)
 }
    
-  
 yparse <- function(x) {
     if (!is.expression(x)) return
     options(show.error.messages = FALSE)
@@ -367,6 +367,7 @@ yAssignFunction <- function(x) {
 	)
 }
 
+#' @export
 yacas.function <- function(x, ...) {
 	funname <- deparse(substitute(x))
 	a <- paste( "(", paste(names(formals(x)), collapse = ","), ")" )
@@ -378,12 +379,14 @@ yacas.function <- function(x, ...) {
 	NextMethod(x)
 }
 
+#' @export
 yacas.formula <- function(x, ...) {
 	x <- as.expression(as.language(x[[length(x)]]))
 	.Class <- "expression"
 	NextMethod(x)
 }
 
+#' @export
 yacas.yacas <- function(x, ...) {
 	x <- x[[1]]
 	stopifnot(is.expression(x))
@@ -399,10 +402,7 @@ as.Expr.formula <- function(x) as.expression(as.language(x[[length(x)]]))
 #' 
 #' Evaluate a yacas expression.
 #' 
-#' 
-#' @aliases Eval Eval.Sym Eval.Expr Eval.yacas
-#' @method Eval Expr
-#' @method Eval yacas
+#' @aliases Eval Eval.default Eval.Sym Eval.Expr Eval.yacas
 #' @param x Object to be evaluated.
 #' @param env Environment or list in which to perform evaluation.
 #' @param \dots Not currently used.
@@ -416,11 +416,19 @@ as.Expr.formula <- function(x) as.expression(as.language(x[[length(x)]]))
 #' Eval(yacas(expression(x*x)))
 #'
 #' @export
-Eval <- function(x, env = parent.frame(), ...) UseMethod("Eval")
+Eval <- function(x, env = parent.frame(), ...) {
+  UseMethod("Eval", x)
+}
 
 #' @export
-Eval.yacas <- function(x, env = parent.frame(), ...) 
-	eval(x[[1]], envir = env)
+Eval.default <- function(x, env = parent.frame(), ...) {
+  stop("Eval() currently only implemented for objects of type Sym, Expr and yacas")
+}
+
+#' @export
+Eval.yacas <- function(x, env = parent.frame(), ...) {
+  eval(x[[1]], envir = env)
+}
 
 as.expression.yacas <- function(x, ...) x[[1]]
 as.character.yacas <- function(x, ...) as.character(x[[1]])
