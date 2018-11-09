@@ -1,4 +1,110 @@
-
+#' yacas interface
+#' 
+#' Interface to the yacas computer algebra system.
+#' 
+#' The user supplies an R expression, an R function name corresponding to a
+#' function with a single line body, a formula or a yacas input string.  In the
+#' case of a formula it is regarded as an expression represented by the right
+#' hand side of the formula while the left hand side, if any, is ignored.
+#' 
+#' @aliases yacas.character yacas.expression yacas.function yacas.formula
+#' yacas.yacas yacas as.expression.yacas as.character.yacas addSemi ynext
+#' ySequence ysub yparse yAssignFunction
+#' @param x A yacas character string or an R expression without terminating
+#' semicolon to be processed by yacas.
+#' @param verbose A logical value indicating verbosity of output or
+#' \code{"input"} to only show input to yacas but not output from yacas or
+#' \code{"output"} to only show output from yacas but not input to yacas.
+#' @param method method used to communicate with yacas.  If \code{"socket"} is
+#' specified then the same yacas session is used on a sequence of calls.  If
+#' \code{"system"} is specified then a new instance of yacas is used just for
+#' the period of that call. \code{"system"} does not require that the system be
+#' configured to support telnet/sockets and so may be useful in some instances.
+#' If no value is specified the default is taken from
+#' \code{getOption("yacas.method")} and if that is not specified "socket" is
+#' used.  \code{"socket"} and \code{"system"} may be abbreviated.
+#' @param addSemi If \code{TRUE} a semicolon is added to the character string
+#' sent to yacas.  This can be set to \code{FALSE} if its known that the
+#' character string already has a trailing semicolon.  It is ignored if
+#' \code{retclass="expression"}.
+#' @param retclass The class of the first component of the yacas structure.  It
+#' defaults to \code{"expression"} but may be specified as \code{"character"}
+#' or \code{"unquote"}.  \code{"unquote"} is the same as \code{"character"}
+#' except that if the character string returned would have otherwise had quotes
+#' in the first and and last positions then they are stripped.
+#' @param \dots Additional arguments ultimately passed down to
+#' \code{yacas.character}.
+#' @return An R object of class \code{"yacas"} is returned.  If
+#' \code{PrettyPrinter("OMForm")} is in effect, which it is by default, then
+#' the first component is an R expression and the \code{OMForm} component
+#' contains OpenMath XML code.  In other cases the first component is NULL and
+#' the \code{YacasForm} or \code{PrettyForm} components have display
+#' information.
+#' @note Windows Installation.  On Windows one can install \code{Ryacas} by
+#' issuing the commands:
+#' 
+#' \tabular{l}{ \code{install.packages("Ryacas", dep = TRUE)}\cr
+#' \code{library(Ryacas)}\cr \code{yacasInstall()}\cr }
+#' 
+#' or by using the \code{Packages | Install package(s)} menu in place of the
+#' first command.  The second command downloads \code{scripts.dat} and
+#' \code{yacas.exe} from the internet and installs them into
+#' \code{R_HOME/library/Ryacas/yacdir} where \code{R_HOME} is the location of
+#' your \code{R} installation.
+#' 
+#' Normally the default locations of yacas, its initialization file and the
+#' scripts file are sufficient but, if necessary, they can be overridden via
+#' the environment variables: \code{YACAS_HOME}, \code{YACAS_INIT} and
+#' \code{YACAS_SCRIPTS}. The \code{YACAS_INVOKE_STRING} environment variable
+#' discussed in the next section overrides all three of these.
+#' 
+#' All OS Installation.  The \code{YACAS_INVOKE_STRING} environment variable
+#' can be used to override the invocation string for yacas.  Normally it is not
+#' used.  If it does need to be used then a typical use might be:
+#' 
+#' \tabular{l}{ \code{library(Ryacas)}\cr \code{# only need to do the file.copy
+#' command once}\cr \code{file.copy(system.file("yacdir/R.ys", package =
+#' "Ryacas"), "~/.yacsrc")}\cr \code{# this needs to be done once per
+#' session}\cr \code{Sys.setenv(YACAS_INVOKE_STRING = "yacas -pc --server
+#' 9734")}\cr \code{demo(Ryacas) # test it out}\cr }
+#' 
+#' yacmode. There is also a utility yacmode which is called without arguments
+#' and just turns R into a terminal into yacas until one quits out of it (and
+#' back to R) by entering stop, end, quit, exit or e.
+#' 
+#' Startup. \code{yacas} starts up when \code{yacasStart()} is called or the
+#' first time \code{yacas} is called.  yacas is shut down when
+#' \code{yacasStop()} is called or when the package is detached using the
+#' \code{detach()} R command.  On Windows, when yacas is shut down, the yacas
+#' process is terminated on Windows XP Pro but not on other versions of
+#' Windows. In those cases there will be a dangling process that the user must
+#' terminate manually.
+#' 
+#' Translation.  The translation process occurs in several steps.  If the input
+#' to the \code{yacas} function is an expression then it is translated to a
+#' valid yacas character string (otherwise, it is sent to yacas unprocessed).
+#' Yacas then processes the string and if \code{retclass="expression"} it is
+#' translated back to an R expression (otherwise it is sent back unprocessed).
+#' Examples of translations are:
+#' 
+#' \tabular{ll}{ R\tab yacas\cr sin(x)\tab Sin(x)\cr deriv(sin, x)\tab
+#' Deriv(x)Sin(x)\cr log(x)\tab Ln(x)\cr }
+#' @references \url{http://yacas.sourceforge.net}
+#' @keywords symbolmath
+#' @examples
+#' 
+#' yacas(expression(Factor(x^2-1)))
+#' exp1 <- expression(x^2 + 2 * x^2)
+#' exp2 <- expression(2 * exp0)
+#' exp3 <- expression(6 * pi * x)
+#' exp4 <- expression((exp1 * (1 - sin(exp3))) / exp2)
+#' print(yacas(exp4))
+#' 
+#' print(yacas("Version()")) # yacas version
+#' 
+#' # see demo("Ryacas-Function")
+#' 
+#' @export
 yacas <- function(x, ...)
   UseMethod("yacas")
 
@@ -57,6 +163,41 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 
 
 as.language <- function(x) parse(text=paste(deparse(x)))[[1]]
+
+
+#' Get body of function as an expression.
+#' 
+#' Get body of function as an expression.
+#' 
+#' This function is similar to the R \code{body} function except that function
+#' returns a call object whereas this one returns an expression usable in
+#' Ryacas calculations.
+#' 
+#' @aliases bodyAsExpression as.language
+#' @param x An R function.
+#' @return An expression.
+#' @seealso \code{\link{body}}
+#' @keywords symbolmath
+#' @examples
+#' 
+#' 
+#' # construct an R function for the Burr probability density
+#' # function (PDF) given the Burr cumulative distribution function (CDF)
+#' BurrCDF <- function(x, c = 1, k = 1) 1-(1+x^c)^-k
+#' 
+#' # transfer CDF to yacas
+#' yacas(BurrCDF)
+#' 
+#' # create a template for the PDF from the CDF
+#' BurrPDF <- BurrCDF
+#' 
+#' # differentiate CDF and place resulting expression in body
+#' body(BurrPDF) <- yacas(expression(deriv(BurrCDF(x,c,k))))[[1]]
+#' 
+#' # test out PDF
+#' BurrPDF(1)
+#' 
+#' 
 bodyAsExpression <- function(x) as.expression(as.language(body(x)))
 	
 yacas.expression <- function(x, ...) {
@@ -252,8 +393,32 @@ yacas.yacas <- function(x, ...) {
 
 as.Expr.formula <- function(x) as.expression(as.language(x[[length(x)]]))
 
+
+
+#' Evaluate a yacas expression.
+#' 
+#' Evaluate a yacas expression.
+#' 
+#' 
+#' @aliases Eval Eval.Sym Eval.Expr Eval.yacas
+#' @method Eval Expr
+#' @method Eval yacas
+#' @param x Object to be evaluated.
+#' @param env Environment or list in which to perform evaluation.
+#' @param \dots Not currently used.
+#' @keywords symbolmath
+#' @examples
+#' 
+#' Eval(yacas(expression(x*x)), list(x=2))
+#' 
+#' # same
+#' x <- 2
+#' Eval(yacas(expression(x*x)))
+#'
+#' @export
 Eval <- function(x, env = parent.frame(), ...) UseMethod("Eval")
 
+#' @export
 Eval.yacas <- function(x, env = parent.frame(), ...) 
 	eval(x[[1]], envir = env)
 

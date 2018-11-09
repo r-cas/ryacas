@@ -1,3 +1,4 @@
+#' @importFrom xml2 xml_attrs xml_name xml_text read_xml xml_root
 OpenMath2R <- function(x) {
  out <- c()
  recurse <- function( x ) {

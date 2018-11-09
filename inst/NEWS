@@ -4,6 +4,7 @@ o TeXForm() now returns character vector
 o More tests
 o Internal
   - Enable use of devtools::load_all() via .onLoad() and .yacas_init_force()
+  - Convert to Roxygen documentation
 
 Changes in version 0.3-4
 

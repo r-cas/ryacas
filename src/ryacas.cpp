@@ -45,7 +45,7 @@ namespace {
     }
 }
 
-// [[Rcpp::export(name = ".yacas_init_force")]]
+// [[Rcpp::export]]
 void yacas_init_force(std::string path)
 {
   Rcpp::Rcout << "Trying to initialise internal yacas: " << std::endl;
@@ -53,6 +53,19 @@ void yacas_init_force(std::string path)
   Rcpp::Rcout << "Done." << std::endl;
 }
 
+//' Evaluate yacas expression
+//' 
+//' This is a low-level function for evaluating yacas expression represented as
+//' string.
+//' 
+//' @param expr Yacas expression
+//' @return Result of evaluating \code{expr} by yacas in OpenMath format and
+//' side-effects of the evaluation
+//' 
+//' @examples
+//' yacas_evaluate("D(x)Sin(x^2)")
+//' 
+//' @export
 // [[Rcpp::export]]
 std::vector<std::string> yacas_evaluate(std::string expr)
 {
