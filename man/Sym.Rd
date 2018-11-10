@@ -105,6 +105,7 @@
 \alias{\%Where\%.default}
 \title{Sym}
 \usage{
+Sym(x) 
 Sym(...)
 }
 \arguments{
