@@ -1,3 +1,4 @@
+#' @export
 print.yacas <- function(x, ...) {
 	catn <- function(...) cat(..., "\n", sep = "")
 	display <- list(...)$display
