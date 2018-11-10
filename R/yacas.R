@@ -139,6 +139,7 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
       #text <- gsub("\\", "\\\\", text, fixed = TRUE)
       text <- sub("^['\"](.*)['\"]", "\\1", text)
       text <- gsub("[ ]+\\$$", "$", text) # remove space before ending math-mode dollar
+      text <- gsub("(^\\$)|(\\$$)", "", text) # remove math mode
       #result <- list(text = text, TeXForm = yacas.res[1])
       return(text)
       
