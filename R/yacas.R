@@ -40,6 +40,9 @@
 #' contains OpenMath XML code.  In other cases the first component is NULL and
 #' the \code{YacasForm} or \code{PrettyForm} components have display
 #' information.
+#' @usage 
+#' yacas(x, ...)
+#' yacas(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
 #' @note Windows Installation.  On Windows one can install \code{Ryacas} by
 #' issuing the commands:
 #' 

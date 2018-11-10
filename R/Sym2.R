@@ -53,8 +53,8 @@
 #' @param \dots An R character string or object that can be coerced to a
 #' character string.
 #' @usage 
-#' Sym(x) 
 #' Sym(...)
+#' Sym(x) 
 #' @return \code{Sym} returns a \code{"Sym"} object and \code{Expr} returns an
 #' \code{"Expr"} object.
 #' @note Currently the only \code{Expr} methods implemented are

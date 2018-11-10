@@ -105,8 +105,8 @@
 \alias{\%Where\%.default}
 \title{Sym}
 \usage{
-Sym(x) 
 Sym(...)
+Sym(x)
 }
 \arguments{
 \item{\dots}{An R character string or object that can be coerced to a
