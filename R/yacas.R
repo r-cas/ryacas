@@ -131,9 +131,14 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
     yacas.res <- yacas_evaluate(x)
 
     if (grepl('^<OMOBJ>.*<OMSTR>', yacas.res[1])) {
-      text <- OpenMath2R(yacas.res[1])
+      text <- yacas.res[1]
+      text <- gsub("&amp;", "&", text, fixed = TRUE)
+      text <- gsub("&", "&amp;", text, fixed = TRUE)
+      #text <- OpenMath2R(yacas.res[1])
+      text <- OpenMath2R(text)
       #text <- gsub("\\", "\\\\", text, fixed = TRUE)
       text <- sub("^['\"](.*)['\"]", "\\1", text)
+      text <- gsub("[ ]+\\$$", "$", text) # remove space before ending math-mode dollar
       #result <- list(text = text, TeXForm = yacas.res[1])
       return(text)
       
@@ -419,9 +424,7 @@ as.Expr.formula <- function(x) as.expression(as.language(x[[length(x)]]))
 #' Eval(yacas(expression(x*x)))
 #'
 #' @export
-Eval <- function(x, env = parent.frame(), ...) {
-  UseMethod("Eval", x)
-}
+Eval <- function(x, env = parent.frame(), ...) UseMethod("Eval")
 
 #' @export
 Eval.default <- function(x, env = parent.frame(), ...) {
