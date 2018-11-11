@@ -1,6 +1,6 @@
 Changes in version 0.3-5
 
-o TeXForm() now returns character vector
+o TeXForm() now returns character vector (without $'s at the beginning and end)
 o More tests
 o Internal
   - Enable use of devtools::load_all() via .onLoad() and .yacas_init_force()

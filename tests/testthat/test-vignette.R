@@ -24,7 +24,7 @@ test_that("TeXForm", {
   expect_equal(as.expression(texp), expression(xs + xs^2/2 + xs^3/6 + 1))
   
   # yacas does not know texp:
-  expect_equal(yacas("TeXForm(texp)"), "$\\mathrm{ texp }$")
+  expect_equal(yacas("TeXForm(texp)"), "\\mathrm{ texp }")
 })
 
 yacas("texp2 := Taylor(xs, 0, 3) Exp(xs)")
@@ -37,7 +37,7 @@ test_that("TeXForm", {
   
   # yacas does know texp2s
   expect_equal(yacas("TeXForm(texp2)"), 
-               "$xs + \\frac{xs ^{2}}{2}  + \\frac{xs ^{3}}{6}  + 1$")
+               "xs + \\frac{xs ^{2}}{2}  + \\frac{xs ^{3}}{6}  + 1")
 })
 test_that("PrettyForm", {
   o1 <- capture.output(PrettyForm(texp))

@@ -23,15 +23,15 @@ test_that("Expr", {
 })
 
 test_that("TeXForm", {
-  expect_equal(yacas("TeXForm(x*x)"), "$x ^{2}$")
+  expect_equal(yacas("TeXForm(x*x)"), "x ^{2}")
   
   #FIXME: Fails Travis but not locally; why?
   #expect_equal(TeXForm(yacas("x*x")), "$x ^{2}$")
   
-  expect_equal(yacas("TeXForm(x*x)", retclass = "unquote"), "$x ^{2}$")
+  expect_equal(yacas("TeXForm(x*x)", retclass = "unquote"), "x ^{2}")
   
   x <- Sym("x")
-  expect_equal(TeXForm(x*x), "$x ^{2}$")
+  expect_equal(TeXForm(x*x), "x ^{2}")
 })
 
 test_that("Yacmode", {
