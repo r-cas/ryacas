@@ -42,11 +42,7 @@
 #' information.
 #' @usage 
 #' yacas(x, ...)
-#' 
-#' # When x is character:
-#' yacas(x, verbose = FALSE, method, 
-#'          retclass = c("expression", "character", "unquote"), 
-#'          addSemi = TRUE, ...)
+#' \method{yacas}{character}(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
 #' @note Windows Installation.  On Windows one can install \code{Ryacas} by
 #' issuing the commands:
 #' 
