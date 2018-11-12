@@ -1,6 +1,6 @@
 ---
 title: "`Ryacas` -- an `R` interface to the `yacas` computer algebra system"
-author: "Mikkel Meyer Andersen and Søren Højsgaard"
+author: "Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Ayal Pinkus and Mikkel Meyer Andersen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
