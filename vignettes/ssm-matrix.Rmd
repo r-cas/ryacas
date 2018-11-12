@@ -15,7 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, message=FALSE}
 library(Ryacas)
-library(tidyverse)
 library(Matrix)
 ```
 
