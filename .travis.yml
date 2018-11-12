@@ -8,7 +8,7 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tlmgr install boxedminipage; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr install boxedminipage; fi
-  - R -q -e 'install.packages(c("remotes", "curl", "testthat", "knitr", "dplyr", "tidygraph", "ggraph", "RcppProgress", "RcppArmadillo", "igraph", "tibble")); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+  - R -q -e 'install.packages(c("remotes", "curl", "testthat", "rmarkdown", "knitr", "dplyr", "tidygraph", "ggraph", "RcppProgress", "RcppArmadillo", "igraph", "tibble")); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
 install: R -q -e 'tic::install()'
 after_install: R -q -e 'tic::after_install()'
 before_script: R -q -e 'tic::before_script()'
