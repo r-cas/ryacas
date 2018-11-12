@@ -7,6 +7,8 @@
 #' case of a formula it is regarded as an expression represented by the right
 #' hand side of the formula while the left hand side, if any, is ignored.
 #' 
+#' Note the silent version [syacas()].
+#' 
 #' @aliases yacas.character yacas.expression yacas.function yacas.formula
 #' yacas.yacas yacas as.expression.yacas as.character.yacas addSemi ynext
 #' ySequence ysub yparse yAssignFunction
@@ -440,3 +442,33 @@ Eval.yacas <- function(x, env = parent.frame(), ...) {
 as.expression.yacas <- function(x, ...) x[[1]]
 as.character.yacas <- function(x, ...) as.character(x[[1]])
 
+#' yacas interface -- silent version
+#' 
+#' Similar to [yacas()] but silent.
+#' This can be useful when working with yacas directly.
+#' 
+#' @inheritParams yacas
+#' @seealso yacas
+#' 
+#' @export
+syacas <- function(x, ...) {
+  invisible(yacas(x, ...))
+}
+
+#' Get width of yacas output
+#' 
+#' @export
+get_output_width <- function() {
+  res <- yacas("Print(FormulaMaxWidth())")
+  res <- gsub("\n", "", res$PrettyForm, fixed = TRUE)
+  res <- as.integer(res)
+  return(res)
+}
+
+#' Set width of yacas output
+#' 
+#' @export
+set_output_width <- function(w) {
+  cmd <- paste0("SetFormulaMaxWidth(", w, ")")
+  return(invisible(yacas(cmd)))
+}

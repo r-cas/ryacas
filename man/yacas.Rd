@@ -67,6 +67,8 @@ The user supplies an R expression, an R function name corresponding to a
 function with a single line body, a formula or a yacas input string.  In the
 case of a formula it is regarded as an expression represented by the right
 hand side of the formula while the left hand side, if any, is ignored.
+
+Note the silent version \code{\link[=syacas]{syacas()}}.
 }
 \note{
 Windows Installation.  On Windows one can install \code{Ryacas} by

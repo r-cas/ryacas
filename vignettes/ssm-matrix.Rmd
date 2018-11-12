@@ -1,0 +1,139 @@
+---
+title: "The structure of the concentration and covariance matrix in a simple state-space model"
+author: "Mikkel Meyer Andersen and Søren Højsgaard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The structure of the concentration and covariance matrix in a simple state-space model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE, echo=F}
+library(Ryacas)
+library(tidyverse)
+library(Matrix)
+```
+
+Set output width:
+
+```{r}
+get_output_width()
+set_output_width(120)
+get_output_width()
+```
+
+
+
+## Autoregression ($AR(1)$)
+
+Consider $AR(1)$ process: $x_i = a x_{i-1} + e_i$ where $i=1,2,3$ and where $x_0=e_0$. Isolating error terms gives that
+$$
+ e = L_1 x
+$$
+where $e=(e_0, \dots, e_3)$ and $x=(x_0, \dots x_3)$ and where $L_1$ has the form
+```{r}
+syacas("L1 := {{ 1,  0,  0, 0}, 
+               {-a,  1,  0, 0}, 
+               { 0, -a,  1, 0}, 
+               { 0,  0, -a, 1}}")
+```
+
+If error terms have variance $1$ then $\mathbf{Var}(e)=L \mathbf{Var}(x) L'$ so the covariance matrix $V1=\mathbf{Var}(x) = L^- (L^-)'$ while the concentration matrix is $K=L L'$
+
+```{r}
+syacas("K1 := Simplify(L1 * Transpose(L1))")
+syacas("V1 := Simplify(Inverse(K1))")
+```
+
+```{r}
+K1 = yacas("K1 := Simplify(L1 * Transpose(L1))")
+V1 = yacas("V1 := Simplify(Inverse(K1))")
+```
+
+```{r, results="asis"}
+K1 <- Sym("K1") ## Uskønt...
+V1 <- Sym("V1")
+cat(
+  "\\begin{align} K_1 &= ", TeXForm(K1), " \\\\ 
+                  V_1 &= ", TeXForm(V1), " \\end{align}", sep = "")
+```
+
+## Dynamic linear model
+
+Augument the $AR(1)$ process above with $y_i=b x_i + u_i$. Then
+$(e,u)$ can be expressed in terms of $(x,y)$ as
+$$
+(e,u) = L_2(x,y)
+$$
+where
+```{r}
+syacas("L2 := { { 1,  0,  0,  0, 0, 0, 0}, 
+                {-a,  1,  0,  0, 0, 0, 0},   
+                { 0, -a,  1,  0, 0, 0, 0}, 
+                { 0,  0, -a,  1, 0, 0, 0},
+                { 0, -b,  0,  0, 1, 0, 0}, 
+                { 0,  0, -b,  0, 0, 1, 0}, 
+                { 0,  0,  0, -b, 0, 0, 1}}")
+```
+
+```{r}
+syacas("K2 := Simplify(L2 * Transpose(L2))")
+syacas("V2 := Simplify(Inverse(K2))")
+
+K2s <- Sym("K2")
+V2s <- Sym("V2")
+```
+
+```{r, results="asis"}
+cat(
+  "\\begin{align} K_2 &= ", TeXForm(K2s), " \\\\ 
+                  V_2 &= ", TeXForm(V2s), " \\end{align}", sep = "")
+```
+
+
+## Numerical evalation in R
+
+```{r}
+sparsify <- function(x){Matrix::Matrix(x, sparse=T)}
+
+alpha <- .5
+beta <- -.3
+
+## AR(1)
+N <- 3
+L1 <- diag(1, 1 + N)
+L1[cbind(1+(1:N), 1:N)] <- -alpha
+K1 <- L1 %*% t(L1)
+V1 <- solve(K1)
+sparsify(K1)
+sparsify(V1)
+
+## Dynamic linear models
+N <- 3
+L2 <- diag(1, 1 + 2*N)
+L2[cbind(1+(1:N), 1:N)] <- -alpha
+L2[cbind(1 + N + (1:N), 1 + 1:N)] <- -beta
+L2
+K2 <- L2 %*% t(L2)
+V2 <- solve(K2)
+sparsify(K2)
+sparsify(V2)
+```
+
+Comparing with results calculated by yacas:
+
+```{r}
+yres_V2 <- Eval(V2s, list(a = alpha, b = beta))
+yres_V2_mat <- matrix(unlist(yres_V2), nrow = 7, ncol = 7)
+
+V2
+yres_V2_mat
+V2 - yres_V2_mat
+all.equal(V2, yres_V2_mat)
+```
+
