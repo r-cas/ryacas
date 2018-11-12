@@ -80,6 +80,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/introduction.html">`Ryacas` -- an `R` interface to the `yacas` computer algebra system</a>
+    </li>
+    <li>
       <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
     </li>
   </ul>
@@ -253,7 +256,7 @@ Deriv(x)Sin(x)</td>
 <span class='no'>exp2</span> <span class='kw'>&lt;-</span> <span class='fu'>expression</span>(<span class='fl'>2</span> * <span class='no'>exp0</span>)
 <span class='no'>exp3</span> <span class='kw'>&lt;-</span> <span class='fu'>expression</span>(<span class='fl'>6</span> * <span class='no'>pi</span> * <span class='no'>x</span>)
 <span class='no'>exp4</span> <span class='kw'>&lt;-</span> <span class='fu'>expression</span>((<span class='no'>exp1</span> * (<span class='fl'>1</span> - <span class='fu'>sin</span>(<span class='no'>exp3</span>))) / <span class='no'>exp2</span>)
-<span class='fu'>print</span>(<span class='fu'>yacas</span>(<span class='no'>exp4</span>))</div><div class='output co'>#&gt; expression(exp1 * (1 - sin(exp3))/exp2)</div><div class='input'>
+<span class='fu'>print</span>(<span class='fu'>yacas</span>(<span class='no'>exp4</span>))</div><div class='output co'>#&gt; expression(expression((x + 1) * (x - 1)) * (1 - sin(exp3))/exp2)</div><div class='input'>
 <span class='fu'>print</span>(<span class='fu'>yacas</span>(<span class='st'>"Version()"</span>)) <span class='co'># yacas version</span></div><div class='output co'>#&gt; [1] "1.6.1"</div><div class='input'>
 # see demo("Ryacas-Function")
 

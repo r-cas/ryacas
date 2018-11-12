@@ -1,4 +1,5 @@
 # Ryacas #
+
 [![Build Status](https://travis-ci.org/mikldk/ryacas.svg?branch=master)](https://travis-ci.org/mikldk/ryacas)
 [![Build status](https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true)](https://ci.appveyor.com/project/mikldk/ryacas/branch/master)
 
@@ -21,14 +22,14 @@ To build and install from github using R 3.3.0 (or later) and the R devtools pac
 
 ## Online info ##
 
-For overview, pointers to additional information, installation
-instructions and a sample session see http://code.google.com/p/ryacas/
-
-The vignette can be viewed online at https://github.com/mikldk/ryacas/blob/master/inst/doc/Ryacas.pdf
+For vignettes, overview, pointers to additional information, installation
+instructions and a sample session see <http://mikldk.github.io/ryacas/>. 
+The old site was <http://code.google.com/p/ryacas/>.
 
 Yacas documentation can be found at http://yacas.readthedocs.org/
 
 ## More ##
+
 Once Ryacas is installed, pointers to additional information
 can be found with these R commands:
 
@@ -38,7 +39,7 @@ can be found with these R commands:
 
 ## Yacas ##
 
-The package contains stripped-down yacas distribution. For the complete yacas source code see https://github.com/grzegorzmazur/yacas/ . For more information on yacas see http://www.yacas.org/
+The package contains stripped-down yacas distribution. For the complete yacas source code see <https://github.com/grzegorzmazur/yacas/> . For more information on yacas see <http://www.yacas.org/>.
 
 ---
 
