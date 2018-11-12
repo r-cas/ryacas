@@ -4,7 +4,7 @@ author: "Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Ayal Pinkus and Mik
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Ryacas` -- an `R` interface to the `yacas` computer algebra system}
+  %\VignetteIndexEntry{Ryacas - an R interface to the yacas computer algebra system}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
