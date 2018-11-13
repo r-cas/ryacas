@@ -6,6 +6,9 @@
 \usage{
 set_output_width(w)
 }
+\arguments{
+\item{w}{Width in number of characters}
+}
 \description{
 Set width of yacas output
 }

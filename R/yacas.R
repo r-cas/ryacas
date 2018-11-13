@@ -44,7 +44,9 @@
 #' information.
 #' @usage 
 #' yacas(x, ...)
-#' \method{yacas}{character}(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
+#' \method{yacas}{character}(x, verbose = FALSE, method, 
+#'     retclass = c("expression", "character", "unquote"), 
+#'     addSemi = TRUE, ...)
 #' @note Windows Installation.  On Windows one can install \code{Ryacas} by
 #' issuing the commands:
 #' 
@@ -466,6 +468,8 @@ get_output_width <- function() {
 }
 
 #' Set width of yacas output
+#' 
+#' @param w Width in number of characters
 #' 
 #' @export
 set_output_width <- function(w) {

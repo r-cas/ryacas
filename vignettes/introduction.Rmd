@@ -64,7 +64,7 @@ Eval(exp1, list(x=4))
 
 Some commands are not proper `R` expressions. For example, 
 typing 
-```{r, error = TRUE}
+```
 yacas(expression(D(x)Sin(x)))
 ``` 
 produces an error. 

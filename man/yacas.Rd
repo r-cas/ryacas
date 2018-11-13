@@ -18,7 +18,9 @@
 \title{yacas interface}
 \usage{
 yacas(x, ...)
-\method{yacas}{character}(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...)
+\method{yacas}{character}(x, verbose = FALSE, method, 
+    retclass = c("expression", "character", "unquote"), 
+    addSemi = TRUE, ...)
 }
 \arguments{
 \item{x}{A yacas character string or an R expression without terminating

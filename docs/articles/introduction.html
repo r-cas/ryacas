@@ -84,7 +84,7 @@
 <code>Ryacas</code> – an <code>R</code> interface to the <code>yacas</code> computer algebra system</h1>
                         <h4 class="author">Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Ayal Pinkus and Mikkel Meyer Andersen</h4>
             
-            <h4 class="date">2018-11-12</h4>
+            <h4 class="date">2018-11-13</h4>
       
       <small>Source: <a href="https://github.com//mikldk/ryacas/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -121,10 +121,7 @@ organised differently.
 <h2 class="hasAnchor">
 <a href="#yacas-expressions" class="anchor"></a><code>yacas</code> expressions</h2>
 <p>Some commands are not proper <code>R</code> expressions. For example, typing</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw">expression</span>(<span class="kw">D</span>(x)<span class="kw">Sin</span>(x)))</code></pre></div>
-<pre><code>## Error: &lt;text&gt;:1:22: unexpected symbol
-## 1: yacas(expression(D(x)Sin
-##                          ^</code></pre>
+<pre><code>yacas(expression(D(x)Sin(x)))</code></pre>
 <p>produces an error. For such cases we can make a specification using the <code>yacas</code> syntax:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x)Sin(x)"</span>)</code></pre></div>
 <pre><code>## expression(cos(x))</code></pre>
