@@ -22,7 +22,7 @@ Description: An interface to the yacas computer algebra system.
 Depends: R (>= 3.3.0)
 Imports: Rcpp (>= 0.12.0), xml2, stats
 LinkingTo: Rcpp
-Suggests: knitr, rmarkdown, testthat (>= 0.9.0), devtools (>= 1.11.0), pkgload (>= 1.0.0)
+Suggests: knitr, rmarkdown, testthat, devtools, pkgload, Matrix
 License: GPL-2
 URL: https://github.com//mikldk/ryacas, http://www.yacas.org
 BugReports: https://github.com/mikldk/ryacas/issues
