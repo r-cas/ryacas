@@ -115,6 +115,7 @@
 yacas <- function(x, ...)
   UseMethod("yacas")
 
+#' @importFrom xml2 xml_attr xml_find_all read_xml
 #' @export
 yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...) {
 
@@ -134,6 +135,7 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 
     yacas.res <- yacas_evaluate(x)
 
+    # TeXForm
     if (grepl('^<OMOBJ>.*<OMSTR>', yacas.res[1])) {
       text <- yacas.res[1]
       text <- gsub("&amp;", "&", text, fixed = TRUE)
@@ -149,18 +151,48 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
       
       #class(result) <- "yacas"
       #return(result)
-    } else  if (grepl('^<OMOBJ>', yacas.res[1])) {
-        text <- OpenMath2R(yacas.res[1])
-
-        if (retclass == "expression") {
-            #text <- parse(text = text, srcfile = NULL)
-            text <- gsub("\\", "\\\\", text, fixed = TRUE)
-            text <- parse(text = text, srcfile = NULL)
-        } else if (retclass == "unquote") {
-            text <- sub("^['\"](.*)['\"]", "\\1", text)
-        }
-
+    } else if (grepl('^<OMOBJ>', yacas.res[1])) {
+      # Matrix/vector:
+      # Only take where OMS has certain cd attr values.
+      # First, find all values of cd attribute of OMS element:
+      cd_vals <- unique(
+        xml2::xml_attr(
+          xml2::xml_find_all(
+            xml2::read_xml(yacas.res[1]), ".//*[name()='OMS']"), "cd"))
+      allowed_cds <- c("list1", "arith1")
+      cd_ok <- length(setdiff(cd_vals, allowed_cds)) == 0L
+      # print(yacas.res[1])
+      # print(cd_vals)
+      # print(cd_ok)
+      
+      if (cd_ok && 
+          grepl('^<OMOBJ>.*<OMS cd=\"list1\" name=\"list\"/>.*<OMS cd=\"list1\" name=\"list\"/>', yacas.res[1])) {
+        # Matrix
+        text <- OpenMath2RMatrix(yacas.res[1])
+        text <- c("Sym matrix:", 
+                  capture.output(print(text, quote = FALSE)))
         result <- list(text = text, OMForm = yacas.res[1])
+      } else if (cd_ok && 
+                 grepl('^<OMOBJ>.*<OMS cd=\"list1\" name=\"list\"/>', yacas.res[1])) {
+        # Vector; important that this comes after Matrix above
+        text <- OpenMath2RVector(yacas.res[1])
+        text <- c("Sym vector:", 
+                  paste0(paste("(", text, ")"), collapse = ", "))
+        result <- list(text = text, OMForm = yacas.res[1])
+      } else {
+        # Default / other types
+        text <- OpenMath2R(yacas.res[1])
+        
+        if (retclass == "expression") {
+          #text <- parse(text = text, srcfile = NULL)
+          text <- gsub("\\", "\\\\", text, fixed = TRUE)
+          text <- parse(text = text, srcfile = NULL)
+        } else if (retclass == "unquote") {
+          text <- sub("^['\"](.*)['\"]", "\\1", text)
+        }
+        
+        result <- list(text = text, OMForm = yacas.res[1])
+      }
     } else if (nchar(yacas.res[1]) > 0) {
         result <- list(NULL, PrettyForm = sub('<OMOBJ>.*</OMOBJ>(\r?\n)', '', yacas.res[1]))
     } else {

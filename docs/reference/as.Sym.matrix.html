@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set width of yacas output — set_output_width • Ryacas</title>
+<title>Convert character matrix to yacas object — as.Sym.matrix • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Set width of yacas output — set_output_width" />
+<meta property="og:title" content="Convert character matrix to yacas object — as.Sym.matrix" />
 
-<meta property="og:description" content="Set width of yacas output" />
+<meta property="og:description" content="Simple and raw conversion to yacas" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,33 +111,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set width of yacas output</h1>
-    <small>Source: <a href='https://github.com//mikldk/ryacas/blob/master/R/yacas.R'><code>R/yacas.R</code></a></small>
-    <div class="hidden name"><code>set_output_width.Rd</code></div>
+    <h1>Convert character matrix to yacas object</h1>
+    <small>Source: <a href='https://github.com//mikldk/ryacas/blob/master/R/Sym2.R'><code>R/Sym2.R</code></a></small>
+    <div class="hidden name"><code>as.Sym.matrix.Rd</code></div>
     </div>
 
     
-    <p>Set width of yacas output</p>
+    <p>Simple and raw conversion to yacas</p>
     
 
-    <pre class="usage"><span class='fu'>set_output_width</span>(<span class='no'>w</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>w</th>
-      <td><p>Width in number of characters</p></td>
-    </tr>
-    </table>
-    
+    <pre class="usage"><span class='co'># S3 method for matrix</span>
+<span class='fu'><a href='Sym.html'>as.Sym</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+        
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"2"</span>, <span class='st'>"4"</span>, <span class='st'>"c"</span>, <span class='st'>"d"</span>, <span class='st'>"6"</span>), <span class='fl'>3</span>, <span class='fl'>2</span>)
+<span class='no'>x</span></div><div class='output co'>#&gt;      [,1] [,2]
+#&gt; [1,] "a"  "c" 
+#&gt; [2,] "2"  "d" 
+#&gt; [3,] "4"  "6" </div><div class='input'><span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Sym.html'>as.Sym</a></span>(<span class='no'>x</span>)
+<span class='no'>y</span></div><div class='output co'>#&gt; Sym matrix:
+#&gt;      [,1] [,2]
+#&gt; [1,] a    c   
+#&gt; [2,] 2    d   
+#&gt; [3,] 4    6   </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -12,6 +12,7 @@
 \alias{as.Sym}
 \alias{as.Sym.Expr}
 \alias{as.Sym.yacas}
+\alias{as.Sym.matrix}
 \alias{as.character.Sym}
 \alias{as.expression.Sym}
 \alias{deriv.Sym}
@@ -130,8 +131,8 @@ help(Ops) for a list).  Also there are methods for a number of R generics:
 \code{deriv.Sym} and \code{print.Sym} and yacas-oriented functions: Clear,
 Conjugate, Expand, Factor, Factorial, I, Identity, Infinity, Integrate,
 Inverse, InverseTaylor, Limit, List, N, Newton, Pi, Precision, PrettyForm,
-PrettyPrinter, Set, Simplify, Solve, Subst, Taylor, TeXForm, Ver and
-"%Where%" all of which have the same meaning as the corresponding yacas
+PrettyPrinter, Set, Simplify, Solve, Subst, Taylor, TeXForm, Transpose,
+Ver and "%Where%" all of which have the same meaning as the corresponding yacas
 commands. Try \code{vignette("Rycas-Sym")} for many examples.
 }
 \note{

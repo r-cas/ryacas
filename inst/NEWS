@@ -1,6 +1,8 @@
 Changes in version 0.3-5
 
 o TeXForm() now returns character vector (without $'s at the beginning and end)
+o New as.Sym.matrix() that converts a character matrix to a yacas matrix
+o Transpose() added
 o Added silent/invisible yacas() function called syacas()
 o Additional vignettes (in Rmarkdown format)
 o More tests

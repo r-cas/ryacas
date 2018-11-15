@@ -28,12 +28,14 @@
 #' \code{deriv.Sym} and \code{print.Sym} and yacas-oriented functions: Clear,
 #' Conjugate, Expand, Factor, Factorial, I, Identity, Infinity, Integrate,
 #' Inverse, InverseTaylor, Limit, List, N, Newton, Pi, Precision, PrettyForm,
-#' PrettyPrinter, Set, Simplify, Solve, Subst, Taylor, TeXForm, Ver and
-#' "%Where%" all of which have the same meaning as the corresponding yacas
+#' PrettyPrinter, Set, Simplify, Solve, Subst, Taylor, TeXForm, Transpose, 
+#' Ver and "%Where%" all of which have the same meaning as the corresponding yacas
 #' commands. Try \code{vignette("Rycas-Sym")} for many examples.
 #' 
 #' @aliases Sym Expr Exprq Ops.Expr Math.Expr deriv.Expr print.Expr
-#' as.character.Expr as.Sym as.Sym.Expr as.Sym.yacas as.character.Sym
+#' as.character.Expr as.Sym as.Sym.Expr 
+#' as.Sym.yacas as.Sym.matrix 
+#' as.character.Sym
 #' as.expression.Sym deriv.Sym Integrate OpenMath2R Ops.Sym Math.Sym
 #' Ops.yacas.symbol print.Sym determinant.Sym print.yacas Sym SymExpr trans
 #' transtab yacas.symbol.value yDeriv yFactorial yIntegrate yLimit yrewrite
@@ -97,6 +99,44 @@ as.Sym.yacas <- function(x, ...) Sym(format(yparse(x[[1]])))
 #' @export
 as.Sym.Expr <- function(x, ...) Sym(format(yparse(x)))
 
+
+#' Convert character vector to yacas object
+#' 
+#' Simple and raw conversion to yacas
+#' 
+#' @examples 
+#' x <- c("a", "2", "4", "c", "d", "6")
+#' x
+#' y <- as.Sym(x)
+#' y
+#' @export
+as.Sym.character <- function(x, ...) {
+  stopifnot(is.vector(x))
+  stopifnot(is.character(x))
+  
+  z <- paste0("{ ", paste0(x, collapse = ", "), " }")
+  return(Sym(z))
+}
+
+#' Convert character matrix to yacas object
+#' 
+#' Simple and raw conversion to yacas
+#' 
+#' @examples 
+#' x <- matrix(c("a", "2", "4", "c", "d", "6"), 3, 2)
+#' x
+#' y <- as.Sym(x)
+#' y
+#' @export
+as.Sym.matrix <- function(x, ...) {
+  stopifnot(is.matrix(x))
+  stopifnot(is.character(x))
+  
+  z <- apply(x, 1, function(z1) paste0("{ ", paste0(z1, collapse = ", "), " }"))
+  z2 <- paste0("{ ", paste0(z, collapse = ", "), " }")
+  return(Sym(z2))
+}
+
 #' @export
 Ops.Sym <- function (e1, e2) 
     if (missing(e2)) { Sym(.Generic, e1)
@@ -134,6 +174,12 @@ Simplify <- function(x, ...) UseMethod("Simplify")
 
 #' @export
 Simplify.default <- function(x, ...) Sym("Simplify(", x, ")")
+
+#' @export
+Transpose <- function(x, ...) UseMethod("Transpose")
+
+#' @export
+Transpose.default <- function(x, ...) Sym("Transpose(", x, ")")
 
 #' @export
 Factorial <- function(x) UseMethod("Factorial")

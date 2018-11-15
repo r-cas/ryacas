@@ -58,6 +58,9 @@
     <li>
       <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
     </li>
+    <li>
+      <a href="../articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -84,7 +87,7 @@
 <code>Ryacas</code> – an <code>R</code> interface to the <code>yacas</code> computer algebra system</h1>
                         <h4 class="author">Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Ayal Pinkus and Mikkel Meyer Andersen</h4>
             
-            <h4 class="date">2018-11-13</h4>
+            <h4 class="date">2018-11-15</h4>
       
       <small>Source: <a href="https://github.com//mikldk/ryacas/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -413,11 +416,17 @@ zs</code></pre></div>
 <a href="#standard-form" class="anchor"></a>Standard form</h3>
 <p>The (standard) yacas form is:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"A:={{a,b},{c,d}}"</span>)</code></pre></div>
-<pre><code>## expression(list(list(a, b), list(c, d)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1] [,2]
+## [1,] a    b   
+## [2,] c    d</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"B:= (1+x)^2+k^3"</span>)</code></pre></div>
 <pre><code>## expression((x + 1)^2 + k^3)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"A"</span>)</code></pre></div>
-<pre><code>## expression(list(list(a, b), list(c, d)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1] [,2]
+## [1,] a    b   
+## [2,] c    d</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"B"</span>)</code></pre></div>
 <pre><code>## expression((x + 1)^2 + k^3)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>); bs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"bs"</span>); cs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"cs"</span>); ds &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ds"</span>)
@@ -425,7 +434,10 @@ A &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html"
 ks &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ks"</span>)
 B &lt;-<span class="st"> </span>(<span class="dv">1</span>+xs)^<span class="dv">2</span>+ks^<span class="dv">3</span>
 A</code></pre></div>
-<pre><code>## expression(list(list(as, bs), list(cs, ds)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1] [,2]
+## [1,] as   bs  
+## [2,] cs   ds</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">B</code></pre></div>
 <pre><code>## expression((xs + 1)^2 + ks^3)</code></pre>
 </div>
@@ -512,15 +524,21 @@ A</code></pre></div>
 <a href="#solving-equations-symbolically" class="anchor"></a>Solving equations symbolically</h3>
 <p>Solve equations symbolically with the <code><a href="../reference/Sym.html">Solve()</a></code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Solve(x/(1+x) == a, x)"</span>)</code></pre></div>
-<pre><code>## expression(list(x == a/(1 - a)))</code></pre>
+<pre><code>## Sym vector:
+## [1] x == a/(1 - a)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Solve(x^2+x == 0, x)"</span>)</code></pre></div>
-<pre><code>## expression(list(x == 0, x == -1))</code></pre>
+<pre><code>## Sym vector:
+## [1] x == 0  x == -1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(xs/(<span class="dv">1</span>+xs) ==<span class="st"> </span>as, xs)</code></pre></div>
-<pre><code>## expression(list(xs == as/(1 - as)))</code></pre>
+<pre><code>## Sym vector:
+## [1] xs == as/(1 - as)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(xs^<span class="dv">2</span>+xs ==<span class="st"> </span><span class="dv">0</span>, xs)</code></pre></div>
-<pre><code>## expression(list(xs == 0, xs == -1))</code></pre>
+<pre><code>## Sym vector:
+## [1] xs == 0  xs == -1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(<span class="kw"><a href="../reference/Sym.html">List</a></span>(xs^<span class="dv">2</span>+ys^<span class="dv">2</span>==<span class="dv">6</span>, xs-ys==<span class="dv">3</span>), <span class="kw"><a href="../reference/Sym.html">List</a></span>(xs,ys))</code></pre></div>
-<pre><code>## expression(list(list(xs == root(6 - ys^2, 2), ys == ys)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1]                    [,2]    
+## [1,] xs == root(6 - ys^2, 2) ys == ys</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># FIXME</span>
 <span class="co">#Solve(List(mean==(xs/(xs+ys)), variance==((xs*ys)/(((xs+ys)^2) * (xs+ys+1)))),</span>
 <span class="co">#    List(xs,ys))</span></code></pre></div>
@@ -628,8 +646,11 @@ ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 <h1 class="hasAnchor">
 <a href="#matrices" class="anchor"></a>Matrices</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"E4:={ {u1,u1,0},{u1,0,u2},{0,u2,0} }"</span>)</code></pre></div>
-<pre><code>## expression(list(list(u1, u1, 0), list(u1, 0, u2), list(0, u2, 
-##     0)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1] [,2] [,3]
+## [1,] u1   u1   0   
+## [2,] u1   0    u2  
+## [3,] 0    u2   0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(E4)"</span>)</code></pre></div>
 <pre><code>## 
 ## /                       \
@@ -655,13 +676,21 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 <h2 class="hasAnchor">
 <a href="#inverse" class="anchor"></a>Inverse</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"E4i := Inverse(E4)"</span>)</code></pre></div>
-<pre><code>## expression(list(list(u1 * u2^2/(u1^2 * u2^2), 1/u1 - u1 * u2^2/(u2^2 * 
-##     u1^2), -(u1 * u2/u1)/u2^2), list(1/u1 - u1 * u2^2/(u2^2 * 
-##     u1^2), u1 * u2^2/(u2^2 * u1^2) - 1/u1, u2 * u1/(u2^2 * u1)), 
-##     list(-(u1 * u2/u1)/u2^2, u1 * u2/(u1 * u2^2), u1/u2^2)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1]                           [,2]                          
+## [1,] u1 * u2^2/(u1^2 * u2^2)        1/u1 - u1 * u2^2/(u2^2 * u1^2)
+## [2,] 1/u1 - u1 * u2^2/(u2^2 * u1^2) u1 * u2^2/(u2^2 * u1^2) - 1/u1
+## [3,] -(u1 * u2/u1)/u2^2             u1 * u2/(u1 * u2^2)           
+##      [,3]               
+## [1,] -(u1 * u2/u1)/u2^2 
+## [2,] u2 * u1/(u2^2 * u1)
+## [3,] u1/u2^2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(E4i)"</span>)</code></pre></div>
-<pre><code>## expression(list(list(1/u1, 0, -1/u2), list(0, 0, 1/u2), list(-1/u2, 
-##     1/u2, u1/u2^2)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1]  [,2] [,3]   
+## [1,] 1/u1  0    -1/u2  
+## [2,] 0     0    1/u2   
+## [3,] -1/u2 1/u2 u1/u2^2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(Simplify(E4i))"</span>)</code></pre></div>
 <pre><code>## 
 ## /                        \
@@ -680,8 +709,11 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ## \                        /</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E4i &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(E4)
 <span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i)</code></pre></div>
-<pre><code>## expression(list(list(1/u1, 0, -1/u2), list(0, 0, 1/u2), list(-1/u2, 
-##     1/u2, u1/u2^2)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1]  [,2] [,3]   
+## [1,] 1/u1  0    -1/u2  
+## [2,] 0     0    1/u2   
+## [3,] -1/u2 1/u2 u1/u2^2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i))</code></pre></div>
 <pre><code>## 
 ## /                        \
@@ -713,8 +745,11 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ##     (u1 * u2)/(u2^4 * u1^2) - (u1 * u2^2/(u2^2 * u1^2) - 1/u1) * 
 ##     (u1 * u2)^2/(u1^2 * u2^4))</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(E4i)"</span>)</code></pre></div>
-<pre><code>## expression(list(list(1/u1, 0, -1/u2), list(0, 0, 1/u2), list(-1/u2, 
-##     1/u2, u1/u2^2)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1]  [,2] [,3]   
+## [1,] 1/u1  0    -1/u2  
+## [2,] 0     0    1/u2   
+## [3,] -1/u2 1/u2 u1/u2^2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(Determinant(E4i))"</span>)</code></pre></div>
 <pre><code>## expression(-1/(u1 * u2^2))</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">determinant</span>(E4)</code></pre></div>
@@ -728,8 +763,11 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ##     (u1 * u2)/(u2^4 * u1^2) - (u1 * u2^2/(u2^2 * u1^2) - 1/u1) * 
 ##     (u1 * u2)^2/(u1^2 * u2^4))</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i)</code></pre></div>
-<pre><code>## expression(list(list(1/u1, 0, -1/u2), list(0, 0, 1/u2), list(-1/u2, 
-##     1/u2, u1/u2^2)))</code></pre>
+<pre><code>## Sym matrix:
+##      [,1]  [,2] [,3]   
+## [1,] 1/u1  0    -1/u2  
+## [2,] 0     0    1/u2   
+## [3,] -1/u2 1/u2 u1/u2^2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw">determinant</span>(E4i))</code></pre></div>
 <pre><code>## expression(-1/(u1 * u2^2))</code></pre>
 </div>

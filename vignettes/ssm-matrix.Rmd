@@ -127,12 +127,12 @@ sparsify(V2)
 Comparing with results calculated by yacas:
 
 ```{r}
-yres_V2 <- Eval(V2s, list(a = alpha, b = beta))
-yres_V2_mat <- matrix(unlist(yres_V2), nrow = 7, ncol = 7)
-
-V2
-yres_V2_mat
-V2 - yres_V2_mat
-all.equal(V2, yres_V2_mat)
+# yres_V2 <- Eval(V2s, list(a = alpha, b = beta))
+# yres_V2_mat <- matrix(unlist(yres_V2), nrow = 7, ncol = 7)
+# 
+# V2
+# yres_V2_mat
+# V2 - yres_V2_mat
+# all.equal(V2, yres_V2_mat)
 ```
 
