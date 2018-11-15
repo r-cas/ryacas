@@ -115,7 +115,9 @@ as.Sym.character <- function(x, ...) {
   stopifnot(is.character(x))
   
   z <- paste0("{ ", paste0(x, collapse = ", "), " }")
-  return(Sym(z))
+  z3 <- Sym(z)
+  
+  return(z3)
 }
 
 #' Convert character matrix to yacas object
@@ -134,7 +136,9 @@ as.Sym.matrix <- function(x, ...) {
   
   z <- apply(x, 1, function(z1) paste0("{ ", paste0(z1, collapse = ", "), " }"))
   z2 <- paste0("{ ", paste0(z, collapse = ", "), " }")
-  return(Sym(z2))
+  z3 <- Sym(z2)
+  
+  return(z3)
 }
 
 #' @export
@@ -166,8 +170,26 @@ Integrate.default <- function(f, x, a, b, ...) {
 }
 
 #' @export
-Eval.Sym <- function(x, env = parent.frame(), ...) 
-	eval(yacas(unclass(x))[[1]], envir = env)
+Eval.Sym <- function(x, env = parent.frame(), ...) {
+  # FIXME: Introduce S3 class "SymMat"/"SymVec" and exploit?
+  yacres <- yacas(unclass(x))
+  res <- eval(yacres[[1]], envir = env)
+
+  if (!is.null(yacres$LinAlgForm)) {
+    if (yacres$LinAlgType == "Vector") {
+      return(unlist(res))
+    } else if (yacres$LinAlgType == "Matrix") {
+      resmat <- matrix(unlist(res), 
+                       nrow = yacres$LinAlgDim[1], 
+                       ncol = yacres$LinAlgDim[2],
+                       byrow = TRUE)
+      return(resmat)
+    }
+  } 
+  
+  return(res)
+}
+	
 
 #' @export
 Simplify <- function(x, ...) UseMethod("Simplify")

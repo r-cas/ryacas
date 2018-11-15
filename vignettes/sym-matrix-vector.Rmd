@@ -96,4 +96,18 @@ As*xs
 As*As
 ```
 
+# Eval
 
+```{r}
+xs
+Eval(xs, list(x1 = 2, x2 = 3))
+```
+
+```{r}
+As
+Eval(As, list(a11 = 11, a12 = 12, a21 = 21, a22 = 22))
+```
+
+
+
+ 

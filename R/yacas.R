@@ -165,32 +165,41 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
       # print(cd_vals)
       # print(cd_ok)
       
+      LinAlgType <- NULL
+      LinAlgForm <- NULL
+      LinAlgDim <- NULL
+      
       if (cd_ok && 
           grepl('^<OMOBJ>.*<OMS cd=\"list1\" name=\"list\"/>.*<OMS cd=\"list1\" name=\"list\"/>', yacas.res[1])) {
         # Matrix
-        text <- OpenMath2RMatrix(yacas.res[1])
-        text <- c("Sym matrix:", 
-                  capture.output(print(text, quote = FALSE)))
-        result <- list(text = text, OMForm = yacas.res[1])
+        LinAlgType <- "Matrix"
+        LinAlgForm <- OpenMath2RMatrix(yacas.res[1])
+        LinAlgDim <- dim(LinAlgForm)
       } else if (cd_ok && 
                  grepl('^<OMOBJ>.*<OMS cd=\"list1\" name=\"list\"/>', yacas.res[1])) {
         # Vector; important that this comes after Matrix above
-        text <- OpenMath2RVector(yacas.res[1])
-        text <- c("Sym vector:", 
-                  paste0(paste("(", text, ")"), collapse = ", "))
-        result <- list(text = text, OMForm = yacas.res[1])
+        LinAlgType <- "Vector"
+        LinAlgForm <- OpenMath2RVector(yacas.res[1])
+        LinAlgDim <- dim(LinAlgForm)
+      } 
+      
+      # Default / other types
+      text <- OpenMath2R(yacas.res[1])
+      
+      if (retclass == "expression") {
+        #text <- parse(text = text, srcfile = NULL)
+        text <- gsub("\\", "\\\\", text, fixed = TRUE)
+        text <- parse(text = text, srcfile = NULL)
+      } else if (retclass == "unquote") {
+        text <- sub("^['\"](.*)['\"]", "\\1", text)
+      }
+      
+      if (!is.null(LinAlgForm)) {
+        result <- list(text = text, 
+                       LinAlgType = LinAlgType, 
+                       LinAlgForm = LinAlgForm,
+                       LinAlgDim = LinAlgDim)
       } else {
-        # Default / other types
-        text <- OpenMath2R(yacas.res[1])
-        
-        if (retclass == "expression") {
-          #text <- parse(text = text, srcfile = NULL)
-          text <- gsub("\\", "\\\\", text, fixed = TRUE)
-          text <- parse(text = text, srcfile = NULL)
-        } else if (retclass == "unquote") {
-          text <- sub("^['\"](.*)['\"]", "\\1", text)
-        }
-        
         result <- list(text = text, OMForm = yacas.res[1])
       }
     } else if (nchar(yacas.res[1]) > 0) {
