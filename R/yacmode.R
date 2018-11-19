@@ -22,6 +22,7 @@
 #'  q
 #' }
 #' 
+#' @export
 yacmode <-function (){
     cat("Enter Yacas commands here. Type quit to return to R\n")
     x <- readline("Yacas->")
