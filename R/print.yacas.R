@@ -15,7 +15,8 @@ print.yacas <- function(x, ...) {
 		LinAlgForm = switch(x$LinAlgType,
 		                    Vector = {
 		                      catn("Sym vector:")
-		                      catn(paste0(paste("(", x$LinAlgForm, ")"), collapse = ", "))
+		                      #catn(paste0(paste("(", x$LinAlgForm, ")"), collapse = ", "))
+		                      catn(paste0(paste("", x$LinAlgForm, ""), collapse = ", "))
 		                    }, 
 		                    Matrix = {
 		                      catn("Sym matrix:")
