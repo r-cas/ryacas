@@ -532,6 +532,8 @@ set_output_width <- function(w) {
 #' as well. So need to be based on XML.
 # 
 #' List in yacas is "<OMS cd=\"list1\" name=\"list\"/>"
+#' 
+#' @importFrom magrittr "%>%"
 get_xml_list_depth <- function(x) {
   
   list_depth <- Inf
