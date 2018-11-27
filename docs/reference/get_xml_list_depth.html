@@ -6,7 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get width of yacas output — get_output_width • Ryacas</title>
+<title>Matrix/vector:
+Vector: List without nested lists
+Matrix: List of Lists, but no futher nesting
+Cannot be based on x, as this must work for e.g. Eval
+as well. So need to be based on XML.
+List in yacas is "&lt;OMS cd="list1" name="list"/&gt;" — get_xml_list_depth • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +30,19 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Get width of yacas output — get_output_width" />
+<meta property="og:title" content="Matrix/vector:
+Vector: List without nested lists
+Matrix: List of Lists, but no futher nesting
+Cannot be based on x, as this must work for e.g. Eval
+as well. So need to be based on XML.
+List in yacas is "&lt;OMS cd="list1" name="list"/&gt;" — get_xml_list_depth" />
 
-<meta property="og:description" content="Get width of yacas output" />
+<meta property="og:description" content="Matrix/vector:
+Vector: List without nested lists
+Matrix: List of Lists, but no futher nesting
+Cannot be based on x, as this must work for e.g. Eval
+as well. So need to be based on XML.
+List in yacas is "&lt;OMS cd="list1" name="list"/&gt;"" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,16 +129,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get width of yacas output</h1>
+    <h1>Matrix/vector:
+Vector: List without nested lists
+Matrix: List of Lists, but no futher nesting
+Cannot be based on x, as this must work for e.g. Eval
+as well. So need to be based on XML.
+List in yacas is "&lt;OMS cd="list1" name="list"/&gt;"</h1>
     <small>Source: <a href='https://github.com//mikldk/ryacas/blob/master/R/yacas.R'><code>R/yacas.R</code></a></small>
-    <div class="hidden name"><code>get_output_width.Rd</code></div>
+    <div class="hidden name"><code>get_xml_list_depth.Rd</code></div>
     </div>
 
     
-    <p>Get width of yacas output</p>
+    <p>Matrix/vector:
+Vector: List without nested lists
+Matrix: List of Lists, but no futher nesting
+Cannot be based on x, as this must work for e.g. Eval
+as well. So need to be based on XML.
+List in yacas is "&lt;OMS cd="list1" name="list"/&gt;"</p>
     
 
-    <pre class="usage"><span class='fu'>get_output_width</span>()</pre>
+    <pre class="usage"><span class='fu'>get_xml_list_depth</span>(<span class='no'>x</span>)</pre>
         
 
   </div>

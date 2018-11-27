@@ -80,6 +80,9 @@
       <a href="../articles/introduction.html">`Ryacas` -- an `R` interface to the `yacas` computer algebra system</a>
     </li>
     <li>
+      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix naive Bayes model</a>
+    </li>
+    <li>
       <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
     </li>
     <li>
@@ -140,6 +143,12 @@
       </tr><tr>
         <!--  -->
         <td>
+          <p><code><a href="Ryacas_options.html">Ryacas_options()</a></code> </p>
+        </td>
+        <td><p>Set or get options for the Ryacas package</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
           <p><code><a href="Sym.html">Sym()</a></code> <code><a href="Sym.html">Expr()</a></code> </p>
         </td>
         <td><p>Sym</p></td>
@@ -167,6 +176,17 @@
           <p><code><a href="get_output_width.html">get_output_width()</a></code> </p>
         </td>
         <td><p>Get width of yacas output</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="get_xml_list_depth.html">get_xml_list_depth()</a></code> </p>
+        </td>
+        <td><p>Matrix/vector:
+Vector: List without nested lists
+Matrix: List of Lists, but no futher nesting
+Cannot be based on x, as this must work for e.g. Eval
+as well. So need to be based on XML.
+List in yacas is "&lt;OMS cd="list1" name="list"/&gt;"</p></td>
       </tr><tr>
         <!--  -->
         <td>

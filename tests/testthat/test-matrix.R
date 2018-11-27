@@ -8,8 +8,7 @@ test_that("Sym vec", {
   expect_equal(x, c("x1", "x2"))
   expect_s3_class(xs, "Sym")
   expect_s3_class(xs, "character")
-  #expect_output(print(xs), "Sym vector:\\n\\( x1 \\), \\( x2 \\)")
-  expect_output(print(xs), "Sym vector:\\n x1 ,  x2 ")
+  expect_output(print(xs), "Sym vector:\\n\\[1\\] x1 x2")
 })
 
 xs_eval <- Eval(xs, list(x1 = 2, x2 = 3))
@@ -50,3 +49,4 @@ test_that("Sym mat", {
   Ares <- Eval(As, Avals)
   expect_equal(Ares %*% Ares, Eval(As*As, Avals))
 })
+

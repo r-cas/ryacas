@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get width of yacas output — get_output_width • Ryacas</title>
+<title>Set or get options for the Ryacas package — Ryacas_options • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Get width of yacas output — get_output_width" />
+<meta property="og:title" content="Set or get options for the Ryacas package — Ryacas_options" />
 
-<meta property="og:description" content="Get width of yacas output" />
+<meta property="og:description" content="Set or get options for the Ryacas package" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,23 +114,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get width of yacas output</h1>
-    <small>Source: <a href='https://github.com//mikldk/ryacas/blob/master/R/yacas.R'><code>R/yacas.R</code></a></small>
-    <div class="hidden name"><code>get_output_width.Rd</code></div>
+    <h1>Set or get options for the Ryacas package</h1>
+    <small>Source: <a href='https://github.com//mikldk/ryacas/blob/master/R/options.R'><code>R/options.R</code></a></small>
+    <div class="hidden name"><code>Ryacas_options.Rd</code></div>
     </div>
 
     
-    <p>Get width of yacas output</p>
+    <p>Set or get options for the Ryacas package</p>
     
 
-    <pre class="usage"><span class='fu'>get_output_width</span>()</pre>
-        
+    <pre class="usage"><span class='fu'>Ryacas_options</span>(<span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>Option names to retrieve option values or <code>[key] = [value]</code> pairs to set options.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="supported-options"><a class="anchor" href="#supported-options"></a>Supported options</h2>
+
+    
+    <p>The following options are supported</p><ul>
+<li><p><code>module_matvec_enabled</code> (default <code>TRUE</code>): Print yacas <code><a href='Sym.html'>List()</a></code>'s as vectors and</p></li>
+</ul>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#supported-options">Supported options</a></li>
+          </ul>
 
   </div>
 </div>
