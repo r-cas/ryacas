@@ -16,7 +16,8 @@ print.yacas <- function(x, ...) {
 		                    Vector = {
 		                      catn("Sym vector:")
 		                      #catn(paste0(paste("(", x$LinAlgForm, ")"), collapse = ", "))
-		                      catn(paste0(paste("", x$LinAlgForm, ""), collapse = ", "))
+		                      #catn(paste0(paste("", x$LinAlgForm, ""), collapse = ", "))
+		                      print(x$LinAlgForm, quote = FALSE)
 		                    }, 
 		                    Matrix = {
 		                      catn("Sym matrix:")

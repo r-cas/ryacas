@@ -6,6 +6,11 @@
 \usage{
 \method{as.Sym}{character}(x, ...)
 }
+\arguments{
+\item{x}{An R character vector.}
+
+\item{\dots}{Not used}
+}
 \description{
 Simple and raw conversion to yacas
 }
@@ -14,4 +19,6 @@ x <- c("a", "2", "4", "c", "d", "6")
 x
 y <- as.Sym(x)
 y
+Eval(y, list(a = 3, c = 3, d = 3))
+
 }

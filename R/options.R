@@ -14,9 +14,10 @@ RYACAS_OPTIONS <- settings::options_manager(
 #' 
 #' * `module_matvec_enabled` (default `TRUE`): Print yacas `List()`'s as vectors and 
 #'
+#' @importFrom settings stop_if_reserved
 #' @export
 Ryacas_options <- function(...) {
   # protect against the use of reserved words.
-  stop_if_reserved(...)
+  settings::stop_if_reserved(...)
   RYACAS_OPTIONS(...)
 }

@@ -12,7 +12,6 @@
 \alias{as.Sym}
 \alias{as.Sym.Expr}
 \alias{as.Sym.yacas}
-\alias{as.Sym.matrix}
 \alias{as.character.Sym}
 \alias{as.expression.Sym}
 \alias{deriv.Sym}
@@ -57,6 +56,7 @@
 \alias{I}
 \alias{Limit}
 \alias{Inverse}
+\alias{Transpose}
 \alias{as.Expr.formula}
 \alias{Clear.Expr}
 \alias{Clear.default}
@@ -153,5 +153,8 @@ y*y
 deriv(y*y, y)
 Exprq(acos(1/2))
 
+}
+\seealso{
+\code{\link[=as.Sym.matrix]{as.Sym.matrix()}}
 }
 \keyword{symbolmath}
