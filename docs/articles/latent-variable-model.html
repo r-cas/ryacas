@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The structure of the concentration and covariance matrix naive Bayes model • Ryacas</title>
+<title>The structure of the concentration and covariance matrix in a naive Bayes model • Ryacas</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="The structure of the concentration and covariance matrix naive Bayes model">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="The structure of the concentration and covariance matrix in a naive Bayes model">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -55,7 +55,7 @@
       <a href="../articles/introduction.html">`Ryacas` -- an `R` interface to the `yacas` computer algebra system</a>
     </li>
     <li>
-      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix naive Bayes model</a>
+      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
     </li>
     <li>
       <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
@@ -85,10 +85,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>The structure of the concentration and covariance matrix naive Bayes model</h1>
+      <h1>The structure of the concentration and covariance matrix in a naive Bayes model</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2018-11-27</h4>
+            <h4 class="date">2018-11-28</h4>
       
       <small>Source: <a href="https://github.com//mikldk/ryacas/blob/master/vignettes/latent-variable-model.Rmd"><code>vignettes/latent-variable-model.Rmd</code></a></small>
       <div class="hidden name"><code>latent-variable-model.Rmd</code></div>
@@ -144,13 +144,7 @@ L2</code></pre></div>
 ## [4,] -a3  0    0    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Vechr &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">4</span>)
 Vechr[<span class="kw">cbind</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">1</span>:<span class="dv">4</span>)] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"w1"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>)
-Vechr</code></pre></div>
-<pre><code>##      [,1] [,2] [,3] [,4]
-## [1,] "w1" "0"  "0"  "0" 
-## [2,] "0"  "w2" "0"  "0" 
-## [3,] "0"  "0"  "w2" "0" 
-## [4,] "0"  "0"  "0"  "w2"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Ve &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(Vechr)
+Ve &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(Vechr)
 Ve</code></pre></div>
 <pre><code>## Sym matrix:
 ##      [,1] [,2] [,3] [,4]
@@ -160,26 +154,16 @@ Ve</code></pre></div>
 ## [4,] 0    0    0    w2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L2inv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(L2))
 K2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L2) *<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(Ve) *<span class="st"> </span>L2)
-V2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L2inv *<span class="st"> </span>Ve *<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L2inv))
-K2</code></pre></div>
-<pre><code>## Sym matrix:
-##      [,1]                                                                         
-## [1,] (w1 * a1^2 * w2^2 + (w1 * w2^2 * a2^2 + w1 * w2^2 * a3^2) + w2^3)/(w1 * w2^3)
-## [2,] -a1/w2                                                                       
-## [3,] -a2/w2                                                                       
-## [4,] -a3/w2                                                                       
-##      [,2]   [,3]   [,4]  
-## [1,] -a1/w2 -a2/w2 -a3/w2
-## [2,] 1/w2   0      0     
-## [3,] 0      1/w2   0     
-## [4,] 0      0      1/w2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V2</code></pre></div>
-<pre><code>## Sym matrix:
-##      [,1]    [,2]           [,3]           [,4]          
-## [1,] w1      w1 * a1        w1 * a2        w1 * a3       
-## [2,] a1 * w1 w1 * a1^2 + w2 a1 * w1 * a2   a1 * w1 * a3  
-## [3,] a2 * w1 a2 * w1 * a1   w1 * a2^2 + w2 a2 * w1 * a3  
-## [4,] a3 * w1 a3 * w1 * a1   a3 * w1 * a2   w1 * a3^2 + w2</code></pre>
+V2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L2inv *<span class="st"> </span>Ve *<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L2inv))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(
+  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span>
+<span class="st">    K_2 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(K2), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span>
+<span class="st">   V_2 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(V2), <span class="st">" </span>
+<span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</code></pre></div>
+<span class="math display">\[\begin{align} 
+    K_2 &amp;= \left( \begin{array}{cccc} \frac{w_{1} a_{1} ^{2} w_{2} ^{2} + w_{1} w_{2} ^{2} a_{2} ^{2} + w_{1} w_{2} ^{2} a_{3} ^{2} + w_{2} ^{3}}{w_{1} w_{2} ^{3}}  &amp; \frac{ - a_{1}}{w_{2}}  &amp; \frac{ - a_{2}}{w_{2}}  &amp; \frac{ - a_{3}}{w_{2}}  \\ \frac{ - a_{1}}{w_{2}}  &amp; \frac{1}{w_{2}}  &amp; 0 &amp; 0 \\ \frac{ - a_{2}}{w_{2}}  &amp; 0 &amp; \frac{1}{w_{2}}  &amp; 0 \\ \frac{ - a_{3}}{w_{2}}  &amp; 0 &amp; 0 &amp; \frac{1}{w_{2}}  \end{array} \right) \\ 
+   V_2 &amp;= \left( \begin{array}{cccc} w_{1} &amp; w_{1} a_{1} &amp; w_{1} a_{2} &amp; w_{1} a_{3} \\ a_{1} w_{1} &amp; w_{1} a_{1} ^{2} + w_{2} &amp; a_{1} w_{1} a_{2} &amp; a_{1} w_{1} a_{3} \\ a_{2} w_{1} &amp; a_{2} w_{1} a_{1} &amp; w_{1} a_{2} ^{2} + w_{2} &amp; a_{2} w_{1} a_{3} \\ a_{3} w_{1} &amp; a_{3} w_{1} a_{1} &amp; a_{3} w_{1} a_{2} &amp; w_{1} a_{3} ^{2} + w_{2} \end{array} \right) 
+  \end{align}\]</span>
 </div>
   </div>
 

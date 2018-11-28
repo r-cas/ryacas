@@ -1,10 +1,10 @@
 ---
-title: "The structure of the concentration and covariance matrix naive Bayes model"
+title: "The structure of the concentration and covariance matrix in a naive Bayes model"
 author: "Mikkel Meyer Andersen and Søren Højsgaard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{The structure of the concentration and covariance matrix naive Bayes model}
+  %\VignetteIndexEntry{The structure of the concentration and covariance matrix in a naive Bayes model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -64,7 +64,6 @@ L2 <- as.Sym(L2chr)
 L2
 Vechr <- diag(4)
 Vechr[cbind(1:4, 1:4)] <- c("w1", "w2", "w2", "w2")
-Vechr
 Ve <- as.Sym(Vechr)
 Ve
 ```
@@ -73,8 +72,14 @@ Ve
 L2inv <- Simplify(Inverse(L2))
 K2 <- Simplify(Transpose(L2) * Inverse(Ve) * L2)
 V2 <- Simplify(L2inv * Ve * Transpose(L2inv))
-K2
-V2
+```
+
+```{r, results="asis"}
+cat(
+  "\\begin{align} 
+    K_2 &= ", TeXForm(K2), " \\\\ 
+   V_2 &= ", TeXForm(V2), " 
+  \\end{align}", sep = "")
 ```
 
 

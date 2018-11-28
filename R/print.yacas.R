@@ -14,13 +14,13 @@ print.yacas <- function(x, ...) {
 		YacasForm = catn(x$YacasForm),
 		LinAlgForm = switch(x$LinAlgType,
 		                    Vector = {
-		                      catn("Sym vector:")
+		                      catn("Yacas vector:")
 		                      #catn(paste0(paste("(", x$LinAlgForm, ")"), collapse = ", "))
 		                      #catn(paste0(paste("", x$LinAlgForm, ""), collapse = ", "))
 		                      print(x$LinAlgForm, quote = FALSE)
 		                    }, 
 		                    Matrix = {
-		                      catn("Sym matrix:")
+		                      catn("Yacas matrix:")
 		                      print(x$LinAlgForm, quote = FALSE)
 		                    }
 		),
