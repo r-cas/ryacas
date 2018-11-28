@@ -28,18 +28,20 @@
 #' \code{deriv.Sym} and \code{print.Sym} and yacas-oriented functions: Clear,
 #' Conjugate, Expand, Factor, Factorial, I, Identity, Infinity, Integrate,
 #' Inverse, InverseTaylor, Limit, List, N, Newton, Pi, Precision, PrettyForm,
-#' PrettyPrinter, Set, Simplify, Solve, Subst, Taylor, TeXForm, Ver and
-#' "%Where%" all of which have the same meaning as the corresponding yacas
+#' PrettyPrinter, Set, Simplify, Solve, Subst, Taylor, TeXForm, Transpose, 
+#' Ver and "%Where%" all of which have the same meaning as the corresponding yacas
 #' commands. Try \code{vignette("Rycas-Sym")} for many examples.
 #' 
 #' @aliases Sym Expr Exprq Ops.Expr Math.Expr deriv.Expr print.Expr
-#' as.character.Expr as.Sym as.Sym.Expr as.Sym.yacas as.character.Sym
+#' as.character.Expr as.Sym as.Sym.Expr 
+#' as.Sym.yacas
+#' as.character.Sym
 #' as.expression.Sym deriv.Sym Integrate OpenMath2R Ops.Sym Math.Sym
 #' Ops.yacas.symbol print.Sym determinant.Sym print.yacas Sym SymExpr trans
 #' transtab yacas.symbol.value yDeriv yFactorial yIntegrate yLimit yrewrite
 #' yUnlist Simplify Factorial List Ver N Pi Clear Factor Expand Taylor
 #' InverseTaylor PrettyForm TeXForm Precision Conjugate PrettyPrinter Solve
-#' Newton Set Infinity I Limit Inverse as.Expr.formula Clear.Expr Clear.default
+#' Newton Set Infinity I Limit Inverse Transpose as.Expr.formula Clear.Expr Clear.default
 #' Conjugate.Expr Conjugate.default determinant.Expr Expand.Expr Expand.default
 #' Factor.Expr Factor.default Factorial.Expr Factorial.default Integrate.Expr
 #' Integrate.default Inverse.Expr Inverse.default InverseTaylor.default
@@ -55,6 +57,7 @@
 #' @usage 
 #' Sym(...) 
 #' Expr(x)
+#' @seealso [as.Sym.matrix()]
 #' @return \code{Sym} returns a \code{"Sym"} object and \code{Expr} returns an
 #' \code{"Expr"} object.
 #' @note Currently the only \code{Expr} methods implemented are
@@ -97,6 +100,58 @@ as.Sym.yacas <- function(x, ...) Sym(format(yparse(x[[1]])))
 #' @export
 as.Sym.Expr <- function(x, ...) Sym(format(yparse(x)))
 
+
+#' Convert character vector to yacas object
+#' 
+#' Simple and raw conversion to yacas
+#' 
+#' @param x An R character vector.
+#' @param \dots Not used
+#'
+#' @examples 
+#' x <- c("a", "2", "4", "c", "d", "6")
+#' x
+#' y <- as.Sym(x)
+#' y
+#' Eval(y, list(a = 3, c = 3, d = 3))
+#' 
+#' @export
+as.Sym.character <- function(x, ...) {
+  stopifnot(is.vector(x))
+  stopifnot(is.character(x))
+  
+  z <- paste0("{ ", paste0(x, collapse = ", "), " }")
+  z3 <- Sym(z)
+  
+  return(z3)
+}
+
+#' Convert character matrix to yacas object
+#' 
+#' Simple and raw conversion to yacas
+#' 
+#' @param x An R character matrix.
+#' @param \dots Not used
+#' 
+#' @examples 
+#' x <- matrix(c("a", "2", "4", "c", "d", "6"), 3, 2)
+#' x
+#' y <- as.Sym(x)
+#' y
+#' Eval(y, list(a = 3, c = 3, d = 3))
+#' 
+#' @export
+as.Sym.matrix <- function(x, ...) {
+  stopifnot(is.matrix(x))
+  stopifnot(is.character(x))
+  
+  z <- apply(x, 1, function(z1) paste0("{ ", paste0(z1, collapse = ", "), " }"))
+  z2 <- paste0("{ ", paste0(z, collapse = ", "), " }")
+  z3 <- Sym(z2)
+  
+  return(z3)
+}
+
 #' @export
 Ops.Sym <- function (e1, e2) 
     if (missing(e2)) { Sym(.Generic, e1)
@@ -126,14 +181,38 @@ Integrate.default <- function(f, x, a, b, ...) {
 }
 
 #' @export
-Eval.Sym <- function(x, env = parent.frame(), ...) 
-	eval(yacas(unclass(x))[[1]], envir = env)
+Eval.Sym <- function(x, env = parent.frame(), ...) {
+  # FIXME: Introduce S3 class "SymMat"/"SymVec" and exploit?
+  yacres <- yacas(unclass(x))
+  res <- eval(yacres[[1]], envir = env)
+
+  if (!is.null(yacres$LinAlgForm)) {
+    if (yacres$LinAlgType == "Vector") {
+      return(unlist(res))
+    } else if (yacres$LinAlgType == "Matrix") {
+      resmat <- matrix(unlist(res), 
+                       nrow = yacres$LinAlgDim[1], 
+                       ncol = yacres$LinAlgDim[2],
+                       byrow = TRUE)
+      return(resmat)
+    }
+  } 
+  
+  return(res)
+}
+	
 
 #' @export
 Simplify <- function(x, ...) UseMethod("Simplify")
 
 #' @export
 Simplify.default <- function(x, ...) Sym("Simplify(", x, ")")
+
+#' @export
+Transpose <- function(x, ...) UseMethod("Transpose")
+
+#' @export
+Transpose.default <- function(x, ...) Sym("Transpose(", x, ")")
 
 #' @export
 Factorial <- function(x) UseMethod("Factorial")

@@ -115,6 +115,7 @@
 yacas <- function(x, ...)
   UseMethod("yacas")
 
+#' @importFrom xml2 xml_attr xml_find_all read_xml
 #' @export
 yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression", "character", "unquote"), addSemi = TRUE, ...) {
 
@@ -134,6 +135,7 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
 
     yacas.res <- yacas_evaluate(x)
 
+    # TeXForm
     if (grepl('^<OMOBJ>.*<OMSTR>', yacas.res[1])) {
       text <- yacas.res[1]
       text <- gsub("&amp;", "&", text, fixed = TRUE)
@@ -149,18 +151,61 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
       
       #class(result) <- "yacas"
       #return(result)
-    } else  if (grepl('^<OMOBJ>', yacas.res[1])) {
-        text <- OpenMath2R(yacas.res[1])
-
-        if (retclass == "expression") {
-            #text <- parse(text = text, srcfile = NULL)
-            text <- gsub("\\", "\\\\", text, fixed = TRUE)
-            text <- parse(text = text, srcfile = NULL)
-        } else if (retclass == "unquote") {
-            text <- sub("^['\"](.*)['\"]", "\\1", text)
-        }
-
+    } else if (grepl('^<OMOBJ>', yacas.res[1])) {
+      # Matrix/vector:
+      # 
+      # Vector: List without nested lists
+      # Matrix: List of Lists, but no futher nesting
+      #
+      # Cannot be based on x, as this must work for e.g. Eval
+      # as well. So need to be based on XML.
+      # 
+      # List in yacas is "<OMS cd=\"list1\" name=\"list\"/>"
+      
+      try_linalg <- RYACAS_OPTIONS("module_matvec_enabled")
+      
+      if (try_linalg) {
+        list_depth <- get_xml_list_depth(yacas.res[1])
+        #print(list_depth)
+        
+        LinAlgType <- NULL
+        LinAlgForm <- NULL
+        LinAlgDim <- NULL
+        
+        #if (grepl('^<OMOBJ>.*<OMS cd=\"list1\" name=\"list\"/>.*<OMS cd=\"list1\" name=\"list\"/>', yacas.res[1])) {
+        if (is.finite(list_depth) && list_depth == 2L) {
+          # Matrix
+          LinAlgType <- "Matrix"
+          LinAlgForm <- OpenMath2RMatrix(yacas.res[1])
+          LinAlgDim <- dim(LinAlgForm)
+          #} else if (grepl('^<OMOBJ>.*<OMS cd=\"list1\" name=\"list\"/>', yacas.res[1])) {
+        } else if (is.finite(list_depth) && list_depth == 1L) {
+          # Vector; important that this comes after Matrix above
+          LinAlgType <- "Vector"
+          LinAlgForm <- OpenMath2RVector(yacas.res[1])
+          LinAlgDim <- dim(LinAlgForm)
+        } 
+      }
+      
+      # Default / other types
+      text <- OpenMath2R(yacas.res[1])
+      
+      if (retclass == "expression") {
+        #text <- parse(text = text, srcfile = NULL)
+        text <- gsub("\\", "\\\\", text, fixed = TRUE)
+        text <- parse(text = text, srcfile = NULL)
+      } else if (retclass == "unquote") {
+        text <- sub("^['\"](.*)['\"]", "\\1", text)
+      }
+      
+      if (!is.null(LinAlgForm)) {
+        result <- list(text = text, 
+                       LinAlgType = LinAlgType, 
+                       LinAlgForm = LinAlgForm,
+                       LinAlgDim = LinAlgDim)
+      } else {
         result <- list(text = text, OMForm = yacas.res[1])
+      }
     } else if (nchar(yacas.res[1]) > 0) {
         result <- list(NULL, PrettyForm = sub('<OMOBJ>.*</OMOBJ>(\r?\n)', '', yacas.res[1]))
     } else {
@@ -475,4 +520,67 @@ get_output_width <- function() {
 set_output_width <- function(w) {
   cmd <- paste0("SetFormulaMaxWidth(", w, ")")
   return(invisible(yacas(cmd)))
+}
+
+
+#' Matrix/vector:
+# 
+#' Vector: List without nested lists
+#' Matrix: List of Lists, but no futher nesting
+#
+#' Cannot be based on x, as this must work for e.g. Eval
+#' as well. So need to be based on XML.
+# 
+#' List in yacas is "<OMS cd=\"list1\" name=\"list\"/>"
+get_xml_list_depth <- function(x) {
+  
+  list_depth <- Inf
+  
+  d <- xml2::read_xml(x)
+  # Root is <OMOBJ>
+  d <- xml2::xml_child(d)
+  dchd <- xml2::xml_children(d)
+  
+  # A list?
+  if (length(dchd) >= 1L && 
+      isTRUE(all.equal(c(cd = "list1", name = "list"), xml2::xml_attrs(dchd[[1L]])))) {
+    list_depth <- 1L
+    
+    # Remove list indicator
+    dchd <- dchd[-1L]
+    children_sublists <- rep(FALSE, length(dchd))
+    num_elements <- rep(0L, length(dchd))
+    
+    for (j in seq_along(dchd)) {
+      dchd_j <- xml2::xml_children(dchd[[j]])
+      
+      if (is.finite(list_depth) && 
+          length(dchd_j) >= 1L && 
+          isTRUE(all.equal(c(cd = "list1", name = "list"), xml2::xml_attrs(dchd_j[[1L]])))) {
+        
+        # Saw another list, depth 2
+        list_depth <- 2L
+        children_sublists[j] <- TRUE
+        num_elements[j] <- length(dchd_j)
+        
+        # Check if there are more lists below
+        dchd_j_desc <- dchd_j[-1L]
+        
+        if (any(grepl("<OMS cd=\"list1\" name=\"list\"/>", as.character(dchd_j_desc), fixed = TRUE))) {
+          return(Inf)
+        }
+      }
+    }
+    
+    # Make sure type consistent; either no sublists or all sublists
+    if (length(unique(children_sublists)) > 1L) {
+      return(Inf)
+    }
+    
+    if (length(unique(num_elements)) > 1L) {
+      return(Inf)
+    }
+  }
+  
+  return(list_depth)
 }

@@ -55,7 +55,13 @@
       <a href="../articles/introduction.html">`Ryacas` -- an `R` interface to the `yacas` computer algebra system</a>
     </li>
     <li>
+      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
+    </li>
+    <li>
       <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
+    </li>
+    <li>
+      <a href="../articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
     </li>
   </ul>
 </li>
@@ -82,7 +88,7 @@
       <h1>The structure of the concentration and covariance matrix in a simple state-space model</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2018-11-13</h4>
+            <h4 class="date">2018-11-28</h4>
       
       <small>Source: <a href="https://github.com//mikldk/ryacas/blob/master/vignettes/ssm-matrix.Rmd"><code>vignettes/ssm-matrix.Rmd</code></a></small>
       <div class="hidden name"><code>ssm-matrix.Rmd</code></div>
@@ -105,20 +111,24 @@
 <p>Consider <span class="math inline">\(AR(1)\)</span> process: <span class="math inline">\(x_i = a x_{i-1} + e_i\)</span> where <span class="math inline">\(i=1,2,3\)</span> and where <span class="math inline">\(x_0=e_0\)</span>. Isolating error terms gives that <span class="math display">\[
  e = L_1 x
 \]</span> where <span class="math inline">\(e=(e_0, \dots, e_3)\)</span> and <span class="math inline">\(x=(x_0, \dots x_3)\)</span> and where <span class="math inline">\(L_1\)</span> has the form</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/syacas.html">syacas</a></span>(<span class="st">"L1 := {{ 1,  0,  0, 0}, </span>
-<span class="st">               {-a,  1,  0, 0}, </span>
-<span class="st">               { 0, -a,  1, 0}, </span>
-<span class="st">               { 0,  0, -a, 1}}"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="dv">3</span>
+L1chr &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="st">"1"</span>, <span class="dv">1</span> +<span class="st"> </span>N)
+L1chr[<span class="kw">cbind</span>(<span class="dv">1</span>+(<span class="dv">1</span>:N), <span class="dv">1</span>:N)] &lt;-<span class="st"> "-a"</span>
+L1s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(L1chr)
+L1s</code></pre></div>
+<pre><code>## Sym matrix:
+##      [,1] [,2] [,3] [,4]
+## [1,] 1    0    0    0   
+## [2,] -a   1    0    0   
+## [3,] 0    -a   1    0   
+## [4,] 0    0    -a   1</code></pre>
 <p>If error terms have variance <span class="math inline">\(1\)</span> then <span class="math inline">\(\mathbf{Var}(e)=L \mathbf{Var}(x) L'\)</span> so the covariance matrix <span class="math inline">\(V1=\mathbf{Var}(x) = L^- (L^-)'\)</span> while the concentration matrix is <span class="math inline">\(K=L L'\)</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/syacas.html">syacas</a></span>(<span class="st">"K1 := Simplify(L1 * Transpose(L1))"</span>)
-<span class="kw"><a href="../reference/syacas.html">syacas</a></span>(<span class="st">"V1 := Simplify(Inverse(K1))"</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">K1 =<span class="st"> </span><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"K1 := Simplify(L1 * Transpose(L1))"</span>)
-V1 =<span class="st"> </span><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"V1 := Simplify(Inverse(K1))"</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">K1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"K1"</span>) ## Uskønt...
-V1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"V1"</span>)
-<span class="kw">cat</span>(
-  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} K_1 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(K1), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span>
-<span class="st">                  V_1 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(V1), <span class="st">" </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># FIXME: * vs %*%</span>
+K1s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L1s *<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L1s))
+V1s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(K1s))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(
+  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} K_1 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(K1s), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span>
+<span class="st">                  V_1 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(V1s), <span class="st">" </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</code></pre></div>
 <span class="math display">\[\begin{align} K_1 &amp;= \left( \begin{array}{cccc} 1 &amp;  - a &amp; 0 &amp; 0 \\  - a &amp; a ^{2} + 1 &amp;  - a &amp; 0 \\ 0 &amp;  - a &amp; a ^{2} + 1 &amp;  - a \\ 0 &amp; 0 &amp;  - a &amp; a ^{2} + 1 \end{array} \right) \\ 
                   V_1 &amp;= \left( \begin{array}{cccc} a ^{6} + a ^{4} + a ^{2} + 1 &amp; a \left( a ^{4} + a ^{2} + 1\right)  &amp; a ^{2} \left( a ^{2} + 1\right)  &amp; a ^{3} \\ a \left( a ^{4} + a ^{2} + 1\right)  &amp; a ^{4} + a ^{2} + 1 &amp; a \left( a ^{2} + 1\right)  &amp; a ^{2} \\ a ^{2} \left( a ^{2} + 1\right)  &amp; a \left( a ^{2} + 1\right)  &amp; a ^{2} + 1 &amp; a \\ a ^{3} &amp; a ^{2} &amp; a &amp; 1 \end{array} \right) \end{align}\]</span>
 </div>
@@ -128,18 +138,23 @@ V1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 <p>Augument the <span class="math inline">\(AR(1)\)</span> process above with <span class="math inline">\(y_i=b x_i + u_i\)</span>. Then <span class="math inline">\((e,u)\)</span> can be expressed in terms of <span class="math inline">\((x,y)\)</span> as <span class="math display">\[
 (e,u) = L_2(x,y)
 \]</span> where</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/syacas.html">syacas</a></span>(<span class="st">"L2 := { { 1,  0,  0,  0, 0, 0, 0}, </span>
-<span class="st">                {-a,  1,  0,  0, 0, 0, 0},   </span>
-<span class="st">                { 0, -a,  1,  0, 0, 0, 0}, </span>
-<span class="st">                { 0,  0, -a,  1, 0, 0, 0},</span>
-<span class="st">                { 0, -b,  0,  0, 1, 0, 0}, </span>
-<span class="st">                { 0,  0, -b,  0, 0, 1, 0}, </span>
-<span class="st">                { 0,  0,  0, -b, 0, 0, 1}}"</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/syacas.html">syacas</a></span>(<span class="st">"K2 := Simplify(L2 * Transpose(L2))"</span>)
-<span class="kw"><a href="../reference/syacas.html">syacas</a></span>(<span class="st">"V2 := Simplify(Inverse(K2))"</span>)
-
-K2s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"K2"</span>)
-V2s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"V2"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="dv">3</span>
+L2chr &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="st">"1"</span>, <span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>*N)
+L2chr[<span class="kw">cbind</span>(<span class="dv">1</span>+(<span class="dv">1</span>:N), <span class="dv">1</span>:N)] &lt;-<span class="st"> "-a"</span>
+L2chr[<span class="kw">cbind</span>(<span class="dv">1</span> +<span class="st"> </span>N +<span class="st"> </span>(<span class="dv">1</span>:N), <span class="dv">1</span> +<span class="st"> </span><span class="dv">1</span>:N)] &lt;-<span class="st"> "-b"</span>
+L2s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(L2chr)
+L2s</code></pre></div>
+<pre><code>## Sym matrix:
+##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,] 1    0    0    0    0    0    0   
+## [2,] -a   1    0    0    0    0    0   
+## [3,] 0    -a   1    0    0    0    0   
+## [4,] 0    0    -a   1    0    0    0   
+## [5,] 0    -b   0    0    1    0    0   
+## [6,] 0    0    -b   0    0    1    0   
+## [7,] 0    0    0    -b   0    0    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">K2s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L2s *<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L2s))
+V2s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(K2s))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(
   <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} K_2 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(K2s), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span>
 <span class="st">                  V_2 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(V2s), <span class="st">" </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</code></pre></div>
@@ -149,10 +164,12 @@ V2s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.htm
 <div id="numerical-evalation-in-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#numerical-evalation-in-r" class="anchor"></a>Numerical evalation in R</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sparsify &lt;-<span class="st"> </span>function(x){Matrix::<span class="kw"><a href="http://www.rdocumentation.org/packages/Matrix/topics/Matrix">Matrix</a></span>(x, <span class="dt">sparse=</span>T)}
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sparsify &lt;-<span class="st"> </span>function(x) {
+  Matrix::<span class="kw"><a href="http://www.rdocumentation.org/packages/Matrix/topics/Matrix">Matrix</a></span>(x, <span class="dt">sparse =</span> <span class="ot">TRUE</span>)
+}
 
-alpha &lt;-<span class="st"> </span>.<span class="dv">5</span>
-beta &lt;-<span class="st"> </span>-.<span class="dv">3</span>
+alpha &lt;-<span class="st"> </span><span class="fl">0.5</span>
+beta &lt;-<span class="st"> </span>-<span class="fl">0.3</span>
 
 ## AR(1)
 N &lt;-<span class="st"> </span><span class="dv">3</span>
@@ -179,16 +196,7 @@ N &lt;-<span class="st"> </span><span class="dv">3</span>
 L2 &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span>, <span class="dv">1</span> +<span class="st"> </span><span class="dv">2</span>*N)
 L2[<span class="kw">cbind</span>(<span class="dv">1</span>+(<span class="dv">1</span>:N), <span class="dv">1</span>:N)] &lt;-<span class="st"> </span>-alpha
 L2[<span class="kw">cbind</span>(<span class="dv">1</span> +<span class="st"> </span>N +<span class="st"> </span>(<span class="dv">1</span>:N), <span class="dv">1</span> +<span class="st"> </span><span class="dv">1</span>:N)] &lt;-<span class="st"> </span>-beta
-L2</code></pre></div>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
-## [1,]  1.0  0.0  0.0  0.0    0    0    0
-## [2,] -0.5  1.0  0.0  0.0    0    0    0
-## [3,]  0.0 -0.5  1.0  0.0    0    0    0
-## [4,]  0.0  0.0 -0.5  1.0    0    0    0
-## [5,]  0.0  0.3  0.0  0.0    1    0    0
-## [6,]  0.0  0.0  0.3  0.0    0    1    0
-## [7,]  0.0  0.0  0.0  0.3    0    0    1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">K2 &lt;-<span class="st"> </span>L2 %*%<span class="st"> </span><span class="kw">t</span>(L2)
+K2 &lt;-<span class="st"> </span>L2 %*%<span class="st"> </span><span class="kw">t</span>(L2)
 V2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/Matrix/topics/solve-methods">solve</a></span>(K2)
 <span class="kw">sparsify</span>(K2)</code></pre></div>
 <pre><code>## 7 x 7 sparse Matrix of class "dsCMatrix"
@@ -211,37 +219,12 @@ V2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 ## [6,] -0.0750000 -0.1500000 -0.300000  .        .     1.000  .     
 ## [7,] -0.0375000 -0.0750000 -0.150000 -0.30000  .     .      1.0000</code></pre>
 <p>Comparing with results calculated by yacas:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yres_V2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Eval.html">Eval</a></span>(V2s, <span class="kw">list</span>(<span class="dt">a =</span> alpha, <span class="dt">b =</span> beta))
-yres_V2_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">unlist</span>(yres_V2), <span class="dt">nrow =</span> <span class="dv">7</span>, <span class="dt">ncol =</span> <span class="dv">7</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V1s_eval &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Eval.html">Eval</a></span>(V1s, <span class="kw">list</span>(<span class="dt">a =</span> alpha))
+V2s_eval &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Eval.html">Eval</a></span>(V2s, <span class="kw">list</span>(<span class="dt">a =</span> alpha, <span class="dt">b =</span> beta))
 
-V2</code></pre></div>
-<pre><code>##            [,1]       [,2]      [,3]     [,4]  [,5]   [,6]    [,7]
-## [1,]  1.3576563  0.7153125  0.340625  0.13625 -0.15 -0.075 -0.0375
-## [2,]  0.7153125  1.4306250  0.681250  0.27250 -0.30 -0.150 -0.0750
-## [3,]  0.3406250  0.6812500  1.362500  0.54500  0.00 -0.300 -0.1500
-## [4,]  0.1362500  0.2725000  0.545000  1.09000  0.00  0.000 -0.3000
-## [5,] -0.1500000 -0.3000000  0.000000  0.00000  1.00  0.000  0.0000
-## [6,] -0.0750000 -0.1500000 -0.300000  0.00000  0.00  1.000  0.0000
-## [7,] -0.0375000 -0.0750000 -0.150000 -0.30000  0.00  0.000  1.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yres_V2_mat</code></pre></div>
-<pre><code>##            [,1]       [,2]      [,3]     [,4]  [,5]   [,6]    [,7]
-## [1,]  1.3576563  0.7153125  0.340625  0.13625 -0.15 -0.075 -0.0375
-## [2,]  0.7153125  1.4306250  0.681250  0.27250 -0.30 -0.150 -0.0750
-## [3,]  0.3406250  0.6812500  1.362500  0.54500  0.00 -0.300 -0.1500
-## [4,]  0.1362500  0.2725000  0.545000  1.09000  0.00  0.000 -0.3000
-## [5,] -0.1500000 -0.3000000  0.000000  0.00000  1.00  0.000  0.0000
-## [6,] -0.0750000 -0.1500000 -0.300000  0.00000  0.00  1.000  0.0000
-## [7,] -0.0375000 -0.0750000 -0.150000 -0.30000  0.00  0.000  1.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V2 -<span class="st"> </span>yres_V2_mat</code></pre></div>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
-## [1,]    0    0    0    0    0    0    0
-## [2,]    0    0    0    0    0    0    0
-## [3,]    0    0    0    0    0    0    0
-## [4,]    0    0    0    0    0    0    0
-## [5,]    0    0    0    0    0    0    0
-## [6,]    0    0    0    0    0    0    0
-## [7,]    0    0    0    0    0    0    0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(V2, yres_V2_mat)</code></pre></div>
+<span class="kw">all.equal</span>(V1, V1s_eval)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(V2, V2s_eval)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
   </div>

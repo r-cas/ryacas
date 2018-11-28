@@ -36,30 +36,25 @@ $$
 $$
 where $e=(e_0, \dots, e_3)$ and $x=(x_0, \dots x_3)$ and where $L_1$ has the form
 ```{r}
-syacas("L1 := {{ 1,  0,  0, 0}, 
-               {-a,  1,  0, 0}, 
-               { 0, -a,  1, 0}, 
-               { 0,  0, -a, 1}}")
+N <- 3
+L1chr <- diag("1", 1 + N)
+L1chr[cbind(1+(1:N), 1:N)] <- "-a"
+L1s <- as.Sym(L1chr)
+L1s
 ```
 
 If error terms have variance $1$ then $\mathbf{Var}(e)=L \mathbf{Var}(x) L'$ so the covariance matrix $V1=\mathbf{Var}(x) = L^- (L^-)'$ while the concentration matrix is $K=L L'$
 
 ```{r}
-syacas("K1 := Simplify(L1 * Transpose(L1))")
-syacas("V1 := Simplify(Inverse(K1))")
-```
-
-```{r}
-K1 = yacas("K1 := Simplify(L1 * Transpose(L1))")
-V1 = yacas("V1 := Simplify(Inverse(K1))")
+# FIXME: * vs %*%
+K1s <- Simplify(L1s * Transpose(L1s))
+V1s <- Simplify(Inverse(K1s))
 ```
 
 ```{r, results="asis"}
-K1 <- Sym("K1") ## Uskønt...
-V1 <- Sym("V1")
 cat(
-  "\\begin{align} K_1 &= ", TeXForm(K1), " \\\\ 
-                  V_1 &= ", TeXForm(V1), " \\end{align}", sep = "")
+  "\\begin{align} K_1 &= ", TeXForm(K1s), " \\\\ 
+                  V_1 &= ", TeXForm(V1s), " \\end{align}", sep = "")
 ```
 
 ## Dynamic linear model
@@ -71,21 +66,17 @@ $$
 $$
 where
 ```{r}
-syacas("L2 := { { 1,  0,  0,  0, 0, 0, 0}, 
-                {-a,  1,  0,  0, 0, 0, 0},   
-                { 0, -a,  1,  0, 0, 0, 0}, 
-                { 0,  0, -a,  1, 0, 0, 0},
-                { 0, -b,  0,  0, 1, 0, 0}, 
-                { 0,  0, -b,  0, 0, 1, 0}, 
-                { 0,  0,  0, -b, 0, 0, 1}}")
+N <- 3
+L2chr <- diag("1", 1 + 2*N)
+L2chr[cbind(1+(1:N), 1:N)] <- "-a"
+L2chr[cbind(1 + N + (1:N), 1 + 1:N)] <- "-b"
+L2s <- as.Sym(L2chr)
+L2s
 ```
 
 ```{r}
-syacas("K2 := Simplify(L2 * Transpose(L2))")
-syacas("V2 := Simplify(Inverse(K2))")
-
-K2s <- Sym("K2")
-V2s <- Sym("V2")
+K2s <- Simplify(L2s * Transpose(L2s))
+V2s <- Simplify(Inverse(K2s))
 ```
 
 ```{r, results="asis"}
@@ -98,10 +89,12 @@ cat(
 ## Numerical evalation in R
 
 ```{r}
-sparsify <- function(x){Matrix::Matrix(x, sparse=T)}
+sparsify <- function(x) {
+  Matrix::Matrix(x, sparse = TRUE)
+}
 
-alpha <- .5
-beta <- -.3
+alpha <- 0.5
+beta <- -0.3
 
 ## AR(1)
 N <- 3
@@ -117,7 +110,6 @@ N <- 3
 L2 <- diag(1, 1 + 2*N)
 L2[cbind(1+(1:N), 1:N)] <- -alpha
 L2[cbind(1 + N + (1:N), 1 + 1:N)] <- -beta
-L2
 K2 <- L2 %*% t(L2)
 V2 <- solve(K2)
 sparsify(K2)
@@ -127,12 +119,10 @@ sparsify(V2)
 Comparing with results calculated by yacas:
 
 ```{r}
-yres_V2 <- Eval(V2s, list(a = alpha, b = beta))
-yres_V2_mat <- matrix(unlist(yres_V2), nrow = 7, ncol = 7)
+V1s_eval <- Eval(V1s, list(a = alpha))
+V2s_eval <- Eval(V2s, list(a = alpha, b = beta))
 
-V2
-yres_V2_mat
-V2 - yres_V2_mat
-all.equal(V2, yres_V2_mat)
+all.equal(V1, V1s_eval)
+all.equal(V2, V2s_eval)
 ```
 

@@ -1,0 +1,86 @@
+---
+title: "The structure of the concentration and covariance matrix in a naive Bayes model"
+author: "Mikkel Meyer Andersen and Søren Højsgaard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The structure of the concentration and covariance matrix in a naive Bayes model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(Ryacas)
+library(Matrix)
+set_output_width(120)
+```
+
+## Naive Bayes model
+
+Consider this model: 
+$$
+x_i = a x_0 + e_i, \quad i=1, \dots, 4
+$$ 
+and $x_0=e_0$. All terms $e_0, \dots, e_3$ are independent and $N(0,1)$ distributed. 
+Let $e=(e_0, \dots, e_3)$ and $x=(x_0, \dots x_3)$.
+Isolating error terms gives that
+$$
+ e = L_1 x
+$$
+where $L_1$ has the form
+```{r}
+L1chr <- diag(4)
+L1chr[2:4, 1] <- "-a"
+L1 <- as.Sym(L1chr)
+L1
+```
+
+If error terms have variance $1$ then $\mathbf{Var}(e)=L \mathbf{Var}(x) L'$ so the covariance matrix is $V1=\mathbf{Var}(x) = L^- (L^-)'$ while the concentration matrix (the inverse covariances matrix) is $K=L' L$.
+
+```{r}
+L1inv <- Simplify(Inverse(L1))
+K1 <- Simplify(Transpose(L1) * L1)
+V1 <- Simplify(L1inv * Transpose(L1inv))
+```
+
+```{r, results="asis"}
+cat(
+  "\\begin{align} 
+    K_1 &= ", TeXForm(K1), " \\\\ 
+   V_1 &= ", TeXForm(V1), " 
+  \\end{align}", sep = "")
+```
+
+Slightly more elaborate:
+
+```{r}
+L2chr <- diag(4)
+L2chr[2:4, 1] <- c("-a1", "-a2", "-a3")
+L2 <- as.Sym(L2chr)
+L2
+Vechr <- diag(4)
+Vechr[cbind(1:4, 1:4)] <- c("w1", "w2", "w2", "w2")
+Ve <- as.Sym(Vechr)
+Ve
+```
+
+```{r}
+L2inv <- Simplify(Inverse(L2))
+K2 <- Simplify(Transpose(L2) * Inverse(Ve) * L2)
+V2 <- Simplify(L2inv * Ve * Transpose(L2inv))
+```
+
+```{r, results="asis"}
+cat(
+  "\\begin{align} 
+    K_2 &= ", TeXForm(K2), " \\\\ 
+   V_2 &= ", TeXForm(V2), " 
+  \\end{align}", sep = "")
+```
+
+
+
