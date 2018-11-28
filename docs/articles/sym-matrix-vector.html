@@ -113,7 +113,7 @@ L1 &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">1
 L1[<span class="kw">cbind</span>(<span class="dv">1</span>+(<span class="dv">1</span>:N), <span class="dv">1</span>:N)] &lt;-<span class="st"> "-alpha"</span>
 L1s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(L1)
 L1s</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]   [,2]   [,3]   [,4]
 ## [1,] 1      0      0      0   
 ## [2,] -alpha 1      0      0   
@@ -122,7 +122,7 @@ L1s</code></pre></div>
 <p>Now, this can be converted to a <code>Sym</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L1s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(L1)
 L1s</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]   [,2]   [,3]   [,4]
 ## [1,] 1      0      0      0   
 ## [2,] -alpha 1      0      0   
@@ -130,7 +130,7 @@ L1s</code></pre></div>
 ## [4,] 0      0      -alpha 1</code></pre>
 <p>Operations can be performed:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L1s +<span class="st"> </span><span class="dv">4</span></code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]      [,2]      [,3]      [,4]
 ## [1,] 5         4         4         4   
 ## [2,] 4 - alpha 5         4         4   
@@ -138,7 +138,7 @@ L1s</code></pre></div>
 ## [4,] 4         4         4 - alpha 5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp &lt;-<span class="st"> </span>L1s^<span class="dv">4</span>
 tmp</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]                               [,2]                      
 ## [1,] 1                                  0                         
 ## [2,] -4 * alpha                         1                         
@@ -150,7 +150,7 @@ tmp</code></pre></div>
 ## [3,] 1          0   
 ## [4,] -4 * alpha 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(tmp)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]         [,2]        [,3]       [,4]
 ## [1,] 1            0           0          0   
 ## [2,] -4 * alpha   1           0          0   
@@ -159,7 +159,7 @@ tmp</code></pre></div>
 <p>Or the concentration matrix <span class="math inline">\(K=L L'\)</span> can be found:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">K1s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L1s *<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L1s))
 K1s</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]   [,2]        [,3]        [,4]       
 ## [1,] 1      -alpha      0           0          
 ## [2,] -alpha alpha^2 + 1 -alpha      0          
@@ -179,21 +179,21 @@ K1s</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"x"</span>, <span class="dv">1</span>:<span class="dv">2</span>)
 xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(x)
 xs</code></pre></div>
-<pre><code>## Sym vector:
+<pre><code>## Yacas vector:
 ## [1] x1 x2</code></pre>
 <p>And matrix-vector multiplication (or matrix-matrix multiplication):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">paste0</span>(<span class="kw">paste0</span>(<span class="st">"a"</span>, <span class="dv">1</span>:<span class="dv">2</span>), <span class="kw">rep</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="dt">each =</span> <span class="dv">2</span>)), <span class="dv">2</span>, <span class="dv">2</span>)
 As &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(A)
 As</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1] [,2]
 ## [1,] a11  a12 
 ## [2,] a21  a22</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">As*xs</code></pre></div>
-<pre><code>## Sym vector:
+<pre><code>## Yacas vector:
 ## [1] a11 * x1 + a12 * x2 a21 * x1 + a22 * x2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">As*As</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]                  [,2]                 
 ## [1,] a11^2 + a12 * a21     a11 * a12 + a12 * a22
 ## [2,] a21 * a11 + a22 * a21 a21 * a12 + a22^2</code></pre>
@@ -202,12 +202,12 @@ As</code></pre></div>
 <h1 class="hasAnchor">
 <a href="#eval" class="anchor"></a>Eval</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xs</code></pre></div>
-<pre><code>## Sym vector:
+<pre><code>## Yacas vector:
 ## [1] x1 x2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Eval.html">Eval</a></span>(xs, <span class="kw">list</span>(<span class="dt">x1 =</span> <span class="dv">2</span>, <span class="dt">x2 =</span> <span class="dv">3</span>))</code></pre></div>
 <pre><code>## [1] 2 3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">As</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1] [,2]
 ## [1,] a11  a12 
 ## [2,] a21  a22</code></pre>

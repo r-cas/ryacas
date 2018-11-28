@@ -419,14 +419,14 @@ zs</code></pre></div>
 <a href="#standard-form" class="anchor"></a>Standard form</h3>
 <p>The (standard) yacas form is:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"A:={{a,b},{c,d}}"</span>)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1] [,2]
 ## [1,] a    b   
 ## [2,] c    d</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"B:= (1+x)^2+k^3"</span>)</code></pre></div>
 <pre><code>## expression((x + 1)^2 + k^3)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"A"</span>)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1] [,2]
 ## [1,] a    b   
 ## [2,] c    d</code></pre>
@@ -437,7 +437,7 @@ A &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html"
 ks &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ks"</span>)
 B &lt;-<span class="st"> </span>(<span class="dv">1</span>+xs)^<span class="dv">2</span>+ks^<span class="dv">3</span>
 A</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1] [,2]
 ## [1,] as   bs  
 ## [2,] cs   ds</code></pre>
@@ -527,19 +527,19 @@ A</code></pre></div>
 <a href="#solving-equations-symbolically" class="anchor"></a>Solving equations symbolically</h3>
 <p>Solve equations symbolically with the <code><a href="../reference/Sym.html">Solve()</a></code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Solve(x/(1+x) == a, x)"</span>)</code></pre></div>
-<pre><code>## Sym vector:
+<pre><code>## Yacas vector:
 ## [1] x == a/(1 - a)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Solve(x^2+x == 0, x)"</span>)</code></pre></div>
-<pre><code>## Sym vector:
+<pre><code>## Yacas vector:
 ## [1] x == 0  x == -1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(xs/(<span class="dv">1</span>+xs) ==<span class="st"> </span>as, xs)</code></pre></div>
-<pre><code>## Sym vector:
+<pre><code>## Yacas vector:
 ## [1] xs == as/(1 - as)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(xs^<span class="dv">2</span>+xs ==<span class="st"> </span><span class="dv">0</span>, xs)</code></pre></div>
-<pre><code>## Sym vector:
+<pre><code>## Yacas vector:
 ## [1] xs == 0  xs == -1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(<span class="kw"><a href="../reference/Sym.html">List</a></span>(xs^<span class="dv">2</span>+ys^<span class="dv">2</span>==<span class="dv">6</span>, xs-ys==<span class="dv">3</span>), <span class="kw"><a href="../reference/Sym.html">List</a></span>(xs,ys))</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]                    [,2]    
 ## [1,] xs == root(6 - ys^2, 2) ys == ys</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># FIXME</span>
@@ -649,7 +649,7 @@ ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 <h1 class="hasAnchor">
 <a href="#matrices" class="anchor"></a>Matrices</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"E4:={ {u1,u1,0},{u1,0,u2},{0,u2,0} }"</span>)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1] [,2] [,3]
 ## [1,] u1   u1   0   
 ## [2,] u1   0    u2  
@@ -679,7 +679,7 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 <h2 class="hasAnchor">
 <a href="#inverse" class="anchor"></a>Inverse</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"E4i := Inverse(E4)"</span>)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]                           [,2]                          
 ## [1,] u1 * u2^2/(u1^2 * u2^2)        1/u1 - u1 * u2^2/(u2^2 * u1^2)
 ## [2,] 1/u1 - u1 * u2^2/(u2^2 * u1^2) u1 * u2^2/(u2^2 * u1^2) - 1/u1
@@ -689,7 +689,7 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ## [2,] u2 * u1/(u2^2 * u1)
 ## [3,] u1/u2^2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(E4i)"</span>)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]  [,2] [,3]   
 ## [1,] 1/u1  0    -1/u2  
 ## [2,] 0     0    1/u2   
@@ -712,7 +712,7 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ## \                        /</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E4i &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(E4)
 <span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]  [,2] [,3]   
 ## [1,] 1/u1  0    -1/u2  
 ## [2,] 0     0    1/u2   
@@ -748,7 +748,7 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ##     (u1 * u2)/(u2^4 * u1^2) - (u1 * u2^2/(u2^2 * u1^2) - 1/u1) * 
 ##     (u1 * u2)^2/(u1^2 * u2^4))</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(E4i)"</span>)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]  [,2] [,3]   
 ## [1,] 1/u1  0    -1/u2  
 ## [2,] 0     0    1/u2   
@@ -766,7 +766,7 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ##     (u1 * u2)/(u2^4 * u1^2) - (u1 * u2^2/(u2^2 * u1^2) - 1/u1) * 
 ##     (u1 * u2)^2/(u1^2 * u2^4))</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i)</code></pre></div>
-<pre><code>## Sym matrix:
+<pre><code>## Yacas matrix:
 ##      [,1]  [,2] [,3]   
 ## [1,] 1/u1  0    -1/u2  
 ## [2,] 0     0    1/u2   
