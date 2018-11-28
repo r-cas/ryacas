@@ -1,14 +1,16 @@
-Changes in version 0.3-5
+Changes in version 0.4-1
 
 o TeXForm() now returns character vector (without $'s at the beginning and end)
-o New as.Sym.matrix() that converts a character matrix to a yacas matrix
+o New as.Sym.matrix()/as.Sym.character() that converts a 
+  character matrix/vector to a yacas matrix
 o Transpose() added
 o Added silent/invisible yacas() function called syacas()
-o Additional vignettes (in Rmarkdown format)
+o Additional vignettes
 o More tests
 o Internal
   - Enabled use of devtools::load_all() via .onLoad() and .yacas_init_force()
   - Converted to Roxygen documentation
+  - Vignettes in Rmarkdown format
   - pkgdown for GitHub Pages for http://mikldk.github.io/ryacas/
 
 Changes in version 0.3-4
