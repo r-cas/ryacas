@@ -1,4 +1,4 @@
-Changes in version 0.4-1
+Changes in version 0.4.1
 
 o TeXForm() now returns character vector (without $'s at the beginning and end)
 o New as.Sym.matrix()/as.Sym.character() that converts a 
