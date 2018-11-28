@@ -8,7 +8,7 @@ test_that("Sym vec", {
   expect_equal(x, c("x1", "x2"))
   expect_s3_class(xs, "Sym")
   expect_s3_class(xs, "character")
-  expect_output(print(xs), "Sym vector:\\n\\[1\\] x1 x2")
+  expect_output(print(xs), "Yacas vector:\\n\\[1\\] x1 x2")
 })
 
 xs_eval <- Eval(xs, list(x1 = 2, x2 = 3))
@@ -30,7 +30,7 @@ test_that("Sym mat", {
   expect_equal(yacas(As)$LinAlgDim, dim(Achr))
   expect_s3_class(As, "Sym")
   expect_s3_class(As, "character")
-  expect_output(print(As), "Sym matrix:\\n     \\[,1\\] \\[,2\\]    \\[,3\\]    \\[,4\\]   \\n\\[1,\\] 1    -sin\\(b\\) 0       0      \\n\\[2,\\] -a   1       -sin\\(b\\) 0      \\n\\[3,\\] 0    -a      1       -sin\\(b\\)\\n\\[4,\\] 0    0       -a      1      ")
+  expect_output(print(As), "Yacas matrix:\\n     \\[,1\\] \\[,2\\]    \\[,3\\]    \\[,4\\]   \\n\\[1,\\] 1    -sin\\(b\\) 0       0      \\n\\[2,\\] -a   1       -sin\\(b\\) 0      \\n\\[3,\\] 0    -a      1       -sin\\(b\\)\\n\\[4,\\] 0    0       -a      1      ")
 })
 
 test_that("Sym mat/vec error", {
