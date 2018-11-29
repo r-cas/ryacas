@@ -1,7 +1,9 @@
 RYACAS_OPTIONS <- settings::options_manager(
-  module_matvec_enabled = TRUE, 
+  module_matvec_enabled = TRUE,
+  prettyform_default = FALSE, 
   .allowed = list(
-    module_matvec_enabled = settings::inlist(TRUE, FALSE)
+    module_matvec_enabled = settings::inlist(TRUE, FALSE),
+    prettyform_default = settings::inlist(TRUE, FALSE)
   )
 )
 
@@ -12,7 +14,9 @@ RYACAS_OPTIONS <- settings::options_manager(
 #' @section Supported options:
 #' The following options are supported
 #' 
-#' * `module_matvec_enabled` (default `TRUE`): Print yacas `List()`'s as vectors and 
+#' * `module_matvec_enabled` (default `TRUE`): Print yacas `List()`'s as 
+#'   vectors and `List(List(), ...)`'s as matrices.
+#' * `prettyform_default` (default `FALSE`): Print yacas as `PrettyForm()` as default.
 #'
 #' @importFrom settings stop_if_reserved
 #' @export

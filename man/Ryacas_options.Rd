@@ -16,7 +16,9 @@ Set or get options for the Ryacas package
 
 The following options are supported
 \itemize{
-\item \code{module_matvec_enabled} (default \code{TRUE}): Print yacas \code{List()}'s as vectors and
+\item \code{module_matvec_enabled} (default \code{TRUE}): Print yacas \code{List()}'s as
+vectors and \code{List(List(), ...)}'s as matrices.
+\item \code{prettyform_default} (default \code{FALSE}): Print yacas as \code{PrettyForm()} as default.
 }
 }
 

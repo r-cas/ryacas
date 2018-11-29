@@ -9,6 +9,14 @@ print.yacas <- function(x, ...) {
 		else if (!is.null(x[[1]])) "expression"
 		else if (!is.null(x$OMForm)) "OMForm"
 	
+	if (!is.null(display) && 
+	    display == "expression" && 
+	    RYACAS_OPTIONS("prettyform_default")) {
+	  
+	  x <- yacas(PrettyForm(x))
+	  display <- "PrettyForm"
+	}
+	
 	switch(display, 
 		PrettyForm = for(s in x$PrettyForm) catn(s),
 		YacasForm = catn(x$YacasForm),
