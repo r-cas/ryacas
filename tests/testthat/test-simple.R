@@ -57,19 +57,17 @@ test_that("Yacmode", {
 
 
 test_that("Linalg", {
-  m <- matrix("r", 4, 4)
-  diag(m) <- "1"
+  
+  m <- matrix(0, 4, 4)
+  diag(m) <- "r"
   ms <- as.Sym(m)
   
-  expect_equal(as.character(ms), "{ { 1, r, r, r }, { r, 1, r, r }, { r, r, 1, r }, { r, r, r, 1 } }")
-  expect_equal(as.character(CharacteristicEquation(ms, "r")), 
-               "(1 - r)^4 - (1 - r)^2 * r^2 + (1 - r) * r^2 * r - r^4 - r^2 * (1 - r)^2 + (1 - r) * r^2 * r - (1 - r)^2 * r^2 + r^2 * (1 - r) * r + r^3 * (1 - r) - r^4 - r^2 * (1 - r)^2 + (1 - r) * r^2 * r + r^3 * (1 - r) - r^4 + r^2 * (1 - r) * r - (1 - r)^2 * r^2 - r^2 * (1 - r)^2 + (1 - r) * r^2 * r - r^4 + r^4")
+  expect_equal(as.character(ms), "{ { r, 0, 0, 0 }, { 0, r, 0, 0 }, { 0, 0, r, 0 }, { 0, 0, 0, r } }")
+  expect_equal(EigenValues(ms)$LinAlgForm, rep("r", 4))
   
-  # For some reason error
-  skip_on_appveyor()
-  expect_equal(as.character(FindRoots(CharacteristicEquation(ms, "r"), "r")), 
-               as.character(EigenValues(ms, var = "r")))
-  expect_equal(as.character(EigenValues(ms, var = "r")), 
-               as.character(EigenValues(ms)))
-  expect_equal(as.character(EigenValues(ms)), "list(r == 1/2, r == -1/2, r == 1/2, r == 1/2)")
+  
+  m <- matrix(c("2", "1", "1", "2"), 2, 2)
+  ms <- as.Sym(m)
+  
+  expect_equal(unlist(Eval(EigenValues(ms))), c(1, 3))
 })
