@@ -9,3 +9,4 @@ Ryacas*.tar.gz
 *.rds
 Ryacas.Rcheck
 .Rproj.user
+vignettes/*.html
