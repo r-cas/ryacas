@@ -387,6 +387,7 @@ CharacteristicEquation.Sym <- function(mat, var, ...) {
 }
 
 
+
 #' @export
 FindRoots <- function(mat, var, ...) UseMethod("FindRoots")
 
