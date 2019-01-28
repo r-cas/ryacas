@@ -50,7 +50,8 @@
 #' PrettyForm.default PrettyPrinter.Expr PrettyPrinter.default Simplify.Expr
 #' Simplify.default Solve.Expr Solve.default Taylor.Expr Taylor.default
 #' TeXForm.Expr TeXForm.default Ver.Expr Ver.default Identity.default Identity
-#' Subst Subst.default %Where% %Where%.default
+#' Subst Subst.default %Where% %Where%.default 
+#' CharacteristicEquation FindRoots EigenValues
 #' @param x An R expression.
 #' @param \dots An R character string or object that can be coerced to a
 #' character string.
@@ -368,3 +369,72 @@ Identity.default <- function(x) Sym("Identity(", x, ")")
 "%Where%.default" <- function(x, y) {
 	Sym(x, "Where", paste("{", names(y)[[1]], "==", Sym(y[[1]]), "}"))
 }
+
+
+
+#' @export
+CharacteristicEquation <- function(mat, var, ...) UseMethod("CharacteristicEquation")
+
+#' @export
+CharacteristicEquation.Sym <- function(mat, var, ...) {
+  stopifnot(is.character(mat))
+  stopifnot(is.character(var))
+  
+  return(yacas(paste0("CharacteristicEquation(", as.character(mat), ", ", var, ")")))
+  
+  #var_chr <- substitute(var)
+  #return(yacas(paste0("CharacteristicEquation(", as.character(mat), ", ", var_chr, ")")))
+}
+
+
+#' @export
+FindRoots <- function(mat, var, ...) UseMethod("FindRoots")
+
+#' @export
+FindRoots.default <- function(expr, var, ...) {
+  stopifnot(is.character(var))
+  return(yacas(paste0("Solve(0 == ", expr, ", ", var, ")")))
+  
+  #var_chr <- substitute(var)
+  #return(yacas(paste0("Solve(0 == ", expr, ", ", var_chr, ")")))
+}
+
+
+#' @export
+EigenValues <- function(mat, ...) UseMethod("EigenValues")
+
+#' @export
+EigenValues.default <- function(mat, ...) {
+  stopifnot(is.character(mat))
+  stopifnot(is(mat, "Sym"))
+  dots <- list(...)
+  
+  # Catch purely numeric matrices:
+  # probably an error and want to use R directly.
+  # 
+  # Variable name either specified by var in dots
+  
+  var_chr <- NULL
+  
+  # Auto detect variable name:
+  if (!is.null(dots[["var"]])) {
+    var_chr <- dots[["var"]]
+  } else {
+    matform <- yacas(mat)$LinAlgForm
+    symbol_candidates <- unique(c(matform))
+    is_chr <- grepl("[A-Za-z]", symbol_candidates)
+    
+    if (sum(is_chr) != 1L) {
+      stop("More than one variable detected, please specify by 'var' argument")
+    }
+    
+    var_chr <- symbol_candidates[is_chr]
+  }
+  
+  chr_eq <- CharacteristicEquation(mat = mat, var = var_chr)
+  chr_eq_roots <- FindRoots(expr = chr_eq, var = var_chr)
+  
+  return(chr_eq_roots)
+}
+
+

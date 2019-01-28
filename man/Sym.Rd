@@ -104,6 +104,9 @@
 \alias{Subst.default}
 \alias{\%Where\%}
 \alias{\%Where\%.default}
+\alias{CharacteristicEquation}
+\alias{FindRoots}
+\alias{EigenValues}
 \title{Sym}
 \usage{
 Sym(...) 

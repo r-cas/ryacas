@@ -53,3 +53,19 @@ test_that("Yacmode", {
                      return("quit")
                     }, yacmode())))
 })
+
+
+
+test_that("Linalg", {
+  m <- matrix("r", 4, 4)
+  diag(m) <- "1"
+  ms <- as.Sym(m)
+  
+  expect_equal(as.character(ms), "{ { 1, r, r, r }, { r, 1, r, r }, { r, r, 1, r }, { r, r, r, 1 } }")
+  expect_equal(as.character(CharacteristicEquation(ms, "r")), 
+               "(1 - r)^4 - (1 - r)^2 * r^2 + (1 - r) * r^2 * r - r^4 - r^2 * (1 - r)^2 + (1 - r) * r^2 * r - (1 - r)^2 * r^2 + r^2 * (1 - r) * r + r^3 * (1 - r) - r^4 - r^2 * (1 - r)^2 + (1 - r) * r^2 * r + r^3 * (1 - r) - r^4 + r^2 * (1 - r) * r - (1 - r)^2 * r^2 - r^2 * (1 - r)^2 + (1 - r) * r^2 * r - r^4 + r^4")
+  
+  expect_equal(FindRoots(CharacteristicEquation(ms, "r"), "r"), EigenValues(ms, var = "r"))
+  expect_equal(EigenValues(ms, var = "r"), EigenValues(ms))
+  expect_equal(as.character(EigenValues(ms)), "list(r == 1/2, r == -1/2, r == 1/2, r == 1/2)")
+})
