@@ -10,3 +10,4 @@ Ryacas*.tar.gz
 Ryacas.Rcheck
 .Rproj.user
 vignettes/*.html
+revdep

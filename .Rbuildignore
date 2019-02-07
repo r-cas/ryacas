@@ -16,3 +16,4 @@
 tic.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^revdep

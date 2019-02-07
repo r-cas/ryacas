@@ -370,67 +370,67 @@ Identity.default <- function(x) Sym("Identity(", x, ")")
 	Sym(x, "Where", paste("{", names(y)[[1]], "==", Sym(y[[1]]), "}"))
 }
 
-
-
-#' @export
-CharacteristicEquation <- function(mat, freevar, ...) UseMethod("CharacteristicEquation")
-
-#' @export
-CharacteristicEquation.Sym <- function(mat, freevar, ...) {
-  stopifnot(is.character(mat))
-  stopifnot(is.character(freevar))
-  
-  return(yacas(paste0("CharacteristicEquation(", as.character(mat), ", ", freevar, ")")))
-  
-  #var_chr <- substitute(var)
-  #return(yacas(paste0("CharacteristicEquation(", as.character(mat), ", ", var_chr, ")")))
-}
-
-
-
-#' @export
-FindRoots <- function(expr, var, ...) UseMethod("FindRoots")
-
-#' @export
-FindRoots.default <- function(expr, var, ...) {
-  stopifnot(is.character(var))
-  return(yacas(paste0("Solve(0 == ", expr, ", ", var, ")")))
-}
-
-#' @export
-EigenValues <- function(mat, ...) UseMethod("EigenValues")
-
-#' @export
-EigenValues.Sym <- function(mat, ...) {
-  stopifnot(is.character(mat))
-  return(yacas(paste0("EigenValues(", mat, ")")))
-}
-
 #' 
-#' #' @export
-#' EigenValues <- function(mat, ...) UseMethod("EigenValues")
-#' 
-#' #' @export
-#' EigenValues.default <- function(mat, ...) {
-#'   stopifnot(is.character(mat))
-#'   stopifnot(is(mat, "Sym"))
-#'   dots <- list(...)
-#' 
-#'   var_chr_org <- "lambda"
-#'   var_chr <- var_chr_org
-#'   var_chr_i <- 1
-#'   matform <- yacas(mat)$LinAlgForm
-#'   symbol_candidates <- unique(c(matform))
-#'   while (var_chr %in% symbol_candidates) {
-#'     print(var_chr)
-#'     var_chr <- paste0(var_chr_org, var_chr_i)
-#'     var_chr_i <- var_chr_i + 1
-#'   }
-#'   
-#'   chr_eq <- CharacteristicEquation(mat = mat, freevar = var_chr)
-#'   chr_eq_roots <- FindRoots(expr = chr_eq, var = var_chr)
-#'   
-#'   return(chr_eq_roots)
-#' }
+# 
+# #' @export
+# CharacteristicEquation <- function(mat, freevar, ...) UseMethod("CharacteristicEquation")
+# 
+# #' @export
+# CharacteristicEquation.Sym <- function(mat, freevar, ...) {
+#   stopifnot(is.character(mat))
+#   stopifnot(is.character(freevar))
+#   
+#   return(yacas(paste0("CharacteristicEquation(", as.character(mat), ", ", freevar, ")")))
+#   
+#   #var_chr <- substitute(var)
+#   #return(yacas(paste0("CharacteristicEquation(", as.character(mat), ", ", var_chr, ")")))
+# }
+# 
+# 
+# 
+# #' @export
+# FindRoots <- function(expr, var, ...) UseMethod("FindRoots")
+# 
+# #' @export
+# FindRoots.default <- function(expr, var, ...) {
+#   stopifnot(is.character(var))
+#   return(yacas(paste0("Solve(0 == ", expr, ", ", var, ")")))
+# }
+# 
+# #' @export
+# EigenValues <- function(mat, ...) UseMethod("EigenValues")
+# 
+# #' @export
+# EigenValues.Sym <- function(mat, ...) {
+#   stopifnot(is.character(mat))
+#   return(yacas(paste0("EigenValues(", mat, ")")))
+# }
+
+# 
+# #' @export
+# EigenValues <- function(mat, ...) UseMethod("EigenValues")
+# 
+# #' @export
+# EigenValues.default <- function(mat, ...) {
+#   stopifnot(is.character(mat))
+#   stopifnot(is(mat, "Sym"))
+#   dots <- list(...)
+# 
+#   var_chr_org <- "lambda"
+#   var_chr <- var_chr_org
+#   var_chr_i <- 1
+#   matform <- yacas(mat)$LinAlgForm
+#   symbol_candidates <- unique(c(matform))
+#   while (var_chr %in% symbol_candidates) {
+#     print(var_chr)
+#     var_chr <- paste0(var_chr_org, var_chr_i)
+#     var_chr_i <- var_chr_i + 1
+#   }
+#   
+#   chr_eq <- CharacteristicEquation(mat = mat, freevar = var_chr)
+#   chr_eq_roots <- FindRoots(expr = chr_eq, var = var_chr)
+#   
+#   return(chr_eq_roots)
+# }
 
 

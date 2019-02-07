@@ -54,20 +54,20 @@ test_that("Yacmode", {
                     }, yacmode())))
 })
 
-
-
-test_that("Linalg", {
-  
-  m <- matrix(0, 4, 4)
-  diag(m) <- "r"
-  ms <- as.Sym(m)
-  
-  expect_equal(as.character(ms), "{ { r, 0, 0, 0 }, { 0, r, 0, 0 }, { 0, 0, r, 0 }, { 0, 0, 0, r } }")
-  expect_equal(EigenValues(ms)$LinAlgForm, rep("r", 4))
-  
-  
-  m <- matrix(c("2", "1", "1", "2"), 2, 2)
-  ms <- as.Sym(m)
-  
-  expect_equal(unlist(Eval(EigenValues(ms))), c(1, 3))
-})
+# 
+# 
+# test_that("Linalg", {
+#   
+#   m <- matrix(0, 4, 4)
+#   diag(m) <- "r"
+#   ms <- as.Sym(m)
+#   
+#   expect_equal(as.character(ms), "{ { r, 0, 0, 0 }, { 0, r, 0, 0 }, { 0, 0, r, 0 }, { 0, 0, 0, r } }")
+#   expect_equal(EigenValues(ms)$LinAlgForm, rep("r", 4))
+#   
+#   
+#   m <- matrix(c("2", "1", "1", "2"), 2, 2)
+#   ms <- as.Sym(m)
+#   
+#   expect_equal(unlist(Eval(EigenValues(ms))), c(1, 3))
+# })
