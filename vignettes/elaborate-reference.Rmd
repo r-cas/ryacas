@@ -1,10 +1,10 @@
 ---
-title: "`Ryacas` -- an `R` interface to the `yacas` computer algebra system"
+title: "Elaborate reference of `Ryacas` functionality"
 author: "Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Ayal Pinkus and Mikkel Meyer Andersen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Ryacas - an R interface to the yacas computer algebra system}
+  %\VignetteIndexEntry{Elaborate reference of Ryacas functionality}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, message=FALSE}
 library(Ryacas)
 ```
+
 
 # Introduction
 
@@ -811,4 +812,14 @@ yacas(expression(Factor(x^2-1)),retclass='unquote')
 yacas(expression(Factor(x^2-1)),retclass='character')
 ``` 
 
+# Output width
+
+
+Set output width:
+
+```{r}
+get_output_width()
+set_output_width(120)
+get_output_width()
+```
 

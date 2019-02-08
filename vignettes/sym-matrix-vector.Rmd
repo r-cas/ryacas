@@ -17,14 +17,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(Ryacas)
 ```
 
-Set output width:
-
-```{r}
-get_output_width()
-set_output_width(120)
-get_output_width()
-```
-
 # Matrices
 
 Define a character matrix (covariance matrix from a certain $AR(1)$):

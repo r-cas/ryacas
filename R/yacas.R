@@ -486,7 +486,10 @@ Eval.yacas <- function(x, env = parent.frame(), ...) {
   eval(x[[1]], envir = env)
 }
 
+#' @export
 as.expression.yacas <- function(x, ...) x[[1]]
+
+#' @export
 as.character.yacas <- function(x, ...) as.character(x[[1]])
 
 #' yacas interface -- silent version
@@ -523,15 +526,17 @@ set_output_width <- function(w) {
 }
 
 
-#' Matrix/vector:
+# Matrix/vector:
 # 
-#' Vector: List without nested lists
-#' Matrix: List of Lists, but no futher nesting
+# Vector: List without nested lists
+# Matrix: List of Lists, but no futher nesting
 #
-#' Cannot be based on x, as this must work for e.g. Eval
-#' as well. So need to be based on XML.
+# Cannot be based on x, as this must work for e.g. Eval
+# as well. So need to be based on XML.
 # 
-#' List in yacas is "<OMS cd=\"list1\" name=\"list\"/>"
+# List in yacas is "<OMS cd=\"list1\" name=\"list\"/>"
+#
+# x: xml string
 get_xml_list_depth <- function(x) {
   
   list_depth <- Inf

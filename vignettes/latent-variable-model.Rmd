@@ -16,7 +16,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, message=FALSE}
 library(Ryacas)
 library(Matrix)
-set_output_width(120)
 ```
 
 ## Naive Bayes model

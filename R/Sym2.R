@@ -87,7 +87,8 @@ Sym <- function(...) {
 }
 
 #' @export
-as.character.Sym <- function(x, ...) as.character(unclass(x))
+#as.character.Sym <- function(x, ...) as.character(unclass(x))
+as.character.Sym <- function(x, ...) as.character(yacas(x))
 
 #' @export
 as.expression.Sym <- function(x, ...) yacas(x, ...)[[1]]

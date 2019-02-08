@@ -1,0 +1,79 @@
+---
+title: "Getting started"
+author: "Mikkel Meyer Andersen and Søren Højsgaard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(Ryacas)
+```
+
+
+# Introduction
+
+`Ryacas` makes the `yacas` computer algebra system available from
+within `R`. The name `yacas` is short for "Yet Another Computer Algebra
+System". The `yacas` program 
+is developed by Ayal Pinkhuis (who is also the maintainer)
+and others, and is available at <http://www.yacas.org/> for various
+platforms. There is a comprehensive documentation (300+ pages) of
+`yacas` (also available at
+<http://www.yacas.org/>) and the
+documentation contains many examples.
+
+# Example 1: using character vectors
+
+```{r}
+eq <- "x^2 + 4 + 2*x + 2*x"
+yacas(eq)
+yacas(paste0("Simplify(", eq, ")"))
+yacas(paste0("Factor(", eq, ")"))
+```
+
+Or by using the corresponding `R` functions directly:
+```{r}
+Simplify(yacas(eq))
+Factor(yacas(eq))
+```
+
+Or course the result can be saved before calling the helper `R` functions:
+
+```{r}
+yeq <- yacas(eq)
+Simplify(yeq)
+Factor(yeq)
+```
+
+And getting results out:
+
+```{r}
+res <- Factor(yeq)
+as.character(res)
+TeXForm(res)
+```
+
+To include inline, e.g. $`r TeXForm(yeq)` = `r TeXForm(res)`$.
+
+
+# Example 2: using `Sym()` 
+
+```{r}
+xs <- Sym("x")
+eqs <- xs^2 + 4 + 2*xs + 2*xs
+Simplify(eqs)
+Factor(eqs)
+res <- Factor(eqs)
+as.character(res)
+TeXForm(res)
+```
+
+

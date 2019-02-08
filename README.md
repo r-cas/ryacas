@@ -18,7 +18,7 @@ pretty printing and translating R to TeX.
 
 To build and install from github using R 3.3.0 (or later) and the R devtools package 1.11.0 (or later) run this command from within R:
 
-    devtools::install_github("mikldk/ryacas")
+    remotes::install_github("mikldk/ryacas")
 
 ## Online info ##
 

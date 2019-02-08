@@ -18,6 +18,7 @@ library(Ryacas)
 library(Matrix)
 ```
 
+
 Set output width:
 
 ```{r}
