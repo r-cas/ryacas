@@ -1,5 +1,5 @@
 Package: Ryacas
-Version: 0.4.0.9001
+Version: 0.4.1
 Title: R Interface to the Yacas Computer Algebra System 
 Authors@R: c(
     person(given = "Rob", family = "Goedman", 
