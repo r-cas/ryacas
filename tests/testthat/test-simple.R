@@ -10,7 +10,7 @@ test_that("Sym", {
   expect_equal(class(texp), c("Sym", "character"))
   expect_equal(as.expression(texp), expression(xs + xs^2/2 + xs^3/6 + 1))
   expect_equal(as.character(as.expression(texp)), "xs + xs^2/2 + xs^3/6 + 1")
-  expect_equal(as.character(texp), "( Taylor( xs , 0 , 3 ) ( Exp ( xs ) ) )")
+  expect_equal(as.character(texp), "xs + xs^2/2 + xs^3/6 + 1")
 })
 
 test_that("Expr", {
