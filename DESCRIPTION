@@ -15,7 +15,6 @@ Authors@R: c(
     person(given = "Mikkel Meyer", family = "Andersen", 
         email = "mikl@math.aau.dk", role = c("aut", "cre"))
   )
-Author: Rob Goedman <goedman@mac.com>, Gabor Grothendieck <ggrothendieck@gmail.com>, Søren Højsgaard <sorenh@math.aau.dk>, Ayal Pinkus <apinkus@xs4all.nl>, Grzegorz Mazur <teoretyk@gmail.com>, Mikkel Meyer Andersen <mikl@math.aau.dk>
 Maintainer: Mikkel Meyer Andersen <mikl@math.aau.dk>
 Encoding: UTF-8
 Description: An interface to the yacas computer algebra system.

@@ -102,7 +102,7 @@ Eval(As, list(a11 = 11, a12 = 12, a21 = 21, a22 = 22))
 
 # Disabling functionality
 
-The functionality as follows:
+The functionality can be disabled as follows:
 
 ```{r}
 Ryacas_options("module_matvec_enabled")
