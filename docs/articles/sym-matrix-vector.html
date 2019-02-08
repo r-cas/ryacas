@@ -214,6 +214,21 @@ As</code></pre></div>
 ## [1,]   11   12
 ## [2,]   21   22</code></pre>
 </div>
+<div id="disabling-functionality" class="section level1">
+<h1 class="hasAnchor">
+<a href="#disabling-functionality" class="anchor"></a>Disabling functionality</h1>
+<p>The functionality as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Ryacas_options.html">Ryacas_options</a></span>(<span class="st">"module_matvec_enabled"</span>)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">As</code></pre></div>
+<pre><code>## Yacas matrix:
+##      [,1] [,2]
+## [1,] a11  a12 
+## [2,] a21  a22</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Ryacas_options.html">Ryacas_options</a></span>(<span class="dt">module_matvec_enabled =</span> <span class="ot">FALSE</span>)
+As</code></pre></div>
+<pre><code>## expression(list(list(a11, a12), list(a21, a22)))</code></pre>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -224,6 +239,7 @@ As</code></pre></div>
 <li><a href="#matrices">Matrices</a></li>
       <li><a href="#vectors">Vectors</a></li>
       <li><a href="#eval">Eval</a></li>
+      <li><a href="#disabling-functionality">Disabling functionality</a></li>
       </ul>
 </div>
       </div>

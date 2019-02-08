@@ -3,7 +3,7 @@ Changes in version 0.4.1
 o TeXForm() now returns character vector (without $'s at the beginning and end)
 o New as.Sym.matrix()/as.Sym.character() that converts a 
   character matrix/vector to a yacas matrix 
-  (see "Matrix and vector Sym objects" vignette)
+  (see "Matrix and vector Sym objects" vignette), can be disabled via Ryacas_options.
 o Transpose() added
 o Added silent/invisible yacas() function called syacas()
 o Additional vignettes

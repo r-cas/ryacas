@@ -163,14 +163,14 @@ yacas.character <- function(x, verbose = FALSE, method, retclass = c("expression
       # List in yacas is "<OMS cd=\"list1\" name=\"list\"/>"
       
       try_linalg <- RYACAS_OPTIONS("module_matvec_enabled")
+
+      LinAlgType <- NULL
+      LinAlgForm <- NULL
+      LinAlgDim <- NULL
       
       if (try_linalg) {
         list_depth <- get_xml_list_depth(yacas.res[1])
         #print(list_depth)
-        
-        LinAlgType <- NULL
-        LinAlgForm <- NULL
-        LinAlgDim <- NULL
         
         #if (grepl('^<OMOBJ>.*<OMS cd=\"list1\" name=\"list\"/>.*<OMS cd=\"list1\" name=\"list\"/>', yacas.res[1])) {
         if (is.finite(list_depth) && list_depth == 2L) {
