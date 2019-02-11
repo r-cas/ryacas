@@ -76,6 +76,12 @@ std::vector<std::string> yacas_evaluate(std::string expr)
     _side_effects.str("");
     
     _yacas->Evaluate(expr);
+    
+    if (_yacas->IsError()) {
+      std::string err = _yacas->Error();
+      std::string msg = "Yacas returned this error: " + err;
+      Rcpp::stop(msg);
+    }
 
     const std::vector<std::string> results = {
         _side_effects.str(),
