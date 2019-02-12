@@ -1,0 +1,105 @@
+---
+title: "Automatic generation of exams in R using `Ryacas`"
+author: "Mikkel Meyer Andersen and Søren Højsgaard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Automatic generation of exams in R using Ryacas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(Ryacas)
+```
+
+The [`exams` package](https://cran.r-project.org/package=exams) offer a wide range of ways of generating exams. See e.g. the many [examples](http://www.r-exams.org/templates/).
+
+`Ryacas` can be used in connection with the [`exams` package](https://cran.r-project.org/package=exams) in multiple ways. The obvious ones are for symbolic mathematics and for turning `R` code into TeX.
+
+In this vignette we demonstrate both by two simple examples. First, we make exercises where the student must find roots in a quadratic polynomial. We generate exercises where the roots are two different integers and the polynomial are written in simplified form using `Ryacas` (in principle this can be solved purely numeric as well, but the solution is less elegant). 
+Then we make exercises in simple factorisations, e.g. "Bring $9 x ^{2} + 30 x y + 25 y ^{2}$ on the form
+$(a \cdot x + b \cdot y)^2$ for positive $a$ and $b$.".
+Both examples show how symbolic math and TeX from the `Ryacas` package are used.
+
+```{r, include=FALSE}
+library(exams)
+
+out_dir <- tempdir()
+```
+
+# Roots in polynomials
+
+This is the exams `Rmd` file:
+
+```{r, comment=NA, echo=FALSE}
+exam_file <- system.file("exams/poly.Rmd", package = "Ryacas")
+fl <- readLines(exam_file)
+cat(paste0(fl, "\n"))
+```
+
+This can then be compiled using e.g. `exams::exams2html`, `exams::exams2pandoc` or any of the other `exams::exams2*` functions:
+
+```{r, include=FALSE}
+out_nm <- "out-exams-poly"
+
+set.seed(1)
+exams::exams2pandoc(exam_file, n = 2, type = "markdown", dir = out_dir, name = out_nm)
+```
+
+
+Giving first sample:
+
+```{r, comment=NA, echo=FALSE}
+fl <- readLines(file.path(out_dir, paste0(out_nm, "1.markdown")))
+cat(paste0(fl, "\n"))
+```
+
+
+And second sample:
+
+```{r, comment=NA, echo=FALSE}
+fl <- readLines(file.path(out_dir, paste0(out_nm, "2.markdown")))
+cat(paste0(fl, "\n"))
+```
+
+
+# Factorisation
+
+This is the exams `Rmd` file:
+
+```{r, comment=NA, echo=FALSE}
+exam_file <- system.file("exams/factorisation.Rmd", package = "Ryacas")
+fl <- readLines(exam_file)
+cat(paste0(fl, "\n"))
+```
+
+This can then be compiled using e.g. `exams::exams2html`, `exams::exams2pandoc` or any of the other `exams::exams2*` functions:
+
+```{r, include=FALSE}
+out_nm <- "out-exams-factorisation"
+
+set.seed(1)
+exams::exams2pandoc(exam_file, n = 2, type = "markdown", dir = out_dir, name = out_nm)
+```
+
+
+Giving first sample:
+
+```{r, comment=NA, echo=FALSE}
+fl <- readLines(file.path(out_dir, paste0(out_nm, "1.markdown")))
+cat(paste0(fl, "\n"))
+```
+
+
+And second sample:
+
+```{r, comment=NA, echo=FALSE}
+fl <- readLines(file.path(out_dir, paste0(out_nm, "2.markdown")))
+cat(paste0(fl, "\n"))
+```
+

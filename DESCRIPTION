@@ -27,6 +27,7 @@ Imports:
 LinkingTo: Rcpp
 Suggests:
     devtools,
+    exams,
     knitr,
     Matrix,
     pkgload,

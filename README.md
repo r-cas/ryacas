@@ -24,7 +24,6 @@ To build and install from github using R 3.3.0 (or later) and the R devtools pac
 
 For vignettes, overview, pointers to additional information, installation
 instructions and a sample session see <http://mikldk.github.io/ryacas/>. 
-The old site was <http://code.google.com/p/ryacas/>.
 
 Yacas documentation can be found at http://yacas.readthedocs.org/
 
@@ -43,9 +42,10 @@ The package contains stripped-down yacas distribution. For the complete yacas so
 
 ---
 
+Mikkel Meyer Andersen, mikl at math dot aau dot dk  
 Rob Goedman, goedman at mac dot com  
 Gabor Grothendieck, ggrothendieck at gmail dot com  
 Søren Højsgaard, sorenh at math dot aau dot dk  
 Ayal Pinkus, apinkus at xs4all dot nl  
 Grzegorz Mazur, teoretyk at gmail dot com  
-Mikkel Meyer Andersen, mikl at math dot aau dot dk  
+

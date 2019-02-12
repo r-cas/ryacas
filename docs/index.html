@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R Interface to the Yacas Computer Algebra System  • Ryacas</title>
+<title>R Interface to the Yacas Computer Algebra System • Ryacas</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="R Interface to the Yacas Computer Algebra System ">
+<script src="pkgdown.js"></script><meta property="og:title" content="R Interface to the Yacas Computer Algebra System">
 <meta property="og:description" content="An interface to the yacas computer algebra system.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
       </span>
     </div>
 
@@ -54,6 +54,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="articles/elaborate-reference.html">Elaborate reference of `Ryacas` functionality</a>
+    </li>
+    <li>
+      <a href="articles/exams.html">Automatic generation of exams in R using `Ryacas`</a>
     </li>
     <li>
       <a href="articles/getting-started.html">Getting started</a>
@@ -103,7 +106,7 @@
 <div id="online-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#online-info" class="anchor"></a>Online info</h2>
-<p>For vignettes, overview, pointers to additional information, installation instructions and a sample session see <a href="http://mikldk.github.io/ryacas/" class="uri">http://mikldk.github.io/ryacas/</a>. The old site was <a href="http://code.google.com/p/ryacas/" class="uri">http://code.google.com/p/ryacas/</a>.</p>
+<p>For vignettes, overview, pointers to additional information, installation instructions and a sample session see <a href="http://mikldk.github.io/ryacas/" class="uri">http://mikldk.github.io/ryacas/</a>.</p>
 <p>Yacas documentation can be found at <a href="http://yacas.readthedocs.org/" class="uri">http://yacas.readthedocs.org/</a></p>
 </div>
 <div id="more" class="section level2">
@@ -118,12 +121,12 @@ package?Ryacas</code></pre></div>
 <a href="#yacas" class="anchor"></a>Yacas</h2>
 <p>The package contains stripped-down yacas distribution. For the complete yacas source code see <a href="https://github.com/grzegorzmazur/yacas/" class="uri">https://github.com/grzegorzmazur/yacas/</a> . For more information on yacas see <a href="http://www.yacas.org/" class="uri">http://www.yacas.org/</a>.</p>
 <hr>
-<p>Rob Goedman, goedman at mac dot com<br>
+<p>Mikkel Meyer Andersen, mikl at math dot aau dot dk<br>
+Rob Goedman, goedman at mac dot com<br>
 Gabor Grothendieck, ggrothendieck at gmail dot com<br>
 Søren Højsgaard, sorenh at math dot aau dot dk<br>
 Ayal Pinkus, apinkus at xs4all dot nl<br>
-Grzegorz Mazur, teoretyk at gmail dot com<br>
-Mikkel Meyer Andersen, mikl at math dot aau dot dk</p>
+Grzegorz Mazur, teoretyk at gmail dot com</p>
 </div>
 </div>
   </div>
@@ -149,12 +152,12 @@ Mikkel Meyer Andersen, mikl at math dot aau dot dk</p>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
+<li>Mikkel Meyer Andersen <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Rob Goedman <br><small class="roles"> Author </small>  </li>
 <li>Gabor Grothendieck <br><small class="roles"> Author </small>  </li>
 <li>Søren Højsgaard <br><small class="roles"> Author </small>  </li>
-<li>Ayal Pinkus <br><small class="roles"> Author </small>  </li>
 <li>Grzegorz Mazur <br><small class="roles"> Author </small>  </li>
-<li>Mikkel Meyer Andersen <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Ayal Pinkus <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -169,7 +172,7 @@ Mikkel Meyer Andersen, mikl at math dot aau dot dk</p>
 </div>
 
       <footer><div class="copyright">
-  <p>Developed by Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Ayal Pinkus, Grzegorz Mazur, Mikkel Meyer Andersen.</p>
+  <p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
 </div>
 
 <div class="pkgdown">
