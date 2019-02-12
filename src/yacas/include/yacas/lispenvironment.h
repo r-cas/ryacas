@@ -105,6 +105,9 @@ public:
   void PopLocalFrame();
   void NewLocal(const LispString* aVariable, LispObject* aValue);
   void CurrentLocals(LispPtr& aResult);
+  
+  // mikl 2019-02-12: https://github.com/grzegorzmazur/yacas/commit/12627b6f853c28c35c991741b0dc16616b8aa239
+  void GlobalVariables(LispPtr& aResult);
   //@}
 
 public:

@@ -237,7 +237,21 @@ void LispEnvironment::CurrentLocals(LispPtr& aResult)
     aResult = LispSubList::New(LispObjectAdder(iList->Copy()) + LispObjectAdder(locals));
 }
 
+// mikl 2019-02-12: https://github.com/grzegorzmazur/yacas/commit/12627b6f853c28c35c991741b0dc16616b8aa239
+void LispEnvironment::GlobalVariables(LispPtr& aResult)
+{
+    LispPtr vars(iList->Copy());
+    LispIterator tail(vars);
+    ++tail;
 
+    for (const auto p: iGlobals) {
+        if (p.first->front() == '$' || p.first->front() == '%')
+            continue;
+        *tail = LispAtom::New(*this, *p.first);
+        ++tail;
+    }
+    aResult = LispSubList::New(vars);
+}
 
 LispPrinter& LispEnvironment::CurrentPrinter()
 {
