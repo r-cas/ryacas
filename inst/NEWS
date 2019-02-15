@@ -1,3 +1,9 @@
+Changes in version 0.4.2
+
+o Yacas errors are now provided to the user instead of just an empty result
+o Vignette on making exercises via the exams package
+o getSyms() function to list all Sym()'s in the global environment (.GlobalEnv)
+
 Changes in version 0.4.1
 
 o TeXForm() now returns character vector (without $'s at the beginning and end)

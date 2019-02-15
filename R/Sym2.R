@@ -32,6 +32,8 @@
 #' Ver and "%Where%" all of which have the same meaning as the corresponding yacas
 #' commands. Try \code{vignette("Rycas-Sym")} for many examples.
 #' 
+#' Get `Sym` objects with `getSyms()`.
+#' 
 #' @aliases Sym Expr Exprq Ops.Expr Math.Expr deriv.Expr print.Expr
 #' as.character.Expr as.Sym as.Sym.Expr 
 #' as.Sym.yacas
@@ -102,6 +104,32 @@ as.Sym.yacas <- function(x, ...) Sym(format(yparse(x[[1]])))
 #' @export
 as.Sym.Expr <- function(x, ...) Sym(format(yparse(x)))
 
+
+#' List `Sym()` objects
+#' 
+#' Lists all `Sym()` objects in the global environment (`.GlobalEnv`)
+#' 
+#' @param all.names a logical value. If `TRUE`, all object names are returned. If `FALSE`, names which begin with a `.` are omitted.
+#' 
+#' @examples getSyms()
+#' xs <- Sym("x")
+#' getSyms()
+#' 
+#' @importFrom methods is
+#' 
+#' @export
+getSyms <- function(all.names = FALSE) {
+  objs <- ls(envir = .GlobalEnv, all.names = all.names)
+  
+  obj_isSym <- unlist(lapply(objs, function(nm) {
+    obj <- get(nm, .GlobalEnv)
+    return(is(obj, "Sym"))
+  }))
+  
+  syms <- objs[obj_isSym]
+  
+  return(syms)
+}
 
 #' Convert character vector to yacas object
 #' 

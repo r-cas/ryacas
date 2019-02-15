@@ -137,6 +137,8 @@ Inverse, InverseTaylor, Limit, List, N, Newton, Pi, Precision, PrettyForm,
 PrettyPrinter, Set, Simplify, Solve, Subst, Taylor, TeXForm, Transpose,
 Ver and "%Where%" all of which have the same meaning as the corresponding yacas
 commands. Try \code{vignette("Rycas-Sym")} for many examples.
+
+Get \code{Sym} objects with \code{getSyms()}.
 }
 \note{
 Currently the only \code{Expr} methods implemented are
