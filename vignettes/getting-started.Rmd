@@ -76,4 +76,11 @@ as.character(res)
 TeXForm(res)
 ```
 
+# Example 3: using Yacas variables and `Sym()` 
 
+```{r}
+yacas("p := x^2 + 4 + 2*x + 2*x")
+ps <- Sym("p")
+ps
+TeXForm(Simplify(ps))
+```
