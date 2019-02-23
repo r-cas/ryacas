@@ -95,7 +95,7 @@
       <h1>Getting started</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-02-12</h4>
+            <h4 class="date">2019-02-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NA/NA/blob/master/vignettes/getting-started.Rmd"><code>vignettes/getting-started.Rmd</code></a></small>
       <div class="hidden name"><code>getting-started.Rmd</code></div>
@@ -155,6 +155,18 @@ eqs &lt;-<span class="st"> </span>xs<span class="op">^</span><span class="dv">2<
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(res)</code></pre></div>
 <pre><code>## [1] "\\left( x + 2\\right)  ^{2}"</code></pre>
 </div>
+<div id="example-3-using-yacas-variables-and-sym" class="section level1">
+<h1 class="hasAnchor">
+<a href="#example-3-using-yacas-variables-and-sym" class="anchor"></a>Example 3: using Yacas variables and <code><a href="../reference/Sym.html">Sym()</a></code>
+</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"p := x^2 + 4 + 2*x + 2*x"</span>)</code></pre></div>
+<pre><code>## expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"p"</span>)
+ps</code></pre></div>
+<pre><code>## expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(ps))</code></pre></div>
+<pre><code>## [1] "x ^{2} + 4 x + 4"</code></pre>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -165,6 +177,7 @@ eqs &lt;-<span class="st"> </span>xs<span class="op">^</span><span class="dv">2<
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#example-1-using-character-vectors">Example 1: using character vectors</a></li>
       <li><a href="#example-2-using-sym">Example 2: using <code><a href="--/reference/Sym-html">Sym()</a></code></a></li>
+      <li><a href="#example-3-using-yacas-variables-and-sym">Example 3: using Yacas variables and <code><a href="--/reference/Sym-html">Sym()</a></code></a></li>
       </ul>
 </div>
       </div>

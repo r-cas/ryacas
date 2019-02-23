@@ -137,8 +137,17 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>yacmode</span>()</pre>
-        
+    <pre class="usage"><span class='fu'>yacmode</span>(<span class='kw'>enable_history</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>enable_history</th>
+      <td><p>Use <code>R</code> history such that previous yacas commands can be used. Default is <code>TRUE</code>.</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Output of yacas is returned.</p>
@@ -150,8 +159,8 @@ to R prompt.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Note that command recall will recall previous R commands, not previous
-yacas input. Yacas is given a limited amount of time to complete, otherwise
+    <p>Note that command will use R <code><a href='https://www.rdocumentation.org/packages/utils/topics/savehistory'>history()</a></code> and modify it by default.
+Yacas is given a limited amount of time to complete, otherwise
 <code>\[1\] CommandLine(1) : User interrupted calculation</code> is returned. E.g.
 Taylor(x,0,5) 1/(1+x) will work, but Taylor(x,0,12) 1/(1+x) is likely to
 take too long.</p>
@@ -175,6 +184,7 @@ yacmode()
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
 
