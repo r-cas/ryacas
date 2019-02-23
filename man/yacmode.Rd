@@ -4,7 +4,10 @@
 \alias{yacmode}
 \title{yacmode interface}
 \usage{
-yacmode()
+yacmode(enable_history = TRUE)
+}
+\arguments{
+\item{enable_history}{Use \code{R} history such that previous yacas commands can be used. Default is \code{TRUE}.}
 }
 \value{
 Output of yacas is returned.
@@ -17,8 +20,8 @@ The user types valid yacas input and presses return. Type 'quit' to return
 to R prompt.
 }
 \note{
-Note that command recall will recall previous R commands, not previous
-yacas input. Yacas is given a limited amount of time to complete, otherwise
+Note that command will use R \code{history()} and modify it by default.
+Yacas is given a limited amount of time to complete, otherwise
 \code{\[1\] CommandLine(1) : User interrupted calculation} is returned. E.g.
 Taylor(x,0,5) 1/(1+x) will work, but Taylor(x,0,12) 1/(1+x) is likely to
 take too long.

@@ -38,7 +38,11 @@ test_that("Yacmode", {
   expect_equal("Enter Yacas commands here. Type quit to return to R", 
                capture.output(
                  testthat::with_mock(
-                   readline = function(x) { return("quit")}, yacmode())))
+                   readline = function(x) { return("quit")}, 
+                   savehistory = function(x) { return() },
+                   loadhistory = function(x) { return() },
+                   
+                   yacmode())))
   
   ran_before <- FALSE
   expect_equal(c("Enter Yacas commands here. Type quit to return to R", 
@@ -51,7 +55,11 @@ test_that("Yacmode", {
                        return("x*x*x")
                      }
                      return("quit")
-                    }, yacmode())))
+                    }, 
+                   savehistory = function(x) { return() },
+                   loadhistory = function(x) { return() },
+                   
+                   yacmode())))
 })
 
 # 
