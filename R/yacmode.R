@@ -23,34 +23,47 @@
 #' }
 #' 
 #' @export
-yacmode <-function (){
-    cat("Enter Yacas commands here. Type quit to return to R\n")
-    x <- readline("Yacas->")
-    while (length(which(c("stop;", "stop", "end;", "end", "quit;",
-                          "quit", "exit;", "exit", "e;", "e", "q;", "q","\n") == x)) ==
-           0) {
+yacmode <-function () {
+  # Enable history in yacmode()
+  # https://stackoverflow.com/a/27528113
+  tmphistory <- tempfile()
+  savehistory(tmphistory)
+  on.exit(unlink(tmphistory))
+  
+  cat("Enter Yacas commands here. Type quit to return to R\n")
+  x <- readline("Yacas->")
+  while (length(which(c("stop;", "stop", "end;", "end", "quit;",
+                        "quit", "exit;", "exit", "e;", "e", "q;", "q","\n") == x)) ==
+         0) {
 
-      o <- yacas(x)
-      print(o)
-      
-      # x <- gsub("Out>","#",x)
-      # x <- gsub(" ","",unlist(strsplit(x,"#"))[1])
-      # x <- gsub(" ","",gsub("In>",'',x))
-      # if (x != '' && !is.na(x)){
-      #   pr <- try( parse(text = x ),silent=TRUE)
-      #   if (class(pr)=='try-error'){
-      #     # o<- yacas(x,retclass='character');
-      #     o<- yacas(x)
-      #   } else {
-      #     o <- yacas(parse(text = x)); 
-      #   }
-      #   # o <- paste(o)
-      #   # a<-lapply(o,function(s) cat(paste(s,"\n")))
-      #   print(o)
-      # }
-      
-      x <- readline("Yacas->")
-    }
+    o <- yacas(x)
+    print(o)
+    
+    # Update history:
+    histcon <- file(tmphistory, open = "a")
+    writeLines(x, histcon)
+    close(histcon)
+    loadhistory(tmphistory)
+    
+    # Old:
+    # x <- gsub("Out>","#",x)
+    # x <- gsub(" ","",unlist(strsplit(x,"#"))[1])
+    # x <- gsub(" ","",gsub("In>",'',x))
+    # if (x != '' && !is.na(x)){
+    #   pr <- try( parse(text = x ),silent=TRUE)
+    #   if (class(pr)=='try-error'){
+    #     # o<- yacas(x,retclass='character');
+    #     o<- yacas(x)
+    #   } else {
+    #     o <- yacas(parse(text = x)); 
+    #   }
+    #   # o <- paste(o)
+    #   # a<-lapply(o,function(s) cat(paste(s,"\n")))
+    #   print(o)
+    # }
+    
+    x <- readline("Yacas->")
   }
+}
 
 
