@@ -4,7 +4,7 @@ author: "Mikkel Meyer Andersen and Søren Højsgaard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{The structure of the concentration and covariance matrix in a naive Bayes model}
+  %\VignetteIndexEntry{Towards a JSS-like paper on ryacas}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
