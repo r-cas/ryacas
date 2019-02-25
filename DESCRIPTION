@@ -33,6 +33,7 @@ Suggests:
     Matrix,
     pkgload,
     rmarkdown,
+    igraph,
     testthat
 License: GPL-2
 URL: https://github.com//mikldk/ryacas, http://www.yacas.org
