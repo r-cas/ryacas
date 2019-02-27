@@ -31,16 +31,33 @@ yacmode <- function(enable_history = TRUE) {
   # https://stackoverflow.com/a/27528113
   if (enable_history == TRUE) {
     tmphistory <- tempfile()
-    utils::savehistory(tmphistory)
+    try(utils::savehistory(tmphistory), silent = TRUE)
     on.exit(unlink(tmphistory))
   }
   
+  update_history <- function(x) {
+    # Update history:
+    if (enable_history == TRUE) {
+      histcon <- file(tmphistory, open = "a")
+      writeLines(x, histcon)
+      close(histcon)
+      try(utils::loadhistory(tmphistory), silent = TRUE)
+    }
+    
+    return(invisible(x))
+  }
+
+  
   cat("Enter Yacas commands here. Type quit to return to R\n")
   x <- readline("Yacas->")
+
   while (length(which(c("stop;", "stop", "end;", "end", "quit;",
                         "quit", "exit;", "exit", "e;", "e", "q;", "q", "q()", "\n") == x)) ==
          0) {
 
+    # Put here to not include exit/quit/... in history
+    update_history(x)
+    
     o <- yacas(x)
     print(o)
     
@@ -62,14 +79,6 @@ yacmode <- function(enable_history = TRUE) {
     # }
     
     x <- readline("Yacas->")
-
-    # Update history:
-    if (enable_history == TRUE) {
-      histcon <- file(tmphistory, open = "a")
-      writeLines(x, histcon)
-      close(histcon)
-      utils::loadhistory(tmphistory)
-    }
   }
 }
 
