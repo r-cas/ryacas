@@ -24,13 +24,14 @@
 #'  q
 #' }
 #' 
+#' @importFrom utils loadhistory savehistory
 #' @export
 yacmode <- function(enable_history = TRUE) {
   # Enable history in yacmode()
   # https://stackoverflow.com/a/27528113
   if (enable_history == TRUE) {
     tmphistory <- tempfile()
-    savehistory(tmphistory)
+    utils::savehistory(tmphistory)
     on.exit(unlink(tmphistory))
   }
   
@@ -67,7 +68,7 @@ yacmode <- function(enable_history = TRUE) {
       histcon <- file(tmphistory, open = "a")
       writeLines(x, histcon)
       close(histcon)
-      loadhistory(tmphistory)
+      utils::loadhistory(tmphistory)
     }
   }
 }
