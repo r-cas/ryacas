@@ -34,7 +34,7 @@ test_that("TeXForm", {
   expect_equal(TeXForm(x*x), "x ^{2}")
 })
 
-test_that("Yacmode", {
+test_that("Yacas mode", {
   expect_equal("Enter Yacas commands here. Type quit to return to R", 
                capture.output(
                  testthat::with_mock(
@@ -46,7 +46,7 @@ test_that("Yacmode", {
   
   ran_before <- FALSE
   expect_equal(c("Enter Yacas commands here. Type quit to return to R", 
-                 "Yacas: x^3"),
+                 "yacas_expression(x^3)"),
                capture.output(
                  testthat::with_mock(
                    readline = function(x) {

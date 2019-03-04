@@ -40,9 +40,10 @@ print.yacas <- function(x, ...) {
 		  } else {
 			  #cat("Yacas ")
 				#print(x[[1]])
-		    cat("Yacas: ", as.character(x[[1]]), "\n", sep = "")
+		    cat("yacas_expression(", as.character(x[[1]]), ")\n", sep = "")
 		    #print(x[[1]])
 		  },
 		OMForm = for(s in x$OMForm) catn(s))
+	
 	invisible()
 }
