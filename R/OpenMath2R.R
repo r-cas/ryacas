@@ -218,6 +218,11 @@ colnames(transtab) <- c("R", "OM", "yacas")
 
 # Used for expressions not handled by R
 
+#' Root function
+#' 
+#' The $y$'th root of $x$.
+#' 
+#' @export
 root <- function(x, y) {
 	(x)^(1/(y))
 }
