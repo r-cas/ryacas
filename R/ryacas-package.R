@@ -42,7 +42,7 @@ NULL
 #' Translations from R to the yacas computer algebra system.
 #'
 #' @name yacasTranslations
-#' @aliases yacasTranslations root
+#' @aliases yacasTranslations
 #' @note The translation process occurs in several steps.  If the input to the
 #' \code{yacas} function is an expression then it is translated to a valid
 #' yacas character string (otherwise, it is sent to yacas unprocessed). Yacas

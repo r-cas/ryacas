@@ -6,6 +6,11 @@
 \usage{
 root(x, y)
 }
+\arguments{
+\item{x}{Number to take $y$'th root of}
+
+\item{y}{Root}
+}
 \description{
-The $y$'th root of $x$.
+The $y$'th root of $x$, i.e. $x^(1/y)$.
 }

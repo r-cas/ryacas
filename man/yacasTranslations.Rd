@@ -2,7 +2,6 @@
 % Please edit documentation in R/ryacas-package.R
 \name{yacasTranslations}
 \alias{yacasTranslations}
-\alias{root}
 \title{Yacas translations}
 \description{
 Translations from R to the yacas computer algebra system.

@@ -220,7 +220,10 @@ colnames(transtab) <- c("R", "OM", "yacas")
 
 #' Root function
 #' 
-#' The $y$'th root of $x$.
+#' The $y$'th root of $x$, i.e. $x^(1/y)$.
+#' 
+#' @param x Number to take $y$'th root of
+#' @param y Root
 #' 
 #' @export
 root <- function(x, y) {
