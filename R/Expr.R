@@ -138,6 +138,12 @@ determinant.Expr <- function(x, ...)
 #' 
 #' @export
 stripvar <- function(expr, var) {
+  # NOTE: Is it necessary to use Yacas?
+  #       E.g.:
+  #       sol := { x == 2, x == 40 };
+  #       I(y) := Eval(x Where y);
+  #       MapSingle("I", sol);
+  
   replace_ <- function(x) {
     gsub(paste0(var, " == "), "", x, fixed = TRUE)
   }
