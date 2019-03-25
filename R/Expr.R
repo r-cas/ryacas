@@ -123,3 +123,30 @@ Inverse.Expr <- function(x, ...)
 #' @export
 determinant.Expr <- function(x, ...)
    Expr(substitute(Determinant(x, ...), as.list(match.call())[-1]))
+
+#' Removes part of expression containing variable
+#' 
+#' Yacas' `Solve(eq, x)` can return e.g. 
+#' `x == expr` and `{x == expr1, x == expr2, ...}`.
+#' Some usages are easier if the initial `x == ` part is removed.
+#' This is the purpose of this function.
+#' 
+#' @param expr Expression where `x == expr` should be replaced to `expr`
+#' @param var Name of variable, e.g. `x`
+#' 
+#' @keywords symbolmath
+#' 
+#' @export
+stripvar <- function(expr, var) {
+  replace_ <- function(x) {
+    gsub(paste0(var, " == "), "", x, fixed = TRUE)
+  }
+  
+  expr$text <- parse(text = replace_(as.character(expr$text)))
+  
+  if (!is.null(expr$LinAlgForm)) {
+    expr$LinAlgForm <- replace_(as.character(expr$LinAlgForm))
+  }
+  
+  return(expr)
+}
