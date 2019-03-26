@@ -1,7 +1,7 @@
 #' Get Yacas variables
 #' 
 #' @export
-get_yacas_variables <- function() {
+lsyacas <- function() {
   x <- yacas("Variables()", addSemi = FALSE, retclass = "character")
   z <- x$LinAlgForm
   z <- setdiff(z, "i") # i = imaginary unit: I in Yacas, i in R
