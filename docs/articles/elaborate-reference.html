@@ -95,7 +95,7 @@
       <h1>Elaborate reference of <code>Ryacas</code> functionality</h1>
                         <h4 class="author">Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Ayal Pinkus and Mikkel Meyer Andersen</h4>
             
-            <h4 class="date">2019-02-23</h4>
+            <h4 class="date">2019-04-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NA/NA/blob/master/vignettes/elaborate-reference.Rmd"><code>vignettes/elaborate-reference.Rmd</code></a></small>
       <div class="hidden name"><code>elaborate-reference.Rmd</code></div>
@@ -104,7 +104,7 @@
 
     
     
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</a></code></pre></div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -123,9 +123,9 @@ organised differently.
 <h2 class="hasAnchor">
 <a href="#r-expressions" class="anchor"></a><code>R</code> expressions</h2>
 <p>A call to <code>yacas</code> may be in the form of an <code>R</code> expression which involves valid R calls, symbols or constants (though not all valid <code>R</code> expressions are valid). For example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Factor</a></span>(x<span class="op">^</span><span class="dv">2-1</span>)))</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">exp1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Factor</a></span>(x<span class="op">^</span><span class="dv">2-1</span>)))</a></code></pre></div>
 <p>The result <code>exp1</code> is not an expression in the <code>R</code> sense but an object of class <code>"yacas"</code>. To evaluate the resulting expression numerically, we can do</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Eval.html">Eval</a></span>(exp1, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">x=</span><span class="dv">4</span>))</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/Eval.html">Eval</a></span>(exp1, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">x=</span><span class="dv">4</span>))</a></code></pre></div>
 <pre><code>## [1] 15</code></pre>
 </div>
 <div id="yacas-expressions" class="section level2">
@@ -134,118 +134,118 @@ organised differently.
 <p>Some commands are not proper <code>R</code> expressions. For example, typing</p>
 <pre><code>yacas(expression(D(x)Sin(x)))</code></pre>
 <p>produces an error. For such cases we can make a specification using the <code>yacas</code> syntax:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x)Sin(x)"</span>)</code></pre></div>
-<pre><code>## expression(cos(x))</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x)Sin(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(x))</code></pre>
 </div>
 <div id="sym-objects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sym-objects" class="anchor"></a><code>Sym</code> objects</h2>
 <p>Probably the most elegant way of working with <code>yacas</code> is by using <code>Sym</code> objects. A <code>Sym</code> object is a <code>yacas</code> character string that has the “Sym” class. One can combine <code>Sym</code> objects with other <code>Sym</code> objects as well as to other <code>R</code> objects using <code>+</code>, <code>-</code> and other similar <code>R</code> operators.</p>
 <p>The function <code><a href="../reference/Sym.html">Sym(x)</a></code> coerces an object <code>x</code> to a <code>Sym</code> object by first coercing it to character and then changing its class to “Sym”:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"x"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"x"</span>)</a></code></pre></div>
 <p>Operations on <code>Sym</code> objects lead to new <code>Sym</code> objects:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x<span class="op">+</span><span class="dv">4</span></code></pre></div>
-<pre><code>## expression(x + 4)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">x<span class="op">+</span><span class="dv">4</span></a></code></pre></div>
+<pre><code>## yacas_expression(x + 4)</code></pre>
 <p>One can apply <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>deriv</code>, <code>Integrate</code> and other provided functions to <code>Sym</code> objects. For example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Integrate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(x), x)</code></pre></div>
-<pre><code>## expression(-cos(x))</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/Sym.html">Integrate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(x), x)</a></code></pre></div>
+<pre><code>## yacas_expression(-cos(x))</code></pre>
 <p>In this way the communication with <code>yacas</code> is ``tacit’’.</p>
 <p>It is important to note the difference between the <code>R</code> name <code>x</code> and the symbol <code>"x"</code> as illustrated below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"xs"</span>)
-x</code></pre></div>
-<pre><code>## expression(xs)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x<span class="op">+</span><span class="dv">4</span></code></pre></div>
-<pre><code>## expression(xs + 4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Eval.html">Eval</a></span>(x<span class="op">+</span><span class="dv">4</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">xs=</span><span class="dv">5</span>))</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"xs"</span>)</a>
+<a class="sourceLine" id="cb13-2" title="2">x</a></code></pre></div>
+<pre><code>## yacas_expression(xs)</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">x<span class="op">+</span><span class="dv">4</span></a></code></pre></div>
+<pre><code>## yacas_expression(xs + 4)</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="../reference/Eval.html">Eval</a></span>(x<span class="op">+</span><span class="dv">4</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">xs=</span><span class="dv">5</span>))</a></code></pre></div>
 <pre><code>## [1] 9</code></pre>
 <p>The convention in the following is 1) that <code>Sym</code> objects match with their names that they end with an ‘s’, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">'xs'</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">'xs'</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="a-sample-session" class="section level1">
 <h1 class="hasAnchor">
 <a href="#a-sample-session" class="anchor"></a>A sample session</h1>
 <p>Algebraic calculations:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>((<span class="dv">10</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">7</span><span class="op">^</span><span class="dv">7</span>))</code></pre></div>
-<pre><code>## expression(823603)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="dv">1</span><span class="op">/</span><span class="dv">14</span><span class="op">+</span><span class="dv">5</span><span class="op">/</span><span class="dv">21</span><span class="op">*</span><span class="st"> </span>(<span class="dv">30</span><span class="op">-</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)))</code></pre></div>
-<pre><code>## expression(149/21)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#(Sym(10) + Sym(2)) * Sym(5) + Sym(7) ^ Sym(7)</span>
-<span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"10 * 2"</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="dv">7</span>) <span class="op">^</span><span class="st"> </span><span class="dv">7</span></code></pre></div>
-<pre><code>## expression(823643)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#(Sym(10) + 2) * 5 + Sym(7) ^ 7</span>
-<span class="co">#Sym("(10+2)*5 + 7^7")</span>
-<span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"1/14 + 5/21 * (30 - 1+1/2)"</span>)</code></pre></div>
-<pre><code>## expression(149/21)</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>((<span class="dv">10</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">7</span><span class="op">^</span><span class="dv">7</span>))</a></code></pre></div>
+<pre><code>## yacas_expression(823603)</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="dv">1</span><span class="op">/</span><span class="dv">14</span><span class="op">+</span><span class="dv">5</span><span class="op">/</span><span class="dv">21</span><span class="op">*</span><span class="st"> </span>(<span class="dv">30</span><span class="op">-</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)))</a></code></pre></div>
+<pre><code>## yacas_expression(149/21)</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co">#(Sym(10) + Sym(2)) * Sym(5) + Sym(7) ^ Sym(7)</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"10 * 2"</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="dv">7</span>) <span class="op">^</span><span class="st"> </span><span class="dv">7</span></a></code></pre></div>
+<pre><code>## yacas_expression(823643)</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co">#(Sym(10) + 2) * 5 + Sym(7) ^ 7</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="co">#Sym("(10+2)*5 + 7^7")</span></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"1/14 + 5/21 * (30 - 1+1/2)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(149/21)</code></pre>
 <p>Numerical evaluations:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="op">-</span><span class="dv">12</span><span class="op">/</span><span class="dv">2</span>)))</code></pre></div>
-<pre><code>## expression(-6)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"-12/2"</span>)</code></pre></div>
-<pre><code>## expression(-6)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Eval(Sym("-12/2"))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="op">-</span><span class="dv">12</span><span class="op">/</span><span class="dv">2</span>)))</a></code></pre></div>
+<pre><code>## yacas_expression(-6)</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"-12/2"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(-6)</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co">#Eval(Sym("-12/2"))</span></a></code></pre></div>
 <p>Symbolic expressions:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Factor</a></span>(x<span class="op">^</span><span class="dv">2-1</span>)))</code></pre></div>
-<pre><code>## expression((x + 1) * (x - 1))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span>)
-exp2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>exp0)
-exp3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="dv">6</span> <span class="op">*</span><span class="st"> </span>pi <span class="op">*</span><span class="st"> </span>x)
-exp4 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>((exp1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(exp3))) <span class="op">/</span><span class="st"> </span>exp2)
-<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(exp4)</code></pre></div>
-<pre><code>## expression(3 * (x^2 * (1 - sin(6 * (x * pi))))/(2 * exp0))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(xs<span class="op">^</span><span class="dv">2-1</span>)</code></pre></div>
-<pre><code>## expression((xs + 1) * (xs - 1))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exp1 &lt;-<span class="st"> </span>xs<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>xs<span class="op">^</span><span class="dv">2</span>
-exp0 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"exp0"</span>)
-exp2 &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(exp0)
-exp3 &lt;-<span class="st"> </span><span class="dv">6</span> <span class="op">*</span><span class="st"> </span>Pi <span class="op">*</span><span class="st"> </span>xs
-exp4 &lt;-<span class="st"> </span>exp1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(exp3)) <span class="op">/</span><span class="st"> </span>exp2
-exp4</code></pre></div>
-<pre><code>## expression(3 * (xs^2 * (1 - sin(6 * (xs * pi))))/(2 * exp0))</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Factor</a></span>(x<span class="op">^</span><span class="dv">2-1</span>)))</a></code></pre></div>
+<pre><code>## yacas_expression((x + 1) * (x - 1))</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">exp1 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb35-2" title="2">exp2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>exp0)</a>
+<a class="sourceLine" id="cb35-3" title="3">exp3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="dv">6</span> <span class="op">*</span><span class="st"> </span>pi <span class="op">*</span><span class="st"> </span>x)</a>
+<a class="sourceLine" id="cb35-4" title="4">exp4 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>((exp1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(exp3))) <span class="op">/</span><span class="st"> </span>exp2)</a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(exp4)</a></code></pre></div>
+<pre><code>## yacas_expression(3 * (x^2 * (1 - sin(6 * (x * pi))))/(2 * exp0))</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(xs<span class="op">^</span><span class="dv">2-1</span>)</a></code></pre></div>
+<pre><code>## yacas_expression((xs + 1) * (xs - 1))</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">exp1 &lt;-<span class="st"> </span>xs<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>xs<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb39-2" title="2">exp0 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"exp0"</span>)</a>
+<a class="sourceLine" id="cb39-3" title="3">exp2 &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(exp0)</a>
+<a class="sourceLine" id="cb39-4" title="4">exp3 &lt;-<span class="st"> </span><span class="dv">6</span> <span class="op">*</span><span class="st"> </span>Pi <span class="op">*</span><span class="st"> </span>xs</a>
+<a class="sourceLine" id="cb39-5" title="5">exp4 &lt;-<span class="st"> </span>exp1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(exp3)) <span class="op">/</span><span class="st"> </span>exp2</a>
+<a class="sourceLine" id="cb39-6" title="6">exp4</a></code></pre></div>
+<pre><code>## yacas_expression(3 * (xs^2 * (1 - sin(6 * (xs * pi))))/(2 * exp0))</code></pre>
 <p>Combining symbolic and numerical expressions:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="kw">Sin</span>(<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">Cos</span>(x)<span class="op">^</span><span class="dv">2</span>)))</code></pre></div>
-<pre><code>## expression(cos(x)^2 + 0.7080734182)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">cos</a></span>(xs)<span class="op">^</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## expression(cos(xs)^2 + 0.708073418273571)</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="kw">Sin</span>(<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">Cos</span>(x)<span class="op">^</span><span class="dv">2</span>)))</a></code></pre></div>
+<pre><code>## yacas_expression(cos(x)^2 + 0.7080734182)</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">cos</a></span>(xs)<span class="op">^</span><span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(xs)^2 + 0.708073418273571)</code></pre>
 <p>Differentiation:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x)Sin(x)"</span>)</code></pre></div>
-<pre><code>## expression(cos(x))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/deriv">deriv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs), xs)</code></pre></div>
-<pre><code>## expression(cos(xs))</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x)Sin(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(x))</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/deriv">deriv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs), xs)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(xs))</code></pre>
 <p>Integration:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Clear(a,b,A,B)"</span>)</code></pre></div>
-<pre><code>## expression(TRUE)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Integrate(x,a,b)Sin(x)"</span>)</code></pre></div>
-<pre><code>## expression(cos(a) - cos(b))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>)
-bs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"bs"</span>)
-<span class="kw"><a href="../reference/Sym.html">Integrate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs), xs, as, bs)</code></pre></div>
-<pre><code>## expression(cos(as) - cos(bs))</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Clear(a,b,A,B)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(TRUE)</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Integrate(x,a,b)Sin(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(a) - cos(b))</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>)</a>
+<a class="sourceLine" id="cb53-2" title="2">bs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"bs"</span>)</a>
+<a class="sourceLine" id="cb53-3" title="3"><span class="kw"><a href="../reference/Sym.html">Integrate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs), xs, as, bs)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(as) - cos(bs))</code></pre>
 <p>Expanding polynomials:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Expand((1+x)^3)"</span>)</code></pre></div>
-<pre><code>## expression(x^3 + 3 * x^2 + 3 * x + 1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Expand</a></span>((<span class="dv">1</span><span class="op">+</span>xs)<span class="op">^</span><span class="dv">3</span>)</code></pre></div>
-<pre><code>## expression(xs^3 + 3 * xs^2 + 3 * xs + 1)</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Expand((1+x)^3)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(x^3 + 3 * x^2 + 3 * x + 1)</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw"><a href="../reference/Sym.html">Expand</a></span>((<span class="dv">1</span><span class="op">+</span>xs)<span class="op">^</span><span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(xs^3 + 3 * xs^2 + 3 * xs + 1)</code></pre>
 <p>Taylor expansion:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"texp := Taylor(x,0,3) Exp(x)"</span>)</code></pre></div>
-<pre><code>## expression(x + x^2/2 + x^3/6 + 1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">texp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Taylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(xs), xs, <span class="dv">0</span>, <span class="dv">3</span>)
-<span class="co"># Or: texp &lt;- Sym("texp")</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"texp := Taylor(x,0,3) Exp(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(x + x^2/2 + x^3/6 + 1)</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">texp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Taylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(xs), xs, <span class="dv">0</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="co"># Or: texp &lt;- Sym("texp")</span></a></code></pre></div>
 <p>Printing the result in nice forms:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(texp)"</span>) </code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(texp)"</span>) </a></code></pre></div>
 <pre><code>## 
 ##      2    3    
 ##     x    x     
 ## x + -- + -- + 1
 ##     2    6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"TeXForm(texp)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"TeXForm(texp)"</span>)</a></code></pre></div>
 <pre><code>## [1] "x + \\frac{x ^{2}}{2}  + \\frac{x ^{3}}{6}  + 1"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(texp) </code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(texp) </a></code></pre></div>
 <pre><code>## 
 ##        2     3    
 ##      xs    xs     
 ## xs + --- + --- + 1
 ##       2     6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(texp)</code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(texp)</a></code></pre></div>
 <pre><code>## [1] "xs + \\frac{xs ^{2}}{2}  + \\frac{xs ^{3}}{6}  + 1"</code></pre>
 </div>
 <div id="simple-yacas-calculations" class="section level1">
@@ -255,164 +255,164 @@ bs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 <h2 class="hasAnchor">
 <a href="#setting-and-clearing-a-variable" class="anchor"></a>Setting and clearing a variable</h2>
 <p>The function <code><a href="../reference/Sym.html">Set()</a></code> and the operator <code>:=</code> can both be used to assign values to global variables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"n := (10 + 2) * 5"</span>)</code></pre></div>
-<pre><code>## expression(60)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"n := n+n"</span>)</code></pre></div>
-<pre><code>## expression(120)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#yacas("Set(z, Cos(a))")</span>
-<span class="co">#yacas("z+z")</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"n := (10 + 2) * 5"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(60)</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"n := n+n"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(120)</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="co">#yacas("Set(z, Cos(a))")</span></a>
+<a class="sourceLine" id="cb74-2" title="2"><span class="co">#yacas("z+z")</span></a></code></pre></div>
 <p>The same can be achieved with <code>Sym</code> objects: Consider:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Set</a></span>(ns, (<span class="dv">10</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5</span>)</code></pre></div>
-<pre><code>## expression(60)</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1"><span class="kw"><a href="../reference/Sym.html">Set</a></span>(ns, (<span class="dv">10</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="dv">5</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(60)</code></pre>
 <p>Now <code>ns</code> exists as a variable in <code>yacas</code> (and we can make computations on this variable as above). However we have no handle on this variable in <code>R</code>. Such a handle is obtained with</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ns"</span>)</code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ns"</span>)</a></code></pre></div>
 <p>Now the <code>R</code> variable <code>ns</code> refers to the <code>yacas</code> variable <code>ns</code> and we can make calculations directly from <code>R</code>, e.g:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Set</a></span>(ns,<span class="dv">123</span>)</code></pre></div>
-<pre><code>## expression(123)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ns</code></pre></div>
-<pre><code>## expression(123)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ns<span class="op">^</span><span class="dv">2</span></code></pre></div>
-<pre><code>## expression(15129)</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1"><span class="kw"><a href="../reference/Sym.html">Set</a></span>(ns,<span class="dv">123</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(123)</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">ns</a></code></pre></div>
+<pre><code>## yacas_expression(123)</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1">ns<span class="op">^</span><span class="dv">2</span></a></code></pre></div>
+<pre><code>## yacas_expression(15129)</code></pre>
 <p>Likewise:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>)
-zs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"zs"</span>)
-<span class="kw"><a href="../reference/Sym.html">Set</a></span>(zs, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">cos</a></span>(as))</code></pre></div>
-<pre><code>## expression(cos(as))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zs <span class="op">+</span><span class="st"> </span>zs</code></pre></div>
-<pre><code>## expression(2 * cos(as))</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>)</a>
+<a class="sourceLine" id="cb84-2" title="2">zs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"zs"</span>)</a>
+<a class="sourceLine" id="cb84-3" title="3"><span class="kw"><a href="../reference/Sym.html">Set</a></span>(zs, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">cos</a></span>(as))</a></code></pre></div>
+<pre><code>## yacas_expression(cos(as))</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">zs <span class="op">+</span><span class="st"> </span>zs</a></code></pre></div>
+<pre><code>## yacas_expression(2 * cos(as))</code></pre>
 <p>Clear a variable binding execute <code><a href="../reference/Sym.html">Clear()</a></code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(n))</code></pre></div>
-<pre><code>## expression(120)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Clear(n)"</span>)</code></pre></div>
-<pre><code>## expression(TRUE)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(n))</code></pre></div>
-<pre><code>## expression(n)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Set</a></span>(ns, <span class="dv">1</span>)</code></pre></div>
-<pre><code>## expression(1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ns"</span>)
-ns</code></pre></div>
-<pre><code>## expression(1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Clear</a></span>(ns)</code></pre></div>
-<pre><code>## expression(TRUE)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ns</code></pre></div>
-<pre><code>## expression(ns)</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(n))</a></code></pre></div>
+<pre><code>## yacas_expression(120)</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Clear(n)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(TRUE)</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(n))</a></code></pre></div>
+<pre><code>## yacas_expression(n)</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1"><span class="kw"><a href="../reference/Sym.html">Set</a></span>(ns, <span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(1)</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ns"</span>)</a>
+<a class="sourceLine" id="cb96-2" title="2">ns</a></code></pre></div>
+<pre><code>## yacas_expression(1)</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1"><span class="kw"><a href="../reference/Sym.html">Clear</a></span>(ns)</a></code></pre></div>
+<pre><code>## yacas_expression(TRUE)</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">ns</a></code></pre></div>
+<pre><code>## yacas_expression(ns)</code></pre>
 </div>
 <div id="symbolic-and-numerical-evaluations-precision" class="section level2">
 <h2 class="hasAnchor">
 <a href="#symbolic-and-numerical-evaluations-precision" class="anchor"></a>Symbolic and numerical evaluations, precision</h2>
 <p>Evaluations are generally exact:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Exp(0)"</span>)</code></pre></div>
-<pre><code>## expression(1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Exp(1)"</span>)</code></pre></div>
-<pre><code>## expression(exp(1))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Sin(Pi/4)"</span>)</code></pre></div>
-<pre><code>## expression(root(1/2, 2))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"355/113"</span>)</code></pre></div>
-<pre><code>## expression(355/113)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="dv">0</span>))</code></pre></div>
-<pre><code>## expression(1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="dv">1</span>))</code></pre></div>
-<pre><code>## expression(exp(1))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(Pi<span class="op">/</span><span class="dv">4</span>)</code></pre></div>
-<pre><code>## expression(root(1/2, 2))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"355/113"</span>)</code></pre></div>
-<pre><code>## expression(355/113)</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Exp(0)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(1)</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Exp(1)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(exp(1))</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Sin(Pi/4)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(root(1/2, 2))</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"355/113"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(355/113)</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="dv">0</span>))</a></code></pre></div>
+<pre><code>## yacas_expression(1)</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="dv">1</span>))</a></code></pre></div>
+<pre><code>## yacas_expression(exp(1))</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(Pi<span class="op">/</span><span class="dv">4</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(root(1/2, 2))</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"355/113"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(355/113)</code></pre>
 <p>To obtain a numerical evaluation (approximation), the <code><a href="../reference/Sym.html">N()</a></code> function can be used:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(Exp(1))"</span>)</code></pre></div>
-<pre><code>## expression(2.7182818284)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(Sin(Pi/4))"</span>)</code></pre></div>
-<pre><code>## expression(0.7071067811)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(355/113)"</span>)</code></pre></div>
-<pre><code>## expression(3.1415929203)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="dv">1</span>))</code></pre></div>
-<pre><code>## expression(2.71828182845905)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(Pi<span class="op">/</span><span class="dv">4</span>))</code></pre></div>
-<pre><code>## expression(0.7071067811)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="dv">355</span><span class="op">/</span><span class="dv">113</span>)</code></pre></div>
-<pre><code>## expression(3.14159292035398)</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(Exp(1))"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(2.7182818284)</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(Sin(Pi/4))"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(0.7071067811)</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(355/113)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(3.1415929203)</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" title="1"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="dv">1</span>))</a></code></pre></div>
+<pre><code>## yacas_expression(2.71828182845905)</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(Pi<span class="op">/</span><span class="dv">4</span>))</a></code></pre></div>
+<pre><code>## yacas_expression(0.7071067811)</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="dv">355</span><span class="op">/</span><span class="dv">113</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(3.14159292035398)</code></pre>
 <p>The <code><a href="../reference/Sym.html">N()</a></code> function has an optional second argument, the required precision:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(355/133,20)"</span>)</code></pre></div>
-<pre><code>## expression(2.66917293233083)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="st">"355/113"</span>,<span class="dv">20</span>) </code></pre></div>
-<pre><code>## expression(3.14159292035398)</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(355/133,20)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(2.66917293233083)</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="st">"355/113"</span>,<span class="dv">20</span>) </a></code></pre></div>
+<pre><code>## yacas_expression(3.14159292035398)</code></pre>
 <p>The command <code><a href="../reference/Sym.html">Precision(n)</a></code> can be used to specify that all floating point numbers should have a fixed precision of n digits:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Precision(5)"</span>)</code></pre></div>
-<pre><code>## expression(Precision(5))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(355/113)"</span>)</code></pre></div>
-<pre><code>## expression(3.1415929203)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Precision</a></span>(<span class="dv">5</span>)</code></pre></div>
-<pre><code>## expression(Precision(5))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="st">"355/113"</span>)</code></pre></div>
-<pre><code>## expression(3.1415929203)</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Precision(5)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(Precision(5))</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"N(355/113)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(3.1415929203)</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" title="1"><span class="kw"><a href="../reference/Sym.html">Precision</a></span>(<span class="dv">5</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(Precision(5))</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" title="1"><span class="kw"><a href="../reference/Sym.html">N</a></span>(<span class="st">"355/113"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(3.1415929203)</code></pre>
 </div>
 <div id="rational-numbers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rational-numbers" class="anchor"></a>Rational numbers</h2>
 <p>Rational numbers will stay rational as long as the numerator and denominator are integers:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="dv">55</span><span class="op">/</span><span class="dv">10</span>))</code></pre></div>
-<pre><code>## expression(11/2)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"55 / 10"</span>)</code></pre></div>
-<pre><code>## expression(11/2)</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="dv">55</span><span class="op">/</span><span class="dv">10</span>))</a></code></pre></div>
+<pre><code>## yacas_expression(11/2)</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" title="1"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"55 / 10"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(11/2)</code></pre>
 </div>
 <div id="symbolic-calculation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#symbolic-calculation" class="anchor"></a>Symbolic calculation</h2>
 <p>Some exact manipulations :</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"1/14+5/21*(30-(1+1/2)*5^2)"</span>)</code></pre></div>
-<pre><code>## expression(-12/7)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"0+x"</span>)</code></pre></div>
-<pre><code>## expression(x)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"x+1*y"</span>)</code></pre></div>
-<pre><code>## expression(x + y)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Sin(ArcSin(alpha))+Tan(ArcTan(beta))"</span>)</code></pre></div>
-<pre><code>## expression(alpha + beta)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"1/14+5/21*(1*30-(1+1/2)*5^2)"</span>)</code></pre></div>
-<pre><code>## expression(-12/7)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"xs"</span>)
-ys &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ys"</span>)
-<span class="dv">0</span><span class="op">+</span>xs</code></pre></div>
-<pre><code>## expression(xs)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xs<span class="op">+</span><span class="dv">1</span><span class="op">*</span>ys</code></pre></div>
-<pre><code>## expression(xs + ys)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">asin</a></span>(xs))<span class="op">+</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">tan</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">atan</a></span>(ys))</code></pre></div>
-<pre><code>## expression(xs + ys)</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"1/14+5/21*(30-(1+1/2)*5^2)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(-12/7)</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"0+x"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(x)</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"x+1*y"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(x + y)</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Sin(ArcSin(alpha))+Tan(ArcTan(beta))"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(alpha + beta)</code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" title="1"><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"1/14+5/21*(1*30-(1+1/2)*5^2)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(-12/7)</code></pre>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" title="1">xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"xs"</span>)</a>
+<a class="sourceLine" id="cb156-2" title="2">ys &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ys"</span>)</a>
+<a class="sourceLine" id="cb156-3" title="3"><span class="dv">0</span><span class="op">+</span>xs</a></code></pre></div>
+<pre><code>## yacas_expression(xs)</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" title="1">xs<span class="op">+</span><span class="dv">1</span><span class="op">*</span>ys</a></code></pre></div>
+<pre><code>## yacas_expression(xs + ys)</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">asin</a></span>(xs))<span class="op">+</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">tan</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">atan</a></span>(ys))</a></code></pre></div>
+<pre><code>## yacas_expression(xs + ys)</code></pre>
 </div>
 <div id="complex-numbers-and-the-imaginary-unit" class="section level2">
 <h2 class="hasAnchor">
 <a href="#complex-numbers-and-the-imaginary-unit" class="anchor"></a>Complex numbers and the imaginary unit</h2>
 <p>The imaginary unit <span class="math inline">\(i\)</span> is denoted I and complex numbers can be entered as either expressions involving I or explicitly Complex(a,b) for a+ib.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"I^2"</span>)</code></pre></div>
-<pre><code>## expression(-1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"7+3*I"</span>)</code></pre></div>
-<pre><code>## expression(complex_cartesian(7, 3))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Conjugate(%)"</span>)</code></pre></div>
-<pre><code>## expression(complex_cartesian(7, -3))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Exp(3*I)"</span>)</code></pre></div>
-<pre><code>## expression(complex_cartesian(cos(3), sin(3)))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">I<span class="op">^</span><span class="dv">2</span></code></pre></div>
-<pre><code>## expression(-1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">7</span><span class="op">+</span><span class="dv">3</span><span class="op">*</span>I</code></pre></div>
-<pre><code>## expression(complex_cartesian(7, 3))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Conjugate</a></span>(<span class="dv">7</span><span class="op">+</span><span class="dv">3</span><span class="op">*</span>I)</code></pre></div>
-<pre><code>## expression(complex_cartesian(7, -3))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="dv">3</span><span class="op">*</span>I)</code></pre></div>
-<pre><code>## expression(complex_cartesian(cos(3), sin(3)))</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"I^2"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(-1)</code></pre>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"7+3*I"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(complex_cartesian(7, 3))</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Conjugate(%)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(complex_cartesian(7, -3))</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Exp(3*I)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(complex_cartesian(cos(3), sin(3)))</code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" title="1">I<span class="op">^</span><span class="dv">2</span></a></code></pre></div>
+<pre><code>## yacas_expression(-1)</code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" title="1"><span class="dv">7</span><span class="op">+</span><span class="dv">3</span><span class="op">*</span>I</a></code></pre></div>
+<pre><code>## yacas_expression(complex_cartesian(7, 3))</code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" title="1"><span class="kw"><a href="../reference/Sym.html">Conjugate</a></span>(<span class="dv">7</span><span class="op">+</span><span class="dv">3</span><span class="op">*</span>I)</a></code></pre></div>
+<pre><code>## yacas_expression(complex_cartesian(7, -3))</code></pre>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(<span class="dv">3</span><span class="op">*</span>I)</a></code></pre></div>
+<pre><code>## yacas_expression(complex_cartesian(cos(3), sin(3)))</code></pre>
 </div>
 <div id="recall-the-most-recent-line-the-operator" class="section level2">
 <h2 class="hasAnchor">
 <a href="#recall-the-most-recent-line-the-operator" class="anchor"></a>Recall the most recent line – the <code>%</code> operator</h2>
 <p>The operator <code>%</code> automatically recalls the result from the previous line.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"(1+x)^3"</span>)</code></pre></div>
-<pre><code>## expression((x + 1)^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"%"</span>)</code></pre></div>
-<pre><code>## expression((x + 1)^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"z:= %"</span>)</code></pre></div>
-<pre><code>## expression((x + 1)^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">1</span><span class="op">+</span>x)<span class="op">^</span><span class="dv">3</span></code></pre></div>
-<pre><code>## expression((xs + 1)^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"%"</span>)
-zs</code></pre></div>
-<pre><code>## expression((xs + 1)^3)</code></pre>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"(1+x)^3"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression((x + 1)^3)</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"%"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression((x + 1)^3)</code></pre>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"z:= %"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression((x + 1)^3)</code></pre>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" title="1">(<span class="dv">1</span><span class="op">+</span>x)<span class="op">^</span><span class="dv">3</span></a></code></pre></div>
+<pre><code>## yacas_expression((xs + 1)^3)</code></pre>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" title="1">zs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"%"</span>)</a>
+<a class="sourceLine" id="cb186-2" title="2">zs</a></code></pre></div>
+<pre><code>## yacas_expression((xs + 1)^3)</code></pre>
 </div>
 <div id="printing-with-prettyform-prettyprint-and-texform" class="section level2">
 <h2 class="hasAnchor">
@@ -423,55 +423,55 @@ zs</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#standard-form" class="anchor"></a>Standard form</h3>
 <p>The (standard) yacas form is:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"A:={{a,b},{c,d}}"</span>)</code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"A:={{a,b},{c,d}}"</span>)</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1] [,2]
 ## [1,] a    b   
 ## [2,] c    d</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"B:= (1+x)^2+k^3"</span>)</code></pre></div>
-<pre><code>## expression((x + 1)^2 + k^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"A"</span>)</code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"B:= (1+x)^2+k^3"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression((x + 1)^2 + k^3)</code></pre>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"A"</span>)</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1] [,2]
 ## [1,] a    b   
 ## [2,] c    d</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"B"</span>)</code></pre></div>
-<pre><code>## expression((x + 1)^2 + k^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>); bs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"bs"</span>); cs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"cs"</span>); ds &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ds"</span>)
-A &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">List</a></span>(<span class="kw"><a href="../reference/Sym.html">List</a></span>(as,bs), <span class="kw"><a href="../reference/Sym.html">List</a></span>(cs,ds))
-ks &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ks"</span>)
-B &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>xs)<span class="op">^</span><span class="dv">2</span><span class="op">+</span>ks<span class="op">^</span><span class="dv">3</span>
-A</code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"B"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression((x + 1)^2 + k^3)</code></pre>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" title="1">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>); bs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"bs"</span>); cs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"cs"</span>); ds &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ds"</span>)</a>
+<a class="sourceLine" id="cb196-2" title="2">A &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">List</a></span>(<span class="kw"><a href="../reference/Sym.html">List</a></span>(as,bs), <span class="kw"><a href="../reference/Sym.html">List</a></span>(cs,ds))</a>
+<a class="sourceLine" id="cb196-3" title="3">ks &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ks"</span>)</a>
+<a class="sourceLine" id="cb196-4" title="4">B &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>xs)<span class="op">^</span><span class="dv">2</span><span class="op">+</span>ks<span class="op">^</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb196-5" title="5">A</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1] [,2]
 ## [1,] as   bs  
 ## [2,] cs   ds</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">B</code></pre></div>
-<pre><code>## expression((xs + 1)^2 + ks^3)</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1">B</a></code></pre></div>
+<pre><code>## yacas_expression((xs + 1)^2 + ks^3)</code></pre>
 </div>
 <div id="pretty-form" class="section level3">
 <h3 class="hasAnchor">
 <a href="#pretty-form" class="anchor"></a>Pretty form</h3>
 <p>The Pretty form is:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(A)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(A)"</span>)</a></code></pre></div>
 <pre><code>## 
 ## /              \
 ## | ( a ) ( b )  |
 ## |              |
 ## | ( c ) ( d )  |
 ## \              /</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(B)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(B)"</span>)</a></code></pre></div>
 <pre><code>## 
 ##          2    3
 ## ( x + 1 )  + k</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(A)</code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" title="1"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(A)</a></code></pre></div>
 <pre><code>## 
 ## /                \
 ## | ( as ) ( bs )  |
 ## |                |
 ## | ( cs ) ( ds )  |
 ## \                /</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(B)</code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" title="1"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(B)</a></code></pre></div>
 <pre><code>## 
 ##           2     3
 ## ( xs + 1 )  + ks</code></pre>
@@ -480,9 +480,9 @@ A</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#tex-form" class="anchor"></a>TeX form</h3>
 <p>The output can be displayed in TeX form:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"TeXForm(B)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"TeXForm(B)"</span>)</a></code></pre></div>
 <pre><code>## [1] "\\left( x + 1\\right)  ^{2} + k ^{3}"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(B)</code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" title="1"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(B)</a></code></pre></div>
 <pre><code>## [1] "\\left( xs + 1\\right)  ^{2} + ks ^{3}"</code></pre>
 </div>
 </div>
@@ -493,36 +493,34 @@ A</code></pre></div>
 <div id="factorial" class="section level2">
 <h2 class="hasAnchor">
 <a href="#factorial" class="anchor"></a>Factorial</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"40!"</span>)</code></pre></div>
-<pre><code>## expression(8.15915283247898e+47)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Factorial</a></span>(<span class="dv">40</span>)</code></pre></div>
-<pre><code>## expression(Factorial(40))</code></pre>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"40!"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(8.15915283247898e+47)</code></pre>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1"><span class="kw"><a href="../reference/Sym.html">Factorial</a></span>(<span class="dv">40</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(Factorial(40))</code></pre>
 </div>
 <div id="taylor-expansions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#taylor-expansions" class="anchor"></a>Taylor expansions</h2>
 <p>Expand <span class="math inline">\(\exp(x)\)</span> in three terms around <span class="math inline">\(0\)</span> and <span class="math inline">\(a\)</span>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Taylor(x,0,3) Exp(x)"</span>)</code></pre></div>
-<pre><code>## expression(x + x^2/2 + x^3/6 + 1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Taylor(x,a,3) Exp(x)"</span>)</code></pre></div>
-<pre><code>## expression(exp(a) + exp(a) * (x - a) + (x - a)^2 * exp(a)/2 + 
-##     (x - a)^3 * exp(a)/6)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"xs"</span>)
-<span class="kw"><a href="../reference/Sym.html">Taylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(xs),xs,<span class="dv">0</span>,<span class="dv">3</span>)</code></pre></div>
-<pre><code>## expression(xs + xs^2/2 + xs^3/6 + 1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>)
-<span class="kw"><a href="../reference/Sym.html">Taylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(x),x,as,<span class="dv">3</span>)</code></pre></div>
-<pre><code>## expression(exp(as) + exp(as) * (xs - as) + (xs - as)^2 * exp(as)/2 + 
-##     (xs - as)^3 * exp(as)/6)</code></pre>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Taylor(x,0,3) Exp(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(x + x^2/2 + x^3/6 + 1)</code></pre>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Taylor(x,a,3) Exp(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(exp(a) + exp(a) * (x - a) + (x - a)^2 * exp(a)/2 + (x - a)^3 * exp(a)/6)</code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" title="1">xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"xs"</span>)</a>
+<a class="sourceLine" id="cb220-2" title="2"><span class="kw"><a href="../reference/Sym.html">Taylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(xs),xs,<span class="dv">0</span>,<span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(xs + xs^2/2 + xs^3/6 + 1)</code></pre>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1">as &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"as"</span>)</a>
+<a class="sourceLine" id="cb222-2" title="2"><span class="kw"><a href="../reference/Sym.html">Taylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(x),x,as,<span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(exp(as) + exp(as) * (xs - as) + (xs - as)^2 * exp(as)/2 + (xs - as)^3 * exp(as)/6)</code></pre>
 <p>The <code><a href="../reference/Sym.html">InverseTaylor()</a></code> function builds the Taylor series expansion of the inverse of an expression. For example, the Taylor expansion in two terms of the inverse of <span class="math inline">\(\exp(x)\)</span> around <span class="math inline">\(x=0\)</span> (which is the Taylor expansion of <span class="math inline">\(Ln(y)\)</span> around <span class="math inline">\(y=1\)</span>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"InverseTaylor(x,0,2)Exp(x)"</span>)</code></pre></div>
-<pre><code>## expression(x - 1 - (x - 1)^2/2)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Taylor(y,1,2)Ln(y)"</span>)</code></pre></div>
-<pre><code>## expression(y - 1 - (y - 1)^2/2)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">InverseTaylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(xs),xs,<span class="dv">0</span>,<span class="dv">2</span>)</code></pre></div>
-<pre><code>## expression(xs + xs^2/2 + 1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Taylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log</a></span>(ys),ys,<span class="dv">1</span>,<span class="dv">2</span>)</code></pre></div>
-<pre><code>## expression(ys - 1 - (ys - 1)^2/2)</code></pre>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"InverseTaylor(x,0,2)Exp(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(x - 1 - (x - 1)^2/2)</code></pre>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Taylor(y,1,2)Ln(y)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(y - 1 - (y - 1)^2/2)</code></pre>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" title="1"><span class="kw"><a href="../reference/Sym.html">InverseTaylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(xs),xs,<span class="dv">0</span>,<span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(xs + xs^2/2 + 1)</code></pre>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1"><span class="kw"><a href="../reference/Sym.html">Taylor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log</a></span>(ys),ys,<span class="dv">1</span>,<span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(ys - 1 - (ys - 1)^2/2)</code></pre>
 </div>
 <div id="solving-equations" class="section level2">
 <h2 class="hasAnchor">
@@ -531,135 +529,137 @@ A</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#solving-equations-symbolically" class="anchor"></a>Solving equations symbolically</h3>
 <p>Solve equations symbolically with the <code><a href="../reference/Sym.html">Solve()</a></code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Solve(x/(1+x) == a, x)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Solve(x/(1+x) == a, x)"</span>)</a></code></pre></div>
 <pre><code>## Yacas vector:
 ## [1] x == a/(1 - a)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Solve(x^2+x == 0, x)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Solve(x^2+x == 0, x)"</span>)</a></code></pre></div>
 <pre><code>## Yacas vector:
 ## [1] x == 0  x == -1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(xs<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>xs) <span class="op">==</span><span class="st"> </span>as, xs)</code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" title="1"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(xs<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>xs) <span class="op">==</span><span class="st"> </span>as, xs)</a></code></pre></div>
 <pre><code>## Yacas vector:
 ## [1] xs == as/(1 - as)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(xs<span class="op">^</span><span class="dv">2</span><span class="op">+</span>xs <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, xs)</code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" title="1"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(xs<span class="op">^</span><span class="dv">2</span><span class="op">+</span>xs <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, xs)</a></code></pre></div>
 <pre><code>## Yacas vector:
 ## [1] xs == 0  xs == -1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(<span class="kw"><a href="../reference/Sym.html">List</a></span>(xs<span class="op">^</span><span class="dv">2</span><span class="op">+</span>ys<span class="op">^</span><span class="dv">2</span><span class="op">==</span><span class="dv">6</span>, xs<span class="op">-</span>ys<span class="op">==</span><span class="dv">3</span>), <span class="kw"><a href="../reference/Sym.html">List</a></span>(xs,ys))</code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" title="1"><span class="kw"><a href="../reference/Sym.html">Solve</a></span>(<span class="kw"><a href="../reference/Sym.html">List</a></span>(xs<span class="op">^</span><span class="dv">2</span><span class="op">+</span>ys<span class="op">^</span><span class="dv">2</span><span class="op">==</span><span class="dv">6</span>, xs<span class="op">-</span>ys<span class="op">==</span><span class="dv">3</span>), <span class="kw"><a href="../reference/Sym.html">List</a></span>(xs,ys))</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1]                    [,2]    
 ## [1,] xs == root(6 - ys^2, 2) ys == ys</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># </span><span class="al">FIXME</span>
-<span class="co">#Solve(List(mean==(xs/(xs+ys)), variance==((xs*ys)/(((xs+ys)^2) * (xs+ys+1)))),</span>
-<span class="co">#    List(xs,ys))</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" title="1"><span class="co"># </span><span class="al">FIXME</span></a>
+<a class="sourceLine" id="cb242-2" title="2"><span class="co">#Solve(List(mean==(xs/(xs+ys)), variance==((xs*ys)/(((xs+ys)^2) * (xs+ys+1)))),</span></a>
+<a class="sourceLine" id="cb242-3" title="3"><span class="co">#    List(xs,ys))</span></a></code></pre></div>
 <p>(Note the use of the == operator, which does not evaluate to anything, to denote an “equation” object.)</p>
 </div>
 <div id="solving-equations-numerically" class="section level3">
 <h3 class="hasAnchor">
 <a href="#solving-equations-numerically" class="anchor"></a>Solving equations numerically</h3>
 <p>To solve an equation (in one variable) like <span class="math inline">\(sin(x)-exp(x)=0\)</span> numerically taking <span class="math inline">\(0.5\)</span> as initial guess and an accuracy of <span class="math inline">\(0.0001\)</span> do:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Newton(Sin(x)-Exp(x),x, 0.5, 0.0001)"</span>)</code></pre></div>
-<pre><code>## expression(-3.1830630118)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Newton</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs)<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(xs),xs, <span class="fl">0.5</span>, <span class="fl">0.0001</span>) </code></pre></div>
-<pre><code>## expression(-3.1830630118)</code></pre>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb243-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Newton(Sin(x)-Exp(x),x, 0.5, 0.0001)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(-3.1830630118)</code></pre>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb245-1" title="1"><span class="kw"><a href="../reference/Sym.html">Newton</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs)<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(xs),xs, <span class="fl">0.5</span>, <span class="fl">0.0001</span>) </a></code></pre></div>
+<pre><code>## yacas_expression(-3.1830630118)</code></pre>
 </div>
 </div>
 <div id="expanding-polynomials" class="section level2">
 <h2 class="hasAnchor">
 <a href="#expanding-polynomials" class="anchor"></a>Expanding polynomials</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Expand</a></span>((<span class="dv">1</span><span class="op">+</span>x)<span class="op">^</span><span class="dv">3</span>)))</code></pre></div>
-<pre><code>## expression(x^3 + 3 * x^2 + 3 * x + 1)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Expand</a></span>((x<span class="op">+</span><span class="dv">1</span>)<span class="op">^</span><span class="dv">3</span>)</code></pre></div>
-<pre><code>## expression(xs^3 + 3 * xs^2 + 3 * xs + 1)</code></pre>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Expand</a></span>((<span class="dv">1</span><span class="op">+</span>x)<span class="op">^</span><span class="dv">3</span>)))</a></code></pre></div>
+<pre><code>## yacas_expression(x^3 + 3 * x^2 + 3 * x + 1)</code></pre>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" title="1"><span class="kw"><a href="../reference/Sym.html">Expand</a></span>((x<span class="op">+</span><span class="dv">1</span>)<span class="op">^</span><span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(xs^3 + 3 * xs^2 + 3 * xs + 1)</code></pre>
 </div>
 <div id="simplifying-an-expression" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simplifying-an-expression" class="anchor"></a>Simplifying an expression</h2>
 <p>The function Simplify() attempts to reduce an expression to a simpler form.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"y"</span>)
-<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"(x+y)^3-(x-y)^3"</span>)</code></pre></div>
-<pre><code>## expression((x + y)^3 - (x - y)^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(%)"</span>)</code></pre></div>
-<pre><code>## expression(6 * (x^2 * y) + 2 * y^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(x<span class="op">+</span>y)<span class="op">^</span><span class="dv">3</span><span class="op">-</span>(x<span class="op">-</span>y)<span class="op">^</span><span class="dv">3</span></code></pre></div>
-<pre><code>## expression((xs + y)^3 - (xs - y)^3)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="st">"%"</span>)</code></pre></div>
-<pre><code>## expression(6 * (xs^2 * y) + 2 * y^3)</code></pre>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" title="1">y &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"y"</span>)</a>
+<a class="sourceLine" id="cb251-2" title="2"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"(x+y)^3-(x-y)^3"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression((x + y)^3 - (x - y)^3)</code></pre>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(%)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(6 * (x^2 * y) + 2 * y^3)</code></pre>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" title="1">(x<span class="op">+</span>y)<span class="op">^</span><span class="dv">3</span><span class="op">-</span>(x<span class="op">-</span>y)<span class="op">^</span><span class="dv">3</span></a></code></pre></div>
+<pre><code>## yacas_expression((xs + y)^3 - (xs - y)^3)</code></pre>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb257-1" title="1"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="st">"%"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(6 * (xs^2 * y) + 2 * y^3)</code></pre>
 </div>
 <div id="analytical-derivatives" class="section level2">
 <h2 class="hasAnchor">
 <a href="#analytical-derivatives" class="anchor"></a>Analytical derivatives</h2>
 <p>Analytical derivatives of functions can be evaluated with the <code><a href="https://www.rdocumentation.org/packages/stats/topics/deriv">D()</a></code> and <code><a href="https://www.rdocumentation.org/packages/stats/topics/deriv">deriv()</a></code> functions:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x) Sin(x)"</span>)</code></pre></div>
-<pre><code>## expression(cos(x))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/deriv">deriv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs), xs)</code></pre></div>
-<pre><code>## expression(cos(xs))</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x) Sin(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(x))</code></pre>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/deriv">deriv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs), xs)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(xs))</code></pre>
 <p>These functions also accepts an argument specifying how often the derivative has to be taken, e.g:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x,4)Sin(x)"</span>)</code></pre></div>
-<pre><code>## expression(sin(x))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/deriv">deriv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs),xs,<span class="dv">4</span>)</code></pre></div>
-<pre><code>## expression(sin(xs))</code></pre>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"D(x,4)Sin(x)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(sin(x))</code></pre>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/deriv">deriv</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs),xs,<span class="dv">4</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(sin(xs))</code></pre>
 </div>
 <div id="integration" class="section level2">
 <h2 class="hasAnchor">
 <a href="#integration" class="anchor"></a>Integration</h2>
-<p>@ &lt;<echo>&gt;= yacas(“Clear(a,b,A,B)”) ```</echo></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#yacas("Integrate(x,a,b)Sin(x)")</span>
-<span class="co">#yacas("Integrate(x,a,b)Ln(x)+x")</span>
-<span class="co">#yacas("Integrate(x)1/(x^2-1)")</span>
-<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Integrate(x)Sin(a*x)^2*Cos(b*x)"</span>)</code></pre></div>
-<pre><code>## expression((2 * sin(b * x)/b - (sin(-2 * (x * a) - b * x)/(-2 * 
-##     a - b) + sin(-2 * (x * a) + b * x)/(-2 * a + b)))/4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Integrate(sin(x),x,a,b)</span>
-<span class="co">#Integrate(log(x),x,a,b)</span>
-<span class="co">#Integrate(1/(x^2-1),x)</span>
-a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"a"</span>)
-b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"b"</span>)
-<span class="kw"><a href="../reference/Sym.html">Integrate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(a<span class="op">*</span>x)<span class="op">^</span><span class="dv">2</span><span class="op">*</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">cos</a></span>(b<span class="op">*</span>x),x)</code></pre></div>
-<pre><code>## expression((2 * sin(b * xs)/b - (sin(-2 * (xs * a) - b * xs)/(-2 * 
-##     a - b) + sin(-2 * (xs * a) + b * xs)/(-2 * a + b)))/4)</code></pre>
+<p>@ &lt;&lt;echo=F,results=hide&gt;&gt;= yacas(“Clear(a,b,A,B)”)</p>
+<pre><code>
+
+
+```r
+#yacas("Integrate(x,a,b)Sin(x)")
+#yacas("Integrate(x,a,b)Ln(x)+x")
+#yacas("Integrate(x)1/(x^2-1)")
+yacas("Integrate(x)Sin(a*x)^2*Cos(b*x)")</code></pre>
+<pre><code>## yacas_expression((2 * sin(b * x)/b - (sin(-2 * (x * a) - b * x)/(-2 * a - b) + sin(-2 * (x * a) + b * x)/(-2 * a + b)))/4)</code></pre>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" title="1"><span class="co">#Integrate(sin(x),x,a,b)</span></a>
+<a class="sourceLine" id="cb269-2" title="2"><span class="co">#Integrate(log(x),x,a,b)</span></a>
+<a class="sourceLine" id="cb269-3" title="3"><span class="co">#Integrate(1/(x^2-1),x)</span></a>
+<a class="sourceLine" id="cb269-4" title="4">a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"a"</span>)</a>
+<a class="sourceLine" id="cb269-5" title="5">b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"b"</span>)</a>
+<a class="sourceLine" id="cb269-6" title="6"><span class="kw"><a href="../reference/Sym.html">Integrate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(a<span class="op">*</span>x)<span class="op">^</span><span class="dv">2</span><span class="op">*</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">cos</a></span>(b<span class="op">*</span>x),x)</a></code></pre></div>
+<pre><code>## yacas_expression((2 * sin(b * xs)/b - (sin(-2 * (xs * a) - b * xs)/(-2 * a - b) + sin(-2 * (xs * a) + b * xs)/(-2 * a + b)))/4)</code></pre>
 </div>
 <div id="limits" class="section level2">
 <h2 class="hasAnchor">
 <a href="#limits" class="anchor"></a>Limits</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#yacas("Limit(x,0)Sin(x)/x")</span>
-<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Limit(n,Infinity)(1+(1/n))^n"</span>)</code></pre></div>
-<pre><code>## expression(exp(1))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Limit(h,0) (Sin(x+h)-Sin(x))/h"</span>)</code></pre></div>
-<pre><code>## expression(cos(x))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Limit(sin(x)/x,x,0)</span>
-ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ns"</span>)
-<span class="kw"><a href="../reference/Sym.html">Limit</a></span>((<span class="dv">1</span><span class="op">+</span>(<span class="dv">1</span><span class="op">/</span>ns))<span class="op">^</span>ns,ns,Infinity)</code></pre></div>
-<pre><code>## expression(exp(1))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"hs"</span>)
-<span class="kw"><a href="../reference/Sym.html">Limit</a></span>((<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs<span class="op">+</span>hs)<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs))<span class="op">/</span>hs,hs,<span class="dv">0</span>)</code></pre></div>
-<pre><code>## expression(cos(xs))</code></pre>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" title="1"><span class="co">#yacas("Limit(x,0)Sin(x)/x")</span></a>
+<a class="sourceLine" id="cb271-2" title="2"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Limit(n,Infinity)(1+(1/n))^n"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(exp(1))</code></pre>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb273-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Limit(h,0) (Sin(x+h)-Sin(x))/h"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(x))</code></pre>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" title="1"><span class="co">#Limit(sin(x)/x,x,0)</span></a>
+<a class="sourceLine" id="cb275-2" title="2">ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"ns"</span>)</a>
+<a class="sourceLine" id="cb275-3" title="3"><span class="kw"><a href="../reference/Sym.html">Limit</a></span>((<span class="dv">1</span><span class="op">+</span>(<span class="dv">1</span><span class="op">/</span>ns))<span class="op">^</span>ns,ns,Infinity)</a></code></pre></div>
+<pre><code>## yacas_expression(exp(1))</code></pre>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" title="1">hs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"hs"</span>)</a>
+<a class="sourceLine" id="cb277-2" title="2"><span class="kw"><a href="../reference/Sym.html">Limit</a></span>((<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs<span class="op">+</span>hs)<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">sin</a></span>(xs))<span class="op">/</span>hs,hs,<span class="dv">0</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(cos(xs))</code></pre>
 </div>
 <div id="variable-substitution" class="section level2">
 <h2 class="hasAnchor">
 <a href="#variable-substitution" class="anchor"></a>Variable substitution</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Subst(x,Cos(a))x+x"</span>)</code></pre></div>
-<pre><code>## expression(2 * cos(a))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Subst</a></span>(xs<span class="op">+</span>xs,xs,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">cos</a></span>(as))</code></pre></div>
-<pre><code>## expression(2 * cos(as))</code></pre>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Subst(x,Cos(a))x+x"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(2 * cos(a))</code></pre>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" title="1"><span class="kw"><a href="../reference/Sym.html">Subst</a></span>(xs<span class="op">+</span>xs,xs,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Trig">cos</a></span>(as))</a></code></pre></div>
+<pre><code>## yacas_expression(2 * cos(as))</code></pre>
 </div>
 <div id="solving-ordinary-differential-equations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#solving-ordinary-differential-equations" class="anchor"></a>Solving ordinary differential equations</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"OdeSolve(y''==4*y)"</span>)</code></pre></div>
-<pre><code>## expression(C545 * exp(2 * x) + C549 * exp(-2 * x))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"OdeSolve(y'==8*y)"</span>)</code></pre></div>
-<pre><code>## expression(C579 * exp(8 * x))</code></pre>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"OdeSolve(y''==4*y)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(C545 * exp(2 * x) + C549 * exp(-2 * x))</code></pre>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"OdeSolve(y'==8*y)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(C579 * exp(8 * x))</code></pre>
 </div>
 </div>
 <div id="matrices" class="section level1">
 <h1 class="hasAnchor">
 <a href="#matrices" class="anchor"></a>Matrices</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"E4:={ {u1,u1,0},{u1,0,u2},{0,u2,0} }"</span>)</code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"E4:={ {u1,u1,0},{u1,0,u2},{0,u2,0} }"</span>)</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1] [,2] [,3]
 ## [1,] u1   u1   0   
 ## [2,] u1   0    u2  
 ## [3,] 0    u2   0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(E4)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb289-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(E4)"</span>)</a></code></pre></div>
 <pre><code>## 
 ## /                       \
 ## | ( u1 ) ( u1 ) ( 0 )   |
@@ -668,10 +668,10 @@ ns &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ## |                       |
 ## | ( 0 )  ( u2 ) ( 0 )   |
 ## \                       /</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">u1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"u1"</span>)
-u2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"u2"</span>)
-E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">List</a></span>(<span class="kw"><a href="../reference/Sym.html">List</a></span>(u1, u1, <span class="dv">0</span>), <span class="kw"><a href="../reference/Sym.html">List</a></span>(u1, <span class="dv">0</span>, u2), <span class="kw"><a href="../reference/Sym.html">List</a></span>(<span class="dv">0</span>, u2, <span class="dv">0</span>))
-<span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(E4)</code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb291-1" title="1">u1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"u1"</span>)</a>
+<a class="sourceLine" id="cb291-2" title="2">u2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"u2"</span>)</a>
+<a class="sourceLine" id="cb291-3" title="3">E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">List</a></span>(<span class="kw"><a href="../reference/Sym.html">List</a></span>(u1, u1, <span class="dv">0</span>), <span class="kw"><a href="../reference/Sym.html">List</a></span>(u1, <span class="dv">0</span>, u2), <span class="kw"><a href="../reference/Sym.html">List</a></span>(<span class="dv">0</span>, u2, <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb291-4" title="4"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(E4)</a></code></pre></div>
 <pre><code>## 
 ## /                       \
 ## | ( u1 ) ( u1 ) ( 0 )   |
@@ -683,7 +683,7 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 <div id="inverse" class="section level2">
 <h2 class="hasAnchor">
 <a href="#inverse" class="anchor"></a>Inverse</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"E4i := Inverse(E4)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"E4i := Inverse(E4)"</span>)</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1]                           [,2]                          
 ## [1,] u1 * u2^2/(u1^2 * u2^2)        1/u1 - u1 * u2^2/(u2^2 * u1^2)
@@ -693,13 +693,13 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ## [1,] -(u1 * u2/u1)/u2^2 
 ## [2,] u2 * u1/(u2^2 * u1)
 ## [3,] u1/u2^2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(E4i)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb295-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(E4i)"</span>)</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1]  [,2] [,3]   
 ## [1,] 1/u1  0    -1/u2  
 ## [2,] 0     0    1/u2   
 ## [3,] -1/u2 1/u2 u1/u2^2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(Simplify(E4i))"</span>)</code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb297-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"PrettyForm(Simplify(E4i))"</span>)</a></code></pre></div>
 <pre><code>## 
 ## /                        \
 ## | / 1  \ ( 0 )  / -1 \   |
@@ -715,14 +715,14 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 ## | \ u2 / \ u2 / |   2 |  |
 ## |               \ u2  /  |
 ## \                        /</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E4i &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(E4)
-<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i)</code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb299-1" title="1">E4i &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(E4)</a>
+<a class="sourceLine" id="cb299-2" title="2"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i)</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1]  [,2] [,3]   
 ## [1,] 1/u1  0    -1/u2  
 ## [2,] 0     0    1/u2   
 ## [3,] -1/u2 1/u2 u1/u2^2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i))</code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb301-1" title="1"><span class="kw"><a href="../reference/Sym.html">PrettyForm</a></span>(<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i))</a></code></pre></div>
 <pre><code>## 
 ## /                        \
 ## | / 1  \ ( 0 )  / -1 \   |
@@ -742,61 +742,49 @@ E4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html
 <div id="determinant" class="section level2">
 <h2 class="hasAnchor">
 <a href="#determinant" class="anchor"></a>Determinant</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Determinant(E4)"</span>)</code></pre></div>
-<pre><code>## expression(-(u1 * u2^2))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Determinant(E4i)"</span>)</code></pre></div>
-<pre><code>## expression((u1 * u2^2/(u2^2 * u1^2) - 1/u1) * (u1 * u2^2) * u1/(u1^2 * 
-##     u2^4) - u1 * u2^2 * (u2 * u1) * (u1 * u2)/(u1 * u2^2 * (u2^2 * 
-##     u1 * (u1^2 * u2^2))) - (1/u1 - u1 * u2^2/(u2^2 * u1^2)) * 
-##     (u1 * u2)^2/(u2^4 * u1^2) - (1/u1 - u1 * u2^2/(u2^2 * u1^2))^2 * 
-##     u1/u2^2 - (1/u1 - u1 * u2^2/(u2^2 * u1^2)) * (u2 * u1) * 
-##     (u1 * u2)/(u2^4 * u1^2) - (u1 * u2^2/(u2^2 * u1^2) - 1/u1) * 
-##     (u1 * u2)^2/(u1^2 * u2^4))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(E4i)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb303-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Determinant(E4)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(-(u1 * u2^2))</code></pre>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb305-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Determinant(E4i)"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression((u1 * u2^2/(u2^2 * u1^2) - 1/u1) * (u1 * u2^2) * u1/(u1^2 * u2^4) - u1 * u2^2 * (u2 * u1) * (u1 * u2)/(u1 * u2^2 * (u2^2 * u1 * (u1^2 * u2^2))) - (1/u1 - u1 * u2^2/(u2^2 * u1^2)) * (u1 * u2)^2/(u2^4 * u1^2) - (1/u1 - u1 * u2^2/(u2^2 * u1^2))^2 * u1/u2^2 - (1/u1 - u1 * u2^2/(u2^2 * u1^2)) * (u2 * u1) * (u1 * u2)/(u2^4 * u1^2) - (u1 * u2^2/(u2^2 * u1^2) - 1/u1) * (u1 * u2)^2/(u1^2 * u2^4))</code></pre>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb307-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(E4i)"</span>)</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1]  [,2] [,3]   
 ## [1,] 1/u1  0    -1/u2  
 ## [2,] 0     0    1/u2   
 ## [3,] -1/u2 1/u2 u1/u2^2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(Determinant(E4i))"</span>)</code></pre></div>
-<pre><code>## expression(-1/(u1 * u2^2))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/det">determinant</a></span>(E4)</code></pre></div>
-<pre><code>## expression(-(u1 * u2^2))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/det">determinant</a></span>(E4i)</code></pre></div>
-<pre><code>## expression((u1 * u2^2/(u2^2 * u1^2) - 1/u1) * (u1 * u2^2) * u1/(u1^2 * 
-##     u2^4) - u1 * u2^2 * (u2 * u1) * (u1 * u2)/(u1 * u2^2 * (u2^2 * 
-##     u1 * (u1^2 * u2^2))) - (1/u1 - u1 * u2^2/(u2^2 * u1^2)) * 
-##     (u1 * u2)^2/(u2^4 * u1^2) - (1/u1 - u1 * u2^2/(u2^2 * u1^2))^2 * 
-##     u1/u2^2 - (1/u1 - u1 * u2^2/(u2^2 * u1^2)) * (u2 * u1) * 
-##     (u1 * u2)/(u2^4 * u1^2) - (u1 * u2^2/(u2^2 * u1^2) - 1/u1) * 
-##     (u1 * u2)^2/(u1^2 * u2^4))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i)</code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb309-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"Simplify(Determinant(E4i))"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(-1/(u1 * u2^2))</code></pre>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb311-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/det">determinant</a></span>(E4)</a></code></pre></div>
+<pre><code>## yacas_expression(-(u1 * u2^2))</code></pre>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb313-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/det">determinant</a></span>(E4i)</a></code></pre></div>
+<pre><code>## yacas_expression((u1 * u2^2/(u2^2 * u1^2) - 1/u1) * (u1 * u2^2) * u1/(u1^2 * u2^4) - u1 * u2^2 * (u2 * u1) * (u1 * u2)/(u1 * u2^2 * (u2^2 * u1 * (u1^2 * u2^2))) - (1/u1 - u1 * u2^2/(u2^2 * u1^2)) * (u1 * u2)^2/(u2^4 * u1^2) - (1/u1 - u1 * u2^2/(u2^2 * u1^2))^2 * u1/u2^2 - (1/u1 - u1 * u2^2/(u2^2 * u1^2)) * (u2 * u1) * (u1 * u2)/(u2^4 * u1^2) - (u1 * u2^2/(u2^2 * u1^2) - 1/u1) * (u1 * u2)^2/(u1^2 * u2^4))</code></pre>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb315-1" title="1"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(E4i)</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1]  [,2] [,3]   
 ## [1,] 1/u1  0    -1/u2  
 ## [2,] 0     0    1/u2   
 ## [3,] -1/u2 1/u2 u1/u2^2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/det">determinant</a></span>(E4i))</code></pre></div>
-<pre><code>## expression(-1/(u1 * u2^2))</code></pre>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb317-1" title="1"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/det">determinant</a></span>(E4i))</a></code></pre></div>
+<pre><code>## yacas_expression(-1/(u1 * u2^2))</code></pre>
 </div>
 </div>
 <div id="miscellaneous" class="section level1">
 <h1 class="hasAnchor">
 <a href="#miscellaneous" class="anchor"></a>Miscellaneous</h1>
 <p>Note that the value returned by <code>yacas</code> can be of different types:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Factor</a></span>(x<span class="op">^</span><span class="dv">2-1</span>)),<span class="dt">retclass=</span><span class="st">'unquote'</span>)</code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb319-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Factor</a></span>(x<span class="op">^</span><span class="dv">2-1</span>)),<span class="dt">retclass=</span><span class="st">'unquote'</span>)</a></code></pre></div>
 <pre><code>## *" ("+" (x ,1 ),"- (x ,1 ))</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Factor</a></span>(x<span class="op">^</span><span class="dv">2-1</span>)),<span class="dt">retclass=</span><span class="st">'character'</span>)</code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb321-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/expression">expression</a></span>(<span class="kw"><a href="../reference/Sym.html">Factor</a></span>(x<span class="op">^</span><span class="dv">2-1</span>)),<span class="dt">retclass=</span><span class="st">'character'</span>)</a></code></pre></div>
 <pre><code>## "*" ("+" (x ,1 ),"-" (x ,1 ))</code></pre>
 </div>
 <div id="output-width" class="section level1">
 <h1 class="hasAnchor">
 <a href="#output-width" class="anchor"></a>Output width</h1>
 <p>Set output width:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_output_width.html">get_output_width</a></span>()</code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb323-1" title="1"><span class="kw"><a href="../reference/get_output_width.html">get_output_width</a></span>()</a></code></pre></div>
 <pre><code>## [1] 60</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_output_width.html">set_output_width</a></span>(<span class="dv">120</span>)
-<span class="kw"><a href="../reference/get_output_width.html">get_output_width</a></span>()</code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb325-1" title="1"><span class="kw"><a href="../reference/set_output_width.html">set_output_width</a></span>(<span class="dv">120</span>)</a>
+<a class="sourceLine" id="cb325-2" title="2"><span class="kw"><a href="../reference/get_output_width.html">get_output_width</a></span>()</a></code></pre></div>
 <pre><code>## [1] 120</code></pre>
 </div>
   </div>

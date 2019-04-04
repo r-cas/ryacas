@@ -95,7 +95,7 @@
       <h1>Getting started</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-02-23</h4>
+            <h4 class="date">2019-04-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NA/NA/blob/master/vignettes/getting-started.Rmd"><code>vignettes/getting-started.Rmd</code></a></small>
       <div class="hidden name"><code>getting-started.Rmd</code></div>
@@ -104,7 +104,7 @@
 
     
     
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</a></code></pre></div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -113,58 +113,58 @@
 <div id="example-1-using-character-vectors" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example-1-using-character-vectors" class="anchor"></a>Example 1: using character vectors</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eq &lt;-<span class="st"> "x^2 + 4 + 2*x + 2*x"</span>
-<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(eq)</code></pre></div>
-<pre><code>## expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"Simplify("</span>, eq, <span class="st">")"</span>))</code></pre></div>
-<pre><code>## expression(x^2 + 4 * x + 4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"Factor("</span>, eq, <span class="st">")"</span>))</code></pre></div>
-<pre><code>## expression((x + 2)^2)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">eq &lt;-<span class="st"> "x^2 + 4 + 2*x + 2*x"</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(eq)</a></code></pre></div>
+<pre><code>## yacas_expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"Simplify("</span>, eq, <span class="st">")"</span>))</a></code></pre></div>
+<pre><code>## yacas_expression(x^2 + 4 * x + 4)</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"Factor("</span>, eq, <span class="st">")"</span>))</a></code></pre></div>
+<pre><code>## yacas_expression((x + 2)^2)</code></pre>
 <p>Or by using the corresponding <code>R</code> functions directly:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(eq))</code></pre></div>
-<pre><code>## expression(x^2 + 4 * x + 4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(eq))</code></pre></div>
-<pre><code>## expression((x + 2)^2)</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(eq))</a></code></pre></div>
+<pre><code>## yacas_expression(x^2 + 4 * x + 4)</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(<span class="kw"><a href="../reference/yacas.html">yacas</a></span>(eq))</a></code></pre></div>
+<pre><code>## yacas_expression((x + 2)^2)</code></pre>
 <p>Or course the result can be saved before calling the helper <code>R</code> functions:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yeq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(eq)
-<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(yeq)</code></pre></div>
-<pre><code>## expression(x^2 + 4 * x + 4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(yeq)</code></pre></div>
-<pre><code>## expression((x + 2)^2)</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">yeq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(eq)</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(yeq)</a></code></pre></div>
+<pre><code>## yacas_expression(x^2 + 4 * x + 4)</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(yeq)</a></code></pre></div>
+<pre><code>## yacas_expression((x + 2)^2)</code></pre>
 <p>And getting results out:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(yeq)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(res)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(yeq)</a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(res)</a></code></pre></div>
 <pre><code>## [1] "(x + 2)^2"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(res)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(res)</a></code></pre></div>
 <pre><code>## [1] "\\left( x + 2\\right)  ^{2}"</code></pre>
-<p>To include inline, e.g. <span class="math inline">\(x ^{2} + 2 x + 2 x + 4 = \left( x + 2\right) ^{2}\)</span>.</p>
+<p>To include inline, e.g. <span class="math inline">\(x ^{2} + 2 x + 2 x + 4 = \left( x + 2\right) ^{2}\)</span>.</p>
 </div>
 <div id="example-2-using-sym" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example-2-using-sym" class="anchor"></a>Example 2: using <code><a href="../reference/Sym.html">Sym()</a></code>
 </h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"x"</span>)
-eqs &lt;-<span class="st"> </span>xs<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>xs <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>xs
-<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(eqs)</code></pre></div>
-<pre><code>## expression(x^2 + 4 * x + 4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(eqs)</code></pre></div>
-<pre><code>## expression((x + 2)^2)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(eqs)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(res)</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">xs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"x"</span>)</a>
+<a class="sourceLine" id="cb20-2" title="2">eqs &lt;-<span class="st"> </span>xs<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>xs <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>xs</a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(eqs)</a></code></pre></div>
+<pre><code>## yacas_expression(x^2 + 4 * x + 4)</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(eqs)</a></code></pre></div>
+<pre><code>## yacas_expression((x + 2)^2)</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Factor</a></span>(eqs)</a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(res)</a></code></pre></div>
 <pre><code>## [1] "(x + 2)^2"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(res)</code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(res)</a></code></pre></div>
 <pre><code>## [1] "\\left( x + 2\\right)  ^{2}"</code></pre>
 </div>
 <div id="example-3-using-yacas-variables-and-sym" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example-3-using-yacas-variables-and-sym" class="anchor"></a>Example 3: using Yacas variables and <code><a href="../reference/Sym.html">Sym()</a></code>
 </h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"p := x^2 + 4 + 2*x + 2*x"</span>)</code></pre></div>
-<pre><code>## expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"p"</span>)
-ps</code></pre></div>
-<pre><code>## expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(ps))</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="../reference/yacas.html">yacas</a></span>(<span class="st">"p := x^2 + 4 + 2*x + 2*x"</span>)</a></code></pre></div>
+<pre><code>## yacas_expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Sym</a></span>(<span class="st">"p"</span>)</a>
+<a class="sourceLine" id="cb30-2" title="2">ps</a></code></pre></div>
+<pre><code>## yacas_expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(<span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(ps))</a></code></pre></div>
 <pre><code>## [1] "x ^{2} + 4 x + 4"</code></pre>
 </div>
   </div>

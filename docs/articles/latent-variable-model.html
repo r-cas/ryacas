@@ -95,7 +95,7 @@
       <h1>The structure of the concentration and covariance matrix in a naive Bayes model</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-02-23</h4>
+            <h4 class="date">2019-04-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NA/NA/blob/master/vignettes/latent-variable-model.Rmd"><code>vignettes/latent-variable-model.Rmd</code></a></small>
       <div class="hidden name"><code>latent-variable-model.Rmd</code></div>
@@ -104,8 +104,8 @@
 
     
     
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Matrix)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Matrix)</a></code></pre></div>
 <div id="naive-bayes-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#naive-bayes-model" class="anchor"></a>Naive Bayes model</h2>
@@ -114,10 +114,10 @@ x_i = a x_0 + e_i, \quad i=1, \dots, 4
 \]</span> and <span class="math inline">\(x_0=e_0\)</span>. All terms <span class="math inline">\(e_0, \dots, e_3\)</span> are independent and <span class="math inline">\(N(0,1)\)</span> distributed. Let <span class="math inline">\(e=(e_0, \dots, e_3)\)</span> and <span class="math inline">\(x=(x_0, \dots x_3)\)</span>. Isolating error terms gives that <span class="math display">\[
  e = L_1 x
 \]</span> where <span class="math inline">\(L_1\)</span> has the form</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L1chr &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">4</span>)
-L1chr[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>] &lt;-<span class="st"> "-a"</span>
-L1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(L1chr)
-L1</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">L1chr &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">L1chr[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>] &lt;-<span class="st"> "-a"</span></a>
+<a class="sourceLine" id="cb2-3" title="3">L1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(L1chr)</a>
+<a class="sourceLine" id="cb2-4" title="4">L1</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1] [,2] [,3] [,4]
 ## [1,] 1    0    0    0   
@@ -125,51 +125,51 @@ L1</code></pre></div>
 ## [3,] -a   0    1    0   
 ## [4,] -a   0    0    1</code></pre>
 <p>If error terms have variance <span class="math inline">\(1\)</span> then <span class="math inline">\(\mathbf{Var}(e)=L \mathbf{Var}(x) L'\)</span> so the covariance matrix is <span class="math inline">\(V1=\mathbf{Var}(x) = L^- (L^-)'\)</span> while the concentration matrix (the inverse covariances matrix) is <span class="math inline">\(K=L' L\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L1inv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(L1))
-K1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L1) <span class="op">*</span><span class="st"> </span>L1)
-V1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L1inv <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L1inv))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(
-  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span>
-<span class="st">    K_1 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(K1), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span>
-<span class="st">   V_1 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(V1), <span class="st">" </span>
-<span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</code></pre></div>
-<span class="math display">\[\begin{align} 
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">L1inv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(L1))</a>
+<a class="sourceLine" id="cb4-2" title="2">K1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L1) <span class="op">*</span><span class="st"> </span>L1)</a>
+<a class="sourceLine" id="cb4-3" title="3">V1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L1inv <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L1inv))</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(</a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="st">    K_1 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(K1), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">   V_1 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(V1), <span class="st">" </span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</a></code></pre></div>
+<p><span class="math display">\[\begin{align} 
     K_1 &amp;= \left( \begin{array}{cccc} 3 a ^{2} + 1 &amp;  - a &amp;  - a &amp;  - a \\  - a &amp; 1 &amp; 0 &amp; 0 \\  - a &amp; 0 &amp; 1 &amp; 0 \\  - a &amp; 0 &amp; 0 &amp; 1 \end{array} \right) \\ 
    V_1 &amp;= \left( \begin{array}{cccc} 1 &amp; a &amp; a &amp; a \\ a &amp; a ^{2} + 1 &amp; a ^{2} &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} + 1 &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} &amp; a ^{2} + 1 \end{array} \right) 
-  \end{align}\]</span>
+  \end{align}\]</span></p>
 <p>Slightly more elaborate:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L2chr &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">4</span>)
-L2chr[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"-a1"</span>, <span class="st">"-a2"</span>, <span class="st">"-a3"</span>)
-L2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(L2chr)
-L2</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">L2chr &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">L2chr[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"-a1"</span>, <span class="st">"-a2"</span>, <span class="st">"-a3"</span>)</a>
+<a class="sourceLine" id="cb6-3" title="3">L2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(L2chr)</a>
+<a class="sourceLine" id="cb6-4" title="4">L2</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1] [,2] [,3] [,4]
 ## [1,] 1    0    0    0   
 ## [2,] -a1  1    0    0   
 ## [3,] -a2  0    1    0   
 ## [4,] -a3  0    0    1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Vechr &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">4</span>)
-Vechr[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"w1"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>)
-Ve &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(Vechr)
-Ve</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">Vechr &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/diag">diag</a></span>(<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2">Vechr[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"w1"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>)</a>
+<a class="sourceLine" id="cb8-3" title="3">Ve &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">as.Sym</a></span>(Vechr)</a>
+<a class="sourceLine" id="cb8-4" title="4">Ve</a></code></pre></div>
 <pre><code>## Yacas matrix:
 ##      [,1] [,2] [,3] [,4]
 ## [1,] w1   0    0    0   
 ## [2,] 0    w2   0    0   
 ## [3,] 0    0    w2   0   
 ## [4,] 0    0    0    w2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L2inv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(L2))
-K2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L2) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(Ve) <span class="op">*</span><span class="st"> </span>L2)
-V2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L2inv <span class="op">*</span><span class="st"> </span>Ve <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L2inv))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(
-  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span>
-<span class="st">    K_2 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(K2), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span>
-<span class="st">   V_2 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(V2), <span class="st">" </span>
-<span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</code></pre></div>
-<span class="math display">\[\begin{align} 
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">L2inv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(L2))</a>
+<a class="sourceLine" id="cb10-2" title="2">K2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(<span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L2) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Inverse</a></span>(Ve) <span class="op">*</span><span class="st"> </span>L2)</a>
+<a class="sourceLine" id="cb10-3" title="3">V2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Simplify</a></span>(L2inv <span class="op">*</span><span class="st"> </span>Ve <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/Sym.html">Transpose</a></span>(L2inv))</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(</a>
+<a class="sourceLine" id="cb11-2" title="2">  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="st">    K_2 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(K2), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="st">   V_2 &amp;= "</span>, <span class="kw"><a href="../reference/Sym.html">TeXForm</a></span>(V2), <span class="st">" </span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</a></code></pre></div>
+<p><span class="math display">\[\begin{align} 
     K_2 &amp;= \left( \begin{array}{cccc} \frac{w_{1} a_{1} ^{2} w_{2} ^{2} + w_{1} w_{2} ^{2} a_{2} ^{2} + w_{1} w_{2} ^{2} a_{3} ^{2} + w_{2} ^{3}}{w_{1} w_{2} ^{3}}  &amp; \frac{ - a_{1}}{w_{2}}  &amp; \frac{ - a_{2}}{w_{2}}  &amp; \frac{ - a_{3}}{w_{2}}  \\ \frac{ - a_{1}}{w_{2}}  &amp; \frac{1}{w_{2}}  &amp; 0 &amp; 0 \\ \frac{ - a_{2}}{w_{2}}  &amp; 0 &amp; \frac{1}{w_{2}}  &amp; 0 \\ \frac{ - a_{3}}{w_{2}}  &amp; 0 &amp; 0 &amp; \frac{1}{w_{2}}  \end{array} \right) \\ 
    V_2 &amp;= \left( \begin{array}{cccc} w_{1} &amp; w_{1} a_{1} &amp; w_{1} a_{2} &amp; w_{1} a_{3} \\ a_{1} w_{1} &amp; w_{1} a_{1} ^{2} + w_{2} &amp; a_{1} w_{1} a_{2} &amp; a_{1} w_{1} a_{3} \\ a_{2} w_{1} &amp; a_{2} w_{1} a_{1} &amp; w_{1} a_{2} ^{2} + w_{2} &amp; a_{2} w_{1} a_{3} \\ a_{3} w_{1} &amp; a_{3} w_{1} a_{1} &amp; a_{3} w_{1} a_{2} &amp; w_{1} a_{3} ^{2} + w_{2} \end{array} \right) 
-  \end{align}\]</span>
+  \end{align}\]</span></p>
 </div>
   </div>
 

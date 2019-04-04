@@ -96,7 +96,7 @@
 </h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-02-23</h4>
+            <h4 class="date">2019-04-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NA/NA/blob/master/vignettes/exams.Rmd"><code>vignettes/exams.Rmd</code></a></small>
       <div class="hidden name"><code>exams.Rmd</code></div>
@@ -105,10 +105,10 @@
 
     
     
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</a></code></pre></div>
 <p>The <a href="https://cran.r-project.org/package=exams"><code>exams</code> package</a> offer a wide range of ways of generating exams. See e.g. the many <a href="http://www.r-exams.org/templates/">examples</a>.</p>
 <p><code>Ryacas</code> can be used in connection with the <a href="https://cran.r-project.org/package=exams"><code>exams</code> package</a> in multiple ways. The obvious ones are for symbolic mathematics and for turning <code>R</code> code into TeX.</p>
-<p>In this vignette we demonstrate both by two simple examples. First, we make exercises where the student must find roots in a quadratic polynomial. We generate exercises where the roots are two different integers and the polynomial are written in simplified form using <code>Ryacas</code> (in principle this can be solved purely numeric as well, but the solution is less elegant). Then we make exercises in simple factorisations, e.g. “Bring <span class="math inline">\(9 x ^{2} + 30 x y + 25 y ^{2}\)</span> on the form <span class="math inline">\((a \cdot x + b \cdot y)^2\)</span> for positive <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.”. Both examples show how symbolic math and TeX from the <code>Ryacas</code> package are used.</p>
+<p>In this vignette we demonstrate both by two simple examples. First, we make exercises where the student must find roots in a quadratic polynomial. We generate exercises where the roots are two different integers and the polynomial are written in simplified form using <code>Ryacas</code> (in principle this can be solved purely numeric as well, but the solution is less elegant). Then we make exercises in simple factorisations, e.g. “Bring <span class="math inline">\(9 x ^{2} + 30 x y + 25 y ^{2}\)</span> on the form <span class="math inline">\((a \cdot x + b \cdot y)^2\)</span> for positive <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.”. Both examples show how symbolic math and TeX from the <code>Ryacas</code> package are used.</p>
 <div id="roots-in-polynomials" class="section level1">
 <h1 class="hasAnchor">
 <a href="#roots-in-polynomials" class="anchor"></a>Roots in polynomials</h1>
@@ -147,7 +147,7 @@
  extype: mchoice
  exsolution: `r paste0(answ, collapse = "")`
  exshuffle: FALSE</code></pre>
-<p>This can then be compiled using e.g. <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2html">exams::exams2html</a></code>, <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2pandoc">exams::exams2pandoc</a></code> or any of the other <code>exams::exams2*</code> functions:</p>
+<p>This can then be compiled using e.g. <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2html">exams::exams2html</a></code>, <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2pandoc">exams::exams2pandoc</a></code> or any of the other <code>exams::exams2*</code> functions:</p>
 <p>Giving first sample:</p>
 <pre><code>1.  **Question**\
      Choose all roots of $x ^{2} + 5 x + 6$:
@@ -173,9 +173,7 @@
      (j) 5
  
      **Solution**\
-     The roots are -3, -2.
- 
- </code></pre>
+     The roots are -3, -2.</code></pre>
 <p>And second sample:</p>
 <pre><code>1.  **Question**\
      Choose all roots of $x ^{2} - 5 x + 4$:
@@ -201,9 +199,7 @@
      (j) 5
  
      **Solution**\
-     The roots are 1, 4.
- 
- </code></pre>
+     The roots are 1, 4.</code></pre>
 </div>
 <div id="factorisation" class="section level1">
 <h1 class="hasAnchor">
@@ -246,7 +242,7 @@
  extype: cloze
  exclozetype: string|string
  exsolution: `r paste(answers, collapse = "|")`</code></pre>
-<p>This can then be compiled using e.g. <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2html">exams::exams2html</a></code>, <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2pandoc">exams::exams2pandoc</a></code> or any of the other <code>exams::exams2*</code> functions:</p>
+<p>This can then be compiled using e.g. <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2html">exams::exams2html</a></code>, <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2pandoc">exams::exams2pandoc</a></code> or any of the other <code>exams::exams2*</code> functions:</p>
 <p>Giving first sample:</p>
 <pre><code>1.  **Question**\
      Bring $$4 \left( x ^{2} + 2 x y + y ^{2}\right)$$ on the form
@@ -260,9 +256,7 @@
      =
      (2x + 2y)^2$$
  
-     Thus $a = 2$ and $b = 2$.
- 
- </code></pre>
+     Thus $a = 2$ and $b = 2$.</code></pre>
 <p>And second sample:</p>
 <pre><code>1.  **Question**\
      Bring $$9 x ^{2} + 30 x y + 25 y ^{2}$$ on the form
@@ -276,9 +270,7 @@
      =
      (3x + 5y)^2$$
  
-     Thus $a = 3$ and $b = 5$.
- 
- </code></pre>
+     Thus $a = 3$ and $b = 5$.</code></pre>
 </div>
   </div>
 
