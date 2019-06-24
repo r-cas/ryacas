@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Evaluate yacas expression — yacas_evaluate • Ryacas</title>
+<title>Legacy function — yacas_evaluate • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Evaluate yacas expression — yacas_evaluate" />
+<meta property="og:title" content="Legacy function — yacas_evaluate" />
 
-<meta property="og:description" content="This is a low-level function for evaluating yacas expression represented as
-string." />
+<meta property="og:description" content="Legacy function" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,7 +63,7 @@ string." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -87,22 +86,10 @@ string." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/elaborate-reference.html">Elaborate reference of `Ryacas` functionality</a>
-    </li>
-    <li>
-      <a href="../articles/exams.html">Automatic generation of exams in R using `Ryacas`</a>
+      <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
-    </li>
-    <li>
-      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
-    </li>
-    <li>
-      <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
-    </li>
-    <li>
-      <a href="../articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
     </li>
   </ul>
 </li>
@@ -110,7 +97,7 @@ string." />
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/NA/NA">
+  <a href="https://github.com/mikldk/ryacas">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -127,49 +114,35 @@ string." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Evaluate yacas expression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/NA/NA/blob/master/R/RcppExports.R'><code>R/RcppExports.R</code></a></small>
+    <h1>Legacy function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/legacy.R'><code>R/legacy.R</code></a></small>
     <div class="hidden name"><code>yacas_evaluate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This is a low-level function for evaluating yacas expression represented as
-string.</p>
+    <p>Legacy function</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>yacas_evaluate</span>(<span class='no'>expr</span>)</pre>
+    <pre class="usage"><span class='fu'>yacas_evaluate</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr</th>
-      <td><p>Yacas expression</p></td>
+      <th>...</th>
+      <td><p>not used</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Result of evaluating <code>expr</code> by yacas in OpenMath format and
-side-effects of the evaluation</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>yacas_evaluate</span>(<span class='st'>"D(x)Sin(x^2)"</span>)</div><div class='output co'>#&gt; [1] "&lt;OMOBJ&gt;\n  &lt;OMA&gt;\n    &lt;OMS cd=\"arith1\" name=\"times\"/&gt;\n    &lt;OMI&gt;2&lt;/OMI&gt;\n    &lt;OMA&gt;\n      &lt;OMS cd=\"arith1\" name=\"times\"/&gt;\n      &lt;OMV name=\"x\"/&gt;\n      &lt;OMA&gt;\n        &lt;OMS cd=\"transc1\" name=\"cos\"/&gt;\n        &lt;OMA&gt;\n          &lt;OMS cd=\"arith1\" name=\"power\"/&gt;\n          &lt;OMV name=\"x\"/&gt;\n          &lt;OMI&gt;2&lt;/OMI&gt;\n        &lt;/OMA&gt;\n      &lt;/OMA&gt;\n    &lt;/OMA&gt;\n  &lt;/OMA&gt;\n&lt;/OMOBJ&gt;\n"
-#&gt; [2] ""                                                                                                                                                                                                                                                                                                                                                                                                      </div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

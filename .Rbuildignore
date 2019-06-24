@@ -17,3 +17,5 @@ tic.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^revdep$
+^TODO$
+^yacas-upstream-update

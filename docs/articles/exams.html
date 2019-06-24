@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Automatic generation of exams in R using <code>Ryacas</code> • Ryacas</title>
+<title>Using <code>Ryacas</code> in automatic generation of exams in R • Ryacas</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Automatic generation of exams in R using &lt;code&gt;Ryacas&lt;/code&gt;">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Using &lt;code&gt;Ryacas&lt;/code&gt; in automatic generation of exams in R">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -53,29 +53,17 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/elaborate-reference.html">Elaborate reference of `Ryacas` functionality</a>
-    </li>
-    <li>
-      <a href="../articles/exams.html">Automatic generation of exams in R using `Ryacas`</a>
+      <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
-    </li>
-    <li>
-      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
-    </li>
-    <li>
-      <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
-    </li>
-    <li>
-      <a href="../articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/NA/NA">
+  <a href="https://github.com/mikldk/ryacas">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -92,20 +80,20 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Automatic generation of exams in R using <code>Ryacas</code>
-</h1>
+      <h1>Using <code>Ryacas</code> in automatic generation of exams in R</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-04-04</h4>
+            <h4 class="date">2019-06-24</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/NA/NA/blob/master/vignettes/exams.Rmd"><code>vignettes/exams.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mikldk/ryacas/blob/master/vignettes/exams.Rmd"><code>vignettes/exams.Rmd</code></a></small>
       <div class="hidden name"><code>exams.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span></a></code></pre></div>
 <p>The <a href="https://cran.r-project.org/package=exams"><code>exams</code> package</a> offer a wide range of ways of generating exams. See e.g. the many <a href="http://www.r-exams.org/templates/">examples</a>.</p>
 <p><code>Ryacas</code> can be used in connection with the <a href="https://cran.r-project.org/package=exams"><code>exams</code> package</a> in multiple ways. The obvious ones are for symbolic mathematics and for turning <code>R</code> code into TeX.</p>
 <p>In this vignette we demonstrate both by two simple examples. First, we make exercises where the student must find roots in a quadratic polynomial. We generate exercises where the roots are two different integers and the polynomial are written in simplified form using <code>Ryacas</code> (in principle this can be solved purely numeric as well, but the solution is less elegant). Then we make exercises in simple factorisations, e.g. “Bring <span class="math inline">\(9 x ^{2} + 30 x y + 25 y ^{2}\)</span> on the form <span class="math inline">\((a \cdot x + b \cdot y)^2\)</span> for positive <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.”. Both examples show how symbolic math and TeX from the <code>Ryacas</code> package are used.</p>
@@ -120,14 +108,16 @@
  answ &lt;- integer(length(possible_roots))
  answ[match(roots, possible_roots)] &lt;- 1L
  
- xs &lt;- Sym("x")
- pol &lt;- Simplify((xs - roots[1])*(xs - roots[2]))
+ poly_tex &lt;- paste0("(x - ", roots[1], ")*(x - ", roots[2], ")") %&gt;% 
+   y_fn("Simplify") %&gt;% 
+   y_fn("TeXForm") %&gt;% 
+   yac_str()
  ```
  
  Question
  ========
  
- Choose all roots of $`r TeXForm(pol)`$:
+ Choose all roots of $`r poly_tex`$:
  
  Answerlist
  ----------
@@ -147,10 +137,10 @@
  extype: mchoice
  exsolution: `r paste0(answ, collapse = "")`
  exshuffle: FALSE</code></pre>
-<p>This can then be compiled using e.g. <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2html">exams::exams2html</a></code>, <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2pandoc">exams::exams2pandoc</a></code> or any of the other <code>exams::exams2*</code> functions:</p>
+<p>This can then be compiled using e.g. <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2html">exams::exams2html</a></code>, <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2pandoc">exams::exams2pandoc</a></code> or any of the other <code>exams::exams2*</code> functions to obtain something like:</p>
 <p>Giving first sample:</p>
 <pre><code>1.  **Question**\
-     Choose all roots of $x ^{2} + 5 x + 6$:
+     Choose all roots of $x ^{2} - 2 x - 8$:
  
      (a) -5
  
@@ -173,10 +163,10 @@
      (j) 5
  
      **Solution**\
-     The roots are -3, -2.</code></pre>
+     The roots are -2, 4.</code></pre>
 <p>And second sample:</p>
 <pre><code>1.  **Question**\
-     Choose all roots of $x ^{2} - 5 x + 4$:
+     Choose all roots of $x ^{2} + 3 x - 10$:
  
      (a) -5
  
@@ -199,7 +189,7 @@
      (j) 5
  
      **Solution**\
-     The roots are 1, 4.</code></pre>
+     The roots are -5, 2.</code></pre>
 </div>
 <div id="factorisation" class="section level1">
 <h1 class="hasAnchor">
@@ -209,7 +199,13 @@
  possible_answers &lt;- c(1:5) # Must be positive
  answers &lt;- sample(possible_answers, 2, replace = TRUE)
  
- expr &lt;- yacas(paste0("TeXForm(Simplify(Expand((", answers[1L], "*x + ", answers[2L], "*y)^2)))"))
+ poly &lt;- paste0("(", answers[1L], "*x + ", answers[2L], "*y)^2")
+   
+ expr &lt;- poly %&gt;% 
+   y_fn("Expand") %&gt;% 
+   y_fn("Simplify") %&gt;% 
+   y_fn("TeXForm") %&gt;% 
+   yac_str()
  ```
  
  Question
@@ -242,35 +238,35 @@
  extype: cloze
  exclozetype: string|string
  exsolution: `r paste(answers, collapse = "|")`</code></pre>
-<p>This can then be compiled using e.g. <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2html">exams::exams2html</a></code>, <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2pandoc">exams::exams2pandoc</a></code> or any of the other <code>exams::exams2*</code> functions:</p>
+<p>This can then be compiled using e.g. <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2html">exams::exams2html</a></code>, <code><a href="https://www.rdocumentation.org/packages/exams/topics/exams2pandoc">exams::exams2pandoc</a></code> or any of the other <code>exams::exams2*</code> functions to obtain something like:</p>
 <p>Giving first sample:</p>
 <pre><code>1.  **Question**\
-     Bring $$4 \left( x ^{2} + 2 x y + y ^{2}\right)$$ on the form
+     Bring $$4 x ^{2} + 20 x y + 25 y ^{2}$$ on the form
      $$(a \cdot x + b \cdot y)^2$$ for positive $a$ and $b$ and report
      $a$ and $b$ (in that order).
  
      (a) (b) 
  
      **Solution**\
-     $$4 \left( x ^{2} + 2 x y + y ^{2}\right)
+     $$4 x ^{2} + 20 x y + 25 y ^{2}
      =
-     (2x + 2y)^2$$
+     (2x + 5y)^2$$
  
-     Thus $a = 2$ and $b = 2$.</code></pre>
+     Thus $a = 2$ and $b = 5$.</code></pre>
 <p>And second sample:</p>
 <pre><code>1.  **Question**\
-     Bring $$9 x ^{2} + 30 x y + 25 y ^{2}$$ on the form
+     Bring $$9 x ^{2} + 12 x y + 4 y ^{2}$$ on the form
      $$(a \cdot x + b \cdot y)^2$$ for positive $a$ and $b$ and report
      $a$ and $b$ (in that order).
  
      (a) (b) 
  
      **Solution**\
-     $$9 x ^{2} + 30 x y + 25 y ^{2}
+     $$9 x ^{2} + 12 x y + 4 y ^{2}
      =
-     (3x + 5y)^2$$
+     (3x + 2y)^2$$
  
-     Thus $a = 3$ and $b = 5$.</code></pre>
+     Thus $a = 3$ and $b = 2$.</code></pre>
 </div>
   </div>
 

@@ -105,8 +105,6 @@ public:
   void PopLocalFrame();
   void NewLocal(const LispString* aVariable, LispObject* aValue);
   void CurrentLocals(LispPtr& aResult);
-  
-  // mikl 2019-02-12: https://github.com/grzegorzmazur/yacas/commit/12627b6f853c28c35c991741b0dc16616b8aa239
   void GlobalVariables(LispPtr& aResult);
   //@}
 
@@ -251,23 +249,12 @@ private:
 
     struct LispLocalVariable {
         LispLocalVariable(const LispString* var, LispObject* val):
-        var(var), val(val)
+            var(var), val(val)
         {
-            ++var->iReferenceCount;
         }
 
-        LispLocalVariable(const LispLocalVariable& v):
-        var(v.var), val(v.val)
-        {
-            ++var->iReferenceCount;
-        }
 
-        ~LispLocalVariable()
-        {
-            --var->iReferenceCount;
-        }
-
-        const LispString* var;
+        LispStringSmartPtr var;
         LispPtr val;
     };
 

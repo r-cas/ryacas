@@ -33,8 +33,10 @@ namespace {
         if (!_yacas->IsError())
             _yacas->Evaluate("Load(\"yacasinit.ys\");");
 
-        if (!_yacas->IsError())
-            _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
+        if (!_yacas->IsError()) {
+          // DEPRECATION: delete:
+          _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
+        }
 
         if (_yacas->IsError()) {
             const std::string msg = "Failed to initialize yacas: " + _yacas->Error();
@@ -59,34 +61,48 @@ void yacas_init_force(std::string path)
 //' string.
 //' 
 //' @param expr Yacas expression
-//' @return Result of evaluating \code{expr} by yacas in OpenMath format and
+//' @return Result of evaluating \code{expr} by yacas and
 //' side-effects of the evaluation
 //' 
 //' @examples
-//' yacas_evaluate("D(x)Sin(x^2)")
+//' yac_core("D(x)Sin(x^2)")
 //' 
-//' @export
+//' @concept yac_communication
+//' @keywords internal
+//' 
 // [[Rcpp::export]]
-std::vector<std::string> yacas_evaluate(std::string expr)
+std::vector<std::string> yac_core(std::string expr)
 {
-    if (!_yacas)
-        yacas_initialize(std::string());
-
-    _side_effects.clear();
-    _side_effects.str("");
+  if (!_yacas) {
+    yacas_initialize(std::string());
+  }
+  
+  _side_effects.clear();
+  _side_effects.str("");
+  
+  // NOTE: Until DEPRECATED is removed, totally,
+  //       set printer back to standard and restore
+  // DEPRECATION: delete:
+  _yacas->Evaluate("PrettyPrinter'Set();");
+  _yacas->Evaluate(expr);
+  
+  if (_yacas->IsError()) {
+    std::string err = _yacas->Error();
+    std::string msg = "Yacas returned this error: " + err;
     
-    _yacas->Evaluate(expr);
+    // DEPRECATION: delete:
+    _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
     
-    if (_yacas->IsError()) {
-      std::string err = _yacas->Error();
-      std::string msg = "Yacas returned this error: " + err;
-      Rcpp::stop(msg);
-    }
-
-    const std::vector<std::string> results = {
-        _side_effects.str(),
-        _yacas->Result()
-    };
-    
-    return results;
+    Rcpp::stop(msg);
+  }
+  
+  const std::vector<std::string> results = {
+    _side_effects.str(),
+    _yacas->Result()
+  };
+  
+  // DEPRECATION: delete:
+  _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
+  
+  return results;
 }

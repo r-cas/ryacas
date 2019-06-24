@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>yacas interface — yacas • Ryacas</title>
+<title>Legacy function — yacas • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="yacas interface — yacas" />
+<meta property="og:title" content="Legacy function — yacas" />
 
-<meta property="og:description" content="Interface to the yacas computer algebra system." />
+<meta property="og:description" content="Legacy function" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -86,22 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/elaborate-reference.html">Elaborate reference of `Ryacas` functionality</a>
-    </li>
-    <li>
-      <a href="../articles/exams.html">Automatic generation of exams in R using `Ryacas`</a>
+      <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
-    </li>
-    <li>
-      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
-    </li>
-    <li>
-      <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
-    </li>
-    <li>
-      <a href="../articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
     </li>
   </ul>
 </li>
@@ -109,7 +97,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/NA/NA">
+  <a href="https://github.com/mikldk/ryacas">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -126,197 +114,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>yacas interface</h1>
-    <small class="dont-index">Source: <a href='https://github.com/NA/NA/blob/master/R/yacas.R'><code>R/yacas.R</code></a></small>
+    <h1>Legacy function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/legacy.R'><code>R/legacy.R</code></a></small>
     <div class="hidden name"><code>yacas.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Interface to the yacas computer algebra system.</p>
+    <p>Legacy function</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>yacas</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-<span class='co'># S3 method for character</span>
-<span class='fu'>yacas</span>(<span class='no'>x</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>method</span>,
-    <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"expression"</span>, <span class='st'>"character"</span>, <span class='st'>"unquote"</span>),
-    <span class='kw'>addSemi</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>yacas</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A yacas character string or an R expression without terminating
-semicolon to be processed by yacas.</p></td>
-    </tr>
-    <tr>
-      <th>&#8230;</th>
-      <td><p>Additional arguments ultimately passed down to
-<code>yacas.character</code>.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>A logical value indicating verbosity of output or
-<code>"input"</code> to only show input to yacas but not output from yacas or
-<code>"output"</code> to only show output from yacas but not input to yacas.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>method used to communicate with yacas.  If <code>"socket"</code> is
-specified then the same yacas session is used on a sequence of calls.  If
-<code>"system"</code> is specified then a new instance of yacas is used just for
-the period of that call. <code>"system"</code> does not require that the system be
-configured to support telnet/sockets and so may be useful in some instances.
-If no value is specified the default is taken from
-<code><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption("yacas.method")</a></code> and if that is not specified "socket" is
-used.  <code>"socket"</code> and <code>"system"</code> may be abbreviated.</p></td>
-    </tr>
-    <tr>
-      <th>addSemi</th>
-      <td><p>If <code>TRUE</code> a semicolon is added to the character string
-sent to yacas.  This can be set to <code>FALSE</code> if its known that the
-character string already has a trailing semicolon.  It is ignored if
-<code>retclass="expression"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>retclass</th>
-      <td><p>The class of the first component of the yacas structure.  It
-defaults to <code>"expression"</code> but may be specified as <code>"character"</code>
-or <code>"unquote"</code>.  <code>"unquote"</code> is the same as <code>"character"</code>
-except that if the character string returned would have otherwise had quotes
-in the first and and last positions then they are stripped.</p></td>
+      <th>...</th>
+      <td><p>not used</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An R object of class <code>"yacas"</code> is returned.  If
-<code><a href='Sym.html'>PrettyPrinter("OMForm")</a></code> is in effect, which it is by default, then
-the first component is an R expression and the <code>OMForm</code> component
-contains OpenMath XML code.  In other cases the first component is NULL and
-the <code>YacasForm</code> or <code>PrettyForm</code> components have display
-information.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The user supplies an R expression, an R function name corresponding to a
-function with a single line body, a formula or a yacas input string.  In the
-case of a formula it is regarded as an expression represented by the right
-hand side of the formula while the left hand side, if any, is ignored.</p>
-<p>Note the silent version <code><a href='syacas.html'>syacas()</a></code>.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>Windows Installation.  On Windows one can install <code>Ryacas</code> by
-issuing the commands:</p>
-<table class='table'>
-<tr><td></td></tr>
-<tr><td><code><a href='https://www.rdocumentation.org/packages/utils/topics/install.packages'>install.packages("Ryacas", dep = TRUE)</a></code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-<tr><td><code><a href='https://www.rdocumentation.org/packages/base/topics/library'>library(Ryacas)</a></code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-<tr><td><code>yacasInstall()</code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-</table>
-    <p>or by using the <code>Packages | Install package(s)</code> menu in place of the
-first command.  The second command downloads <code>scripts.dat</code> and
-<code>yacas.exe</code> from the internet and installs them into
-<code>R_HOME/library/Ryacas/yacdir</code> where <code>R_HOME</code> is the location of
-your <code>R</code> installation.</p>
-<p>Normally the default locations of yacas, its initialization file and the
-scripts file are sufficient but, if necessary, they can be overridden via
-the environment variables: <code>YACAS_HOME</code>, <code>YACAS_INIT</code> and
-<code>YACAS_SCRIPTS</code>. The <code>YACAS_INVOKE_STRING</code> environment variable
-discussed in the next section overrides all three of these.</p>
-<p>All OS Installation.  The <code>YACAS_INVOKE_STRING</code> environment variable
-can be used to override the invocation string for yacas.  Normally it is not
-used.  If it does need to be used then a typical use might be:</p>
-<table class='table'>
-<tr><td></td></tr>
-<tr><td><code><a href='https://www.rdocumentation.org/packages/base/topics/library'>library(Ryacas)</a></code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-<tr><td><code># only need to do the file.copy
-command once</code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-<tr><td><code><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy(system.file("yacdir/R.ys", package =
-"Ryacas"), "~/.yacsrc")</a></code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-<tr><td><code># this needs to be done once per
-session</code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-<tr><td><code><a href='https://www.rdocumentation.org/packages/base/topics/Sys.setenv'>Sys.setenv(YACAS_INVOKE_STRING = "yacas -pc --server
-9734")</a></code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-<tr><td><code><a href='https://www.rdocumentation.org/packages/utils/topics/demo'>demo(Ryacas) # test it out</a></code></td></tr>
-<tr><td></td></tr>
-<tr><td></td></tr>
-</table>
-    <p>yacmode. There is also a utility yacmode which is called without arguments
-and just turns R into a terminal into yacas until one quits out of it (and
-back to R) by entering stop, end, quit, exit or e.</p>
-<p>Startup. <code>yacas</code> starts up when <code>yacasStart()</code> is called or the
-first time <code>yacas</code> is called.  yacas is shut down when
-<code>yacasStop()</code> is called or when the package is detached using the
-<code><a href='https://www.rdocumentation.org/packages/base/topics/detach'>detach()</a></code> R command.  On Windows, when yacas is shut down, the yacas
-process is terminated on Windows XP Pro but not on other versions of
-Windows. In those cases there will be a dangling process that the user must
-terminate manually.</p>
-<p>Translation.  The translation process occurs in several steps.  If the input
-to the <code>yacas</code> function is an expression then it is translated to a
-valid yacas character string (otherwise, it is sent to yacas unprocessed).
-Yacas then processes the string and if <code>retclass="expression"</code> it is
-translated back to an R expression (otherwise it is sent back unprocessed).
-Examples of translations are:</p>
-<table class='table'>
-<tr><td>R</td><td>yacas</td></tr>
-<tr><td>sin(x)</td><td>Sin(x)</td></tr>
-<tr><td>deriv(sin, x)</td><td></td></tr>
-<tr><td>Deriv(x)Sin(x)</td><td>log(x)</td></tr>
-<tr><td>Ln(x)</td><td></td></tr>
-</table>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p><a href='http://yacas.sourceforge.net'>http://yacas.sourceforge.net</a></p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>yacas</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/expression'>expression</a></span>(<span class='fu'><a href='Sym.html'>Factor</a></span>(<span class='no'>x</span>^<span class='fl'>2</span>-<span class='fl'>1</span>)))</div><div class='output co'>#&gt; yacas_expression((x + 1) * (x - 1))</div><div class='input'><span class='no'>exp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/expression'>expression</a></span>(<span class='no'>x</span>^<span class='fl'>2</span> + <span class='fl'>2</span> * <span class='no'>x</span>^<span class='fl'>2</span>)
-<span class='no'>exp2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/expression'>expression</a></span>(<span class='fl'>2</span> * <span class='no'>exp0</span>)
-<span class='no'>exp3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/expression'>expression</a></span>(<span class='fl'>6</span> * <span class='no'>pi</span> * <span class='no'>x</span>)
-<span class='no'>exp4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/expression'>expression</a></span>((<span class='no'>exp1</span> * (<span class='fl'>1</span> - <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Trig'>sin</a></span>(<span class='no'>exp3</span>))) / <span class='no'>exp2</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>yacas</span>(<span class='no'>exp4</span>))</div><div class='output co'>#&gt; yacas_expression(exp1 * (1 - sin(exp3))/exp2)</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'>yacas</span>(<span class='st'>"Version()"</span>)) <span class='co'># yacas version</span></div><div class='output co'>#&gt; [1] "1.6.1"</div><div class='input'>
-# see demo("Ryacas-Function")
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#note">Note</a></li>
-
-      <li><a href="#references">References</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

@@ -9,8 +9,6 @@
 #include <cstddef>
 #include <string>
 
-#include "lisptype.h"
-
 class InputStatus
 {
 public:
@@ -18,20 +16,9 @@ public:
 
   void SetTo(const std::string& aFileName);
   void RestoreFrom(InputStatus& aPreviousStatus);
-  int LineNumber();
-  const std::string& FileName();
+  int LineNumber() const;
+  const std::string& FileName() const;
   void NextLine();
-
-  inline InputStatus(const InputStatus& aOther) : iFileName(aOther.iFileName) , iLineNumber(aOther.iLineNumber)
-  {
-  }
-
-  inline InputStatus& operator=(const InputStatus& aOther)
-  {
-    iFileName   = aOther.iFileName;
-    iLineNumber = aOther.iLineNumber;
-    return *this;
-  }
 
 private:
   std::string iFileName;
@@ -39,13 +26,13 @@ private:
 };
 
 inline
-int InputStatus::LineNumber()
+int InputStatus::LineNumber() const
 {
   return iLineNumber;
 }
 
 inline
-const std::string& InputStatus::FileName()
+const std::string& InputStatus::FileName() const
 {
   return iFileName;
 }

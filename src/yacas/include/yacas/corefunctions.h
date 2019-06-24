@@ -64,7 +64,6 @@ CORE_KERNEL_FUNCTION("MacroClear",LispClearVar,1,YacasEvaluator::Function | Yaca
 CORE_KERNEL_FUNCTION("Local",LispNewLocal,1,YacasEvaluator::Macro | YacasEvaluator::Variable)
 CORE_KERNEL_FUNCTION("MacroLocal",LispNewLocal,1,YacasEvaluator::Function | YacasEvaluator::Variable)
 
-// mikl 2019-02-12: https://github.com/grzegorzmazur/yacas/commit/12627b6f853c28c35c991741b0dc16616b8aa239
 CORE_KERNEL_FUNCTION("Variables", LispVars, 0, YacasEvaluator::Function | YacasEvaluator::Fixed)
 
 //
