@@ -14,7 +14,6 @@
 /// to use these variables).
 
 
-#include "lisptype.h"
 #include "lispenvironment.h"
 #include "noncopyable.h"
 #include "numbers.h"
@@ -218,7 +217,7 @@ protected:
     std::vector<const YacasParamMatcherBase*> iParamMatchers;
 
     /// List of variables appearing in the pattern.
-    std::vector<const LispString*> iVariables;
+    std::vector<LispStringSmartPtr> iVariables;
 
     /// List of predicates which need to be true for a match.
     std::vector<LispPtr> iPredicates;

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Removes part of expression containing variable — stripvar • Ryacas</title>
+<title>Legacy function — stripvar • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,12 +30,9 @@
 
 
 
-<meta property="og:title" content="Removes part of expression containing variable — stripvar" />
+<meta property="og:title" content="Legacy function — stripvar" />
 
-<meta property="og:description" content="Yacas' Solve(eq, x) can return e.g.
-x == expr and {x == expr1, x == expr2, ...}.
-Some usages are easier if the initial x ==  part is removed.
-This is the purpose of this function." />
+<meta property="og:description" content="Legacy function" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +63,7 @@ This is the purpose of this function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -89,22 +86,10 @@ This is the purpose of this function." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/elaborate-reference.html">Elaborate reference of `Ryacas` functionality</a>
-    </li>
-    <li>
-      <a href="../articles/exams.html">Automatic generation of exams in R using `Ryacas`</a>
+      <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
-    </li>
-    <li>
-      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
-    </li>
-    <li>
-      <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
-    </li>
-    <li>
-      <a href="../articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
     </li>
   </ul>
 </li>
@@ -112,7 +97,7 @@ This is the purpose of this function." />
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/NA/NA">
+  <a href="https://github.com/mikldk/ryacas">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -129,32 +114,25 @@ This is the purpose of this function." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Removes part of expression containing variable</h1>
-    <small class="dont-index">Source: <a href='https://github.com/NA/NA/blob/master/R/Expr.R'><code>R/Expr.R</code></a></small>
+    <h1>Legacy function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/legacy.R'><code>R/legacy.R</code></a></small>
     <div class="hidden name"><code>stripvar.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Yacas' <code><a href='Sym.html'>Solve(eq, x)</a></code> can return e.g.
-<code>x == expr</code> and <code>{x == expr1, x == expr2, ...}</code>.
-Some usages are easier if the initial <code>x == </code> part is removed.
-This is the purpose of this function.</p>
+    <p>Legacy function</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stripvar</span>(<span class='no'>expr</span>, <span class='no'>var</span>)</pre>
+    <pre class="usage"><span class='fu'>stripvar</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr</th>
-      <td><p>Expression where <code>x == expr</code> should be replaced to <code>expr</code></p></td>
-    </tr>
-    <tr>
-      <th>var</th>
-      <td><p>Name of variable, e.g. <code>x</code></p></td>
+      <th>...</th>
+      <td><p>not used</p></td>
     </tr>
     </table>
     

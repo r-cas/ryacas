@@ -15,21 +15,21 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// yacas_evaluate
-std::vector<std::string> yacas_evaluate(std::string expr);
-RcppExport SEXP _Ryacas_yacas_evaluate(SEXP exprSEXP) {
+// yac_core
+std::vector<std::string> yac_core(std::string expr);
+RcppExport SEXP _Ryacas_yac_core(SEXP exprSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type expr(exprSEXP);
-    rcpp_result_gen = Rcpp::wrap(yacas_evaluate(expr));
+    rcpp_result_gen = Rcpp::wrap(yac_core(expr));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Ryacas_yacas_init_force", (DL_FUNC) &_Ryacas_yacas_init_force, 1},
-    {"_Ryacas_yacas_evaluate", (DL_FUNC) &_Ryacas_yacas_evaluate, 1},
+    {"_Ryacas_yac_core", (DL_FUNC) &_Ryacas_yac_core, 1},
     {NULL, NULL, 0}
 };
 

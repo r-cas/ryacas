@@ -1,8 +1,9 @@
-Changes in version 0.4.2
+Changes in version 0.5.0
 
-o Yacas errors are now provided to the user instead of just an empty result
-o Vignette on making exercises via the exams package
-o getSyms() function to list all Sym()'s in the global environment (.GlobalEnv)
+o PREPARING FOR A WHOLE NEW INTERFACE FROM NEXT VERSION - READ GETTING STARTED VIGNETTE.
+  All old functions throw a warning, and will be removed in the next major version.
+o Yacas errors are now provided to the user instead of just an empty result.
+o Vignette on making exercises via the exams package.
 
 Changes in version 0.4.1
 

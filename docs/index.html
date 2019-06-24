@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -53,29 +53,17 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/elaborate-reference.html">Elaborate reference of `Ryacas` functionality</a>
-    </li>
-    <li>
-      <a href="articles/exams.html">Automatic generation of exams in R using `Ryacas`</a>
+      <a href="articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="articles/getting-started.html">Getting started</a>
-    </li>
-    <li>
-      <a href="articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
-    </li>
-    <li>
-      <a href="articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
-    </li>
-    <li>
-      <a href="articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/NA/NA">
+  <a href="https://github.com/mikldk/ryacas">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -90,7 +78,12 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
+    
+
+    
+    
+<!-- README.md is generated from README.Rmd. Please edit only README.Rmd! -->
 <div id="ryacas" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#ryacas" class="anchor"></a>Ryacas</h1></div>
@@ -99,9 +92,9 @@
 <p>It can be used for exact arithmetic, symbolic math, ASCII pretty printing and translating R to TeX.</p>
 <div id="install-from-github" class="section level2">
 <h2 class="hasAnchor">
-<a href="#install-from-github" class="anchor"></a>Install from github</h2>
-<p>To build and install from github using R 3.3.0 (or later) and the R devtools package 1.11.0 (or later) run this command from within R:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"mikldk/ryacas"</span>)</a></code></pre></div>
+<a href="#install-from-github" class="anchor"></a>Install from GitHub</h2>
+<p>To build and install from github using R 3.3.0 (or later) and the R <code>devtools</code> package 1.11.0 (or later) run this command from within R:</p>
+<pre><code><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("mikldk/ryacas")</a></code></pre>
 </div>
 <div id="online-info" class="section level2">
 <h2 class="hasAnchor">
@@ -109,17 +102,51 @@
 <p>For vignettes, overview, pointers to additional information, installation instructions and a sample session see <a href="http://mikldk.github.io/ryacas/" class="uri">http://mikldk.github.io/ryacas/</a>.</p>
 <p>Yacas documentation can be found at <a href="http://yacas.readthedocs.org/" class="uri">http://yacas.readthedocs.org/</a></p>
 </div>
-<div id="more" class="section level2">
+<div id="brief-examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#more" class="anchor"></a>More</h2>
-<p>Once Ryacas is installed, pointers to additional information can be found with these R commands:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</a>
-<a class="sourceLine" id="cb2-2" title="2">package?Ryacas</a></code></pre></div>
+<a href="#brief-examples" class="anchor"></a>Brief examples</h2>
+<p>Below we show a few examples. Please refer to the <a href="http://mikldk.github.io/ryacas/articles/getting-started.html">“Getting started”</a> vignette (and the other vignettes) for more information.</p>
+<p>Returning strings with <code><a href="reference/yac_str.html">yac_str()</a></code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>(<span class="st">"x+x+x+x"</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; [1] "4*x"</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>(<span class="st">"Factor(x^2+x-6)"</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; [1] "(x-2)*(x+3)"</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>(<span class="st">"D(x) x^2+x-6"</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; [1] "2*x+1"</span></a></code></pre></div>
+<p>Returning <code>R</code> expressions with <code><a href="reference/yac_expr.html">yac_expr()</a></code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="reference/yac_expr.html">yac_expr</a></span>(<span class="st">"x+x+x+x"</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; expression(4 * x)</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/eval">eval</a></span>(<span class="kw"><a href="reference/yac_expr.html">yac_expr</a></span>(<span class="st">"x+x+x+x"</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">x =</span> <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; [1] 16</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="reference/yac_expr.html">yac_expr</a></span>(<span class="st">"Factor(x^2+x-6)"</span>)</a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; expression((x - 2) * (x + 3))</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="kw"><a href="reference/yac_expr.html">yac_expr</a></span>(<span class="st">"D(x) x^2+x-6"</span>)</a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; expression(2 * x + 1)</span></a></code></pre></div>
+<p>Using functions easier:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="st">"x^2+x-6"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"Factor"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>()</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; [1] "(x-2)*(x+3)"</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="st">"x^2+x-6"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"D(x)"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_expr.html">yac_expr</a></span>()</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; expression(2 * x + 1)</span></a></code></pre></div>
+<p>Solving equations (removes the <code>x==</code> from <code>yacas</code>):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>(<span class="st">"Solve(x^2+x-6 == 0, x)"</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; [1] "{x==2,x==(-3)}"</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="reference/yac_solve_str.html">yac_solve_str</a></span>(<span class="st">"Solve(x^2+x-6 == 0, x)"</span>)</a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; [1] "{2,-3}"</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="reference/yac_solve_expr.html">yac_solve_expr</a></span>(<span class="st">"Solve(x^2+x-6 == 0, x)"</span>)</a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; expression(c(2, -3))</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="st">"x^2+x-6 == 0"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"Solve"</span>, <span class="st">"x"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_solve_str.html">yac_solve_str</a></span>()</a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; [1] "{2,-3}"</span></a></code></pre></div>
+<p>And output in TeX:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="st">"3/4 + Pi/8"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"Simplify"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"TeXForm"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>()</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt; [1] "\\frac{\\pi  + 6}{8} "</span></a></code></pre></div>
+<p>And arbitrary precision:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>(<span class="st">"N(Pi, 50)"</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; [1] "3.1415926535897932384626433832795028841971693993751058209"</span></a></code></pre></div>
 </div>
 <div id="yacas" class="section level2">
 <h2 class="hasAnchor">
 <a href="#yacas" class="anchor"></a>Yacas</h2>
-<p>The package contains stripped-down yacas distribution. For the complete yacas source code see <a href="https://github.com/grzegorzmazur/yacas/" class="uri">https://github.com/grzegorzmazur/yacas/</a> . For more information on yacas see <a href="http://www.yacas.org/" class="uri">http://www.yacas.org/</a>.</p>
+<p>The package contains stripped-down yacas distribution. For the complete yacas source code see <a href="https://github.com/grzegorzmazur/yacas/" class="uri">https://github.com/grzegorzmazur/yacas/</a> . For more information on yacas see <a href="http://www.yacas.org/" class="uri">http://www.yacas.org/</a> or the documention directly at <a href="https://yacas.readthedocs.io/" class="uri">https://yacas.readthedocs.io/</a>. .</p>
 <hr>
 <p>Mikkel Meyer Andersen, mikl at math dot aau dot dk<br>
 Rob Goedman, goedman at mac dot com<br>
@@ -137,7 +164,7 @@ Grzegorz Mazur, teoretyk at gmail dot com</p>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=Ryacas">https://​cloud.r-project.org/​package=Ryacas</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/NA/NA">https://​github.com/​NA/​NA</a>
+<li>Browse source code at <br><a href="https://github.com/mikldk/ryacas">https://​github.com/​mikldk/​ryacas</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/mikldk/ryacas/issues">https://​github.com/​mikldk/​ryacas/​issues</a>
 </li>
@@ -161,7 +188,7 @@ Grzegorz Mazur, teoretyk at gmail dot com</p>
 </ul>
 </div>
 
-  <div class="dev-status">
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/mikldk/ryacas"><img src="https://travis-ci.org/mikldk/ryacas.svg?branch=master" alt="Build Status"></a></li>
@@ -169,7 +196,9 @@ Grzegorz Mazur, teoretyk at gmail dot com</p>
 </ul>
 </div>
 </div>
+
 </div>
+
 
       <footer><div class="copyright">
   <p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>

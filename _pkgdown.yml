@@ -1,0 +1,24 @@
+reference:
+- title: Evaluate/run yacas commands
+  desc: >
+    `yac_*(x)` functions evaluate/run `yacas` command `x`. The result varies depending on which of the functions used (see below).
+    These functions are the only ones that call `yacas`.
+  contents:
+  - has_concept("yac_communication")
+- title: Solve functions
+  desc: >
+    Specific functions used for easier interfacing with `yacas`'s [`Solve`](https://yacas.readthedocs.io/en/latest/reference_manual/solvers.html#symbolic-solvers) command.
+  contents:
+  - has_concept("solve")
+- title: Various utility functions
+  desc: These are various utility functions that do not call `yacas`.
+  contents:
+  - has_concept("helper")
+- title: Package
+  desc: ~
+  contents:
+  - '`Ryacas-package`'
+- title: Legacy
+  desc: ~
+  contents:
+  - has_concept("legacy")

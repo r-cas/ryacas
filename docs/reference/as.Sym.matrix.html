@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -86,22 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/elaborate-reference.html">Elaborate reference of `Ryacas` functionality</a>
-    </li>
-    <li>
       <a href="../articles/exams.html">Automatic generation of exams in R using `Ryacas`</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
-    </li>
-    <li>
-      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
-    </li>
-    <li>
-      <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
-    </li>
-    <li>
-      <a href="../articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
     </li>
   </ul>
 </li>
@@ -159,12 +147,17 @@
 <span class='no'>x</span></div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; [1,] "a"  "c" 
 #&gt; [2,] "2"  "d" 
-#&gt; [3,] "4"  "6" </div><div class='input'><span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Sym.html'>as.Sym</a></span>(<span class='no'>x</span>)
-<span class='no'>y</span></div><div class='output co'>#&gt; Yacas matrix:
+#&gt; [3,] "4"  "6" </div><div class='input'><span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Sym.html'>as.Sym</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'Sym()/yacas()/Eval()/Factor()/...' er forældet.</span>
+#&gt; <span class='warning'>Brug 'yac_str()/yac_expr()/... introduced in the 'Getting started' vignette.' i stedet for.</span>
+#&gt; <span class='warning'>Se help("Deprecated")</span></div><div class='input'><span class='no'>y</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'Sym()/yacas()/Eval()/Factor()/...' er forældet.</span>
+#&gt; <span class='warning'>Brug 'yac_str()/yac_expr()/... introduced in the 'Getting started' vignette.' i stedet for.</span>
+#&gt; <span class='warning'>Se help("Deprecated")</span></div><div class='output co'>#&gt; Yacas matrix:
 #&gt;      [,1] [,2]
 #&gt; [1,] a    c   
 #&gt; [2,] 2    d   
-#&gt; [3,] 4    6   </div><div class='input'><span class='fu'><a href='Eval.html'>Eval</a></span>(<span class='no'>y</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>3</span>))</div><div class='output co'>#&gt;      [,1] [,2]
+#&gt; [3,] 4    6   </div><div class='input'><span class='fu'><a href='Eval.html'>Eval</a></span>(<span class='no'>y</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>3</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'Sym()/yacas()/Eval()/Factor()/...' er forældet.</span>
+#&gt; <span class='warning'>Brug 'yac_str()/yac_expr()/... introduced in the 'Getting started' vignette.' i stedet for.</span>
+#&gt; <span class='warning'>Se help("Deprecated")</span></div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; [1,]    3    3
 #&gt; [2,]    2    3
 #&gt; [3,]    4    6</div><div class='input'>

@@ -1,9 +1,6 @@
 #ifndef YACAS_LISPERROR_H
 #define YACAS_LISPERROR_H
 
-#include "lisptype.h"
-#include "lispstring.h"
-
 #include <string>
 
 class LispError {
@@ -80,6 +77,10 @@ class LispErrInvalidExpression: public LispError {
 public:
     LispErrInvalidExpression():
         LispError("Error parsing expression") {}
+
+    explicit LispErrInvalidExpression(const std::string& ctx):
+        LispError("Error parsing expression near token " + ctx) {}
+
 };
 
 class LispErrUnprintableToken: public LispError {

@@ -11,3 +11,5 @@ Ryacas.Rcheck
 .Rproj.user
 vignettes/*.html
 revdep
+yacas-upstream-update/yacas
+yacas-upstream-update/new-*

@@ -1,20 +1,19 @@
 #ifndef YACAS_ANUMBER_H
 #define YACAS_ANUMBER_H
 
-#include "lispstring.h"
-
 #include <cassert>
-#include <vector>
 #include <cctype>
+#include <string>
+#include <vector>
 
 // These define the internal types for the arbitrary precision
 // number module. The larger they are the better. PlatDoubleWord
 // should be at least twice as big as PlatWord, to prevent overflowing
 // during multiplication.
 
-typedef unsigned short PlatWord;
-typedef unsigned long PlatDoubleWord;
-typedef signed long PlatSignedDoubleWord;
+typedef std::uint32_t PlatWord;
+typedef std::uint64_t PlatDoubleWord;
+typedef std::int64_t PlatSignedDoubleWord;
 
 /* Quantities derived from the platform-dependent types for doing
  * arithmetic.
@@ -22,7 +21,6 @@ typedef signed long PlatSignedDoubleWord;
 
 #define WordBits  (8*sizeof(PlatWord))
 #define WordBase  (((PlatDoubleWord)1)<<WordBits)
-#define WordMask  (WordBase-1)
 
 /* Class ANumber represents an arbitrary precision number. it is
  * basically an array of PlatWord objects, with the first element
@@ -31,8 +29,8 @@ typedef signed long PlatSignedDoubleWord;
 class ANumber : public std::vector<PlatWord>
 {
 public:
-    ANumber(const char* aString,int aPrecision,int aBase=10);
-    ANumber(int aPrecision);
+    ANumber(const std::string& aString,int aPrecision,int aBase=10);
+    explicit ANumber(int aPrecision);
     //TODO the properties of this object are set in the member initialization list, but then immediately overwritten by the CopyFrom. We can make this slightly cleaner by only initializing once.
     inline ANumber(const ANumber& aOther) : iExp(0),iNegative(false),iPrecision(0),iTensExp(0)
     {
@@ -40,7 +38,7 @@ public:
     }
     void CopyFrom(const ANumber& aOther);
     bool ExactlyEqual(const ANumber& aOther);
-    void SetTo(const char* aString,int aBase=10);
+    void SetTo(const std::string& aString,int aBase=10);
     int Precision() const;
     void SetPrecision(int aPrecision) {iPrecision = aPrecision;}
     void ChangePrecision(int aPrecision);
@@ -82,7 +80,7 @@ int WordDigits(int aPrecision, int aBase);
 
 // Operations on ANumber.
 void Negate(ANumber& aNumber);
-void  ANumberToString(LispString& aResult, ANumber& aNumber, int aBase, bool aForceFloat=false);
+void ANumberToString(std::string& aResult, ANumber& aNumber, int aBase, bool aForceFloat=false);
 void Add(ANumber& aResult, ANumber& a1, ANumber& a2);
 void Subtract(ANumber& aResult, ANumber& a1, ANumber& a2);
 void Multiply(ANumber& aResult, ANumber& a1, ANumber& a2);
