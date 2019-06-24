@@ -260,6 +260,23 @@ yac_str("Expand(poly)")
 ```
 
 
+# Sums
+
+```{r}
+yac_str("Sum(k, 0, n, a^k)")
+``` 
+
+
+# Limits
+
+```{r}
+cmd <- "Limit(n, Infinity) (1+(1/n))^n"
+yac_str(cmd)
+yac_expr(cmd)
+yac_str("Limit(h, 0) (Sin(x+h)-Sin(x))/h")
+``` 
+
+
 # Solving equations
 
 Say we want to find roots of `poly`. First note that the equality in `yacas` is `==`. Then_
@@ -369,6 +386,8 @@ Below are some `yacas` functions. A more elaborate reference is available at <ht
     + `D(x) expr`: Take the derivative of `expr` with respect to `x`
     + `HessianMatrix(function, var)`: Create the Hessian matrix
     + `JacobianMatrix(function, var)`: Create the Jacobian matrix
+    + `Limit(n, a) f(n)`: Limit of `f(n)` for `n` going towards `a` (e.g. `Infinity` or `0`)
+    + `Sum(k, a, b, f(k))`: Sum of `f(k)` for `k` from `a` to `b`.
 * Output
     + `TeXForm(x)`: Get a $\LaTeX$ representation of an expression
     + `PrettyForm(x)`: Print a prettier ASCII representation of an expression
