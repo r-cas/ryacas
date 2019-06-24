@@ -11,14 +11,16 @@ yacas_init_force <- function(path) {
 #' string.
 #' 
 #' @param expr Yacas expression
-#' @return Result of evaluating \code{expr} by yacas in OpenMath format and
+#' @return Result of evaluating \code{expr} by yacas and
 #' side-effects of the evaluation
 #' 
 #' @examples
-#' yacas_evaluate("D(x)Sin(x^2)")
+#' yac_core("D(x)Sin(x^2)")
 #' 
-#' @export
-yacas_evaluate <- function(expr) {
-    .Call(`_Ryacas_yacas_evaluate`, expr)
+#' @concept yac_communication
+#' @keywords internal
+#' 
+yac_core <- function(expr) {
+    .Call(`_Ryacas_yac_core`, expr)
 }
 

@@ -1,5 +1,5 @@
 Package: Ryacas
-Version: 0.4.1.9000
+Version: 1.0.0
 Title: R Interface to the Yacas Computer Algebra System
 Authors@R: c(
     person(given = "Mikkel Meyer", family = "Andersen",
@@ -23,8 +23,7 @@ Imports:
     methods,
     Rcpp (>= 0.12.0),
     stats,
-    settings,
-    xml2
+    magrittr
 LinkingTo: Rcpp
 Suggests:
     devtools,
@@ -36,7 +35,8 @@ Suggests:
     igraph,
     testthat
 License: GPL-2
-URL: https://github.com//mikldk/ryacas, http://www.yacas.org
+SystemRequirements: C++17
+URL: https://github.com/mikldk/ryacas, http://www.yacas.org
 BugReports: https://github.com/mikldk/ryacas/issues
 Roxygen: list(markdown = TRUE, roclets = c("rd", "collate", "namespace"))
 RoxygenNote: 6.1.1

@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -83,22 +83,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/elaborate-reference.html">Elaborate reference of `Ryacas` functionality</a>
-    </li>
-    <li>
-      <a href="../articles/exams.html">Automatic generation of exams in R using `Ryacas`</a>
+      <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
-    </li>
-    <li>
-      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
-    </li>
-    <li>
-      <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
-    </li>
-    <li>
-      <a href="../articles/sym-matrix-vector.html">Matrix and vector `Sym` objects</a>
     </li>
   </ul>
 </li>
@@ -106,7 +94,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/NA/NA">
+  <a href="https://github.com/mikldk/ryacas">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -137,118 +125,414 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-evaluate-run-yacas-commands" class="hasAnchor"><a href="#section-evaluate-run-yacas-commands" class="anchor"></a>Evaluate/run yacas commands</h2>
+          <p class="section-desc"><p><code>yac_*(x)</code> functions evaluate/run <code>yacas</code> command <code>x</code>. The result varies depending on which of the functions used (see below). These functions are the only ones that call <code>yacas</code>.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="yac.html">yac()</a></code> </p>
+        </td>
+        <td><p>Run yacas command</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_assign.html">yac_assign()</a></code> </p>
+        </td>
+        <td><p>Assign yacas variable</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_cli.html">yac_cli()</a></code> </p>
+        </td>
+        <td><p>yacas command line interface</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_expr.html">yac_expr()</a></code> </p>
+        </td>
+        <td><p>Run yacas command returning R expression</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_silent.html">yac_silent()</a></code> </p>
+        </td>
+        <td><p>Run yacas command silently</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_str.html">yac_str()</a></code> </p>
+        </td>
+        <td><p>Run yacas command returning string/character</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-solve-functions" class="hasAnchor"><a href="#section-solve-functions" class="anchor"></a>Solve functions</h2>
+          <p class="section-desc"><p>Specific functions used for easier interfacing with <code>yacas</code>’s <a href="https://yacas.readthedocs.io/en/latest/reference_manual/solvers.html#symbolic-solvers"><code>Solve</code></a> command.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="yac_solve_expr.html">yac_solve_expr()</a></code> </p>
+        </td>
+        <td><p>Run yacas Solve() command returning R expression</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_solve_str.html">yac_solve_str()</a></code> </p>
+        </td>
+        <td><p>Run yacas Solve() command returning string/character</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-various-utility-functions" class="hasAnchor"><a href="#section-various-utility-functions" class="anchor"></a>Various utility functions</h2>
+          <p class="section-desc"><p>These are various utility functions that do not call <code>yacas</code>.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="as_r.html">as_r()</a></code> </p>
+        </td>
+        <td><p>Convert yacas vector (list) or matrix (list of lists) to R vector/matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as_y.html">as_y()</a></code> </p>
+        </td>
+        <td><p>Convert R vector/matrix to yacas vector (list) or matrix (list of lists)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="y_fn.html">y_fn()</a></code> </p>
+        </td>
+        <td><p>Prepare simple <code>yacas</code> call</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="y_print.html">y_print()</a></code> </p>
+        </td>
+        <td><p>Pretty print yacas strings</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-package" class="hasAnchor"><a href="#section-package" class="anchor"></a>Package</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="Eval.html">Eval()</a></code> </p>
-        </td>
-        <td><p>Evaluate a yacas expression.</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="Ryacas-package.html">Ryacas-package</a></code> </p>
         </td>
         <td><p>R interface to yacas computer algebra package</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-legacy" class="hasAnchor"><a href="#section-legacy" class="anchor"></a>Legacy</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="Clear.html">Clear()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Conjugate.html">Conjugate()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Eval.html">Eval()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Expand.html">Expand()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Expr.html">Expr()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Exprq.html">Exprq()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Factor.html">Factor()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Factorial.html">Factorial()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="I.html">I()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Identity.html">Identity()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Infinity.html">Infinity()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Integrate.html">Integrate()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Inverse.html">Inverse()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="InverseTaylor.html">InverseTaylor()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Limit.html">Limit()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="List.html">List()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Math.html">Math()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="N.html">N()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Newton.html">Newton()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Ops.html">Ops()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Pi.html">Pi()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Precision.html">Precision()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="PrettyForm.html">PrettyForm()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="PrettyPrinter.html">PrettyPrinter()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="Ryacas_options.html">Ryacas_options()</a></code> </p>
         </td>
-        <td><p>Set or get options for the Ryacas package</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="Sym.html">Sym()</a></code> <code><a href="Sym.html">Expr()</a></code> </p>
+          <p><code><a href="Set.html">Set()</a></code> </p>
         </td>
-        <td><p>Sym</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="as.Sym.character.html">as.Sym(<i>&lt;character&gt;</i>)</a></code> </p>
+          <p><code><a href="Simplify.html">Simplify()</a></code> </p>
         </td>
-        <td><p>Convert character vector to yacas object</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="as.Sym.matrix.html">as.Sym(<i>&lt;matrix&gt;</i>)</a></code> </p>
+          <p><code><a href="Solve.html">Solve()</a></code> </p>
         </td>
-        <td><p>Convert character matrix to yacas object</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bodyAsExpression.html">bodyAsExpression()</a></code> </p>
+          <p><code><a href="Subst.html">Subst()</a></code> </p>
         </td>
-        <td><p>Get body of function as an expression.</p></td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Sym.html">Sym()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Taylor.html">Taylor()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="TeXForm.html">TeXForm()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Transpose.html">Transpose()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Ver.html">Ver()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.Sym.html">as.Sym()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.expression.Sym.html">as.expression(<i>&lt;Sym&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.expression.yacas.html">as.expression(<i>&lt;yacas&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.language.html">as.language()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="deriv.html">deriv()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="determinant.html">determinant()</a></code> </p>
+        </td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="getSyms.html">getSyms()</a></code> </p>
         </td>
-        <td><p>List <code>Sym()</code> objects</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_output_width.html">get_output_width()</a></code> </p>
+          <p><code><a href="grapes-Where-grapes.html">`%Where%`</a></code> </p>
         </td>
-        <td><p>Get width of yacas output</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="root.html">root()</a></code> </p>
         </td>
-        <td><p>Root function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="set_output_width.html">set_output_width()</a></code> </p>
-        </td>
-        <td><p>Set width of yacas output</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="stripvar.html">stripvar()</a></code> </p>
         </td>
-        <td><p>Removes part of expression containing variable</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="syacas.html">syacas()</a></code> </p>
         </td>
-        <td><p>yacas interface -- silent version</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="y_ls.html">y_ls()</a></code> </p>
         </td>
-        <td><p>Get Yacas variables</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="yacas.html">yacas()</a></code> </p>
         </td>
-        <td><p>yacas interface</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yacasTranslations.html">yacasTranslations</a></code> </p>
-        </td>
-        <td><p>Yacas translations</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="yacas_evaluate.html">yacas_evaluate()</a></code> </p>
         </td>
-        <td><p>Evaluate yacas expression</p></td>
+        <td><p>Legacy function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="yacmode.html">yacmode()</a></code> </p>
         </td>
-        <td><p>yacmode interface</p></td>
+        <td><p>Legacy function</p></td>
       </tr>
     </tbody>
     </table>
@@ -257,7 +541,11 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-evaluate-run-yacas-commands">Evaluate/run yacas commands</a></li>
+      <li><a href="#section-solve-functions">Solve functions</a></li>
+      <li><a href="#section-various-utility-functions">Various utility functions</a></li>
+      <li><a href="#section-package">Package</a></li>
+      <li><a href="#section-legacy">Legacy</a></li>
     </ul>
   </div>
 </div>

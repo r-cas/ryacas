@@ -23,6 +23,7 @@
 
 #include "lispobject.h"
 #include "lispstring.h"
+#include "mempool.h"
 #include "numbers.h"  // RefPtr<BigNumber> needs definition of BigNumber
 #include "noncopyable.h"
 
@@ -38,31 +39,22 @@ constexpr int BASE2 = 2;
 
 class LispEnvironment;
 
-class LispAtom: public LispObject
+class LispAtom: public LispObject, public FastAlloc<LispAtom>
 {
 public:
   static LispObject* New(LispEnvironment& aEnvironment, const std::string& aString);
-  ~LispAtom() override;
   const LispString* String() override;
   LispObject* Copy() const override { return new LispAtom(*this); }
 private:
   LispAtom(const LispString* aString);
-  LispAtom& operator=(const LispAtom& aOther)
-  {
-    // copy constructor not written yet, hence the assert
-    assert(0);
-    return *this;
-  }
-public:
-  LispAtom(const LispAtom& other);
-private:
-  const LispString* iString;
+
+  LispStringSmartPtr iString;
 };
 
 //------------------------------------------------------------------------------
 // LispSublist
 
-class LispSubList: public LispObject
+class LispSubList: public LispObject, public FastAlloc<LispSubList>
 {
 public:
   static LispSubList* New(LispObject* aSubList);
@@ -82,7 +74,7 @@ private:
 //------------------------------------------------------------------------------
 // LispGenericClass
 
-class LispGenericClass: public LispObject
+class LispGenericClass: public LispObject, public FastAlloc<LispGenericClass>
 {
 public:
   static LispGenericClass* New(GenericClass* aClass);
@@ -105,7 +97,7 @@ private:
     GenericClass* iClass;
 };
 
-class LispNumber: public LispObject
+class LispNumber: public LispObject, public FastAlloc<LispNumber>
 {
 public:
     /// constructors:

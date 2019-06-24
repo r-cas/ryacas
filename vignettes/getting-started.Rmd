@@ -26,61 +26,354 @@ System". The `yacas` program
 is developed by Ayal Pinkhuis (who is also the maintainer)
 and others, and is available at <http://www.yacas.org/> for various
 platforms. There is a comprehensive documentation (300+ pages) of
-`yacas` (also available at
-<http://www.yacas.org/>) and the
+`yacas` available at <https://yacas.readthedocs.io> and the
 documentation contains many examples.
 
-# Example 1: using character vectors
+## Note
+
+This version of `Ryacas` is somewhat different to previous versions of `Ryacas` 
+because we have tried to make the interface a lot simpler.
+
+The old version of `Ryacas` is available as a legacy version called `Ryacas0` at <https://github.com/mikldk/ryacas0/> with documentation directly available at <https://mikldk.github.io/ryacas0/>.
+
+## Interfaces to `yacas`
+
+The naming principle governing `Ryacas` functions is as follows:
+
+* `yac_*(x)` functions evaluate/run `yacas` command `x`; the result varies depending on which of the functions used (see below)
+* `y_*(x)` various utility functions (not involving calls to `yacas`)
+
+More specifically about ways to call `yacas` (the `yac_*(x)` functions):
+
+* `yac_str(x)`: Evaluate `yacas` command `x` (a string) and get result as **string/character**.
+* `yac_expr(x)`: Evaluate `yacas` command `x` (a string) and get result as an **`R` expression**.
+
+Note, that the `yacas` command `x` is a string and must often be built op using `paste()`/`paste0()`. 
+Examples of this will be shown in multiple examples below. 
+A short summary of often used `yacas` commands are found in the section "`yacas` reference" at the end of this document.
+Similarly, a short summary of `Ryacas` functions are also found in the section "`Ryacas` reference" at the end of this document.
+
+# Example 1: Simple algebra
+
+First, consider this polynomial:
 
 ```{r}
 eq <- "x^2 + 4 + 2*x + 2*x"
-yacas(eq)
-yacas(paste0("Simplify(", eq, ")"))
-yacas(paste0("Factor(", eq, ")"))
 ```
 
-Or by using the corresponding `R` functions directly:
-```{r}
-Simplify(yacas(eq))
-Factor(yacas(eq))
-```
-
-Or course the result can be saved before calling the helper `R` functions:
+Now, perform `yacas` operations, and get result as string/character:
 
 ```{r}
-yeq <- yacas(eq)
-Simplify(yeq)
-Factor(yeq)
+yac_str(eq) # No task was given to yacas, so we simply get the same returned
+yac_str(paste0("Simplify(", eq, ")"))
+yac_str(paste0("Factor(", eq, ")"))
+yac_str(paste0("TeXForm(Factor(", eq, "))"))
 ```
 
-And getting results out:
+\[
+`r yac_str(paste0("TeXForm(Factor(", eq, "))"))`
+\]
+
+Instead of the pattern `paste0("Simplify(", eq, ")")` etc., there exists a 
+helper function `y_fn()` that does this:
 
 ```{r}
-res <- Factor(yeq)
-as.character(res)
-TeXForm(res)
+y_fn(eq, "Simplify")
+yac_str(y_fn(eq, "Simplify"))
+yac_str(y_fn(eq, "Factor"))
+yac_str(y_fn(y_fn(eq, "Factor"), "TeXForm"))
 ```
 
-To include inline, e.g. $`r TeXForm(yeq)` = `r TeXForm(res)`$.
-
-
-# Example 2: using `Sym()` 
+As you see, there are a lot of nestings. That can be avoided by using `magrittr`'s pipe `%>%` (automatically available with `Ryacas`) together with the helper function `y_fn()`:
 
 ```{r}
-xs <- Sym("x")
-eqs <- xs^2 + 4 + 2*xs + 2*xs
-Simplify(eqs)
-Factor(eqs)
-res <- Factor(eqs)
-as.character(res)
-TeXForm(res)
+eq %>% y_fn("Simplify")
+eq %>% y_fn("Simplify") %>% yac_str()
+eq %>% y_fn("Factor") %>% yac_str()
+eq %>% y_fn("Factor") %>% y_fn("TeXForm") %>% yac_str()
 ```
 
-# Example 3: using Yacas variables and `Sym()` 
+Below, we will stick to the standard way of calling the functions, and not using the pipe, but now it has been demonstrated if the user prefers that way.
+
+We will not use the pipe operator below, but just demonstrate its usage.
+
+Now, again perform `yacas` operations, but get result as an `R` expression, e.g. for continued computations:
 
 ```{r}
-yacas("p := x^2 + 4 + 2*x + 2*x")
-ps <- Sym("p")
-ps
-TeXForm(Simplify(ps))
+eq
+eq %>% yac_expr() # Alternative to "yac_expr(eq)"
+cmd <- eq %>% y_fn("Factor")
+cmd
+e <- yac_expr(cmd)
+e
+eval(e, list(x = 2))
 ```
+
+# Example 2: Linear algebra
+
+To work with matrices and vectors, you need to realise that `yacas` and `R` has different 
+ways of representing these objects. `yacas` represents vectors as a list, and a matrix as a list of lists (each list is a row).
+
+## Simple example
+
+You can work with these directly. Here illutrated with vectors:
+
+```{r}
+cmd <- "2*{x, x^2, x^3}"
+cmd %>% yac_str()
+e <- cmd %>% yac_expr()
+e
+eval(e, list(x = 1.5))
+```
+
+And then illutrated with matrices. First with purely numeric contents:
+
+```{r}
+cmd <- "{{1, 2}, {3, 4}}"
+yac_str(cmd)
+y_print(cmd) # Convenience function for prettier print
+e <- cmd %>% yac_expr()
+e
+eval(e)
+```
+
+Also in $\LaTeX$:
+
+```{r}
+cmd %>% y_fn("TeXForm") %>% yac_str()
+```
+
+
+But it also works with symbolic contents:
+
+```{r}
+cmd1 <- paste0("a * ", cmd, "")
+cmd2 <- cmd1 %>% y_fn("Inverse")
+cmd2
+cmd2 %>% yac_str()
+cmd2 %>% y_fn("TeXForm") %>% yac_str()
+```
+
+\[
+`r cmd2 %>% y_fn("TeXForm") %>% yac_str()`
+\]
+
+```{r}
+paste0(cmd2, "*", cmd1) %>% 
+  y_fn("Simplify") %>% 
+  yac_str()
+e2 <- cmd2 %>% yac_expr()
+eval(e2, list(a = 2.2))
+```
+
+## Using `R`'s character matrices
+
+The above is fine when writing `yacas` vectors and matrices by hand. 
+But often one would want to exploit `R`'s convenient functions to work with matrices. 
+
+The central idea to make this possible is to work with `R` character matrices. 
+We provide two helper functions to go back and forth between `R` and `yacas`:
+
+* `as_y(x)`: Convert `R` character matrix `x` to a `yacas` representation
+* `as_r(x)`: Convert a `yacas` representation `x` to a `R` character matrix
+
+Below, we illustrate the usage of both functions.
+
+First, we create a character matrix using `R`:
+
+```{r}
+Achr <- matrix(0, nrow = 3, ncol = 3)
+diag(Achr) <- 1
+Achr[2, 3] <- "a"
+Achr[1, 3] <- "a"
+Achr
+```
+
+Note how this is a character matrix. If we want to find it's inverse symbolically using `yacas`, it must first be represented as a `yacas` matrix:
+
+```{r}
+Ayac <- Achr %>% as_y()
+Ayac
+```
+
+Now, we can find the inverse:
+
+```{r}
+cmd <- Ayac %>% y_fn("Inverse")
+cmd %>% yac_str()
+```
+
+A nicer representation can be obtained in (at least) four ways:
+
+```{r}
+way1 <- cmd %>% yac_str()
+way1 %>% y_print()
+way2 <- cmd %>% y_fn("TeXForm") %>% yac_str()
+way2
+way3 <- cmd %>% y_fn("PrettyForm") %>% yac_str()
+way3 %>% cat() # Result of PrettyForm() must be printed
+way4 <- cmd %>% yac_str()
+way4
+way4 %>% as_r()
+way4 %>% as_r() %>% print(quote = FALSE)
+```
+
+Say we want to subset it to only consider a submatrix.
+To do that, we can use `R`'s facilities:
+
+```{r}
+A_inv_yac <- way4 %>% as_r()
+Bchr <- A_inv_yac[2:3, 2:3]
+Bchr
+Bchr %>% as_y()
+Bchr %>% as_y() %>% 
+    y_fn("Inverse") %>% 
+    yac_str() %>% 
+    as_r()
+```
+
+# `yacas` variables
+
+`yacas` also has variables. They are assigned by `:=`. 
+
+Consider this example:
+
+```{r}
+yac_str("poly := (x-3)*(x+2)")
+```
+
+If the output is not necessary, it can be suppressed by using `yac_silent()` instead of `yac_str()`:
+
+```{r}
+yac_silent("poly := (x-3)*(x+2)")
+```
+
+We can now list `yacas` variables (`I` is the imaginary unit):
+
+```{r}
+yac_str("Variables()")
+```
+
+```{r}
+yac_str("Expand(poly)")
+"poly" %>% y_fn("Expand") %>% yac_str()
+```
+
+
+# Solving equations
+
+Say we want to find roots of `poly`. First note that the equality in `yacas` is `==`. Then_
+
+```{r}
+cmd <- "Solve(poly == 0, x)"
+cmd %>% yac_str()
+```
+
+If we want the solution without the variable name `x` and the equality symbol `==`, we can use `Ryacas` helper functions `yac_solve_expr()` and `yac_solve_str()` depending on the desired result type:
+
+* `yac_solve_expr(x)`:  Evaluate `yacas` command `x` (a string starting with 'Solve') and reducing `var == ` from the `yacas` result, and get result as an **`R` expression**.
+* `yac_solve_str(x)`: Same as `yac_solve_expr()`, but get result as as **string/character**.
+
+Examples of usage:
+
+```{r}
+cmd
+cmd %>% yac_solve_str()
+cmd %>% yac_solve_expr()
+```
+
+We can also use `y_fn()`:
+
+```{r}
+"poly == 0" %>% y_fn("Solve", "x")
+"poly == 0" %>% y_fn("Solve", "x") %>% yac_solve_str()
+```
+
+
+# Case: gradient and Hessian for a function
+
+Say we have a function:
+
+```{r}
+f <- function(x, y) 2*x^2 + 3*y + y*x^2
+f_body <- body(f)
+f_body
+f_body_chr <- as.character(as.expression(body(f)))
+f_body_chr
+# or:
+# f_body_chr <- "2 * x^2 + 3 * y + y * x^2"
+# f <- function(x, y) NULL
+# body(f) <- parse(text = f_body_chr, keep.source = FALSE)
+```
+
+The gradient can be found using `yacas` (`D(x) expr` is the derivative of `expr` with respect to `x`):
+
+```{r}
+cmd_g <- paste0("{ D(x) ", f_body_chr, ", D(y) ", f_body_chr, " }")
+cmd_g
+g_body <- yac_expr(cmd_g)
+g_body
+g <- function(x, y) NULL
+body(g) <- g_body
+g
+g(2, 4)
+```
+
+The Hessian matrix can also be found using `yacas`:
+
+```{r}
+cmd_H <- paste0("HessianMatrix(", f_body_chr, ", {x, y})")
+cmd_H
+H_body <- yac_expr(cmd_H)
+H_body
+H <- function(x, y) NULL
+body(H) <- H_body
+H
+H(2, 4)
+```
+
+# `Ryacas` reference
+
+Principle:
+
+* `yac_*(x)` functions evaluate/run `yacas` command x; the result varies depending on which of the functions used
+* `y_*(x)` various utility functions (not involving calls to `yacas`)
+
+Reference:
+
+* Evaluate `yacas` expressions
+    + `yac_expr(x)`: Evaluate `yacas` command `x` (a string) and get result as an **`R` expression**.
+    + `yac_silent(x)`: Evaluate `yacas` command `x` (a string) silently; useful for creating `yacas` variables.
+    + `yac_solve_expr(x)`:  Evaluate `yacas` command `x` (a string starting with 'Solve') and reducing `var == ` from the `yacas` result, and get result as an **`R` expression**.
+    + `yac_solve_str(x)`: Same as `yac_solve_expr()`, but get result as as **string/character**.
+    + `yac_str(x)`: Same as `yac_expr()`, but get result as **string/character**.
+* Helper functions
+    + `as_y(x)`: Convert `R` character matrix `x` to a `yacas` representation
+    + `as_r(x)`: Convert a `yacas` representation `x` to a `R` character matrix
+    + `y_fn(x, fn)`: Helper function to prepare a call for `yacas`, e.g. `y_fn("x^2 - 1", "Factor")` is gives `"Factor(x^2 - 1)"`
+    + `y_print(x)`: Pretty print yacas strings, e.g. a yacas matrix
+* Lower level functions
+    + `yac_core(x)`: Evaluate `yacas` command `x` (a string) and get both result and side effects; used in the implementation of `yac_expr()`, `yac_silent()`, and `yac_str()`
+
+# `yacas` reference
+
+Below are some `yacas` functions. A more elaborate reference is available at <https://yacas.readthedocs.io/>:
+
+* General
+    + `Expand(x)`: Expand an expression
+    + `Factor(x)`: Factorise an expression
+    + `Simplify(x)`: Simplify an expression
+    + `Solve(expr, var)` solve an equation (refer to the `Ryacas` functions `yac_solve_expr()` and `yac_solve_str()`)
+    + `Variables()`: List `yacas` variables
+* Calculus:
+    + `D(x) expr`: Take the derivative of `expr` with respect to `x`
+    + `HessianMatrix(function, var)`: Create the Hessian matrix
+    + `JacobianMatrix(function, var)`: Create the Jacobian matrix
+* Output
+    + `TeXForm(x)`: Get a $\LaTeX$ representation of an expression
+    + `PrettyForm(x)`: Print a prettier ASCII representation of an expression
+* Linear algebra
+    + `Inverse(A)`: Inverse of a matrix
+    + `Transpose(A)`: Transpose of a matrix
+    + `A * B`: Matrix multiplication (and not as `R`'s `%*%`)
+

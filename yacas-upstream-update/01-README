@@ -1,0 +1,34 @@
+#? sudo apt-get install libboost1.62-dev libboost-date-time1.62-dev libjsoncpp-dev libzmq3-dev libzmqpp-dev
+
+# First
+cd yacas-upstream-update
+git clone https://github.com/grzegorzmazur/yacas.git
+
+cd ./yacas
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_CYACAS_GUI=No -DENABLE_CYACAS_KERNEL=Yes -DENABLE_CYACAS_BENCHMARKS=No -DBUILD_TESTING=No -DENABLE_CYACAS_UNIT_TESTS=No -DENABLE_CYACAS_CONSOLE=No -DENABLE_JYACAS=No -DENABLE_DOCS=No ..
+cd ../../../yacas-upstream-update
+
+# Compare versions:
+# Upstream:
+cat ./yacas/build/cyacas/libyacas/config/yacas/yacas_version.h
+# Current:
+cat ../src/yacas/include/yacas/yacas_version.h
+
+###########################
+# 02
+###########################
+./02-extract-files.sh
+
+###########################
+# Compare old to new
+###########################
+meld ../src/yacas/ ./new-src-yacas/
+meld ../inst/yacas/ ./new-inst-yacas/
+
+###########################
+03
+###########################
+./03-merge.sh
+

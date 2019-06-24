@@ -1,10 +1,10 @@
 ---
-title: "Automatic generation of exams in R using `Ryacas`"
+title: "Using `Ryacas` in automatic generation of exams in R"
 author: "Mikkel Meyer Andersen and Søren Højsgaard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Automatic generation of exams in R using Ryacas}
+  %\VignetteIndexEntry{Using Ryacas in automatic generation of exams in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, message=FALSE}
 library(Ryacas)
+set.seed(1) # For reproducibility
 ```
 
 The [`exams` package](https://cran.r-project.org/package=exams) offer a wide range of ways of generating exams. See e.g. the many [examples](http://www.r-exams.org/templates/).
@@ -37,17 +38,16 @@ out_dir <- tempdir()
 This is the exams `Rmd` file:
 
 ```{r, comment=NA, echo=FALSE}
-exam_file <- system.file("exams/poly.Rmd", package = "Ryacas")
+exam_file <- system.file("exams/poly-roots.Rmd", package = "Ryacas")
 fl <- readLines(exam_file)
 cat(paste0(fl, "\n"))
 ```
 
-This can then be compiled using e.g. `exams::exams2html`, `exams::exams2pandoc` or any of the other `exams::exams2*` functions:
+This can then be compiled using e.g. `exams::exams2html`, `exams::exams2pandoc` or any of the other `exams::exams2*` functions to obtain something like:
 
 ```{r, include=FALSE}
 out_nm <- "out-exams-poly"
 
-set.seed(1)
 exams::exams2pandoc(exam_file, n = 2, type = "markdown", dir = out_dir, name = out_nm)
 ```
 
@@ -73,17 +73,16 @@ cat(paste0(fl, "\n"))
 This is the exams `Rmd` file:
 
 ```{r, comment=NA, echo=FALSE}
-exam_file <- system.file("exams/factorisation.Rmd", package = "Ryacas")
+exam_file <- system.file("exams/poly-factorisation.Rmd", package = "Ryacas")
 fl <- readLines(exam_file)
 cat(paste0(fl, "\n"))
 ```
 
-This can then be compiled using e.g. `exams::exams2html`, `exams::exams2pandoc` or any of the other `exams::exams2*` functions:
+This can then be compiled using e.g. `exams::exams2html`, `exams::exams2pandoc` or any of the other `exams::exams2*` functions to obtain something like:
 
 ```{r, include=FALSE}
 out_nm <- "out-exams-factorisation"
 
-set.seed(1)
 exams::exams2pandoc(exam_file, n = 2, type = "markdown", dir = out_dir, name = out_nm)
 ```
 
