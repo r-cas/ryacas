@@ -125,7 +125,7 @@ namespace yacas {
         unsigned NN::TO_STRING_DC_THRESHOLD = 24;
         unsigned NN::DIV_REM_DC_THRESHOLD = 4;
 
-        NN::NN(std::string_view s, unsigned b)
+        NN::NN(std::string s, unsigned b)
         {
             auto p = s.cbegin();
             const auto q = s.cend();

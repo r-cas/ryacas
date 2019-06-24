@@ -10,7 +10,6 @@ OBJECTS=$(OBJECTS.yacas) $(OBJECTS.ryacas)
 
 PKG_CPPFLAGS = -Iyacas/include -DNO_GLOBALS
 
-CXX_STD = CXX17
 PKG_LIBS = `$(R_HOME)/bin/Rscript -e "Rcpp:::LdFlags()"`
 
 all: $(SHLIB)

@@ -31,14 +31,14 @@ namespace yacas {
             static const ZZ TEN;
 
             struct ParseError : public std::invalid_argument {
-                ParseError(std::string_view s, std::size_t) :
+                ParseError(std::string s, std::size_t) :
                     std::invalid_argument("yacas::mp::ZZ: error parsing " + std::string(s))
                 {
                 }
             };
 
             struct DivisionByZeroError : public std::domain_error {
-                DivisionByZeroError(std::string_view s) :
+                DivisionByZeroError(std::string s) :
                     std::domain_error("yacas::mp::NN: attempt to divide " +
                                        std::string(s) + " by zero")
                 {
@@ -48,7 +48,7 @@ namespace yacas {
             ZZ();
             explicit ZZ(int);
             explicit ZZ(const NN&);
-            explicit ZZ(std::string_view s, unsigned b = 10);
+            explicit ZZ(std::string s, unsigned b = 10);
 
             template <class RndEngine>
             ZZ(unsigned no_bits, RndEngine& engine);

@@ -1,5 +1,7 @@
 #include <Rcpp.h>
 
+// [[Rcpp::plugins(cpp14)]]
+
 #include <yacas/yacas.h>
 
 #include <sstream>

@@ -28,7 +28,7 @@ namespace yacas {
         const ZZ ZZ::TWO = ZZ(2);
         const ZZ ZZ::TEN = ZZ(10);
 
-        ZZ::ZZ(std::string_view s, unsigned b) : _neg(false)
+        ZZ::ZZ(std::string s, unsigned b) : _neg(false)
         {
             auto p = s.cbegin();
             const auto q = s.cend();
@@ -47,7 +47,7 @@ namespace yacas {
             }
 
             try {
-                _nn = NN(std::string_view(&(*p), std::distance(p, q)), b);
+                _nn = NN(std::string(&(*p), std::distance(p, q)), b);
             } catch (const NN::ParseError& e) {
                 throw ParseError(&(*p), std::distance(p, q));
             }

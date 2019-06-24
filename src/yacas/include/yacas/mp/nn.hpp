@@ -49,7 +49,7 @@ namespace yacas {
             static unsigned MUL_TOOM33_THRESHOLD;
 
             struct ParseError : public std::invalid_argument {
-                ParseError(std::string_view s, std::size_t) :
+                ParseError(std::string s, std::size_t) :
                     std::invalid_argument("yacas::mp::NN: error parsing " +
                                           std::string(s))
                 {
@@ -57,7 +57,7 @@ namespace yacas {
             };
 
             struct DivisionByZeroError : public std::domain_error {
-                DivisionByZeroError(std::string_view s) :
+                DivisionByZeroError(std::string s) :
                     std::domain_error("yacas::mp::NN: attempt to divide " +
                                       std::string(s) + " by zero")
                 {
@@ -69,7 +69,7 @@ namespace yacas {
             explicit NN(Limb);
             explicit NN(const std::vector<Limb>&);
 
-            explicit NN(std::string_view, unsigned b = 10);
+            explicit NN(std::string, unsigned b = 10);
 
             template <class RndEngine> NN(unsigned no_bits, RndEngine& engine);
 
