@@ -36,9 +36,12 @@ meld ../inst/yacas/ ./new-inst-yacas/
 ###########################
 04
 ###########################
-std::string_view -> std::string
+"std::string_view" -> "std::string"
   yacas/include/yacas/mp/nn.hpp
   yacas/include/yacas/mp/zz.hpp
   yacas/src/nn.cpp
   yacas/src/zz.cpp
-  
+
+delete "#include <string_view>"
+  yacas/include/yacas/mp/nn.hpp
+

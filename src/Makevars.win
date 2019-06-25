@@ -1,0 +1,18 @@
+# echo `ls yacas/src/*.cpp`
+SOURCES.yacas = yacas/src/anumber.cpp yacas/src/arggetter.cpp yacas/src/associationclass.cpp yacas/src/deffile.cpp yacas/src/errors.cpp yacas/src/infixparser.cpp yacas/src/lispatom.cpp yacas/src/lispenvironment.cpp yacas/src/lisperror.cpp yacas/src/lispeval.cpp yacas/src/lispevalhash.cpp yacas/src/lisphash.cpp yacas/src/lispio.cpp yacas/src/lispobject.cpp yacas/src/lispparser.cpp yacas/src/lispuserfunc.cpp yacas/src/mathcommands2.cpp yacas/src/mathcommands3.cpp yacas/src/mathcommands.cpp yacas/src/mathuserfunc.cpp yacas/src/mempool.cpp yacas/src/nn.cpp yacas/src/numbers.cpp yacas/src/patcher.cpp yacas/src/patternclass.cpp yacas/src/patterns.cpp yacas/src/platmath.cpp yacas/src/standard.cpp yacas/src/stdfileio.cpp yacas/src/stringio.cpp yacas/src/substitute.cpp yacas/src/tokenizer.cpp yacas/src/xmltokenizer.cpp yacas/src/yacasapi.cpp yacas/src/yacasnumbers.cpp yacas/src/zz.cpp
+
+SOURCES.ryacas = RcppExports.cpp ryacas.cpp
+
+OBJECTS.yacas = $(SOURCES.yacas:.cpp=.o)
+OBJECTS.ryacas = $(SOURCES.ryacas:.cpp=.o)
+
+OBJECTS=$(OBJECTS.yacas) $(OBJECTS.ryacas)
+
+PKG_CPPFLAGS = -Iyacas/include -DNO_GLOBALS
+
+PKG_LIBS = `$(R_HOME)/bin/Rscript -e "Rcpp:::LdFlags()"`
+
+all: $(SHLIB)
+
+#clean:
+#	@rm -f $(OBJECTS)
