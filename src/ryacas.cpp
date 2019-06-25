@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 
-// [[Rcpp::plugins(cpp14)]]
+// [[Rcpp::plugins(cpp11)]]
 
 #include <yacas/yacas.h>
 

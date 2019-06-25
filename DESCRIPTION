@@ -35,7 +35,7 @@ Suggests:
     igraph,
     testthat
 License: GPL-2
-SystemRequirements: C++14
+SystemRequirements: C++11
 URL: https://github.com/mikldk/ryacas, http://www.yacas.org
 BugReports: https://github.com/mikldk/ryacas/issues
 Roxygen: list(markdown = TRUE, roclets = c("rd", "collate", "namespace"))
