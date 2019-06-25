@@ -147,9 +147,6 @@ dep_msg <- function() {
   return(str)
 }
 
-#' @inherit dep_msg
-#' @concept legacy
-#'
 #' @export
 "%Where%" <- function(...) {
   stop(dep_msg())
@@ -157,6 +154,8 @@ dep_msg <- function() {
 
 #' @inherit dep_msg
 #' @concept legacy
+#' 
+#' @aliases %Where%
 #'
 #' @export
 Clear <- function(...) {

@@ -5,21 +5,6 @@ yacas_init_force <- function(path) {
     invisible(.Call(`_Ryacas_yacas_init_force`, path))
 }
 
-#' Evaluate yacas expression
-#' 
-#' This is a low-level function for evaluating yacas expression represented as
-#' string.
-#' 
-#' @param expr Yacas expression
-#' @return Result of evaluating \code{expr} by yacas and
-#' side-effects of the evaluation
-#' 
-#' @examples
-#' yac_core("D(x)Sin(x^2)")
-#' 
-#' @concept yac_communication
-#' @keywords internal
-#' 
 yac_core <- function(expr) {
     .Call(`_Ryacas_yac_core`, expr)
 }

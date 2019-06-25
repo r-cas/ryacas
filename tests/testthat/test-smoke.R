@@ -4,7 +4,6 @@ test_that("Version", {
   expect_equal(yac_str("Version()"), "1.7.0")
 })
 
-
 test_that("yac_str()", {
   expect_equal(yac_str("Factor(x^2-1)"), "(x+1)*(x-1)")
   expect_equal(yac_str("Expand((x+1)*(x-1))"), "x^2-1")
@@ -29,6 +28,13 @@ test_that("yac_core()", {
   expect_equal(x[2L], "(x+1)*(x-1);")
 })
 
+test_that("yac()", {
+  expect_equal(yac("Version()"), "1.7.0")
+  expect_equal(yac("Version()", rettype = "str"), "1.7.0")
+  expect_equal(yac("Version()", rettype = "expr"), expression("1.7.0"))
+  expect_equal(yac("Version()", rettype = "silent"), invisible("1.7.0"))
+})
+
 test_that("y_*()", {
   expect_equal(as_y(1:9), "{1, 2, 3, 4, 5, 6, 7, 8, 9}")
   expect_equal(as_r("{1, 2, 3, 4, 5, 6, 7, 8, 9}"), as.character(1:9))
@@ -45,13 +51,13 @@ test_that("y_print()", {
   A <- diag(4)
   Ayac <- as_y(A)
   expect_equal(paste0(capture.output(y_print(Ayac)), collapse = "\n"), 
-               "{{1, 0, 0, 0},\n {0, 1, 0, 0},\n {0, 0, 1, 0},\n {0, 0, 0, 1}}")
+               "{{1, 0, 0, 0},\n {0, 1, 0, 0},\n {0, 0, 1, 0},\n {0, 0, 0, 1}} ")
   
   B <- A
   B[2, 2] <- "-t"
   Byac <- as_y(B)
   expect_equal(paste0(capture.output(y_print(Byac)), collapse = "\n"), 
-               "{{ 1,  0,  0,  0},\n { 0, -t,  0,  0},\n { 0,  0,  1,  0},\n { 0,  0,  0,  1}}")
+               "{{ 1,  0,  0,  0},\n { 0, -t,  0,  0},\n { 0,  0,  1,  0},\n { 0,  0,  0,  1}} ")
 })
 
 test_that("y_solve_*()", {

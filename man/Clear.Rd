@@ -2,6 +2,7 @@
 % Please edit documentation in R/legacy.R
 \name{Clear}
 \alias{Clear}
+\alias{\%Where\%}
 \title{Legacy function}
 \usage{
 Clear(...)

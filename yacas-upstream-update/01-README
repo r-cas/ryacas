@@ -44,4 +44,7 @@ meld ../inst/yacas/ ./new-inst-yacas/
 
 delete "#include <string_view>"
   yacas/include/yacas/mp/nn.hpp
+  
+replace 'abort();' with 'throw std::invalid_argument("abort()");'
+  yacas/src/yacasnumbers.cpp
 

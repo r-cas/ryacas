@@ -579,7 +579,8 @@ void BigNumber::BitXor(const BigNumber& aX, const BigNumber& aY)
 
 void BigNumber::BitNot(const BigNumber& aX)
 {
-    abort();
+    //abort();
+    throw std::invalid_argument("abort()");
     // BecomeInt();
 
     // BigNumber x(aX);

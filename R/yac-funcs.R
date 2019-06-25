@@ -79,7 +79,7 @@ yac_silent.default <- function(x) {
 #' @concept yac_communication
 #' 
 #' @export
-yac <- function(x, return = "str") {
+yac <- function(x, rettype = c("str", "expr", "silent")) {
   UseMethod("yac")
 }
 

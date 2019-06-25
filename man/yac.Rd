@@ -4,7 +4,7 @@
 \alias{yac}
 \title{Run yacas command}
 \usage{
-yac(x, return = "str")
+yac(x, rettype = c("str", "expr", "silent"))
 }
 \arguments{
 \item{x}{yacas command}

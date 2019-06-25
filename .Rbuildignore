@@ -19,3 +19,5 @@ tic.R
 ^revdep$
 ^TODO$
 ^yacas-upstream-update
+^README\.Rmd$
+^_pkgdown\.yml$

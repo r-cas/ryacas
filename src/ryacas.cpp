@@ -57,21 +57,21 @@ void yacas_init_force(std::string path)
   Rcpp::Rcout << "Done." << std::endl;
 }
 
-//' Evaluate yacas expression
-//' 
-//' This is a low-level function for evaluating yacas expression represented as
-//' string.
-//' 
-//' @param expr Yacas expression
-//' @return Result of evaluating \code{expr} by yacas and
-//' side-effects of the evaluation
-//' 
-//' @examples
-//' yac_core("D(x)Sin(x^2)")
-//' 
-//' @concept yac_communication
-//' @keywords internal
-//' 
+// Evaluate yacas expression
+// 
+// This is a low-level function for evaluating yacas expression represented as
+// string.
+// 
+// @param expr Yacas expression
+// @return Result of evaluating \code{expr} by yacas and
+// side-effects of the evaluation
+// 
+// @examples
+// yac_core("D(x)Sin(x^2)")
+// 
+// @concept yac_communication
+// @keywords internal
+// 
 // [[Rcpp::export]]
 std::vector<std::string> yac_core(std::string expr)
 {
