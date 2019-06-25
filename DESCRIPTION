@@ -20,7 +20,6 @@ Encoding: UTF-8
 Description: An interface to the yacas computer algebra system.
 Depends: R (>= 3.3.0)
 Imports:
-    methods,
     Rcpp (>= 0.12.0),
     stats,
     magrittr
