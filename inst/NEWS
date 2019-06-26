@@ -1,9 +1,10 @@
-Changes in version 0.5.0
+Changes in version 1.0.0
 
-o PREPARING FOR A WHOLE NEW INTERFACE FROM NEXT VERSION - READ GETTING STARTED VIGNETTE.
+o A WHOLE NEW INTERFACE - READ GETTING STARTED VIGNETTE.
   All old functions throw a warning, and will be removed in the next major version.
 o Yacas errors are now provided to the user instead of just an empty result.
 o Vignette on making exercises via the exams package.
+o Updated Yacas to 1.7.0 (check with yac_str("Version()"))
 
 Changes in version 0.4.1
 
