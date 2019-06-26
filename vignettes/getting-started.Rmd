@@ -353,12 +353,13 @@ H(2, 4)
 
 Principle:
 
-* `yac_*(x)` functions evaluate/run `yacas` command x; the result varies depending on which of the functions used
+* `yac_*(x)` functions evaluate/run `yacas` command `x`; the result varies depending on which of the functions used
 * `y_*(x)` various utility functions (not involving calls to `yacas`)
 
 Reference:
 
 * Evaluate `yacas` expressions
+    + `yac(x, rettype = c("str", "expr", "silent"))`: Evaluate `yacas` command `x` (a string) and get result determined by `rettype` (default `"str"`).
     + `yac_expr(x)`: Evaluate `yacas` command `x` (a string) and get result as an **`R` expression**.
     + `yac_silent(x)`: Evaluate `yacas` command `x` (a string) silently; useful for creating `yacas` variables.
     + `yac_solve_expr(x)`:  Evaluate `yacas` command `x` (a string starting with 'Solve') and reducing `var == ` from the `yacas` result, and get result as an **`R` expression**.
