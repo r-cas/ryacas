@@ -5,13 +5,24 @@
 
 using namespace Rcpp;
 
-// yacas_init_force
-void yacas_init_force(std::string path);
-RcppExport SEXP _Ryacas_yacas_init_force(SEXP pathSEXP) {
+// yacas_init_force_path
+void yacas_init_force_path(std::string path, bool ryacas_init);
+RcppExport SEXP _Ryacas_yacas_init_force_path(SEXP pathSEXP, SEXP ryacas_initSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type path(pathSEXP);
-    yacas_init_force(path);
+    Rcpp::traits::input_parameter< bool >::type ryacas_init(ryacas_initSEXP);
+    yacas_init_force_path(path, ryacas_init);
+    return R_NilValue;
+END_RCPP
+}
+// yacas_init_force
+void yacas_init_force(bool ryacas_init);
+RcppExport SEXP _Ryacas_yacas_init_force(SEXP ryacas_initSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< bool >::type ryacas_init(ryacas_initSEXP);
+    yacas_init_force(ryacas_init);
     return R_NilValue;
 END_RCPP
 }
@@ -28,6 +39,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_Ryacas_yacas_init_force_path", (DL_FUNC) &_Ryacas_yacas_init_force_path, 2},
     {"_Ryacas_yacas_init_force", (DL_FUNC) &_Ryacas_yacas_init_force, 1},
     {"_Ryacas_yac_core", (DL_FUNC) &_Ryacas_yac_core, 1},
     {NULL, NULL, 0}

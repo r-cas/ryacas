@@ -11,7 +11,7 @@ namespace {
     static CYacas* _yacas = nullptr;
 
     static
-    void yacas_initialize(std::string alternative_path)
+    void yacas_initialize(std::string alternative_path, bool ryacas_init = true)
     {
         _yacas = new CYacas(_side_effects);        
         
@@ -41,7 +41,7 @@ namespace {
           _yacas->Evaluate("PrettyPrinter'Set();");
         }
 
-        if (!_yacas->IsError()) {
+        if (!_yacas->IsError() && ryacas_init) {
           _yacas->Evaluate("Load(\"../yacas-custom/ryacasinit.ys\");");
         }
 
@@ -50,16 +50,22 @@ namespace {
             
             _yacas = nullptr;
             Rcpp::stop(msg);
-        }
+        }        
     }
 }
 
 // [[Rcpp::export]]
-void yacas_init_force(std::string path)
+void yacas_init_force_path(std::string path, bool ryacas_init = true)
 {
-  Rcpp::Rcout << "Trying to initialise internal yacas: " << std::endl;
-  yacas_initialize(path);
+  Rcpp::Rcout << "Trying to initialise internal yacas (with" << (ryacas_init ? "" : "out") << " Ryacas init): " << std::endl;
+  yacas_initialize(path, ryacas_init);
   Rcpp::Rcout << "Done." << std::endl;
+}
+
+// [[Rcpp::export]]
+void yacas_init_force(bool ryacas_init = true)
+{
+  yacas_init_force_path(std::string(), ryacas_init);
 }
 
 // Evaluate yacas expression
@@ -81,7 +87,7 @@ void yacas_init_force(std::string path)
 std::vector<std::string> yac_core(std::string expr)
 {
   if (!_yacas) {
-    yacas_initialize(std::string());
+    yacas_initialize(std::string(), true);
   }
   
   _side_effects.clear();
