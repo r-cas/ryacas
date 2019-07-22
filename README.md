@@ -81,8 +81,8 @@ yac_solve_str("Solve(x^2+x-6 == 0, x)")
 #> [1] "{2,-3}"
 yac_solve_expr("Solve(x^2+x-6 == 0, x)")
 #> expression(c(2, -3))
-yac_solve_expr("Solve((D(x) a*x^2+x-6) == 0, x)")
-#> expression(c(-1/(2 * a)))
+"x^2+x-6 == 0" %>% y_fn("Solve", "x") %>% yac_solve_str()
+#> [1] "{2,-3}"
 ```
 
 And output in TeX:
@@ -90,6 +90,13 @@ And output in TeX:
 ``` r
 "3/4 + Pi/8" %>% y_fn("Simplify") %>% y_fn("TeXForm") %>% yac_str()
 #> [1] "\\frac{\\pi  + 6}{8} "
+```
+
+And arbitrary precision:
+
+``` r
+yac_str("N(Pi, 50)")
+#> [1] "3.1415926535897932384626433832795028841971693993751058209"
 ```
 
 ## Yacas

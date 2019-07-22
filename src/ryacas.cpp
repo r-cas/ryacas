@@ -27,17 +27,22 @@ namespace {
         }
 
         if (!scripts_path.empty()) {
-            if (scripts_path.back() != '/')
+            if (scripts_path.back() != '/') {
                 scripts_path.push_back('/');
+            }
             _yacas->Evaluate(std::string("DefaultDirectory(\"") +  scripts_path + "\");");
         }
 
-        if (!_yacas->IsError())
+        if (!_yacas->IsError()) {
             _yacas->Evaluate("Load(\"yacasinit.ys\");");
+        }
 
         if (!_yacas->IsError()) {
-          // DEPRECATION: delete:
-          _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
+          _yacas->Evaluate("PrettyPrinter'Set();");
+        }
+
+        if (!_yacas->IsError()) {
+          _yacas->Evaluate("Load(\"../yacas-custom/ryacasinit.ys\");");
         }
 
         if (_yacas->IsError()) {
@@ -82,18 +87,11 @@ std::vector<std::string> yac_core(std::string expr)
   _side_effects.clear();
   _side_effects.str("");
   
-  // NOTE: Until DEPRECATED is removed, totally,
-  //       set printer back to standard and restore
-  // DEPRECATION: delete:
-  _yacas->Evaluate("PrettyPrinter'Set();");
   _yacas->Evaluate(expr);
   
   if (_yacas->IsError()) {
     std::string err = _yacas->Error();
     std::string msg = "Yacas returned this error: " + err;
-    
-    // DEPRECATION: delete:
-    _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
     
     Rcpp::stop(msg);
   }
@@ -102,9 +100,6 @@ std::vector<std::string> yac_core(std::string expr)
     _side_effects.str(),
     _yacas->Result()
   };
-  
-  // DEPRECATION: delete:
-  _yacas->Evaluate("PrettyPrinter'Set(\"OMForm\");");
   
   return results;
 }
