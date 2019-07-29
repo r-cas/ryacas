@@ -1,0 +1,85 @@
+---
+title: "User-defined yacas rules"
+author: "Mikkel Meyer Andersen and Søren Højsgaard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{User-defined yacas rules}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(Ryacas)
+```
+
+
+# Included rules
+
+`yacas` comes with a number of rules all defined in the `yacas` directory of the installed package:
+
+```{r}
+system.file(package = "Ryacas", "yacas")
+```
+
+For example in the `sums.rep` folder, a number of rules for sums are defined in the `code.ys` file.
+
+As an example, the fact that
+\[
+  \sum_{k = 1}^n 2k-1 = n^2
+\]
+is defined in `yacas` as
+```
+SumFunc(_k,1,_n,2*_k-1, n^2 );
+```
+and the geometric sum is defined as
+```
+SumFunc(_k,0,_n,(r_IsFreeOf(k))^(_k), (1-r^(n+1))/(1-r) );
+```
+
+These can be verified:
+```{r}
+yac_str("Sum(i, 1, m, 2*i-1)")
+yac_str("Sum(i, 0, m, 2^i)")
+```
+
+There are also rules in `yacas` that are able to let the user change some limits of some sums, e.g. for the geometric sum:
+
+```{r}
+yac_str("Sum(i, 1, m, 2^i)")
+```
+
+# Custom rules
+
+But what about changing the limit of the first sum? I.e. instead of 
+\[
+  \sum_{k = 1}^n 2k-1 = n^2
+\]
+then know that
+\[
+  \sum_{k = 0}^n 2k-1 = -1 + \sum_{k = 1}^n 2k-1 = n^2 - 1 .
+\]
+But what does `yacas` say?
+```{r}
+yac_str("Sum(i, 0, m, 2*i-1)")
+```
+
+We can then add our own rule by:
+```{r}
+yac_silent("SumFunc(_k,0,_n,2*_k-1, n^2 - 1)")
+```
+
+And then try again:
+
+```{r}
+yac_str("Sum(i, 0, m, 2*i-1)")
+```
+
+A good source of inspiration for writing custom rules is reading the included rules, 
+but there is a lot to programming in `yacas` and we refer to `yacas`'s documentation, 
+specifically the chapter [Programming in Yacas](https://yacas.readthedocs.io/en/latest/programming_in_yacas/).
+

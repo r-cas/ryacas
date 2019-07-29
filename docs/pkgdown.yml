@@ -4,4 +4,5 @@ pkgdown_sha: ~
 articles:
   exams: exams.html
   getting-started: getting-started.html
+  yacas-rules: yacas-rules.html
 
