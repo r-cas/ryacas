@@ -30,7 +30,7 @@ For example in the `sums.rep` folder, a number of rules for sums are defined in 
 
 As an example, the fact that
 \[
-  \sum_{k = 1}^n 2k-1 = n^2
+  \sum_{k = 1}^n (2k-1) = n^2
 \]
 is defined in `yacas` as
 ```
@@ -57,11 +57,11 @@ yac_str("Sum(i, 1, m, 2^i)")
 
 But what about changing the limit of the first sum? I.e. instead of 
 \[
-  \sum_{k = 1}^n 2k-1 = n^2
+  \sum_{k = 1}^n (2k-1) = n^2
 \]
 then know that
 \[
-  \sum_{k = 0}^n 2k-1 = -1 + \sum_{k = 1}^n 2k-1 = n^2 - 1 .
+  \sum_{k = 0}^n (2k-1) = -1 + \sum_{k = 1}^n (2k-1) = n^2 - 1 .
 \]
 But what does `yacas` say?
 ```{r}
