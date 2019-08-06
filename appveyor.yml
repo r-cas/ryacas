@@ -25,6 +25,7 @@ environment:
   NOT_CRAN: true
   R_CHECK_ARGS: --as-cran --no-build-vignettes --no-manual
   _R_CHECK_DOC_SIZES_: 0 # Avoids error when check vignette pdf
+  _R_CHECK_FORCE_SUGGESTS_: false # unix package not available on Windows
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
