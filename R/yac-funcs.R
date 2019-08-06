@@ -3,6 +3,7 @@
 #' @param x yacas command
 #' 
 #' @concept yac_communication
+#' @concept yac_symbol
 #' 
 #' @export
 yac_str <- function(x) {
@@ -35,6 +36,7 @@ yac_str.default <- function(x) {
 #' @param x yacas command
 #' 
 #' @concept yac_communication
+#' @concept yac_symbol
 #' 
 #' @export
 yac_expr <- function(x) {
@@ -58,6 +60,7 @@ yac_expr.default <- function(x) {
 #' @param x yacas command
 #' 
 #' @concept yac_communication
+#' @concept yac_symbol
 #' 
 #' @export
 yac_silent <- function(x) {
@@ -77,6 +80,7 @@ yac_silent.default <- function(x) {
 #' @param rettype `str` for string/character, `expr` for expression, `silent` for silent
 #' 
 #' @concept yac_communication
+#' @concept yac_symbol
 #' 
 #' @export
 yac <- function(x, rettype = c("str", "expr", "silent")) {
@@ -108,6 +112,7 @@ yac.default <- function(x, rettype = c("str", "expr", "silent")) {
 #' @param x Variable name
 #' 
 #' @concept yac_communication
+#' @concept yac_symbol
 #' 
 #' @export
 yac_assign <- function(value, x) {
@@ -116,7 +121,7 @@ yac_assign <- function(value, x) {
 
 #' @export
 yac_assign.default <- function(value, x) {
-  yac_silent(paste0(x, " := ", value))
+  return(yac_silent(paste0(x, " := ", value)))
 }
 
 

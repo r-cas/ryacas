@@ -26,3 +26,4 @@ yac_solve_str(cmd)
 
 }
 \concept{helper}
+\concept{yac_symbol}

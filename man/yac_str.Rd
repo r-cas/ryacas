@@ -13,3 +13,4 @@ yac_str(x)
 Run yacas command returning string/character
 }
 \concept{yac_communication}
+\concept{yac_symbol}

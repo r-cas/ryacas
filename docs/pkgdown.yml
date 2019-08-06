@@ -4,5 +4,6 @@ pkgdown_sha: ~
 articles:
   exams: exams.html
   getting-started: getting-started.html
+  symbol-interface: symbol-interface.html
   yacas-rules: yacas-rules.html
 

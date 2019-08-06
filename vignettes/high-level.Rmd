@@ -1,0 +1,155 @@
+---
+title: "Getting started with the symbol interface"
+author: "Mikkel Meyer Andersen and Søren Højsgaard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with the symbol interface}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(Ryacas)
+```
+
+
+# To include
+
+```{r}
+#dim()
+#as.matrix
+#as.vector
+#diag()
+#diag()<-
+upper.tri()
+lower.tri()
+#[,]
+#[,]<-
+y_fn(B, "Transpose") # Always return yac_symbol! as.matrix()
+```
+
+
+# Introduction
+
+Start with a base symbol what can either be:
+
+* A `yacas` command, e.g. `x`, `2*a` or something similar
+* An `R` matrix or vector.
+
+Here, we keep it simple. Consider an `R` matrix and vector:
+
+```{r}
+A <- 2*diag(4)
+A[1,2] <- 4
+A[4,2] <- 2
+diag(A)[2] <- 2
+A
+a <- 1:4
+a
+```
+
+They are now considered `yacas`-enabled:
+
+```{r}
+B <- yac_symbol(A)
+B
+b <- yac_symbol(a)
+b
+```
+
+Notice how they are printed using `yacas`'s syntax.
+
+Standard `R` commands are available:
+
+* `[` (both extracting submatrices, rows, columns, subvectors etc. and assignment)
+* `solve()`
+* `t()`
+* `+`, `-`, `*`, `/`, `%*%`
+* `diag()`
+* `upper.tri()`
+* `lower.tri()`
+
+See this brief demonstration:
+
+```{r}
+A[, 2:3]
+B[, 2:3]
+```
+
+```{r}
+A[upper.tri(A)] <- 1
+B[upper.tri(B)] <- 1
+A
+B
+2*A - A
+2*B - B
+```
+
+```{r}
+A %*% solve(A)
+B %*% solve(B)
+```
+
+```{r}
+solve(A %*% t(A))
+solve(B %*% t(B))
+```
+
+There are additional functions available:
+
+* `simplify()`
+* `tex()`
+
+To demonstrate these and some additional benefit, we exploit `yacas`'s symbolic availabilities.
+
+```{r}
+D <- diag(4) %>% yac_symbol()
+D <- D/"2" # "dividing" by string
+D[2:3, 1] <- "d"
+D[3,4] <- "2*d + 2"
+D
+
+D %>% solve()
+D %>% solve() %>% simplify()
+D %>% solve() %>% simplify() %>% tex()
+```
+
+\[
+`r D %>% solve() %>% simplify() %>% tex()`
+\]
+
+
+The function `tex()` is constructed using the helper function `y_fn()` that makes 
+calls to `yacas` functions easier without lots of string concatenation:
+
+```{r}
+tex(B)
+```
+
+`yacas` has a `Simplify()` function. This is made available via a `simplify()` function that also includes a time-out that prevents `yacas` in making the `R` session hang, but it requires that the `unix` package is available.
+The default `timeout` value used when `unix` is available is `2` seconds.
+
+
+```{r}
+L1 <- diag(5) 
+L1[2, 1] <- "-b21"
+L1[3, 1] <- "-b31"
+L1[4, 2] <- "-b42"
+L1[4, 3] <- "-b43"
+L1[5, 4] <- "-b54"
+L1 <- yac_symbol(L1)
+L1
+K1 <- t(L1) %*% L1
+K1
+K1 %>% solve()
+#K1 %>% solve() %>% simplify(timeout = 1) ## FAILS -- too slow
+##yac_str("V1y := Simplify(Inverse(K1y))")  ## FAILS -- too slow
+```
+
+
+

@@ -13,3 +13,4 @@ yac_silent(x)
 Run yacas command silently
 }
 \concept{yac_communication}
+\concept{yac_symbol}

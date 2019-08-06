@@ -15,3 +15,4 @@ yac(x, rettype = c("str", "expr", "silent"))
 Run yacas command
 }
 \concept{yac_communication}
+\concept{yac_symbol}

@@ -23,8 +23,8 @@ library(Ryacas)
 `Ryacas` makes the `yacas` computer algebra system available from
 within `R`. The name `yacas` is short for "Yet Another Computer Algebra
 System". The `yacas` program 
-is developed by Ayal Pinkhuis (who is also the maintainer)
-and others, and is available at <http://www.yacas.org/> for various
+is developed by Ayal Pinkhuis and others, 
+and is available at <http://www.yacas.org/> for various
 platforms. There is a comprehensive documentation (300+ pages) of
 `yacas` available at <https://yacas.readthedocs.io> and the
 documentation contains many examples.
@@ -43,7 +43,13 @@ The naming principle governing `Ryacas` functions is as follows:
 * `yac_*(x)` functions evaluate/run `yacas` command `x`; the result varies depending on which of the functions used (see below)
 * `y_*(x)` various utility functions (not involving calls to `yacas`)
 
-More specifically about ways to call `yacas` (the `yac_*(x)` functions):
+There are two interfaces to `yacas`: a low-level and a high-level. 
+The low-level is highly customisable, but also requires more work. 
+The high-level is easier for the tasks it can handle, but may also be less computationally efficient.
+
+### The low-level interface
+
+The low-level interface consists of these two main functions:
 
 * `yac_str(x)`: Evaluate `yacas` command `x` (a string) and get result as **string/character**.
 * `yac_expr(x)`: Evaluate `yacas` command `x` (a string) and get result as an **`R` expression**.
@@ -53,7 +59,13 @@ Examples of this will be shown in multiple examples below.
 A short summary of often used `yacas` commands are found in the section "`yacas` reference" at the end of this document.
 Similarly, a short summary of `Ryacas` functions are also found in the section "`Ryacas` reference" at the end of this document.
 
-# Example 1: Simple algebra
+### The high-level interface
+
+The high-level interface consists of the main function `yac_symbol()`.
+
+# Examples of 
+
+## Example 1: Simple algebra
 
 First, consider this polynomial:
 

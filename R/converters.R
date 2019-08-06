@@ -13,7 +13,13 @@ as_y <- function(x) {
   return(y_hlp_to_yacvec(x))
 }
 
-#' Convert yacas vector (list) or matrix (list of lists) to R vector/matrix
+#' Convert yacas to R
+#' 
+#' If `x` is a yacas command as string, convert to a character vector/matrix in R.
+#' If `x` is a `yac_symbol` (e.g. from [yac_symbol()]), then convert it to a numeric object 
+#' if there are no variables or a character type if there are variables.
+#' 
+#' In yacas a vector is a list, and a matrix is a list of lists.
 #' 
 #' @param x yacas list or list of lists to convert
 #' 
@@ -21,6 +27,11 @@ as_y <- function(x) {
 #' 
 #' @export
 as_r <- function(x) {
+  UseMethod("as_r")
+}
+
+#' @export
+as_r.default <- function(x) {
   # Two {'s in line, potentially with space in between
   if (grepl("\\{[ ]*\\{", x)) {
     # Matrix
