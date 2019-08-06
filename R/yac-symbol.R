@@ -431,7 +431,7 @@ solve.yac_symbol <- function(a, b, ...) {
 
   stopifnot(y$is_mat)
   
-  z <- y_fn(x = y_res, fn = "Inverse")
+  z <- y_fn(x = y, fn = "Inverse")
   z_res <- yac_str(z)
   v <- yac_symbol(z_res)
   
