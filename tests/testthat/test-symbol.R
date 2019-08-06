@@ -135,6 +135,31 @@ test_that("lower.tri/upper.tri", {
 })
 
 
+
+test_that("solve()", {
+  # Modified from solve()
+  hilbert_r <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+  
+  hilbert_y <- function(n) { 
+    mat <- matrix("", nrow = n, ncol = n)
+    
+    for (i in 1:n) {
+      for (j in 1:n) {
+        mat[i, j] <- paste0("1 / (", (i-1), " + ", j, ")")
+      }
+    }
+    
+    return(mat)
+  }
+  
+  A1 <- hilbert_r(4)
+  B1 <- yac_symbol(as_y(hilbert_y(4)))
+
+  expect_equal(A1, as_r(B1))
+  expect_equal(solve(A1), as_r(solve(B1)))
+})
+
+
 test_that("Getters for vectors", {
   expect_equal(ncol(a), nrow(a))
   expect_equal(ncol(b), nrow(b))
