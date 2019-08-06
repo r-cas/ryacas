@@ -36,18 +36,21 @@ because we have tried to make the interface a lot simpler.
 
 The old version of `Ryacas` is available as a legacy version called `Ryacas0` at <https://github.com/mikldk/ryacas0/> with documentation directly available at <https://mikldk.github.io/ryacas0/>.
 
-## Interfaces to `yacas`
+# Interfaces to `yacas`
 
 The naming principle governing `Ryacas` functions is as follows:
 
 * `yac_*(x)` functions evaluate/run `yacas` command `x`; the result varies depending on which of the functions used (see below)
 * `y_*(x)` various utility functions (not involving calls to `yacas`)
 
-There are two interfaces to `yacas`: a low-level and a high-level. 
-The low-level is highly customisable, but also requires more work. 
-The high-level is easier for the tasks it can handle, but may also be less computationally efficient.
+There are two interfaces to `yacas`: a low-level ([see vignette](./low-level.html)) and a high-level ([see vignette](./high-level.html)). 
+The low-level is highly customisable, but also requires more work with text strings. 
+The high-level is easier dealing with vectors and matrices, but may also be less computationally efficient and less flexible.
 
-### The low-level interface
+Below, we will demonstrate both interfaces and refer to the other vignettes 
+for more information.
+
+## The low-level interface
 
 The low-level interface consists of these two main functions:
 
@@ -56,8 +59,44 @@ The low-level interface consists of these two main functions:
 
 Note, that the `yacas` command `x` is a string and must often be built op using `paste()`/`paste0()`. 
 Examples of this will be shown in multiple examples below. 
-A short summary of often used `yacas` commands are found in the section "`yacas` reference" at the end of this document.
-Similarly, a short summary of `Ryacas` functions are also found in the section "`Ryacas` reference" at the end of this document.
+Short summaries of often used `yacas` commands and `Ryacas` functions are found 
+at the end of the [The low-level interface](./low-level.html) vignette.
+
+## Examples
+
+```{r}
+eq <- "x^2 + 4 + 2*x + 2*x"
+yac_str(eq) # No task was given to yacas, so we simply get the same returned
+yac_str(paste0("Simplify(", eq, ")"))
+yac_str(paste0("Factor(", eq, ")"))
+yac_str(paste0("TeXForm(Factor(", eq, "))"))
+```
+
+Instead of the pattern `paste0("Simplify(", eq, ")")` etc., there exists a 
+helper function `y_fn()` that does this:
+
+```{r}
+y_fn(eq, "Factor")
+yac_str(y_fn(eq, "Factor"))
+yac_str(y_fn(y_fn(eq, "Factor"), "TeXForm"))
+```
+
+As you see, there are a lot of nested function call. That can be avoided by using `magrittr`'s pipe `%>%` (automatically available with `Ryacas`) together with the helper function `y_fn()`:
+
+```{r}
+eq %>% y_fn("Factor")
+eq %>% y_fn("Factor") %>% yac_str()
+eq %>% y_fn("Factor") %>% y_fn("TeXForm") %>% yac_str()
+```
+
+The polynomial can be evaluated for a value of $x$ by calling [yac_expr()] instead of [yac_str()]:
+```{r}
+yac_str(paste0("Factor(", eq, ")"))
+expr <- yac_expr(paste0("Factor(", eq, ")"))
+expr
+eval(expr, list(x = 2))
+```
+
 
 ### The high-level interface
 

@@ -1,10 +1,10 @@
 ---
-title: "Getting started with the symbol interface"
+title: "The high-level (symbol) interface"
 author: "Mikkel Meyer Andersen and Søren Højsgaard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting started with the symbol interface}
+  %\VignetteIndexEntry{The high-level (symbol) interface}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

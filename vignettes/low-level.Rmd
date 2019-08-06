@@ -59,7 +59,7 @@ yac_str(y_fn(eq, "Factor"))
 yac_str(y_fn(y_fn(eq, "Factor"), "TeXForm"))
 ```
 
-As you see, there are a lot of nestings. That can be avoided by using `magrittr`'s pipe `%>%` (automatically available with `Ryacas`) together with the helper function `y_fn()`:
+As you see, there are a lot of nested function call. That can be avoided by using `magrittr`'s pipe `%>%` (automatically available with `Ryacas`) together with the helper function `y_fn()`:
 
 ```{r}
 eq %>% y_fn("Simplify")
