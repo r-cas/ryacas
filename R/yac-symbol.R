@@ -18,6 +18,10 @@ yac_symbol <- function(x) {
     x
   }
   
+  cmd <- as.character(cmd)
+  # NOTE: Do this here or later?
+  cmd <- yac_str(cmd)
+  
   is_mat <- grepl("^[ ]*\\{[ ]*\\{.*\\}[ ]*\\}[ ]*$", cmd)
   is_vec <- !is_mat && grepl("^[ ]*\\{.*\\}[ ]*$", cmd)
   
@@ -25,7 +29,7 @@ yac_symbol <- function(x) {
             is_mat = is_mat,
             is_vec = is_vec)
   
-  class(y) <- "yac_symbol"
+  class(y) <- c("yac_symbol", "list")
   return(y)
 }
 
@@ -181,8 +185,8 @@ tex.yac_symbol <- function(x) {
 
 #' @export
 `%*%.yac_symbol` <- function(x, y) {
-  stopifnot(is(x, "yac_symbol"))
-  stopifnot(is(y, "yac_symbol"))
+  stopifnot(methods::is(x, "yac_symbol"))
+  stopifnot(methods::is(y, "yac_symbol"))
   
   x_res <- yac_symbol(yac_str(x$yacas_cmd))
   y_res <- yac_symbol(yac_str(y$yacas_cmd))
@@ -200,6 +204,7 @@ tex.yac_symbol <- function(x) {
 #' From [base::diag()].
 #' 
 #' @param x If `yac_symbol` treat as such, else call [base::diag()].
+#' @param \dots further arguments passed to [base::diag()]
 #' 
 #' @concept yac_symbol
 #' 
@@ -215,7 +220,7 @@ diag.default <- function(x, ...) {
 
 #' @export
 diag.yac_symbol <- function(x, ...) {
-  stopifnot(is(x, "yac_symbol"))
+  stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
   y <- yac_symbol(y_res)
@@ -236,7 +241,8 @@ diag.yac_symbol <- function(x, ...) {
 #' 
 #' From [base::diag()].
 #' 
-#' @param x If `yac_symbol` treat as such, else call [base::`diag<-`()].
+#' @param x If `yac_symbol` treat as such, else call `base::diag<-()`.
+#' @param value New value for `diag(x)`
 #' 
 #' @concept yac_symbol
 #' 
@@ -252,7 +258,7 @@ diag.yac_symbol <- function(x, ...) {
 
 #' @export
 `diag<-.yac_symbol` <- function(x, value) {
-  stopifnot(is(x, "yac_symbol"))
+  stopifnot(methods::is(x, "yac_symbol"))
 
   y_res <- yac_str(x$yacas_cmd)
   y <- yac_symbol(y_res)
@@ -272,6 +278,7 @@ diag.yac_symbol <- function(x, ...) {
 #' 
 #' @param x If `yac_symbol` treat as such, else 
 #' call [base::lower.tri()]/[base::upper.tri()].
+#' @param diag Whether diagonal is included.
 #' 
 #' @concept yac_symbol
 #' 
@@ -287,7 +294,7 @@ upper.tri.default <- function(x, diag = FALSE) {
 
 #' @export
 upper.tri.yac_symbol <- function(x, diag = FALSE) {
-  stopifnot(is(x, "yac_symbol"))
+  stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
   y <- yac_symbol(y_res)
@@ -302,6 +309,7 @@ upper.tri.yac_symbol <- function(x, diag = FALSE) {
 #' 
 #' @param x If `yac_symbol` treat as such, else 
 #' call [base::lower.tri()]/[base::upper.tri()].
+#' @param diag Whether diagonal is included.
 #' 
 #' @concept yac_symbol
 #' 
@@ -317,7 +325,7 @@ lower.tri.default <- function(x, diag = FALSE) {
 
 #' @export
 lower.tri.yac_symbol <- function(x, diag = FALSE) {
-  stopifnot(is(x, "yac_symbol"))
+  stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
   y <- yac_symbol(y_res)
@@ -359,6 +367,7 @@ t.yac_symbol <- function(x) {
 #' call [base::solve()].
 #' @param b If `yac_symbol` treat as such, else 
 #' call [base::solve()].
+#' @param \dots Not used
 #' 
 #' @export
 solve.yac_symbol <- function(a, b, ...) {
@@ -389,7 +398,7 @@ solve.yac_symbol <- function(a, b, ...) {
 #' 
 #' @export
 `[.yac_symbol` <- function(x, i, j) {
-  stopifnot(is(x, "yac_symbol"))
+  stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
   y <- yac_symbol(y_res)
@@ -441,7 +450,7 @@ solve.yac_symbol <- function(a, b, ...) {
   # x[i, j] <- a
   # for some symbol a
 
-  stopifnot(is(x, "yac_symbol"))
+  stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
   y <- yac_symbol(y_res)
@@ -487,6 +496,13 @@ print.yac_symbol <- function(x, ...) {
   #cat("Yacas symbol: ", yac_str(x$yacas_cmd), "\n", sep = "")
   Ryacas::y_print(y_res)
   return(invisible(x))
+}
+
+#' @export
+str.yac_symbol <- function(object, ...) {
+  x <- object
+  class(x) <- "list"
+  return(str(x))
 }
 
 #' Math operators
@@ -539,7 +555,8 @@ colnames(Math_transtab) <- c("R", "yacas")
 
 #' Math functions
 #' 
-#' @param x A `yac_symbol`.
+#' @param x `yac_symbol`.
+#' @param \dots further arguments passed to methods
 #' 
 #' @export
 Math.yac_symbol = function(x, ...) {

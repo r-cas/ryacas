@@ -10,6 +10,7 @@
 #' @useDynLib Ryacas, .registration = TRUE
 #' @importFrom Rcpp evalCpp
 #' @importFrom stats deriv
+#' @importFrom methods is
 #' @keywords programming
 NULL
 

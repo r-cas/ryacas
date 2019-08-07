@@ -8,6 +8,8 @@ diag(x, ...)
 }
 \arguments{
 \item{x}{If \code{yac_symbol} treat as such, else call \code{\link[base:diag]{base::diag()}}.}
+
+\item{\dots}{further arguments passed to \code{\link[base:diag]{base::diag()}}}
 }
 \description{
 From \code{\link[base:diag]{base::diag()}}.

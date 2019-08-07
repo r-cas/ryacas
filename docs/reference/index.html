@@ -83,13 +83,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>
+    </li>
+    <li>
       <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/symbol-interface.html">Getting started with the symbol interface</a>
+      <a href="../articles/high-level.html">The high-level (symbol) interface</a>
+    </li>
+    <li>
+      <a href="../articles/low-level.html">The low-level interface</a>
     </li>
     <li>
       <a href="../articles/yacas-rules.html">User-defined yacas rules</a>
@@ -204,7 +210,7 @@
         <td>
           <p><code><a href="as_r.html">as_r()</a></code> </p>
         </td>
-        <td><p>Convert yacas vector (list) or matrix (list of lists) to R vector/matrix</p></td>
+        <td><p>Convert yacas to R</p></td>
       </tr><tr>
         
         <td>
@@ -248,13 +254,13 @@
         <td>
           <p><code><a href="grapes-times-grapes.html">`%*%`</a></code> </p>
         </td>
-        <td><p>Matrix Multiplication</p></td>
+        <td><p>Matrix multiplication</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="lower.tri.html">lower.tri()</a></code> </p>
         </td>
-        <td><p>Lower and Upper Triangular Part of a Matrix</p></td>
+        <td><p>Lower and upper triangular part of a matrix</p></td>
       </tr><tr>
         
         <td>
@@ -278,7 +284,13 @@
         <td>
           <p><code><a href="upper.tri.html">upper.tri()</a></code> </p>
         </td>
-        <td><p>Lower and Upper Triangular Part of a Matrix</p></td>
+        <td><p>Lower and upper triangular part of a matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="y_fn.html">y_fn()</a></code> </p>
+        </td>
+        <td><p>Prepare simple <code>yacas</code> call</p></td>
       </tr><tr>
         
         <td>
@@ -436,12 +448,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="Math.html">Math()</a></code> </p>
-        </td>
-        <td><p>Legacy function</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="N.html">N()</a></code> </p>
         </td>
         <td><p>Legacy function</p></td>
@@ -449,12 +455,6 @@
         
         <td>
           <p><code><a href="Newton.html">Newton()</a></code> </p>
-        </td>
-        <td><p>Legacy function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Ops.html">Ops()</a></code> </p>
         </td>
         <td><p>Legacy function</p></td>
       </tr><tr>
@@ -496,7 +496,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="Simplify.html">Simplify()</a></code> </p>
+          <p><code><a href="SimplifyOld.html">Simplify()</a></code> </p>
         </td>
         <td><p>Legacy function</p></td>
       </tr><tr>

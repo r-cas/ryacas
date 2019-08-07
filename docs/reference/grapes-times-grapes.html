@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Matrix Multiplication — %*% • Ryacas</title>
+<title>Matrix multiplication — %*% • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,12 +30,9 @@
 
 
 
-<meta property="og:title" content="Matrix Multiplication — %*%" />
+<meta property="og:title" content="Matrix multiplication — %*%" />
 
-<meta property="og:description" content="Multiplies two matrices, if they are conformable.  If one argument is
-  a vector, it will be promoted to either a row or column matrix to make
-  the two arguments conformable.  If both are vectors of the same
-  length, it will return the inner product (as a matrix)." />
+<meta property="og:description" content="Matrix multiplication" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -89,13 +86,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>
+    </li>
+    <li>
       <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/symbol-interface.html">Getting started with the symbol interface</a>
+      <a href="../articles/high-level.html">The high-level (symbol) interface</a>
+    </li>
+    <li>
+      <a href="../articles/low-level.html">The low-level interface</a>
     </li>
     <li>
       <a href="../articles/yacas-rules.html">User-defined yacas rules</a>
@@ -123,17 +126,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Matrix Multiplication</h1>
+    <h1>Matrix multiplication</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
     <div class="hidden name"><code>grapes-times-grapes.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Multiplies two matrices, if they are conformable.  If one argument is
-  a vector, it will be promoted to either a row or column matrix to make
-  the two arguments conformable.  If both are vectors of the same
-  length, it will return the inner product (as a matrix).</p>
+    <p>Matrix multiplication</p>
     
     </div>
 
@@ -144,74 +144,21 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>numeric or complex matrices or vectors.</p></td>
+      <td><p>A <code>yac_symbol</code></p></td>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>numeric or complex matrices or vectors.</p></td>
+      <td><p>A <code>yac_symbol</code></p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A double or complex matrix product.  Use <code><a href='https://www.rdocumentation.org/packages/base/topics/drop'>drop</a></code> to remove
-  dimensions which have only one level.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>When a vector is promoted to a matrix, its names are not
-  promoted to row or column names, unlike <code><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></code>.</p>
-<p>Promotion of a vector to a 1-row or 1-column matrix happens when one
-  of the two choices allows <code>x</code> and <code>y</code> to get conformable
-  dimensions.</p>  
-<p>This operator is S4 generic but not S3 generic.  S4 methods need to be
-  written for a function of two arguments named <code>x</code> and <code>y</code>.</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  <em>The New S Language</em>.
-  Wadsworth &amp; Brooks/Cole.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>For matrix <em>cross</em>products, <code><a href='https://www.rdocumentation.org/packages/base/topics/crossprod'>crossprod</a>()</code> and
-  <code><a href='https://www.rdocumentation.org/packages/base/topics/crossprod'>tcrossprod()</a></code> are typically preferable.
-  <code><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code>, <code><a href='https://www.rdocumentation.org/packages/base/topics/Arithmetic'>Arithmetic</a></code>, <code><a href='diag.html'>diag</a></code>.</p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>4</span>
-(<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%*%</span> <span class='no'>x</span>)    <span class='co'># scalar ("inner") product (1 x 1 matrix)</span></div><div class='output co'>#&gt;      [,1]
-#&gt; [1,]   30</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/drop'>drop</a></span>(<span class='no'>z</span>)             <span class='co'># as scalar</span></div><div class='output co'>#&gt; [1] 30</div><div class='input'>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='diag.html'>diag</a></span>(<span class='no'>x</span>)
-<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>12</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='no'>y</span> <span class='kw'>%*%</span> <span class='no'>z</span></div><div class='output co'>#&gt;      [,1] [,2] [,3]
-#&gt; [1,]    1    5    9
-#&gt; [2,]    4   12   20
-#&gt; [3,]    9   21   33
-#&gt; [4,]   16   32   48</div><div class='input'><span class='no'>y</span> <span class='kw'>%*%</span> <span class='no'>x</span></div><div class='output co'>#&gt;      [,1]
-#&gt; [1,]    1
-#&gt; [2,]    4
-#&gt; [3,]    9
-#&gt; [4,]   16</div><div class='input'><span class='no'>x</span> <span class='kw'>%*%</span> <span class='no'>z</span></div><div class='output co'>#&gt;      [,1] [,2] [,3]
-#&gt; [1,]   30   70  110</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

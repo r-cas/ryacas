@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert yacas vector (list) or matrix (list of lists) to R vector/matrix — as_r • Ryacas</title>
+<title>Convert yacas to R — as_r • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Convert yacas vector (list) or matrix (list of lists) to R vector/matrix — as_r" />
+<meta property="og:title" content="Convert yacas to R — as_r" />
 
-<meta property="og:description" content="Convert yacas vector (list) or matrix (list of lists) to R vector/matrix" />
+<meta property="og:description" content="If x is a yacas command as string, convert to a character vector/matrix in R.
+If x is a yac_symbol (e.g. from yac_symbol()), then convert it to a numeric object
+if there are no variables or a character type if there are variables." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -86,13 +88,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>
+    </li>
+    <li>
       <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/symbol-interface.html">Getting started with the symbol interface</a>
+      <a href="../articles/high-level.html">The high-level (symbol) interface</a>
+    </li>
+    <li>
+      <a href="../articles/low-level.html">The low-level interface</a>
     </li>
     <li>
       <a href="../articles/yacas-rules.html">User-defined yacas rules</a>
@@ -120,14 +128,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert yacas vector (list) or matrix (list of lists) to R vector/matrix</h1>
+    <h1>Convert yacas to R</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/converters.R'><code>R/converters.R</code></a></small>
     <div class="hidden name"><code>as_r.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Convert yacas vector (list) or matrix (list of lists) to R vector/matrix</p>
+    <p>If <code>x</code> is a yacas command as string, convert to a character vector/matrix in R.
+If <code>x</code> is a <code>yac_symbol</code> (e.g. from <code><a href='yac_symbol.html'>yac_symbol()</a></code>), then convert it to a numeric object
+if there are no variables or a character type if there are variables.</p>
     
     </div>
 
@@ -142,13 +152,19 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>In yacas a vector is a list, and a matrix is a list of lists.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

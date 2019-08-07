@@ -157,6 +157,7 @@ PrettyPrinter <- function(...) {
 
 #' @inherit dep_msg
 #' @concept legacy
+#' @rdname SimplifyOld
 #'
 #' @export
 Simplify <- function(...) {

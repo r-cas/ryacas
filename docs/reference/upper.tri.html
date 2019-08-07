@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lower and Upper Triangular Part of a Matrix — upper.tri • Ryacas</title>
+<title>Lower and upper triangular part of a matrix — upper.tri • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Lower and Upper Triangular Part of a Matrix — upper.tri" />
+<meta property="og:title" content="Lower and upper triangular part of a matrix — upper.tri" />
 
-<meta property="og:description" content="Returns a matrix of logicals the same size of a given matrix with
-  entries TRUE in the lower or upper triangle." />
+<meta property="og:description" content="Lower and upper triangular part of a matrix" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -87,13 +86,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>
+    </li>
+    <li>
       <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/symbol-interface.html">Getting started with the symbol interface</a>
+      <a href="../articles/high-level.html">The high-level (symbol) interface</a>
+    </li>
+    <li>
+      <a href="../articles/low-level.html">The low-level interface</a>
     </li>
     <li>
       <a href="../articles/yacas-rules.html">User-defined yacas rules</a>
@@ -121,15 +126,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Lower and Upper Triangular Part of a Matrix</h1>
+    <h1>Lower and upper triangular part of a matrix</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
     <div class="hidden name"><code>upper.tri.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns a matrix of logicals the same size of a given matrix with
-  entries <code>TRUE</code> in the lower or upper triangle.</p>
+    <p>Lower and upper triangular part of a matrix</p>
     
     </div>
 
@@ -140,48 +144,22 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a matrix or other <span style="R">R</span> object with <code>length(dim(x)) == 2</code>.
-    For back compatibility reasons, when the above is not fulfilled,
-    <code><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a>(x)</code> is called first.</p></td>
+      <td><p>If <code>yac_symbol</code> treat as such, else
+call <code><a href='https://www.rdocumentation.org/packages/base/topics/lower.tri'>base::lower.tri()</a></code>/<code><a href='https://www.rdocumentation.org/packages/base/topics/lower.tri'>base::upper.tri()</a></code>.</p></td>
     </tr>
     <tr>
       <th>diag</th>
-      <td><p>logical.  Should the diagonal be included?</p></td>
+      <td><p>Whether diagonal is included.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='diag.html'>diag</a></code>, <code><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code>; further <code><a href='https://www.rdocumentation.org/packages/base/topics/row'>row</a></code>
-  and <code><a href='https://www.rdocumentation.org/packages/base/topics/col'>col</a></code> on which <code><a href='lower.tri.html'>lower.tri()</a></code> and
-  <code>upper.tri()</code> are built.</p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>(<span class='no'>m2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>20</span>, <span class='fl'>4</span>, <span class='fl'>5</span>))</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5]
-#&gt; [1,]    1    5    9   13   17
-#&gt; [2,]    2    6   10   14   18
-#&gt; [3,]    3    7   11   15   19
-#&gt; [4,]    4    8   12   16   20</div><div class='input'><span class='fu'><a href='lower.tri.html'>lower.tri</a></span>(<span class='no'>m2</span>)</div><div class='output co'>#&gt;       [,1]  [,2]  [,3]  [,4]  [,5]
-#&gt; [1,] FALSE FALSE FALSE FALSE FALSE
-#&gt; [2,]  TRUE FALSE FALSE FALSE FALSE
-#&gt; [3,]  TRUE  TRUE FALSE FALSE FALSE
-#&gt; [4,]  TRUE  TRUE  TRUE FALSE FALSE</div><div class='input'><span class='no'>m2</span>[<span class='fu'><a href='lower.tri.html'>lower.tri</a></span>(<span class='no'>m2</span>)] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>m2</span></div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5]
-#&gt; [1,]    1    5    9   13   17
-#&gt; [2,]   NA    6   10   14   18
-#&gt; [3,]   NA   NA   11   15   19
-#&gt; [4,]   NA   NA   NA   16   20</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

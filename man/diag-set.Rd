@@ -7,7 +7,9 @@
 diag(x) <- value
 }
 \arguments{
-\item{x}{If \code{yac_symbol} treat as such, else call \link[base:`diag<-`]{base::diag<-()}.}
+\item{x}{If \code{yac_symbol} treat as such, else call \code{base::diag<-()}.}
+
+\item{value}{New value for \code{diag(x)}}
 }
 \description{
 From \code{\link[base:diag]{base::diag()}}.

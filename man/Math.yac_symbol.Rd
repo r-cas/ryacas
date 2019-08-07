@@ -7,7 +7,9 @@
 \method{Math}{yac_symbol}(x, ...)
 }
 \arguments{
-\item{x}{A \code{yac_symbol}.}
+\item{x}{\code{yac_symbol}.}
+
+\item{\dots}{further arguments passed to methods}
 }
 \description{
 Math functions

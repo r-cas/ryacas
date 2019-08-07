@@ -18,8 +18,10 @@ library(Ryacas)
 ```
 
 In `R`, the package `Rmpfr` package provide some functions for arbitrary-precision arithmetic. 
-Below we will revisit some of `Rmpfr`'s examples done with `Ryacas` as 
-well at demonstrate new ones possible with `Ryacas` but not with `Rmpfr` (e.g. solving systems of linear equations and matrix inverses).
+The way it is done is to allow for using more memory for storing numbers. 
+This is very good for some use-cases, e.g. the example in `Rmpfr`'s a vignette "Accurately Computing $\log(1 - \exp(-|a|))$". 
+
+Here, we demonstrate how to do investigate other aspects of arbitrary-precision arithmetic using `Ryacas`, e.g. solving systems of linear equations and matrix inverses.
 
 # Arbitrary-precision arithmetic
 
@@ -85,8 +87,8 @@ pol_val
 yac_str(pol_val)
 ```
 
-The reason for the difference is the near cancellation problem:
-Subtraction of nearly identical quantities. This phenomenon is
+The reason for the difference is the near cancellation problem when using floating-point representation: Subtraction of nearly identical quantities. 
+This phenomenon is
 illustrated in the plot below.
 
 ```{r, fig.height=4, fig.width = 6, fig.pos="H", fig.cap="solid line: $(x-1)^7$; dashed line: factorization of $(x-1)^7$.", echo=FALSE}
@@ -97,18 +99,16 @@ plot(xval, p1_val, type = "l", xlab = "x", ylab = "y")
 lines(xval, p2_val, lty = 2)
 legend("bottomright",
        legend = c(
-         parse(text = paste0("e[1]: y == ", as.character(p1))),
-         parse(text = paste0("e[2]: y == ", as.character(p2)))),
+         parse(text = paste0("p[1]: y == ", as.character(p1))),
+         parse(text = paste0("p[2]: y == ", as.character(p2)))),
        lty = c(1, 2),
        cex = 0.7)
 ```
 
 This example could of course have been illustrated directly in `R` but
-it is convenient that `Ryacas` provides exansion of polynomials
+it is convenient that `Ryacas` provides expansion of polynomials
 directly so that students can experiment with other polynomials
 themselves.
-
-
 
 
 # Inverse of Hilbert matrix

@@ -12,6 +12,8 @@ call \code{\link[base:solve]{base::solve()}}.}
 
 \item{b}{If \code{yac_symbol} treat as such, else
 call \code{\link[base:solve]{base::solve()}}.}
+
+\item{\dots}{Not used}
 }
 \description{
 This generic function solves the

@@ -53,13 +53,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>
+    </li>
+    <li>
       <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/symbol-interface.html">Getting started with the symbol interface</a>
+      <a href="../articles/high-level.html">The high-level (symbol) interface</a>
+    </li>
+    <li>
+      <a href="../articles/low-level.html">The low-level interface</a>
     </li>
     <li>
       <a href="../articles/yacas-rules.html">User-defined yacas rules</a>
@@ -89,7 +95,7 @@
       <h1>User-defined yacas rules</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-08-05</h4>
+            <h4 class="date">2019-08-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mikldk/ryacas/blob/master/vignettes/yacas-rules.Rmd"><code>vignettes/yacas-rules.Rmd</code></a></small>
       <div class="hidden name"><code>yacas-rules.Rmd</code></div>
@@ -104,7 +110,7 @@
 <a href="#included-rules" class="anchor"></a>Included rules</h1>
 <p><code>yacas</code> comes with a number of rules all defined in the <code>yacas</code> directory of the installed package:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="dt">package =</span> <span class="st">"Ryacas"</span>, <span class="st">"yacas"</span>)</a></code></pre></div>
-<pre><code>## [1] "/tmp/RtmpzA6rcB/temp_libpath5f383804af07/Ryacas/yacas"</code></pre>
+<pre><code>## [1] "/tmp/RtmppFbzA2/temp_libpath1e8c48da90c8/Ryacas/yacas"</code></pre>
 <p>For example in the <code>sums.rep</code> folder, a number of rules for sums are defined in the <code>code.ys</code> file.</p>
 <p>As an example, the fact that <span class="math display">\[
   \sum_{k = 1}^n (2k-1) = n^2
