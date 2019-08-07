@@ -1,0 +1,159 @@
+---
+title: "The high-level (symbol) interface"
+author: "Mikkel Meyer Andersen and Søren Højsgaard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The high-level (symbol) interface}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(Ryacas)
+```
+
+A short summary of often-used `yacas` commands are found in the section "`yacas` reference" in the ["Getting started"](./getting-started) vignette.
+A short summary of `Ryacas`'s high-level functions are found in the section "`Ryacas` high-level reference" at the end of this document.
+
+# Introduction
+
+Start with a base symbol what can either be:
+
+* A `yacas` command, e.g. `x`, `2*a` or something similar
+* An `R` matrix or vector.
+
+Here, we keep it simple. Consider an `R` matrix and vector:
+
+```{r}
+A <- matrix(1:16, nrow = 4, ncol = 4)
+a <- 1:4
+A
+a
+```
+
+They are now considered `yacas`-enabled:
+
+```{r}
+B <- yac_symbol(A)
+B
+b <- yac_symbol(a)
+b
+```
+
+Notice how they are printed using `yacas`'s syntax.
+
+We can apply `yacas` functions using `y_fn()`:
+
+```{r}
+y_fn(B, "Transpose")
+y_fn(B, "Inverse")
+y_fn(B, "Trace")
+```
+
+Standard `R` commands are available (see the section "`Ryacas` high-level reference" at the end of this document):
+
+```{r}
+t(A)
+t(B)
+exp(B)
+as_r(exp(B))
+A[, 2:3]
+B[, 2:3]
+A[upper.tri(A)] <- 1
+B[upper.tri(B)] <- 1
+A
+B
+2*A - A
+2*B - B
+A %*% solve(A)
+B %*% solve(B)
+solve(A %*% t(A))
+solve(B %*% t(B))
+```
+
+We can also assign a `yacas` variable, but remember that this may be difficult to distinguish:
+
+```{r}
+yac_str("W") # Get variable W if exists, or else just a symbol
+yac_str("Variables()") # ...or list variables
+B
+yac_assign(B, "W") # assign B in R to W in yacas
+yac_str("W") # Get variable W if exists, or else just a symbol
+yac_str("Variables()") # ...or list variables
+yac_silent("Clear(W)")
+yac_str("Variables()") # List variables
+yac_str("W") # Get variable W if exists, or else just a symbol
+```
+
+
+There are additional functions available:
+
+* `simplify()`
+* `tex()`
+
+To demonstrate these and some additional benefit, we exploit `yacas`'s symbolic availabilities.
+
+```{r}
+D <- diag(4) %>% yac_symbol()
+D
+D <- D/2
+D
+D[2:3, 1] <- "d"
+D[3,4] <- "2*d + 2"
+D
+D %>% solve()
+D %>% solve() %>% simplify()
+D %>% solve() %>% simplify() %>% tex()
+```
+
+\[
+`r D %>% solve() %>% simplify() %>% tex()`
+\]
+
+
+`yacas` has a `Simplify()` function. This is made available via a `simplify()` function that also includes a time-out that prevents `yacas` in making the `R` session hang, but it requires that the `unix` package is available.
+The default `timeout` value used when `unix` is available is `2` seconds.
+
+
+# `Ryacas` high-level reference
+
+Principle:
+
+* `yac_symbol(x)` converts `x` to a `yac_symbol` that automatically runs `yacas` when needed. `x` can both be a text string with `yacas` commands or an `R` vector/matrix.
+* `as_r(x)`: Is used to convert the `yac_symbol` back to an `R` representation.
+* `y_fn(x, fn, ...)`: Apply a `yacas` function `fn` to the `yac_symbol` `x`, i.e. `fn(x, ...)`
+
+Reference:
+
+The following functions work with `yac_symbol`s.
+
+* `yac_*()` functions (see the ["Getting started"](./getting-started) vignette)
+  + `yac_str()`: Return `yacas` string
+  + `yac_expr()`: Return `R` expression
+  + `yac_silent()`: Do something silently
+  + `yac_assign()`: Assign a variable
+* Other
+  + `simplify(x, timeout = 2)`: Try `yacas`'s `Simplify()` function. When the `unix` package is available, the `timeout` (in seconds), stops trying after that amount of time to avoid making the `R` process hang.
+  + `tex()`: Convert 
+* Stanard `R` that has been implemented for `yac_symbol`s:
+  + `print()`
+  + `dim()`
+  + `[` getter
+  + `[<-` setter
+  + `%*%` matrix/vector multiplication
+  + `diag()` getter
+  + `diag<-()` setter
+  + `upper.tri()` getter
+  + `lower.tri()` getter
+  + `t()`
+  + `solve()` (only matrix inverse)
+  + Ops: `+`, `-`, `*`, `/`, `^`
+  + Math functions: `sin()`, `cos()`, `tan()`, 
+                    `asin()`, `acos()`, `atan()`, 
+                    `asinh()`, `acosh()`, `atanh()`, 
+                    `exp()`, `log()`, `sqrt()`

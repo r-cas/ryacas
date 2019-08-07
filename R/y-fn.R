@@ -13,6 +13,7 @@
 #' yac_solve_str(cmd)
 #' 
 #' @concept helper
+#' @concept yac_symbol
 #' 
 #' @export
 y_fn <- function(x, fn, ...) {

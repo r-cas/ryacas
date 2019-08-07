@@ -2,7 +2,10 @@ pandoc: 2.7.1
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
+  arbitrary-precision: arbitrary-precision.html
   exams: exams.html
   getting-started: getting-started.html
+  high-level: high-level.html
+  low-level: low-level.html
   yacas-rules: yacas-rules.html
 

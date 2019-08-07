@@ -15,3 +15,4 @@ yac_assign(value, x)
 Assign yacas variable
 }
 \concept{yac_communication}
+\concept{yac_symbol}

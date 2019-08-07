@@ -13,3 +13,4 @@ yac_expr(x)
 Run yacas command returning R expression
 }
 \concept{yac_communication}
+\concept{yac_symbol}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/converters.R
 \name{as_r}
 \alias{as_r}
-\title{Convert yacas vector (list) or matrix (list of lists) to R vector/matrix}
+\title{Convert yacas to R}
 \usage{
 as_r(x)
 }
@@ -10,6 +10,11 @@ as_r(x)
 \item{x}{yacas list or list of lists to convert}
 }
 \description{
-Convert yacas vector (list) or matrix (list of lists) to R vector/matrix
+If \code{x} is a yacas command as string, convert to a character vector/matrix in R.
+If \code{x} is a \code{yac_symbol} (e.g. from \code{\link[=yac_symbol]{yac_symbol()}}), then convert it to a numeric object
+if there are no variables or a character type if there are variables.
+}
+\details{
+In yacas a vector is a list, and a matrix is a list of lists.
 }
 \concept{helper}

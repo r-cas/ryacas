@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9101</span>
       </span>
     </div>
 
@@ -83,10 +83,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>
+    </li>
+    <li>
       <a href="../articles/exams.html">Using `Ryacas` in automatic generation of exams in R</a>
     </li>
     <li>
       <a href="../articles/getting-started.html">Getting started</a>
+    </li>
+    <li>
+      <a href="../articles/high-level.html">The high-level (symbol) interface</a>
+    </li>
+    <li>
+      <a href="../articles/low-level.html">The low-level interface</a>
     </li>
     <li>
       <a href="../articles/yacas-rules.html">User-defined yacas rules</a>
@@ -201,7 +210,7 @@
         <td>
           <p><code><a href="as_r.html">as_r()</a></code> </p>
         </td>
-        <td><p>Convert yacas vector (list) or matrix (list of lists) to R vector/matrix</p></td>
+        <td><p>Convert yacas to R</p></td>
       </tr><tr>
         
         <td>
@@ -220,6 +229,104 @@
           <p><code><a href="y_print.html">y_print()</a></code> </p>
         </td>
         <td><p>Pretty print yacas strings</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-yacas-symbol" class="hasAnchor"><a href="#section-yacas-symbol" class="anchor"></a>yacas symbol</h2>
+          <p class="section-desc"><p>Higher order functions.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="diag-set.html">`diag<-`()</a></code> </p>
+        </td>
+        <td><p>Matrix diagonals</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="diag.html">diag()</a></code> </p>
+        </td>
+        <td><p>Matrix diagonals</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="grapes-times-grapes.html">`%*%`</a></code> </p>
+        </td>
+        <td><p>Matrix multiplication</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lower.tri.html">lower.tri()</a></code> </p>
+        </td>
+        <td><p>Lower and upper triangular part of a matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="simplify.html">simplify()</a></code> </p>
+        </td>
+        <td><p>Simplify expression</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="t.html">t(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>t</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tex.html">tex()</a></code> </p>
+        </td>
+        <td><p>Export object to TeX</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="upper.tri.html">upper.tri()</a></code> </p>
+        </td>
+        <td><p>Lower and upper triangular part of a matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="y_fn.html">y_fn()</a></code> </p>
+        </td>
+        <td><p>Prepare simple <code>yacas</code> call</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac.html">yac()</a></code> </p>
+        </td>
+        <td><p>Run yacas command</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_assign.html">yac_assign()</a></code> </p>
+        </td>
+        <td><p>Assign yacas variable</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_expr.html">yac_expr()</a></code> </p>
+        </td>
+        <td><p>Run yacas command returning R expression</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_silent.html">yac_silent()</a></code> </p>
+        </td>
+        <td><p>Run yacas command silently</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_str.html">yac_str()</a></code> </p>
+        </td>
+        <td><p>Run yacas command returning string/character</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yac_symbol.html">yac_symbol()</a></code> </p>
+        </td>
+        <td><p>Make a yacas symbol</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -341,12 +448,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="Math.html">Math()</a></code> </p>
-        </td>
-        <td><p>Legacy function</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="N.html">N()</a></code> </p>
         </td>
         <td><p>Legacy function</p></td>
@@ -354,12 +455,6 @@
         
         <td>
           <p><code><a href="Newton.html">Newton()</a></code> </p>
-        </td>
-        <td><p>Legacy function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Ops.html">Ops()</a></code> </p>
         </td>
         <td><p>Legacy function</p></td>
       </tr><tr>
@@ -401,7 +496,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="Simplify.html">Simplify()</a></code> </p>
+          <p><code><a href="SimplifyOld.html">Simplify()</a></code> </p>
         </td>
         <td><p>Legacy function</p></td>
       </tr><tr>
@@ -541,6 +636,7 @@
       <li><a href="#section-evaluate-run-yacas-commands">Evaluate/run yacas commands</a></li>
       <li><a href="#section-solve-functions">Solve functions</a></li>
       <li><a href="#section-various-utility-functions">Various utility functions</a></li>
+      <li><a href="#section-yacas-symbol">yacas symbol</a></li>
       <li><a href="#section-package">Package</a></li>
       <li><a href="#section-legacy">Legacy</a></li>
     </ul>
