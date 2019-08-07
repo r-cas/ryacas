@@ -1,3 +1,4 @@
+# Could also just gsub(), but now we do it "properly"
 solve_build_cmd <- function(x, reduce_var, rform = FALSE) {
   cmd_f <- paste0("func(zzzzz) := Eval(", reduce_var, " Where zzzzz)")
   
@@ -11,12 +12,17 @@ solve_build_cmd <- function(x, reduce_var, rform = FALSE) {
 }
 
 check_solve <- function(cmd) {
+  if (grepl("^[ ]*OldSolve", cmd)) {
+    stop("'OldSolve' not yet supported.")
+  }
+  
   if (!grepl("^[ ]*Solve", cmd)) {
     stop("The command does not start with 'Solve'")
   }
 }
 
 extract_reduce_var <- function(cmd) {
+  #var <- gsub("^[ ]*(OldSolve|Solve)[ ]*\\(.*,[ ]*(.+)[ ]*\\)[ ]*", "\\2", cmd)
   var <- gsub("^[ ]*Solve[ ]*\\(.*,[ ]*(.+)[ ]*\\)[ ]*", "\\1", cmd)
   return(var)
 }
