@@ -31,13 +31,16 @@ For vignettes, overview, pointers to additional information,
 installation instructions and a sample session see
 <http://mikldk.github.io/ryacas/>.
 
-Yacas documentation can be found at <http://yacas.readthedocs.org/>
+Yacas documentation can be found at <http://yacas.readthedocs.org/>.
 
 ## Brief examples
 
-Below we show a few examples. Please refer to the [“Getting
-started”](http://mikldk.github.io/ryacas/articles/getting-started.html)
-vignette (and the other vignettes) for more information.
+Below we show a few examples. We highly recommend reading the “[Getting
+started](http://mikldk.github.io/ryacas/articles/getting-started.html)”
+vignette (and the other vignettes) for a more thorough introduction to
+the package.
+
+### Low-level interface
 
 Returning strings with `yac_str()`:
 
@@ -63,7 +66,9 @@ yac_expr("D(x) x^2+x-6")
 #> expression(2 * x + 1)
 ```
 
-Using functions easier:
+Using functions easier (using
+[`magrittr`](https://cran.r-project.org/package=magrittr)’s pipe,
+`%>%`):
 
 ``` r
 "x^2+x-6" %>% y_fn("Factor") %>% yac_str()
@@ -81,8 +86,8 @@ yac_solve_str("Solve(x^2+x-6 == 0, x)")
 #> [1] "{2,-3}"
 yac_solve_expr("Solve(x^2+x-6 == 0, x)")
 #> expression(c(2, -3))
-"x^2+x-6 == 0" %>% y_fn("Solve", "x") %>% yac_solve_str()
-#> [1] "{2,-3}"
+"x^2+x-6 == 0" %>% y_fn("Solve", "x") %>% yac_solve_expr() %>% eval()
+#> [1]  2 -3
 ```
 
 And output in TeX:
@@ -92,11 +97,74 @@ And output in TeX:
 #> [1] "\\frac{\\pi  + 6}{8} "
 ```
 
-And arbitrary precision:
+And arbitrary precision (see also the “[Arbitrary-precision
+arithmetic](http://mikldk.github.io/ryacas/articles/arbitrary-precision.html)”
+vignette):
 
 ``` r
 yac_str("N(Pi, 50)")
 #> [1] "3.1415926535897932384626433832795028841971693993751058209"
+```
+
+### High-level interface
+
+A brief example with a polynomial is:
+
+``` r
+x <- yac_symbol("x^2+x-6")
+x
+#> [1] x^2+x-6
+y_fn(x, "Factor")
+#> [1] (x-2)*(x+3)
+x %>% y_fn("Factor")
+#> [1] (x-2)*(x+3)
+x %>% as_r()
+#> expression(x^2 + x - 6)
+```
+
+A small matrix example follows:
+
+``` r
+A <- outer(0:3, 1:4, "-") + diag(2:5)
+a <- 1:4
+B <- yac_symbol(A)
+B
+#> {{ 1, -2, -3, -4},
+#>  { 0,  2, -2, -3},
+#>  { 1,  0,  3, -2},
+#>  { 2,  1,  0,  4}}
+b <- yac_symbol(a)
+b
+#> [1] {1,2,3,4}
+y_fn(B, "Transpose")
+#> {{ 1,  0,  1,  2},
+#>  {-2,  2,  0,  1},
+#>  {-3, -2,  3,  0},
+#>  {-4, -3, -2,  4}}
+y_fn(B, "Inverse")
+#> {{   37/202,     3/101,    41/202,    31/101},
+#>  {(-17)/101,    30/101,     3/101,     7/101},
+#>  {(-19)/202,  (-7)/101,    39/202,  (-5)/101},
+#>  { (-5)/101,  (-9)/101, (-11)/101,     8/101}}
+y_fn(B, "Trace")
+#> [1] 10
+B %*% b
+#> [1] {-28,-14,2,20}
+t(B)
+#> {{ 1,  0,  1,  2},
+#>  {-2,  2,  0,  1},
+#>  {-3, -2,  3,  0},
+#>  {-4, -3, -2,  4}}
+B[, 2:3]
+#> {{-2, -3},
+#>  { 2, -2},
+#>  { 0,  3},
+#>  { 1,  0}}
+B %*% solve(B)
+#> {{1, 0, 0, 0},
+#>  {0, 1, 0, 0},
+#>  {0, 0, 1, 0},
+#>  {0, 0, 0, 1}}
 ```
 
 ## Yacas
