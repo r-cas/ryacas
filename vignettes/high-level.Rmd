@@ -30,7 +30,7 @@ Start with a base symbol what can either be:
 Here, we keep it simple. Consider an `R` matrix and vector:
 
 ```{r}
-A <- matrix(1:16, nrow = 4, ncol = 4)
+A <- outer(0:3, 1:4, "-") + diag(2:5)
 a <- 1:4
 A
 a
@@ -58,6 +58,8 @@ y_fn(B, "Trace")
 Standard `R` commands are available (see the section "`Ryacas` high-level reference" at the end of this document):
 
 ```{r}
+A %*% a
+B %*% b
 t(A)
 t(B)
 exp(B)

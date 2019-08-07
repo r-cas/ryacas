@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9101</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9111</span>
       </span>
     </div>
 
@@ -115,139 +115,147 @@
 <li>An <code>R</code> matrix or vector.</li>
 </ul>
 <p>Here, we keep it simple. Consider an <code>R</code> matrix and vector:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">A &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>, <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">4</span>)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">A &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/outer">outer</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="st">"-"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb2-2" title="2">a &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span></a>
 <a class="sourceLine" id="cb2-3" title="3">A</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]    1    5    9   13
-## [2,]    2    6   10   14
-## [3,]    3    7   11   15
-## [4,]    4    8   12   16</code></pre>
+## [1,]    1   -2   -3   -4
+## [2,]    0    2   -2   -3
+## [3,]    1    0    3   -2
+## [4,]    2    1    0    4</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">a</a></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
 <p>They are now considered <code>yacas</code>-enabled:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">B &lt;-<span class="st"> </span><span class="kw"><a href="../reference/yac_symbol.html">yac_symbol</a></span>(A)</a>
 <a class="sourceLine" id="cb6-2" title="2">B</a></code></pre></div>
-<pre><code>## {{ 1,  5,  9, 13},
-##  { 2,  6, 10, 14},
-##  { 3,  7, 11, 15},
-##  { 4,  8, 12, 16}}</code></pre>
+<pre><code>## {{ 1, -2, -3, -4},
+##  { 0,  2, -2, -3},
+##  { 1,  0,  3, -2},
+##  { 2,  1,  0,  4}}</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/yac_symbol.html">yac_symbol</a></span>(a)</a>
 <a class="sourceLine" id="cb8-2" title="2">b</a></code></pre></div>
 <pre><code>## [1] {1,2,3,4}</code></pre>
 <p>Notice how they are printed using <code>yacas</code>’s syntax.</p>
 <p>We can apply <code>yacas</code> functions using <code><a href="../reference/y_fn.html">y_fn()</a></code>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(B, <span class="st">"Transpose"</span>)</a></code></pre></div>
-<pre><code>## {{ 1,  2,  3,  4},
-##  { 5,  6,  7,  8},
-##  { 9, 10, 11, 12},
-##  {13, 14, 15, 16}}</code></pre>
+<pre><code>## {{ 1,  0,  1,  2},
+##  {-2,  2,  0,  1},
+##  {-3, -2,  3,  0},
+##  {-4, -3, -2,  4}}</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(B, <span class="st">"Inverse"</span>)</a></code></pre></div>
-<pre><code>## {{Undefined, Undefined, Undefined, Undefined},
-##  {Undefined, Undefined, Undefined, Undefined},
-##  {Undefined, Undefined, Undefined, Undefined},
-##  {Undefined, Undefined, Undefined, Undefined}}</code></pre>
+<pre><code>## {{   37/202,     3/101,    41/202,    31/101},
+##  {(-17)/101,    30/101,     3/101,     7/101},
+##  {(-19)/202,  (-7)/101,    39/202,  (-5)/101},
+##  { (-5)/101,  (-9)/101, (-11)/101,     8/101}}</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(B, <span class="st">"Trace"</span>)</a></code></pre></div>
-<pre><code>## [1] 34</code></pre>
+<pre><code>## [1] 10</code></pre>
 <p>Standard <code>R</code> commands are available (see the section “<code>Ryacas</code> high-level reference” at the end of this document):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/t.html">t</a></span>(A)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">A <span class="op">%*%</span><span class="st"> </span>a</a></code></pre></div>
+<pre><code>##      [,1]
+## [1,]  -28
+## [2,]  -14
+## [3,]    2
+## [4,]   20</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">B <span class="op">%*%</span><span class="st"> </span>b</a></code></pre></div>
+<pre><code>## [1] {-28,-14,2,20}</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="../reference/t.html">t</a></span>(A)</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    3    4
-## [2,]    5    6    7    8
-## [3,]    9   10   11   12
-## [4,]   13   14   15   16</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="../reference/t.html">t</a></span>(B)</a></code></pre></div>
-<pre><code>## {{ 1,  2,  3,  4},
-##  { 5,  6,  7,  8},
-##  { 9, 10, 11, 12},
-##  {13, 14, 15, 16}}</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(B)</a></code></pre></div>
-<pre><code>## {{ Exp(1),  Exp(5),  Exp(9), Exp(13)},
-##  { Exp(2),  Exp(6), Exp(10), Exp(14)},
-##  { Exp(3),  Exp(7), Exp(11), Exp(15)},
-##  { Exp(4),  Exp(8), Exp(12), Exp(16)}}</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/as_r.html">as_r</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(B))</a></code></pre></div>
-<pre><code>##           [,1]      [,2]       [,3]      [,4]
-## [1,]  2.718282  148.4132   8103.084  442413.4
-## [2,]  7.389056  403.4288  22026.466 1202604.3
-## [3,] 20.085537 1096.6332  59874.142 3269017.4
-## [4,] 54.598150 2980.9580 162754.791 8886110.5</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">A[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
+## [1,]    1    0    1    2
+## [2,]   -2    2    0    1
+## [3,]   -3   -2    3    0
+## [4,]   -4   -3   -2    4</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/t.html">t</a></span>(B)</a></code></pre></div>
+<pre><code>## {{ 1,  0,  1,  2},
+##  {-2,  2,  0,  1},
+##  {-3, -2,  3,  0},
+##  {-4, -3, -2,  4}}</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(B)</a></code></pre></div>
+<pre><code>## {{ Exp(1), Exp(-2), Exp(-3), Exp(-4)},
+##  {      1,  Exp(2), Exp(-2), Exp(-3)},
+##  { Exp(1),       1,  Exp(3), Exp(-2)},
+##  { Exp(2),  Exp(1),       1,  Exp(4)}}</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="../reference/as_r.html">as_r</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">exp</a></span>(B))</a></code></pre></div>
+<pre><code>##          [,1]      [,2]        [,3]        [,4]
+## [1,] 2.718282 0.1353353  0.04978707  0.01831564
+## [2,] 1.000000 7.3890561  0.13533528  0.04978707
+## [3,] 2.718282 1.0000000 20.08553692  0.13533528
+## [4,] 7.389056 2.7182818  1.00000000 54.59815003</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">A[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
 <pre><code>##      [,1] [,2]
-## [1,]    5    9
-## [2,]    6   10
-## [3,]    7   11
-## [4,]    8   12</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">B[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
-<pre><code>## {{ 5,  9},
-##  { 6, 10},
-##  { 7, 11},
-##  { 8, 12}}</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">A[<span class="kw"><a href="../reference/upper.tri.html">upper.tri</a></span>(A)] &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb28-2" title="2">B[<span class="kw"><a href="../reference/upper.tri.html">upper.tri</a></span>(B)] &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb28-3" title="3">A</a></code></pre></div>
+## [1,]   -2   -3
+## [2,]    2   -2
+## [3,]    0    3
+## [4,]    1    0</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">B[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
+<pre><code>## {{-2, -3},
+##  { 2, -2},
+##  { 0,  3},
+##  { 1,  0}}</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">A[<span class="kw"><a href="../reference/upper.tri.html">upper.tri</a></span>(A)] &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb32-2" title="2">B[<span class="kw"><a href="../reference/upper.tri.html">upper.tri</a></span>(B)] &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb32-3" title="3">A</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
 ## [1,]    1    1    1    1
-## [2,]    2    6    1    1
-## [3,]    3    7   11    1
-## [4,]    4    8   12   16</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">B</a></code></pre></div>
-<pre><code>## {{ 1,  1,  1,  1},
-##  { 2,  6,  1,  1},
-##  { 3,  7, 11,  1},
-##  { 4,  8, 12, 16}}</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="dv">2</span><span class="op">*</span>A <span class="op">-</span><span class="st"> </span>A</a></code></pre></div>
+## [2,]    0    2    1    1
+## [3,]    1    0    3    1
+## [4,]    2    1    0    4</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">B</a></code></pre></div>
+<pre><code>## {{1, 1, 1, 1},
+##  {0, 2, 1, 1},
+##  {1, 0, 3, 1},
+##  {2, 1, 0, 4}}</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="dv">2</span><span class="op">*</span>A <span class="op">-</span><span class="st"> </span>A</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
 ## [1,]    1    1    1    1
-## [2,]    2    6    1    1
-## [3,]    3    7   11    1
-## [4,]    4    8   12   16</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="dv">2</span><span class="op">*</span>B <span class="op">-</span><span class="st"> </span>B</a></code></pre></div>
-<pre><code>## {{ 1,  1,  1,  1},
-##  { 2,  6,  1,  1},
-##  { 3,  7, 11,  1},
-##  { 4,  8, 12, 16}}</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">A <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(A)</a></code></pre></div>
-<pre><code>##               [,1] [,2]          [,3]         [,4]
-## [1,]  1.000000e+00    0 -4.163336e-17 2.775558e-17
-## [2,] -2.220446e-16    1  1.387779e-17 4.163336e-17
-## [3,] -4.718448e-16    0  1.000000e+00 6.938894e-17
-## [4,]  0.000000e+00    0  0.000000e+00 1.000000e+00</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">B <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(B)</a></code></pre></div>
+## [2,]    0    2    1    1
+## [3,]    1    0    3    1
+## [4,]    2    1    0    4</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="dv">2</span><span class="op">*</span>B <span class="op">-</span><span class="st"> </span>B</a></code></pre></div>
+<pre><code>## {{1, 1, 1, 1},
+##  {0, 2, 1, 1},
+##  {1, 0, 3, 1},
+##  {2, 1, 0, 4}}</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1">A <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(A)</a></code></pre></div>
+<pre><code>##               [,1]          [,2]         [,3]         [,4]
+## [1,]  1.000000e+00 -1.110223e-16 5.551115e-17 5.551115e-17
+## [2,] -1.110223e-16  1.000000e+00 5.551115e-17 5.551115e-17
+## [3,]  2.220446e-16 -1.110223e-16 1.000000e+00 0.000000e+00
+## [4,]  0.000000e+00 -2.220446e-16 0.000000e+00 1.000000e+00</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">B <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(B)</a></code></pre></div>
 <pre><code>## {{1, 0, 0, 0},
 ##  {0, 1, 0, 0},
 ##  {0, 0, 1, 0},
 ##  {0, 0, 0, 1}}</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(A <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(A))</a></code></pre></div>
-<pre><code>##             [,1]         [,2]          [,3]          [,4]
-## [1,]  3.34013605 -0.301587302 -0.0804988662 -0.1893424036
-## [2,] -0.30158730  0.074074074 -0.0052910053  0.0145502646
-## [3,] -0.08049887 -0.005291005  0.0173847317 -0.0001889645
-## [4,] -0.18934240  0.014550265 -0.0001889645  0.0154006047</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(B <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(B))</a></code></pre></div>
-<pre><code>## {{   491/147,   (-19)/63,  (-71)/882, (-167)/882},
-##  {  (-19)/63,       2/27,   (-1)/189,     11/756},
-##  { (-71)/882,   (-1)/189,    23/1323,  (-1)/5292},
-##  {(-167)/882,     11/756,  (-1)/5292,  163/10584}}</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(A <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(A))</a></code></pre></div>
+<pre><code>##            [,1]       [,2]       [,3]       [,4]
+## [1,]  3.7040816 -1.2551020 -0.8877551 -0.6224490
+## [2,] -1.2551020  0.6938776  0.2346939  0.1530612
+## [3,] -0.8877551  0.2346939  0.3367347  0.1326531
+## [4,] -0.6224490  0.1530612  0.1326531  0.1734694</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(B <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(B))</a></code></pre></div>
+<pre><code>## {{   363/98, (-123)/98,  (-87)/98,  (-61)/98},
+##  {(-123)/98,     34/49,     23/98,     15/98},
+##  { (-87)/98,     23/98,     33/98,     13/98},
+##  { (-61)/98,     15/98,     13/98,     17/98}}</code></pre>
 <p>We can also assign a <code>yacas</code> variable, but remember that this may be difficult to distinguish:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
 <pre><code>## [1] "W"</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># ...or list variables</span></a></code></pre></div>
-<pre><code>## [1] "{rformBitwiseOps,I,tmp,j}"</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">B</a></code></pre></div>
-<pre><code>## {{ 1,  1,  1,  1},
-##  { 2,  6,  1,  1},
-##  { 3,  7, 11,  1},
-##  { 4,  8, 12, 16}}</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw"><a href="../reference/yac_assign.html">yac_assign</a></span>(B, <span class="st">"W"</span>) <span class="co"># assign B in R to W in yacas</span></a>
-<a class="sourceLine" id="cb50-2" title="2"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
-<pre><code>## [1] "{{1,1,1,1},{2,6,1,1},{3,7,11,1},{4,8,12,16}}"</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># ...or list variables</span></a></code></pre></div>
-<pre><code>## [1] "{W,rformBitwiseOps,I,tmp,j}"</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw"><a href="../reference/yac_silent.html">yac_silent</a></span>(<span class="st">"Clear(W)"</span>)</a>
-<a class="sourceLine" id="cb54-2" title="2"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># List variables</span></a></code></pre></div>
-<pre><code>## [1] "{rformBitwiseOps,I,tmp,j}"</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># ...or list variables</span></a></code></pre></div>
+<pre><code>## [1] "{I,rformBitwiseOps,j}"</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">B</a></code></pre></div>
+<pre><code>## {{1, 1, 1, 1},
+##  {0, 2, 1, 1},
+##  {1, 0, 3, 1},
+##  {2, 1, 0, 4}}</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw"><a href="../reference/yac_assign.html">yac_assign</a></span>(B, <span class="st">"W"</span>) <span class="co"># assign B in R to W in yacas</span></a>
+<a class="sourceLine" id="cb54-2" title="2"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
+<pre><code>## [1] "{{1,1,1,1},{0,2,1,1},{1,0,3,1},{2,1,0,4}}"</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># ...or list variables</span></a></code></pre></div>
+<pre><code>## [1] "{W,I,rformBitwiseOps,j}"</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw"><a href="../reference/yac_silent.html">yac_silent</a></span>(<span class="st">"Clear(W)"</span>)</a>
+<a class="sourceLine" id="cb58-2" title="2"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># List variables</span></a></code></pre></div>
+<pre><code>## [1] "{I,rformBitwiseOps,j}"</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
 <pre><code>## [1] "W"</code></pre>
 <p>There are additional functions available:</p>
 <ul>
@@ -255,36 +263,36 @@
 <li><code><a href="../reference/tex.html">tex()</a></code></li>
 </ul>
 <p>To demonstrate these and some additional benefit, we exploit <code>yacas</code>’s symbolic availabilities.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_symbol.html">yac_symbol</a></span>()</a>
-<a class="sourceLine" id="cb58-2" title="2">D</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_symbol.html">yac_symbol</a></span>()</a>
+<a class="sourceLine" id="cb62-2" title="2">D</a></code></pre></div>
 <pre><code>## {{1, 0, 0, 0},
 ##  {0, 1, 0, 0},
 ##  {0, 0, 1, 0},
 ##  {0, 0, 0, 1}}</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">D &lt;-<span class="st"> </span>D<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb60-2" title="2">D</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">D &lt;-<span class="st"> </span>D<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb64-2" title="2">D</a></code></pre></div>
 <pre><code>## {{1/2,   0,   0,   0},
 ##  {  0, 1/2,   0,   0},
 ##  {  0,   0, 1/2,   0},
 ##  {  0,   0,   0, 1/2}}</code></pre>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">D[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>] &lt;-<span class="st"> "d"</span></a>
-<a class="sourceLine" id="cb62-2" title="2">D[<span class="dv">3</span>,<span class="dv">4</span>] &lt;-<span class="st"> "2*d + 2"</span></a>
-<a class="sourceLine" id="cb62-3" title="3">D</a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">D[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>] &lt;-<span class="st"> "d"</span></a>
+<a class="sourceLine" id="cb66-2" title="2">D[<span class="dv">3</span>,<span class="dv">4</span>] &lt;-<span class="st"> "2*d + 2"</span></a>
+<a class="sourceLine" id="cb66-3" title="3">D</a></code></pre></div>
 <pre><code>## {{  1/2,     0,     0,     0},
 ##  {    d,   1/2,     0,     0},
 ##  {    d,     0,   1/2, 2*d+2},
 ##  {    0,     0,     0,   1/2}}</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">D <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">D <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>()</a></code></pre></div>
 <pre><code>## {{           2,            0,            0,            0},
 ##  {      (-4)*d,            2,            0,            0},
 ##  {      (-4)*d,            0,            2, (-4)*(2*d+2)},
 ##  {           0,            0,            0,            2}}</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">D <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/simplify.html">simplify</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">D <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/simplify.html">simplify</a></span>()</a></code></pre></div>
 <pre><code>## {{         2,          0,          0,          0},
 ##  {    (-4)*d,          2,          0,          0},
 ##  {    (-4)*d,          0,          2, (-8)*(d+1)},
 ##  {         0,          0,          0,          2}}</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">D <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/simplify.html">simplify</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/tex.html">tex</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">D <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/simplify.html">simplify</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/tex.html">tex</a></span>()</a></code></pre></div>
 <pre><code>## [1] "\\left( \\begin{array}{cccc} 2 &amp; 0 &amp; 0 &amp; 0 \\\\ -4 d &amp; 2 &amp; 0 &amp; 0 \\\\ -4 d &amp; 0 &amp; 2 &amp; -8 \\left( d + 1\\right)  \\\\ 0 &amp; 0 &amp; 0 &amp; 2 \\end{array} \\right) "</code></pre>
 <p><span class="math display">\[
 \left( \begin{array}{cccc} 2 &amp; 0 &amp; 0 &amp; 0 \\ -4 d &amp; 2 &amp; 0 &amp; 0 \\ -4 d &amp; 0 &amp; 2 &amp; -8 \left( d + 1\right)  \\ 0 &amp; 0 &amp; 0 &amp; 2 \end{array} \right) 

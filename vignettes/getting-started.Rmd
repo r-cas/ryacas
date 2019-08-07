@@ -125,6 +125,40 @@ eqy %>% y_fn("Factor") # Notice how we do not need to call yac_str()/yac_expr()
 ```
 Notice how the printing is different from before.
 
+We start with a small matrix example:
+
+```{r}
+A <- outer(0:3, 1:4, "-") + diag(2:5)
+a <- 1:4
+B <- yac_symbol(A)
+B
+b <- yac_symbol(a)
+b
+```
+
+Notice how they are printed using `yacas`'s syntax.
+
+We can apply `yacas` functions using `y_fn()`:
+
+```{r}
+y_fn(B, "Transpose")
+y_fn(B, "Inverse")
+y_fn(B, "Trace")
+```
+
+Some standard `R` commands are available (see the section "`Ryacas` high-level reference" at the end of the "[The high-level (symbol) interface](./high-level.html)" vignette):
+
+```{r}
+A %*% a
+B %*% b
+t(A)
+t(B)
+A[, 2:3]
+B[, 2:3]
+A %*% solve(A)
+B %*% solve(B)
+```
+
 Next we will demonstrate matrix functionality using the [Hilbert matrix](https://en.wikipedia.org/wiki/Hilbert_matrix) 
 \[
 H_{{ij}}={\frac{1}{i+j-1}} 
