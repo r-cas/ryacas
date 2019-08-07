@@ -72,11 +72,15 @@ test_that("y_fn", {
 test_that("as_r", {
   expect_equal(as_r(B), apply(as_r(B$yacas_cmd), 2, as.numeric))
   
+  # A1 <- A
+  # A1[2, 2] <- "x"
+  # B1 <- yac_symbol(A1)
+  # 
+  # expect_equal(as_r(B1), A1)
+  
   A1 <- A
   A1[2, 2] <- "x"
   B1 <- yac_symbol(A1)
-  
-  expect_equal(as_r(B1), A1)
   
   A2 <- A
   A2[2, 2] <- 999
@@ -94,16 +98,16 @@ test_that("diag", {
   
   A1 <- A
   B1 <- B
-  diag(A1) <- "a"
+  diag(A1) <- 999
   diag(B1) <- "a"
-  expect_equal(A1, as_r(B1))
+  expect_equal(A1, eval(as_r(B1), list(a = 999)))
   
   A1 <- A
   B1 <- B
   x <- c("a", "b", "c", "d")
-  diag(A1) <- x
+  diag(A1) <- 901:904
   diag(B1) <- x
-  expect_equal(A1, as_r(B1))
+  expect_equal(A1, eval(as_r(B1), list(a = 901, b = 902, c = 903, d = 904)))
 })
 
 test_that("lower.tri/upper.tri", {
@@ -121,16 +125,19 @@ test_that("lower.tri/upper.tri", {
     
     A1 <- A
     B1 <- B
-    A1[func(A1)] <- "a"
+    A1[func(A1)] <- 999
     B1[func(B1)] <- "a"
-    expect_equal(A1, as_r(B1))
+    expect_equal(A1,eval(as_r(B1), list(a = 999)))
+    
     
     A1 <- A
     B1 <- B
     x <- c("a", "b", "c", "d", "e", "f")
-    A1[func(A1)] <- x
+    A1[func(A1)] <- 901:906
     B1[func(B1)] <- x
-    expect_equal(A1, as_r(B1))
+    expect_equal(A1, eval(as_r(B1), 
+                          list(a = 901, b = 902, c = 903, 
+                               d = 904, e = 905, f = 906)))
   }
 })
 

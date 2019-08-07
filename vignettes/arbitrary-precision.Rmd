@@ -113,12 +113,13 @@ themselves.
 
 # Inverse of Hilbert matrix
 
-In `R`'s `solve()` help file the Hilbert matrix is introduced:
+In `R`'s `solve()` help file the [Hilbert matrix](https://en.wikipedia.org/wiki/Hilbert_matrix) is introduced:
 
 ```{r}
 hilbert <- function(n) { 
   i <- 1:n
-  return(1 / outer(i - 1, i, "+"))
+  H <- 1 / outer(i - 1, i, "+")
+  return(H)
 }
 ```
 

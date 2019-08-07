@@ -25,8 +25,8 @@ The low-level interface consists of these two main functions:
 Note, that the `yacas` command `x` is a string and must often be built op using `paste()`/`paste0()`. 
 Examples of this will be shown in multiple examples below. 
 
-A short summary of often used `yacas` commands are found in the section "`yacas` reference" at the end of this document.
-Similarly, a short summary of `Ryacas` functions are also found in the section "`Ryacas` reference" at the end of this document.
+A short summary of often-used `yacas` commands are found in the section "`yacas` reference" in the ["Getting started"](./getting-started) vignette.
+A short summary of `Ryacas`'s low-level functions are also found in the section "`Ryacas` low-level reference" at the end of this document.
 
 # Example 1: Simple algebra
 
@@ -59,7 +59,7 @@ yac_str(y_fn(eq, "Factor"))
 yac_str(y_fn(y_fn(eq, "Factor"), "TeXForm"))
 ```
 
-As you see, there are a lot of nested function call. That can be avoided by using `magrittr`'s pipe `%>%` (automatically available with `Ryacas`) together with the helper function `y_fn()`:
+As you see, there are a lot of nested function calls. That can be avoided by using `magrittr`'s pipe `%>%` (automatically available with `Ryacas`) together with the helper function `y_fn()`:
 
 ```{r}
 eq %>% y_fn("Simplify")
@@ -324,7 +324,7 @@ H
 H(2, 4)
 ```
 
-# `Ryacas` reference
+# `Ryacas` low-level reference
 
 Principle:
 
@@ -342,33 +342,8 @@ Reference:
     + `yac_str(x)`: Same as `yac_expr()`, but get result as **string/character**.
 * Helper functions
     + `as_y(x)`: Convert `R` character matrix `x` to a `yacas` representation
-    + `as_r(x)`: Convert a `yacas` representation `x` to a `R` character matrix
-    + `y_fn(x, fn)`: Helper function to prepare a call for `yacas`, e.g. `y_fn("x^2 - 1", "Factor")` is gives `"Factor(x^2 - 1)"`
+    + `as_r(x)`: Convert a `yacas` representation `x` to an `R` object
+    + `y_fn(x, fn, ...)`: Helper function to prepare a call for `yacas`, e.g. `y_fn("x^2 - 1", "Factor")` is gives `"Factor(x^2 - 1)"`; `...` are additional arguments: `y_fn(x, fn, ...)` gives `fn(x, ...)`
     + `y_print(x)`: Pretty print yacas strings, e.g. a yacas matrix
 * Lower level functions
     + `yac_core(x)`: Evaluate `yacas` command `x` (a string) and get both result and side effects; used in the implementation of `yac_expr()`, `yac_silent()`, and `yac_str()`
-
-# `yacas` reference
-
-Below are some `yacas` functions. A more elaborate reference is available at <https://yacas.readthedocs.io/>:
-
-* General
-    + `Expand(x)`: Expand an expression
-    + `Factor(x)`: Factorise an expression
-    + `Simplify(x)`: Simplify an expression
-    + `Solve(expr, var)` solve an equation (refer to the `Ryacas` functions `yac_solve_expr()` and `yac_solve_str()`)
-    + `Variables()`: List `yacas` variables
-* Calculus:
-    + `D(x) expr`: Take the derivative of `expr` with respect to `x`
-    + `HessianMatrix(function, var)`: Create the Hessian matrix
-    + `JacobianMatrix(function, var)`: Create the Jacobian matrix
-    + `Limit(n, a) f(n)`: Limit of `f(n)` for `n` going towards `a` (e.g. `Infinity` or `0`)
-    + `Sum(k, a, b, f(k))`: Sum of `f(k)` for `k` from `a` to `b`.
-* Output
-    + `TeXForm(x)`: Get a $\LaTeX$ representation of an expression
-    + `PrettyForm(x)`: Print a prettier ASCII representation of an expression
-* Linear algebra
-    + `Inverse(A)`: Inverse of a matrix
-    + `Transpose(A)`: Transpose of a matrix
-    + `A * B`: Matrix multiplication (and not as `R`'s `%*%`)
-

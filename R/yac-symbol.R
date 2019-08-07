@@ -1,52 +1,3 @@
-# Supported functions for yac_symbol()
-#######################################
-#
-# ------------------------------------
-# From Ryacas:
-# ------------------------------------
-# * yac_str()
-# * yac_expr()
-# * yac_silent()
-# * yac()
-# * yac_assign()
-#
-# New:
-# * simplify()
-# * tex()
-# 
-# ------------------------------------
-# From R:
-# ------------------------------------
-# * print()
-# * dim()
-# * `[` getter
-# * `[<-` setter
-# * %*% 
-# * diag(): both getter and setter
-# * upper.tri(): only getter
-# * lower.tri(): only getter
-# * t()
-# * solve()
-# * Ops: c("+", "-", "*", "/", "^")
-# * Math functions: 
-#    sin(), cos(), tan(), 
-#    asin(), acos(), atan(), asinh(), acosh(), atanh(), 
-#    exp(), log(), sqrt()
-# 
-# ------------------------------------
-# Missing:
-# ------------------------------------
-# * upper.tri(): setter
-# * lower.tri(): setter
-# 
-# ------------------------------------
-# Not included on purpose:
-# ------------------------------------
-# * 
-
-
-
-
 #' Make a yacas symbol
 #' 
 #' Note that this results in multiple calls to `yacas` and 
@@ -114,24 +65,15 @@ y_fn.yac_symbol <- function(x, fn, ...) {
 }
 
 
-expr_has_vars <- function(x) {
-  y_vars <- all.vars(x)
-  
-  if (length(y_vars) > 0L) {
-    return(TRUE)
-  }
-  
-  return(FALSE)
-}
 
 #' @export
 as_r.yac_symbol <- function(x) {
   y <- yac_expr(x$yacas_cmd)
-  
+
   if (expr_has_vars(y)) {
-    return(as_r.default(x$yacas_cmd))
+    return(y)
   }
-  
+
   return(eval(y))
 }
 

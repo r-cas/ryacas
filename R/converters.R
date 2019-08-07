@@ -30,6 +30,18 @@ as_r <- function(x) {
   UseMethod("as_r")
 }
 
+
+expr_has_vars <- function(x) {
+  y_vars <- all.vars(x)
+  
+  if (length(y_vars) > 0L) {
+    return(TRUE)
+  }
+  
+  return(FALSE)
+}
+
+
 #' @export
 as_r.default <- function(x) {
   # Two {'s in line, potentially with space in between
@@ -38,7 +50,18 @@ as_r.default <- function(x) {
     return(y_hlp_from_yacmat(x))
   }
   
-  # Vector
-  return(y_hlp_from_yacvec(x))
+  # One {
+  if (grepl("\\{", x)) {
+    # Vector
+    return(y_hlp_from_yacvec(x))
+  }
+  
+  y <- yac_expr(x)
+  if (expr_has_vars(y)) {
+    return(y)
+  }
+  
+  # No variables, just eval
+  return(eval(y))
 }
 
