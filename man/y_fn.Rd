@@ -21,8 +21,9 @@ y_fn("x^2 - 1", "Factor")
 
 cmd <- "x^2 - 1 == 0" \%>\% y_fn("Solve", "x")
 cmd
-yac_str(cmd)
-yac_solve_str(cmd)
+sol <- yac_str(cmd)
+sol
+yac_str(y_rmvars(sol))
 
 }
 \concept{helper}

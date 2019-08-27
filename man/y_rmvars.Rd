@@ -10,7 +10,10 @@ y_rmvars(x)
 \item{x}{yacas command}
 }
 \description{
-Remove/strip variable names
+This only builds a yacas command.
+You need to also call \code{\link[=yac_str]{yac_str()}}, \code{\link[=yac_expr]{yac_expr()}} or similar.
+This is the reason that it does not call yacas: it depends on how you
+want it returned (string, expression).
 }
 \examples{
 cmd <- "{x == 2, y == 4}"

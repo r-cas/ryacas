@@ -60,15 +60,14 @@ test_that("y_print()", {
                "{{ 1,  0,  0,  0},\n { 0, -t,  0,  0},\n { 0,  0,  1,  0},\n { 0,  0,  0,  1}} ")
 })
 
-test_that("y_solve_*()", {
+test_that("Solve", {
   yac_silent("poly := x^2 - 1")
   
-  x1 <- yac_solve_str("Solve(poly == 0, x)")
-  expect_equal(x1, "{1,-1}")
-  expect_equal(sort(as_r(x1)), sort(as_r("{1,-1}")))
-  
-  x2 <- yac_solve_expr("Solve(poly == 0, x)")
-  expect_equal(x2, expression(c(1, -1)))
+  x1 <- yac_str("Solve(poly == 0, x)")
+  expect_equal(x1, "{x==1,x==(-1)}")
+  y1 <- x1 %>% y_rmvars() %>% yac_str()
+  expect_equal(y1, "{1,-1}")
+  expect_equal(sort(as_r(y1)), sort(as_r("{1,-1}")))
 })
 
 test_that("y_fn()", {

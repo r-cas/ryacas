@@ -9,8 +9,9 @@
 #' 
 #' cmd <- "x^2 - 1 == 0" %>% y_fn("Solve", "x")
 #' cmd
-#' yac_str(cmd)
-#' yac_solve_str(cmd)
+#' sol <- yac_str(cmd)
+#' sol
+#' yac_str(y_rmvars(sol))
 #' 
 #' @concept helper
 #' @concept yac_symbol
@@ -34,6 +35,11 @@ y_fn.default <- function(x, fn, ...) {
 }
 
 #' Remove/strip variable names
+#' 
+#' This only builds a yacas command. 
+#' You need to also call [yac_str()], [yac_expr()] or similar. 
+#' This is the reason that it does not call yacas: it depends on how you 
+#' want it returned (string, expression).
 #' 
 #' @param x yacas command
 #' 

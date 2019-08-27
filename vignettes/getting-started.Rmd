@@ -228,7 +228,7 @@ Below are some `yacas` functions. A more elaborate reference is available at <ht
     + `Expand(x)`: Expand an expression
     + `Factor(x)`: Factorise an expression
     + `Simplify(x)`: Simplify an expression
-    + `Solve(expr, var)` solve an equation (refer to the `Ryacas` functions `yac_solve_expr()` and `yac_solve_str()`)
+    + `Solve(expr, var)` solve an equation (refer to the `Ryacas` function `y_rmvars()`)
     + `Variables()`: List `yacas` variables
 * Calculus:
     + `D(x) expr`: Take the derivative of `expr` with respect to `x`
