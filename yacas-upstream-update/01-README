@@ -4,13 +4,14 @@
 cd yacas-upstream-update
 
 # https://github.com/grzegorzmazur/yacas/tree/v1.7.0
-git clone https://github.com/grzegorzmazur/yacas.git --branch "v1.7.0"
+#git clone https://github.com/grzegorzmazur/yacas.git --branch "v1.7.0"
+git clone https://github.com/grzegorzmazur/yacas.git
 
 #cd ./yacas
 #mkdir build
 #cd build
 #cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_CYACAS_GUI=No -DENABLE_CYACAS_KERNEL=Yes -DENABLE_CYACAS_BENCHMARKS=No -DBUILD_TESTING=No -DENABLE_CYACAS_UNIT_TESTS=No -DENABLE_CYACAS_CONSOLE=No -DENABLE_JYACAS=No -DENABLE_DOCS=No ..
-cd ../../../yacas-upstream-update
+#cd ../../../yacas-upstream-update
 
 # Compare versions:
 # Upstream:
@@ -65,6 +66,8 @@ grep -iHR "Lesser" inst/yacas
 
   
 /* 
+ * Copyright (C) 2016 Grzegorz Mazur.
+ *
  * Yacas is free software: you can redistribute it and/or modify  
  * it under the terms of the GNU General Public License as published by  
  * the Free Software Foundation, version 3.

@@ -2,8 +2,8 @@
 
 #define YACAS_VERSION_MAJOR 1
 #define YACAS_VERSION_MINOR 7
-#define YACAS_VERSION_MICRO 0
+#define YACAS_VERSION_MICRO 1
 
-#define YACAS_VERSION "1.7.0"
+#define YACAS_VERSION "1.7.1"
 
 #endif

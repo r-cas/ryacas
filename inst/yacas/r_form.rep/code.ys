@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2016 Grzegorz Mazur.
+/* Copyright (C) 2016 Grzegorz Mazur.
  *
  * Yacas is free software: you can redistribute it and/or modify  
  * it under the terms of the GNU General Public License as published by  
@@ -15,7 +14,7 @@
  * write to the Free Software Foundation, Inc., 51 Franklin Street, 
  * Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
+ 
 /* RForm: convert yacas objects to R code. */
 /* Derived from CForm */
 
