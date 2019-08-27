@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9121</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9122</span>
       </span>
     </div>
 
@@ -311,7 +311,7 @@
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1"><span class="kw"><a href="../reference/yac_silent.html">yac_silent</a></span>(<span class="st">"poly := (x-3)*(x+2)"</span>)</a></code></pre></div>
 <p>We can now list <code>yacas</code> variables (<code>I</code> is the imaginary unit):</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>)</a></code></pre></div>
-<pre><code>## [1] "{poly,j,rformBitwiseOps,I}"</code></pre>
+<pre><code>## [1] "{poly,rformBitwiseOps,j,I}"</code></pre>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Expand(poly)"</span>)</a></code></pre></div>
 <pre><code>## [1] "x^2-x-6"</code></pre>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1"><span class="st">"poly"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(<span class="st">"Expand"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>()</a></code></pre></div>
@@ -341,24 +341,17 @@
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1">cmd &lt;-<span class="st"> "Solve(poly == 0, x)"</span></a>
 <a class="sourceLine" id="cb104-2" title="2">cmd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>()</a></code></pre></div>
 <pre><code>## [1] "{x==(-2),x==3}"</code></pre>
-<p>If we want the solution without the variable name <code>x</code> and the equality symbol <code>==</code>, we can use <code>Ryacas</code> helper functions <code><a href="../reference/yac_solve_expr.html">yac_solve_expr()</a></code> and <code><a href="../reference/yac_solve_str.html">yac_solve_str()</a></code> depending on the desired result type:</p>
-<ul>
-<li>
-<code><a href="../reference/yac_solve_expr.html">yac_solve_expr(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string starting with ‘Solve’) and reducing <code>var ==</code> from the <code>yacas</code> result, and get result as an <strong><code>R</code> expression</strong>.</li>
-<li>
-<code><a href="../reference/yac_solve_str.html">yac_solve_str(x)</a></code>: Same as <code><a href="../reference/yac_solve_expr.html">yac_solve_expr()</a></code>, but get result as as <strong>string/character</strong>.</li>
-</ul>
-<p>Examples of usage:</p>
+<p>If we want the solution without the variable name <code>x</code> and the equality symbol <code>==</code>, we can use <code>Ryacas</code> helper function <code><a href="../reference/y_rmvars.html">y_rmvars()</a></code>:</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1">cmd</a></code></pre></div>
 <pre><code>## [1] "Solve(poly == 0, x)"</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">cmd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_solve_str.html">yac_solve_str</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">cmd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/y_rmvars.html">y_rmvars</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>()</a></code></pre></div>
 <pre><code>## [1] "{-2,3}"</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">cmd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_solve_expr.html">yac_solve_expr</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">cmd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/y_rmvars.html">y_rmvars</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_expr.html">yac_expr</a></span>()</a></code></pre></div>
 <pre><code>## expression(c(-2, 3))</code></pre>
 <p>We can also use <code><a href="../reference/y_fn.html">y_fn()</a></code>:</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1"><span class="st">"poly == 0"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(<span class="st">"Solve"</span>, <span class="st">"x"</span>)</a></code></pre></div>
 <pre><code>## [1] "Solve(poly == 0, x)"</code></pre>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1"><span class="st">"poly == 0"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(<span class="st">"Solve"</span>, <span class="st">"x"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_solve_str.html">yac_solve_str</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1"><span class="st">"poly == 0"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(<span class="st">"Solve"</span>, <span class="st">"x"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/y_rmvars.html">y_rmvars</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>()</a></code></pre></div>
 <pre><code>## [1] "{-2,3}"</code></pre>
 </div>
 <div id="case-gradient-and-hessian-for-a-function" class="section level1">
@@ -426,11 +419,7 @@
 <li>
 <code><a href="../reference/yac_expr.html">yac_expr(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string) and get result as an <strong><code>R</code> expression</strong>.</li>
 <li>
-<code><a href="../reference/yac_silent.html">yac_silent(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string) silently; useful for creating <code>yacas</code> variables.</li>
-<li>
-<code><a href="../reference/yac_solve_expr.html">yac_solve_expr(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string starting with ‘Solve’) and reducing <code>var ==</code> from the <code>yacas</code> result, and get result as an <strong><code>R</code> expression</strong>.</li>
-<li>
-<code><a href="../reference/yac_solve_str.html">yac_solve_str(x)</a></code>: Same as <code><a href="../reference/yac_solve_expr.html">yac_solve_expr()</a></code>, but get result as as <strong>string/character</strong>.</li>
+<code><a href="../reference/yac_silent.html">yac_silent(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string) silently; useful for creating <code>yacas</code> variables. <strong>string/character</strong>.</li>
 <li>
 <code><a href="../reference/yac_str.html">yac_str(x)</a></code>: Same as <code><a href="../reference/yac_expr.html">yac_expr()</a></code>, but get result as <strong>string/character</strong>.</li>
 </ul>
@@ -443,6 +432,9 @@
 <code><a href="../reference/as_r.html">as_r(x)</a></code>: Convert a <code>yacas</code> representation <code>x</code> to an <code>R</code> object</li>
 <li>
 <code><a href="../reference/y_fn.html">y_fn(x, fn, ...)</a></code>: Helper function to prepare a call for <code>yacas</code>, e.g. <code><a href="../reference/y_fn.html">y_fn("x^2 - 1", "Factor")</a></code> is gives <code>"Factor(x^2 - 1)"</code>; <code>...</code> are additional arguments: <code><a href="../reference/y_fn.html">y_fn(x, fn, ...)</a></code> gives <code>fn(x, ...)</code>
+</li>
+<li>
+<code><a href="../reference/y_rmvars.html">y_rmvars(x)</a></code>: Removes variables such that <code>{x == 2}</code> instead gets <code>{2}</code>; remember to call <code>yacas</code> with e.g. <code><a href="../reference/yac_str.html">yac_str()</a></code> or <code><a href="../reference/yac_expr.html">yac_expr()</a></code>
 </li>
 <li>
 <code><a href="../reference/y_print.html">y_print(x)</a></code>: Pretty print yacas strings, e.g. a yacas matrix</li>

@@ -33,3 +33,18 @@ y_fn.default <- function(x, fn, ...) {
   return(paste0(fn, "(", x, ", ", extra_args, ")"))
 }
 
+#' Remove/strip variable names
+#' 
+#' @param x yacas command
+#' 
+#' @concept helper
+#' 
+#' @examples
+#' cmd <- "{x == 2, y == 4}"
+#' yac_str(cmd)
+#' yac_str(y_rmvars(cmd))
+#' 
+#' @export
+y_rmvars <- function(x) {
+  paste0("((", x, ") /:: { _lhs == _rhs <- rhs })")
+}

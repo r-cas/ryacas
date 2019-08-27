@@ -77,16 +77,18 @@ Using functions easier (using
 #> expression(2 * x + 1)
 ```
 
-Solving equations (removes the `x==` from `yacas`):
+Solving equations (removes the `x==` from `yacas` with the `y_rmvars()`
+function):
 
 ``` r
-yac_str("Solve(x^2+x-6 == 0, x)")
+sol <- yac_str("Solve(x^2+x-6 == 0, x)")
+sol
 #> [1] "{x==2,x==(-3)}"
-yac_solve_str("Solve(x^2+x-6 == 0, x)")
+sol %>% y_rmvars() %>% yac_str()
 #> [1] "{2,-3}"
-yac_solve_expr("Solve(x^2+x-6 == 0, x)")
+sol %>% y_rmvars() %>% yac_expr()
 #> expression(c(2, -3))
-"x^2+x-6 == 0" %>% y_fn("Solve", "x") %>% yac_solve_expr() %>% eval()
+sol %>% y_rmvars() %>% yac_expr() %>% eval()
 #> [1]  2 -3
 ```
 

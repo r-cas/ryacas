@@ -79,13 +79,14 @@ Using functions easier (using [`magrittr`](https://cran.r-project.org/package=ma
 "x^2+x-6" %>% y_fn("D(x)") %>% yac_expr()
 ```
 
-Solving equations (removes the `x==` from `yacas`):
+Solving equations (removes the `x==` from `yacas` with the `y_rmvars()` function):
 
 ```{r}
-yac_str("Solve(x^2+x-6 == 0, x)")
-yac_solve_str("Solve(x^2+x-6 == 0, x)")
-yac_solve_expr("Solve(x^2+x-6 == 0, x)")
-"x^2+x-6 == 0" %>% y_fn("Solve", "x") %>% yac_solve_expr() %>% eval()
+sol <- yac_str("Solve(x^2+x-6 == 0, x)")
+sol
+sol %>% y_rmvars() %>% yac_str()
+sol %>% y_rmvars() %>% yac_expr()
+sol %>% y_rmvars() %>% yac_expr() %>% eval()
 ```
 
 And output in TeX:
@@ -135,7 +136,6 @@ B %*% solve(B)
 ## Yacas ##
 
 The package contains stripped-down yacas distribution. For the complete yacas source code see <https://github.com/grzegorzmazur/yacas/> . For more information on yacas see <http://www.yacas.org/> or the documention directly at <https://yacas.readthedocs.io/>.
-.
 
 ---
 

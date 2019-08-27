@@ -261,24 +261,19 @@ cmd <- "Solve(poly == 0, x)"
 cmd %>% yac_str()
 ```
 
-If we want the solution without the variable name `x` and the equality symbol `==`, we can use `Ryacas` helper functions `yac_solve_expr()` and `yac_solve_str()` depending on the desired result type:
-
-* `yac_solve_expr(x)`:  Evaluate `yacas` command `x` (a string starting with 'Solve') and reducing `var == ` from the `yacas` result, and get result as an **`R` expression**.
-* `yac_solve_str(x)`: Same as `yac_solve_expr()`, but get result as as **string/character**.
-
-Examples of usage:
+If we want the solution without the variable name `x` and the equality symbol `==`, we can use `Ryacas` helper function `y_rmvars()`:
 
 ```{r}
 cmd
-cmd %>% yac_solve_str()
-cmd %>% yac_solve_expr()
+cmd %>% y_rmvars() %>% yac_str()
+cmd %>% y_rmvars() %>% yac_expr()
 ```
 
 We can also use `y_fn()`:
 
 ```{r}
 "poly == 0" %>% y_fn("Solve", "x")
-"poly == 0" %>% y_fn("Solve", "x") %>% yac_solve_str()
+"poly == 0" %>% y_fn("Solve", "x") %>% y_rmvars() %>% yac_str()
 ```
 
 
@@ -337,13 +332,13 @@ Reference:
     + `yac(x, rettype = c("str", "expr", "silent"))`: Evaluate `yacas` command `x` (a string) and get result determined by `rettype` (default `"str"`).
     + `yac_expr(x)`: Evaluate `yacas` command `x` (a string) and get result as an **`R` expression**.
     + `yac_silent(x)`: Evaluate `yacas` command `x` (a string) silently; useful for creating `yacas` variables.
-    + `yac_solve_expr(x)`:  Evaluate `yacas` command `x` (a string starting with 'Solve') and reducing `var == ` from the `yacas` result, and get result as an **`R` expression**.
-    + `yac_solve_str(x)`: Same as `yac_solve_expr()`, but get result as as **string/character**.
+**string/character**.
     + `yac_str(x)`: Same as `yac_expr()`, but get result as **string/character**.
 * Helper functions
     + `as_y(x)`: Convert `R` character matrix `x` to a `yacas` representation
     + `as_r(x)`: Convert a `yacas` representation `x` to an `R` object
     + `y_fn(x, fn, ...)`: Helper function to prepare a call for `yacas`, e.g. `y_fn("x^2 - 1", "Factor")` is gives `"Factor(x^2 - 1)"`; `...` are additional arguments: `y_fn(x, fn, ...)` gives `fn(x, ...)`
+    + `y_rmvars(x)`: Removes variables such that `{x == 2}` instead gets `{2}`; remember to call `yacas` with e.g. `yac_str()` or `yac_expr()`
     + `y_print(x)`: Pretty print yacas strings, e.g. a yacas matrix
 * Lower level functions
     + `yac_core(x)`: Evaluate `yacas` command `x` (a string) and get both result and side effects; used in the implementation of `yac_expr()`, `yac_silent()`, and `yac_str()`

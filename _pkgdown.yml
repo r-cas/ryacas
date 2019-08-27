@@ -5,11 +5,6 @@ reference:
     These functions are the only ones that call `yacas`.
   contents:
   - has_concept("yac_communication")
-- title: Solve functions
-  desc: >
-    Specific functions used for easier interfacing with `yacas`'s [`Solve`](https://yacas.readthedocs.io/en/latest/reference_manual/solvers.html#symbolic-solvers) command.
-  contents:
-  - has_concept("solve")
 - title: Various utility functions
   desc: These are various utility functions that do not call `yacas`.
   contents:

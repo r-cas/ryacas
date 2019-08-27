@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9121</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9122</span>
       </span>
     </div>
 
@@ -142,15 +142,16 @@
 <a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; [1] "(x-2)*(x+3)"</span></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="st">"x^2+x-6"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"D(x)"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_expr.html">yac_expr</a></span>()</a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; expression(2 * x + 1)</span></a></code></pre></div>
-<p>Solving equations (removes the <code>x==</code> from <code>yacas</code>):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>(<span class="st">"Solve(x^2+x-6 == 0, x)"</span>)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; [1] "{x==2,x==(-3)}"</span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="reference/yac_solve_str.html">yac_solve_str</a></span>(<span class="st">"Solve(x^2+x-6 == 0, x)"</span>)</a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; [1] "{2,-3}"</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="reference/yac_solve_expr.html">yac_solve_expr</a></span>(<span class="st">"Solve(x^2+x-6 == 0, x)"</span>)</a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; expression(c(2, -3))</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="st">"x^2+x-6 == 0"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"Solve"</span>, <span class="st">"x"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_solve_expr.html">yac_solve_expr</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/eval">eval</a></span>()</a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; [1]  2 -3</span></a></code></pre></div>
+<p>Solving equations (removes the <code>x==</code> from <code>yacas</code> with the <code><a href="reference/y_rmvars.html">y_rmvars()</a></code> function):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">sol &lt;-<span class="st"> </span><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>(<span class="st">"Solve(x^2+x-6 == 0, x)"</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2">sol</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; [1] "{x==2,x==(-3)}"</span></a>
+<a class="sourceLine" id="cb5-4" title="4">sol <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_rmvars.html">y_rmvars</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>()</a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; [1] "{2,-3}"</span></a>
+<a class="sourceLine" id="cb5-6" title="6">sol <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_rmvars.html">y_rmvars</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_expr.html">yac_expr</a></span>()</a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; expression(c(2, -3))</span></a>
+<a class="sourceLine" id="cb5-8" title="8">sol <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_rmvars.html">y_rmvars</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_expr.html">yac_expr</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/eval">eval</a></span>()</a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; [1]  2 -3</span></a></code></pre></div>
 <p>And output in TeX:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="st">"3/4 + Pi/8"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"Simplify"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"TeXForm"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>()</a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt; [1] "\\frac{\\pi  + 6}{8} "</span></a></code></pre></div>
@@ -217,7 +218,7 @@
 <div id="yacas" class="section level2">
 <h2 class="hasAnchor">
 <a href="#yacas" class="anchor"></a>Yacas</h2>
-<p>The package contains stripped-down yacas distribution. For the complete yacas source code see <a href="https://github.com/grzegorzmazur/yacas/" class="uri">https://github.com/grzegorzmazur/yacas/</a> . For more information on yacas see <a href="http://www.yacas.org/" class="uri">http://www.yacas.org/</a> or the documention directly at <a href="https://yacas.readthedocs.io/" class="uri">https://yacas.readthedocs.io/</a>. .</p>
+<p>The package contains stripped-down yacas distribution. For the complete yacas source code see <a href="https://github.com/grzegorzmazur/yacas/" class="uri">https://github.com/grzegorzmazur/yacas/</a> . For more information on yacas see <a href="http://www.yacas.org/" class="uri">http://www.yacas.org/</a> or the documention directly at <a href="https://yacas.readthedocs.io/" class="uri">https://yacas.readthedocs.io/</a>.</p>
 <hr>
 <p>Mikkel Meyer Andersen, mikl at math dot aau dot dk<br>
 Rob Goedman, goedman at mac dot com<br>
