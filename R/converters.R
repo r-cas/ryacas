@@ -13,7 +13,7 @@ as_y <- function(x) {
   return(y_hlp_to_yacvec(x))
 }
 
-#' Convert yacas to R
+#' Convert yacas object to R
 #' 
 #' If `x` is a yacas command as string, convert to a character vector/matrix in R.
 #' If `x` is a `yac_symbol` (e.g. from [yac_symbol()]), then convert it to a numeric object 
