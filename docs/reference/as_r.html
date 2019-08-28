@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert yacas to R — as_r • Ryacas</title>
+<title>Convert yacas object to R — as_r • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Convert yacas to R — as_r" />
+<meta property="og:title" content="Convert yacas object to R — as_r" />
 
 <meta property="og:description" content="If x is a yacas command as string, convert to a character vector/matrix in R.
 If x is a yac_symbol (e.g. from yac_symbol()), then convert it to a numeric object
@@ -65,7 +65,7 @@ if there are no variables or a character type if there are variables." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9122</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -100,7 +100,13 @@ if there are no variables or a character type if there are variables." />
       <a href="../articles/high-level.html">The high-level (symbol) interface</a>
     </li>
     <li>
+      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
+    </li>
+    <li>
       <a href="../articles/low-level.html">The low-level interface</a>
+    </li>
+    <li>
+      <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
     </li>
     <li>
       <a href="../articles/yacas-rules.html">User-defined yacas rules</a>
@@ -128,7 +134,7 @@ if there are no variables or a character type if there are variables." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert yacas to R</h1>
+    <h1>Convert yacas object to R</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/converters.R'><code>R/converters.R</code></a></small>
     <div class="hidden name"><code>as_r.Rd</code></div>
     </div>

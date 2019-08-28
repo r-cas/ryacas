@@ -2,7 +2,7 @@
 % Please edit documentation in R/converters.R
 \name{as_r}
 \alias{as_r}
-\title{Convert yacas to R}
+\title{Convert yacas object to R}
 \usage{
 as_r(x)
 }

@@ -32,7 +32,10 @@
 
 <meta property="og:title" content="Remove/strip variable names — y_rmvars" />
 
-<meta property="og:description" content="Remove/strip variable names" />
+<meta property="og:description" content="This only builds a yacas command.
+You need to also call yac_str(), yac_expr() or similar.
+This is the reason that it does not call yacas: it depends on how you
+want it returned (string, expression)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9122</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -98,7 +101,13 @@
       <a href="../articles/high-level.html">The high-level (symbol) interface</a>
     </li>
     <li>
+      <a href="../articles/latent-variable-model.html">The structure of the concentration and covariance matrix in a naive Bayes model</a>
+    </li>
+    <li>
       <a href="../articles/low-level.html">The low-level interface</a>
+    </li>
+    <li>
+      <a href="../articles/ssm-matrix.html">The structure of the concentration and covariance matrix in a simple state-space model</a>
     </li>
     <li>
       <a href="../articles/yacas-rules.html">User-defined yacas rules</a>
@@ -133,7 +142,10 @@
 
     <div class="ref-description">
     
-    <p>Remove/strip variable names</p>
+    <p>This only builds a yacas command.
+You need to also call <code><a href='yac_str.html'>yac_str()</a></code>, <code><a href='yac_expr.html'>yac_expr()</a></code> or similar.
+This is the reason that it does not call yacas: it depends on how you
+want it returned (string, expression).</p>
     
     </div>
 

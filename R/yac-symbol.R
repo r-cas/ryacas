@@ -498,6 +498,7 @@ print.yac_symbol <- function(x, ...) {
   return(invisible(x))
 }
 
+#' @importFrom utils str
 #' @export
 str.yac_symbol <- function(object, ...) {
   x <- object

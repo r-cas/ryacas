@@ -6,6 +6,8 @@ articles:
   exams: exams.html
   getting-started: getting-started.html
   high-level: high-level.html
+  latent-variable-model: latent-variable-model.html
   low-level: low-level.html
+  ssm-matrix: ssm-matrix.html
   yacas-rules: yacas-rules.html
 

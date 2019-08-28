@@ -1,7 +1,8 @@
 Changes in version 1.0.0
 
 o A WHOLE NEW INTERFACE - READ "GETTING STARTED" VIGNETTE.
-  All old functions throw a warning, and will be removed in the next major version.
+  Old functions throw a warning, and will be removed in the next version. 
+  A legacy package Ryacas0 is available: https://github.com/mikldk/ryacas0/ .
 o Yacas errors are now provided to the user instead of just an empty result.
 o Vignette on making exercises via the exams package.
 o Updated Yacas to 1.7.1 (check with yac_str("Version()")).
