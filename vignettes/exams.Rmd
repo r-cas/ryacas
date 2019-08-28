@@ -38,7 +38,7 @@ out_dir <- tempdir()
 This is the exams `Rmd` file:
 
 ```{r, comment=NA, echo=FALSE}
-exam_file <- system.file("exams/poly-roots.Rmd", package = "Ryacas")
+exam_file <- system.file(file.path("exams", "poly-roots.Rmd"), package = "Ryacas")
 fl <- readLines(exam_file)
 cat(paste0(fl, "\n"))
 ```
@@ -73,7 +73,7 @@ cat(paste0(fl, "\n"))
 This is the exams `Rmd` file:
 
 ```{r, comment=NA, echo=FALSE}
-exam_file <- system.file("exams/poly-factorisation.Rmd", package = "Ryacas")
+exam_file <- system.file(file.path("exams", "poly-factorisation.Rmd"), package = "Ryacas")
 fl <- readLines(exam_file)
 cat(paste0(fl, "\n"))
 ```
