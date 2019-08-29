@@ -24,8 +24,8 @@ library(Ryacas)
 
 Ryacas is an [R](https://www.r-project.org/) interface to
 the free [yacas](http://www.yacas.org) Computer Algebra
-System.  Ryacas allows one to send R expressions,
-unprocessed yacas strings and certain other R objects to
+System.  Ryacas allows one to send unprocessed yacas strings and 
+certain other R objects to
 yacas process from R and get back the result. It also has
 facilities for manipulating yacas strings and R expressions
 destined for yacas processing.

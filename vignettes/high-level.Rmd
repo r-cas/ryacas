@@ -27,7 +27,16 @@ Start with a base symbol what can either be:
 * A `yacas` command, e.g. `x`, `2*a` or something similar
 * An `R` matrix or vector.
 
-Here, we keep it simple. Consider an `R` matrix and vector:
+Here, we keep it simple. 
+
+```{r}
+x <- yac_symbol("x")
+2*x^2 - 5
+c(-2, 5)*x
+as_r(c(-2, 5)*x)
+```
+
+Then consider an `R` matrix and vector:
 
 ```{r}
 A <- outer(0:3, 1:4, "-") + diag(2:5)
