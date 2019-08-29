@@ -30,7 +30,7 @@ yacas process from R and get back the result. It also has
 facilities for manipulating yacas strings and R expressions
 destined for yacas processing.
 
-It can be used for exact arithmetic, symbolic math, ASCII
+It can be used for arbitrary-precision arithmetic, symbolic math, ASCII
 pretty printing and translating R to TeX. 
 
 ## Install from GitHub ##
