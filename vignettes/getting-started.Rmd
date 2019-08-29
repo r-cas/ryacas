@@ -43,7 +43,7 @@ The naming principle governing `Ryacas` functions is as follows:
 * `yac_*(x)` functions evaluate/run `yacas` command `x`; the result varies depending on which of the functions used (see below)
 * `y_*(x)` various utility functions (not involving calls to `yacas`)
 
-There are two interfaces to `yacas`: a low-level ([see vignette](./low-level.html)) and a high-level ([see vignette](./high-level.html)). 
+There are two interfaces to `yacas`: a low-level (see the "The low-level interface" vignette) and a high-level (see the "The high-level (symbol) interface" vignette). 
 The low-level is highly customisable, but also requires more work with text strings. 
 The high-level is easier dealing with vectors and matrices, but may also be less computationally efficient and less flexible.
 
@@ -53,9 +53,9 @@ for more information.
 A short summary of often-used `yacas` commands are found 
 at the end of this vignette.
 A short summary of often-used low-level `Ryacas` functions are found 
-at the end of the [The low-level interface](./low-level.html) vignette, 
+at the end of the "The low-level interface" vignette, 
 and a short summary of often-used high-level `Ryacas` functions are found 
-at the end of the [The high-level interface](./high-level.html) vignette.
+at the end of the "The high-level (symbol) interface" vignette.
 
 
 
@@ -146,7 +146,7 @@ y_fn(B, "Inverse")
 y_fn(B, "Trace")
 ```
 
-Some standard `R` commands are available (see the section "`Ryacas` high-level reference" at the end of the "[The high-level (symbol) interface](./high-level.html)" vignette):
+Some standard `R` commands are available (see the section "`Ryacas` high-level reference" at the end of the "The high-level (symbol) interface" vignette):
 
 ```{r}
 A %*% a
@@ -172,7 +172,7 @@ hilbert <- function(n) {
 }
 ```
 
-To avoid floating-point issues (see the "[Arbitrary-precision arithmetic](./arbitrary-precision.html)" vignette), 
+To avoid floating-point issues (see the "Arbitrary-precision arithmetic" vignette), 
 we instead generate just the denominators as a stanard `R` matrix:
 ```{r}
 hilbert_den <- function(n) { 

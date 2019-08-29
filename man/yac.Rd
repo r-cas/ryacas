@@ -14,5 +14,12 @@ yac(x, rettype = c("str", "expr", "silent"))
 \description{
 Run yacas command
 }
+\examples{
+yac("D(x) x^2 + 4*x")
+yac("D(x) x^2 + 4*x", rettype = "str")
+yac("D(x) x^2 + 4*x", rettype = "expr")
+yac("D(x) x^2 + 4*x", rettype = "silent")
+
+}
 \concept{yac_communication}
 \concept{yac_symbol}

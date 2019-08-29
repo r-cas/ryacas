@@ -25,7 +25,7 @@ The low-level interface consists of these two main functions:
 Note, that the `yacas` command `x` is a string and must often be built op using `paste()`/`paste0()`. 
 Examples of this will be shown in multiple examples below. 
 
-A short summary of often-used `yacas` commands are found in the section "`yacas` reference" in the ["Getting started"](./getting-started) vignette.
+A short summary of often-used `yacas` commands are found in the section "`yacas` reference" in the "Getting started" vignette.
 A short summary of `Ryacas`'s low-level functions are also found in the section "`Ryacas` low-level reference" at the end of this document.
 
 # Example 1: Simple algebra

@@ -17,7 +17,11 @@ y_fn(x, fn, ...)
 Prepare simple \code{yacas} call
 }
 \examples{
+y_fn("x^2 - 1", "TeXForm")
+yac_str(y_fn("x^2 - 1", "TeXForm"))
+
 y_fn("x^2 - 1", "Factor")
+yac_str(y_fn("x^2 - 1", "Factor"))
 
 cmd <- "x^2 - 1 == 0" \%>\% y_fn("Solve", "x")
 cmd

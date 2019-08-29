@@ -12,5 +12,14 @@ yac_str(x)
 \description{
 Run yacas command returning string/character
 }
+\examples{
+yac_str("D(x) x^2 + 4*x")
+yac_str("Limit(x, 1) (x^2 - 1)/(x - 1)")
+yac_str("Sum(n, 1, Infinity, (1/2)^n)")
+yac_str("Fibonacci(10)")
+yac_str("Sum(n, 1, 10, Fibonacci(n))")
+yac_str("TeXForm(x^2 - 1)")
+
+}
 \concept{yac_communication}
 \concept{yac_symbol}

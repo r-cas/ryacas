@@ -174,7 +174,7 @@ B %*% solve(B)
 The package contains stripped-down yacas distribution. For the complete
 yacas source code see <https://github.com/grzegorzmazur/yacas/> . For
 more information on yacas see <http://www.yacas.org/> or the documention
-directly at <https://yacas.readthedocs.io/>. .
+directly at <https://yacas.readthedocs.io/>.
 
 -----
 

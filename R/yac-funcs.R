@@ -5,6 +5,14 @@
 #' @concept yac_communication
 #' @concept yac_symbol
 #' 
+#' @examples 
+#' yac_str("D(x) x^2 + 4*x")
+#' yac_str("Limit(x, 1) (x^2 - 1)/(x - 1)")
+#' yac_str("Sum(n, 1, Infinity, (1/2)^n)")
+#' yac_str("Fibonacci(10)")
+#' yac_str("Sum(n, 1, 10, Fibonacci(n))")
+#' yac_str("TeXForm(x^2 - 1)")
+#' 
 #' @export
 yac_str <- function(x) {
   UseMethod("yac_str")
@@ -37,6 +45,13 @@ yac_str.default <- function(x) {
 #' 
 #' @concept yac_communication
 #' @concept yac_symbol
+#' 
+#' @examples 
+#' yac_expr("D(x) x^2 + 4*x")
+#' yac_expr("Limit(x, 1) (x^2 - 1)/(x - 1)")
+#' yac_expr("Sum(n, 1, Infinity, (1/2)^n)")
+#' yac_expr("Fibonacci(10)")
+#' yac_expr("Sum(n, 1, 10, Fibonacci(n))")
 #' 
 #' @export
 yac_expr <- function(x) {
@@ -81,6 +96,12 @@ yac_silent.default <- function(x) {
 #' 
 #' @concept yac_communication
 #' @concept yac_symbol
+#' 
+#' @examples
+#' yac("D(x) x^2 + 4*x")
+#' yac("D(x) x^2 + 4*x", rettype = "str")
+#' yac("D(x) x^2 + 4*x", rettype = "expr")
+#' yac("D(x) x^2 + 4*x", rettype = "silent")
 #' 
 #' @export
 yac <- function(x, rettype = c("str", "expr", "silent")) {

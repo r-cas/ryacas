@@ -109,3 +109,19 @@ std::vector<std::string> yac_core(std::string expr)
   
   return results;
 }
+
+
+/*
+#include "yacas/include/yacas/string_utils.h"
+
+// [[Rcpp::export]]
+void trims(std::string s) {
+  // sapply(c("s1", " s2", "s3 "), trims)
+  // For testing src/yacas/include/yacas/string_utils.h 
+  Rcpp::Rcout << "ltrim     = '" << ltrim(s) << "'" << std::endl;
+  Rcpp::Rcout << "ltrim_old = '" << ltrim_old(s) << "'" << std::endl;
+  Rcpp::Rcout << "rtrim     = '" << rtrim(s) << "'" << std::endl;
+  Rcpp::Rcout << "rtrim_old = '" << rtrim_old(s) << "'" << std::endl;
+}
+*/
+

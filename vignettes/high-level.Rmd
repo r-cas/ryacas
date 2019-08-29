@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(Ryacas)
 ```
 
-A short summary of often-used `yacas` commands are found in the section "`yacas` reference" in the ["Getting started"](./getting-started) vignette.
+A short summary of often-used `yacas` commands are found in the section "`yacas` reference" in the "Getting started" vignette.
 A short summary of `Ryacas`'s high-level functions are found in the section "`Ryacas` high-level reference" at the end of this document.
 
 # Introduction
@@ -134,7 +134,7 @@ Reference:
 
 The following functions work with `yac_symbol`s.
 
-* `yac_*()` functions (see the ["Getting started"](./getting-started) vignette)
+* `yac_*()` functions (see the "Getting started" vignette)
   + `yac_str()`: Return `yacas` string
   + `yac_expr()`: Return `R` expression
   + `yac_silent()`: Do something silently

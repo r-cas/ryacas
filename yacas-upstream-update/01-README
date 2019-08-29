@@ -84,5 +84,46 @@ grep -iHR "Lesser" inst/yacas
  */
  
 
- 
+###########################
+06
+###########################
+Fix this warning:
+yacas/include/yacas/string_utils.h:19:72: warning: 'ptr_fun<int, int>' is deprecated [-Wdeprecated-declarations]
+
+Replace:
+
+inline
+std::string& ltrim(std::string& s)
+{
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) { return !std::isspace(c); }));
+    return s;
+}
+
+inline
+std::string& rtrim(std::string& s)
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
+    return s;
+}
+
+
+By:
+
+inline
+std::string& ltrim(std::string& s)
+{
+    //s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) { return !std::isspace(c); }));
+    std::function<int(int)> lambdafun = [](int c) { return !std::isspace(c); };
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), lambdafun));
+    return s;
+}
+
+inline
+std::string& rtrim(std::string& s)
+{
+    //s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
+    std::function<int(int)> lambdafun = [](int ch) { return !std::isspace(ch); };
+    s.erase(std::find_if(s.rbegin(), s.rend(), lambdafun).base(), s.end());
+    return s;
+}
 

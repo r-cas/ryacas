@@ -130,9 +130,9 @@
 <li>
 <code>y_*(x)</code> various utility functions (not involving calls to <code>yacas</code>)</li>
 </ul>
-<p>There are two interfaces to <code>yacas</code>: a low-level (<a href="./low-level.html">see vignette</a>) and a high-level (<a href="./high-level.html">see vignette</a>). The low-level is highly customisable, but also requires more work with text strings. The high-level is easier dealing with vectors and matrices, but may also be less computationally efficient and less flexible.</p>
+<p>There are two interfaces to <code>yacas</code>: a low-level (see the “The low-level interface” vignette) and a high-level (see the “The high-level (symbol) interface” vignette). The low-level is highly customisable, but also requires more work with text strings. The high-level is easier dealing with vectors and matrices, but may also be less computationally efficient and less flexible.</p>
 <p>Below, we will demonstrate both interfaces and refer to the other vignettes for more information.</p>
-<p>A short summary of often-used <code>yacas</code> commands are found at the end of this vignette. A short summary of often-used low-level <code>Ryacas</code> functions are found at the end of the <a href="./low-level.html">The low-level interface</a> vignette, and a short summary of often-used high-level <code>Ryacas</code> functions are found at the end of the <a href="./high-level.html">The high-level interface</a> vignette.</p>
+<p>A short summary of often-used <code>yacas</code> commands are found at the end of this vignette. A short summary of often-used low-level <code>Ryacas</code> functions are found at the end of the “The low-level interface” vignette, and a short summary of often-used high-level <code>Ryacas</code> functions are found at the end of the “The high-level (symbol) interface” vignette.</p>
 <div id="the-low-level-interface" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-low-level-interface" class="anchor"></a>The low-level interface</h2>
@@ -224,7 +224,7 @@
 ##  { (-5)/101,  (-9)/101, (-11)/101,     8/101}}</code></pre>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(B, <span class="st">"Trace"</span>)</a></code></pre></div>
 <pre><code>## [1] 10</code></pre>
-<p>Some standard <code>R</code> commands are available (see the section “<code>Ryacas</code> high-level reference” at the end of the “<a href="./high-level.html">The high-level (symbol) interface</a>” vignette):</p>
+<p>Some standard <code>R</code> commands are available (see the section “<code>Ryacas</code> high-level reference” at the end of the “The high-level (symbol) interface” vignette):</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">A <span class="op">%*%</span><span class="st"> </span>a</a></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]  -28
@@ -274,7 +274,7 @@ H_{{ij}}={\frac{1}{i+j-1}}
 <a class="sourceLine" id="cb62-3" title="3">  H &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/outer">outer</a></span>(i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, i, <span class="st">"+"</span>)</a>
 <a class="sourceLine" id="cb62-4" title="4">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(H)</a>
 <a class="sourceLine" id="cb62-5" title="5">}</a></code></pre></div>
-<p>To avoid floating-point issues (see the “<a href="./arbitrary-precision.html">Arbitrary-precision arithmetic</a>” vignette), we instead generate just the denominators as a stanard <code>R</code> matrix:</p>
+<p>To avoid floating-point issues (see the “Arbitrary-precision arithmetic” vignette), we instead generate just the denominators as a stanard <code>R</code> matrix:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">hilbert_den &lt;-<span class="st"> </span><span class="cf">function</span>(n) { </a>
 <a class="sourceLine" id="cb63-2" title="2">  i &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span>n</a>
 <a class="sourceLine" id="cb63-3" title="3">  H &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/outer">outer</a></span>(i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, i, <span class="st">"+"</span>)</a>

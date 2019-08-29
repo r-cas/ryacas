@@ -1,23 +1,25 @@
 Package: Ryacas
 Version: 1.0.0
-Title: R Interface to the Yacas Computer Algebra System
+Title: R Interface to the 'Yacas' Computer Algebra System
 Authors@R: c(
     person(given = "Mikkel Meyer", family = "Andersen",
-        email = "mikl@math.aau.dk", role = c("aut", "cre")),
+        email = "mikl@math.aau.dk", role = c("aut", "cre", "cph")),
     person(given = "Rob", family = "Goedman",
-        email = "goedman@mac.com", role = c("aut")),
+        email = "goedman@mac.com", role = c("aut", "cph")),
     person(given = "Gabor", family = "Grothendieck",
-        email = "ggrothendieck@gmail.com", role = c("aut")),
+        email = "ggrothendieck@gmail.com", role = c("aut", "cph")),
     person(given = "Søren", family = "Højsgaard",
-        email = "sorenh@math.aau.dk", role = c("aut")),
+        email = "sorenh@math.aau.dk", role = c("aut", "cph")),
     person(given = "Grzegorz", family = "Mazur",
-        email = "teoretyk@gmail.com", role = c("aut")),
+        email = "teoretyk@gmail.com", role = c("aut", "cph")),
     person(given = "Ayal", family = "Pinkus",
-        email = "apinkus@xs4all.nl", role = c("aut"))
+        email = "apinkus@xs4all.nl", role = c("aut", "cph")),
+    person(given = "Nemanja", family = "Trifunovic", 
+        role = c("cph"), comment = "UTF-8 part of yacas (src/yacas/include/yacas/utf8*)")
   )
 Maintainer: Mikkel Meyer Andersen <mikl@math.aau.dk>
 Encoding: UTF-8
-Description: An interface to the yacas computer algebra system.
+Description: Interface to the 'yacas' computer algebra system (<http://www.yacas.org/>).
 Depends: R (>= 3.3.0)
 Imports:
     Rcpp (>= 0.12.0),
