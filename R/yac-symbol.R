@@ -10,6 +10,8 @@
 #' @concept yac_symbol
 #' @export
 yac_symbol <- function(x) {
+  # TODO: Consider NSE: e.g. yac_symbol(4*x + 5*y) directly?
+  
   stopifnot(is.vector(x) | is.matrix(x))
   
   cmd <- if (is.matrix(x) | length(x) > 1L) {
@@ -572,4 +574,65 @@ Math.yac_symbol = function(x, ...) {
   txt <- paste0(fn, "(", x$yacas_cmd, ")")
   x <- yac_symbol(txt)
   return(x)
+}
+
+
+#' Find the derivative of yac symbol
+#' 
+#' @param expr A `yac_symbol`
+#' @param name variables to take derivate with respect to
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+deriv.yac_symbol <- function(expr, vars) {
+  res <- unlist(lapply(vars, function(var) {
+    paste0("(D(", var, ") ", expr$yacas_cmd, ")")
+  }))
+  
+  res_sym <- yac_symbol(res)
+  
+  return(res_sym)
+}
+
+#' Find the Jacobian matrix of yac symbol
+#' 
+#' @param expr A `yac_symbol`
+#' @param name variables to take Hessian with respect to
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+Jacobian <- function(expr, vars) {
+  UseMethod("Jacobian")
+}
+
+#' @export
+Jacobian.yac_symbol <- function(expr, vars) {
+  res <- paste0("JacobianMatrix( ", expr$yacas_cmd, ", {", 
+                paste0(vars, collapse = ", "), "})")
+  
+  res_sym <- yac_symbol(res)
+  return(res_sym)
+}
+
+#' Find the Hessian matrix of yac symbol
+#' 
+#' @param expr A `yac_symbol`
+#' @param name variables to take Hessian with respect to
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+Hessian <- function(expr, vars) {
+  UseMethod("Hessian")
+}
+
+#' @export
+Hessian.yac_symbol <- function(expr, vars) {
+  res <- paste0("HessianMatrix(", expr$yacas_cmd, ", {", 
+                paste0(vars, collapse = ", "), "})")
+  
+  res_sym <- yac_symbol(res)
+  return(res_sym)
 }

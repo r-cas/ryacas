@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simplify expression — simplify • Ryacas</title>
+<title>Find the Hessian matrix of yac symbol — Hessian • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Simplify expression — simplify" />
+<meta property="og:title" content="Find the Hessian matrix of yac symbol — Hessian" />
 
-<meta property="og:description" content="Simplify expression" />
+<meta property="og:description" content="Find the Hessian matrix of yac symbol" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,30 +129,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simplify expression</h1>
+    <h1>Find the Hessian matrix of yac symbol</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
-    <div class="hidden name"><code>simplify.Rd</code></div>
+    <div class="hidden name"><code>Hessian.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Simplify expression</p>
+    <p>Find the Hessian matrix of yac symbol</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>simplify</span>(<span class='no'>x</span>, <span class='kw'>timeout</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>Hessian</span>(<span class='no'>expr</span>, <span class='no'>vars</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>expr</th>
       <td><p>A <code>yac_symbol</code></p></td>
     </tr>
     <tr>
-      <th>timeout</th>
-      <td><p>timeout in seconds before simplification is aborted;
-only works when package unix is available</p></td>
+      <th>name</th>
+      <td><p>variables to take Hessian with respect to</p></td>
     </tr>
     </table>
     

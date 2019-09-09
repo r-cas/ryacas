@@ -33,7 +33,7 @@ Here, we keep it simple.
 x <- yac_symbol("x")
 2*x^2 - 5
 c(-2, 5)*x
-as_r(c(-2, 5)*x)
+as_r(c(-2, 5)*x) # or yac_expr(c(-2, 5)*x)
 ```
 
 Then consider an `R` matrix and vector:
@@ -50,8 +50,10 @@ They are now considered `yacas`-enabled:
 ```{r}
 B <- yac_symbol(A)
 B
+as_r(B)
 b <- yac_symbol(a)
 b
+as_r(b)
 ```
 
 Notice how they are printed using `yacas`'s syntax.
@@ -102,6 +104,8 @@ yac_str("W") # Get variable W if exists, or else just a symbol
 ```
 
 
+# Simplify and output to TeX
+
 There are additional functions available:
 
 * `simplify()`
@@ -126,9 +130,45 @@ D %>% solve() %>% simplify() %>% tex()
 `r D %>% solve() %>% simplify() %>% tex()`
 \]
 
-
 `yacas` has a `Simplify()` function. This is made available via a `simplify()` function that also includes a time-out that prevents `yacas` in making the `R` session hang, but it requires that the `unix` package is available.
 The default `timeout` value used when `unix` is available is `2` seconds.
+
+# Derivatives
+
+We illustrate using the example in <https://mikl.dk/post/2019-pizza-frozen-yogurt-goebner/>:
+
+```{r}
+L <- yac_symbol("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)")
+L
+```
+
+We can consider one variable only:
+
+```{r}
+deriv(L, "x")
+Hessian(L, "x")
+```
+
+Or multiple variables:
+
+```{r}
+deriv(L, c("x", "y", "a"))
+H <- Hessian(L, c("x", "y", "a"))
+H
+as_r(H)
+eval(as_r(H), list(x = 2, y = 2, a = 2))
+```
+
+The Jacobian is taken on a vector function denoted by many functions:
+
+```{r}
+L2 <- yac_symbol(c("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)", 
+                   "x^3 + 4*a^2")) # just some function
+L2
+Jacobian(L2, "x")
+Jacobian(L2, c("x", "y", "a"))
+```
+
 
 
 # `Ryacas` high-level reference
@@ -151,6 +191,10 @@ The following functions work with `yac_symbol`s.
 * Other
   + `simplify(x, timeout = 2)`: Try `yacas`'s `Simplify()` function. When the `unix` package is available, the `timeout` (in seconds), stops trying after that amount of time to avoid making the `R` process hang.
   + `tex()`: Convert 
+  + Derivatives:
+    - `deriv(expr, vars)`: takes derivative of `yac_symbol` `expr` with respect to `vars`
+    - `Jacobian(expr, vars)`: finds Jacobian of `yac_symbol` `expr` (usually a vector of expressions) with respect to `vars`
+    - `Hessian(expr, vars)`: finds Hessian matrix of `yac_symbol` `expr` with respect to `vars`
 * Stanard `R` that has been implemented for `yac_symbol`s:
   + `print()`
   + `dim()`

@@ -338,3 +338,29 @@ test_that("Setters for matrices", {
   }
 })
 
+test_that("Derivatives", {
+  L <- yac_symbol("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)")
+  
+  # derivative
+  expect_equal(as.character(as_r(deriv(L, "x"))), 
+               "(x * y)/2 - 3 * a")
+  expect_equal(as.character(as_r(deriv(L, c("x", "y", "a")))), 
+               "c((x * y)/2 - 3 * a, x^2/4 - (3 * a)/2, 45 - (3 * x + (3 * y)/2))")
+  
+  # Hessian
+  expect_equal(as.character(as_r(Hessian(L, "x"))), 
+               "rbind(c(y/2))")
+  expect_equal(as.character(as_r(Hessian(L, c("x", "y", "a")))), 
+               "rbind(c(y/2, x/2, -3), c(x/2, 0, -3/2), c(-3, -3/2, 0))")
+  
+  # Jacobian
+  L2 <- yac_symbol(c("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)", 
+                     "x^3 + 4*a^2")) # just some function
+  expect_equal(as.character(as_r(Jacobian(L2, "x"))), 
+               "rbind(c((x * y)/2 - 3 * a), c(3 * x^2))")
+  expect_equal(as.character(as_r(Jacobian(L2, c("x", "y", "a")))), 
+               paste0("rbind(c((x * y)/2 - 3 * a, x^2/4 - (3 * a)/2, ", 
+                      "45 - (3 * x + (3 * y)/2)), c(3 * x^2, 0, 8 * a))"))
+
+})
+
