@@ -98,7 +98,7 @@
       <h1>The high-level (symbol) interface</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-09-09</h4>
+            <h4 class="date">2019-09-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mikldk/ryacas/blob/master/vignettes/high-level.Rmd"><code>vignettes/high-level.Rmd</code></a></small>
       <div class="hidden name"><code>high-level.Rmd</code></div>
@@ -260,7 +260,7 @@
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
 <pre><code>## [1] "W"</code></pre>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># ...or list variables</span></a></code></pre></div>
-<pre><code>## [1] "{rformBitwiseOps,I,j}"</code></pre>
+<pre><code>## [1] "{I,rformBitwiseOps,j}"</code></pre>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">B</a></code></pre></div>
 <pre><code>## {{1, 1, 1, 1},
 ##  {0, 2, 1, 1},
@@ -270,10 +270,10 @@
 <a class="sourceLine" id="cb64-2" title="2"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
 <pre><code>## [1] "{{1,1,1,1},{0,2,1,1},{1,0,3,1},{2,1,0,4}}"</code></pre>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># ...or list variables</span></a></code></pre></div>
-<pre><code>## [1] "{rformBitwiseOps,I,W,j}"</code></pre>
+<pre><code>## [1] "{I,rformBitwiseOps,j,W}"</code></pre>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw"><a href="../reference/yac_silent.html">yac_silent</a></span>(<span class="st">"Clear(W)"</span>)</a>
 <a class="sourceLine" id="cb68-2" title="2"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>) <span class="co"># List variables</span></a></code></pre></div>
-<pre><code>## [1] "{rformBitwiseOps,I,j}"</code></pre>
+<pre><code>## [1] "{I,rformBitwiseOps,j}"</code></pre>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"W"</span>) <span class="co"># Get variable W if exists, or else just a symbol</span></a></code></pre></div>
 <pre><code>## [1] "W"</code></pre>
 </div>
@@ -299,7 +299,7 @@
 ##  {  0,   0, 1/2,   0},
 ##  {  0,   0,   0, 1/2}}</code></pre>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">D[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>] &lt;-<span class="st"> "d"</span></a>
-<a class="sourceLine" id="cb76-2" title="2">D[<span class="dv">3</span>,<span class="dv">4</span>] &lt;-<span class="st"> "2*d + 2"</span></a>
+<a class="sourceLine" id="cb76-2" title="2">D[<span class="dv">3</span>, <span class="dv">4</span>] &lt;-<span class="st"> "2*d + 2"</span></a>
 <a class="sourceLine" id="cb76-3" title="3">D</a></code></pre></div>
 <pre><code>## {{  1/2,     0,     0,     0},
 ##  {    d,   1/2,     0,     0},
@@ -372,8 +372,7 @@
 <li>
 <code><a href="../reference/as_r.html">as_r(x)</a></code>: Is used to convert the <code>yac_symbol</code> back to an <code>R</code> representation.</li>
 <li>
-<code><a href="../reference/y_fn.html">y_fn(x, fn, ...)</a></code>: Apply a <code>yacas</code> function <code>fn</code> to the <code>yac_symbol</code> <code>x</code>, i.e. <code>fn(x, ...)</code>
-</li>
+<code><a href="../reference/y_fn.html">y_fn(x, fn, ...)</a></code>: Apply a <code>yacas</code> function <code>fn</code> to the <code>yac_symbol</code> <code>x</code>, i.e. <code>fn(x, ...)</code>; note that this is evaluated immediately when <code>x</code> is a <code>yac_symbol</code> as opposed to when <code>x</code> is a string</li>
 </ul>
 <p>Reference:</p>
 <p>The following functions work with <code>yac_symbol</code>s.</p>
@@ -397,6 +396,12 @@
 <code><a href="../reference/simplify.html">simplify(x, timeout = 2)</a></code>: Try <code>yacas</code>’s <code>Simplify()</code> function. When the <code>unix</code> package is available, the <code>timeout</code> (in seconds), stops trying after that amount of time to avoid making the <code>R</code> process hang.</li>
 <li>
 <code><a href="../reference/tex.html">tex()</a></code>: Convert</li>
+<li>
+<code><a href="../reference/y_fn.html">y_fn(x, fn, ...)</a></code>: Apply a <code>yacas</code> function <code>fn</code> to the <code>yac_symbol</code> <code>x</code>, i.e. <code>fn(x, ...)</code>
+</li>
+<li>
+<code><a href="../reference/y_rmvars.html">y_rmvars(x)</a></code>: Remove variable names in <code>x</code>
+</li>
 <li>Derivatives:
 <ul>
 <li>
@@ -420,6 +425,8 @@
 <code>[</code> getter</li>
 <li>
 <code>[&lt;-</code> setter</li>
+<li>
+<code>[[</code> getter</li>
 <li>
 <code>%*%</code> matrix/vector multiplication</li>
 <li>

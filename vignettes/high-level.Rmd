@@ -119,7 +119,7 @@ D
 D <- D/2
 D
 D[2:3, 1] <- "d"
-D[3,4] <- "2*d + 2"
+D[3, 4] <- "2*d + 2"
 D
 D %>% solve()
 D %>% solve() %>% simplify()
@@ -177,7 +177,7 @@ Principle:
 
 * `yac_symbol(x)` converts `x` to a `yac_symbol` that automatically runs `yacas` when needed. `x` can both be a text string with `yacas` commands or an `R` vector/matrix.
 * `as_r(x)`: Is used to convert the `yac_symbol` back to an `R` representation.
-* `y_fn(x, fn, ...)`: Apply a `yacas` function `fn` to the `yac_symbol` `x`, i.e. `fn(x, ...)`
+* `y_fn(x, fn, ...)`: Apply a `yacas` function `fn` to the `yac_symbol` `x`, i.e. `fn(x, ...)`; note that this is evaluated immediately when `x` is a `yac_symbol` as opposed to when `x` is a string
 
 Reference:
 
@@ -191,6 +191,8 @@ The following functions work with `yac_symbol`s.
 * Other
   + `simplify(x, timeout = 2)`: Try `yacas`'s `Simplify()` function. When the `unix` package is available, the `timeout` (in seconds), stops trying after that amount of time to avoid making the `R` process hang.
   + `tex()`: Convert 
+  + `y_fn(x, fn, ...)`: Apply a `yacas` function `fn` to the `yac_symbol` `x`, i.e. `fn(x, ...)`
+  + `y_rmvars(x)`: Remove variable names in `x`
   + Derivatives:
     - `deriv(expr, vars)`: takes derivative of `yac_symbol` `expr` with respect to `vars`
     - `Jacobian(expr, vars)`: finds Jacobian of `yac_symbol` `expr` (usually a vector of expressions) with respect to `vars`
@@ -200,6 +202,7 @@ The following functions work with `yac_symbol`s.
   + `dim()`
   + `[` getter
   + `[<-` setter
+  + `[[` getter
   + `%*%` matrix/vector multiplication
   + `diag()` getter
   + `diag<-()` setter

@@ -70,8 +70,6 @@ y_fn.yac_symbol <- function(x, fn, ...) {
   return(z)
 }
 
-
-
 #' @export
 as_r.yac_symbol <- function(x) {
   y <- yac_expr(x$yacas_cmd)
@@ -492,6 +490,33 @@ solve.yac_symbol <- function(a, b, ...) {
   return(v)
 }
 
+
+
+
+#' Extract or replace parts of an object
+#' 
+#' @param x A `yac_symbol`.
+#' @param i row indices specifying elements to extract or replace
+#' @param j column indices specifying elements to extract or replace
+#' 
+#' @export
+`[[.yac_symbol` <- function(x, i) {
+  stopifnot(methods::is(x, "yac_symbol"))
+  stopifnot(x$is_vec)
+  
+  stopifnot(!is.null(i))
+  stopifnot(length(i) == 1L)
+  i <- as.integer(i)
+  
+  stopifnot(i >= 1L)
+  stopifnot(i <= length(x))
+  
+  v <- y_fn(x, "Nth", i)
+  
+  return(v)
+}
+
+
 #' @export
 print.yac_symbol <- function(x, ...) {
   y_res <- yac_str(x$yacas_cmd)
@@ -506,6 +531,15 @@ str.yac_symbol <- function(object, ...) {
   x <- object
   class(x) <- "list"
   return(str(x))
+}
+
+#' @export
+y_rmvars.yac_symbol <- function(x) {
+  # FIXME: Best API?
+  y <- y_rmvars(x$yacas_cmd)
+  v <- yac_symbol(y)
+  
+  return(v)
 }
 
 #' Math operators
@@ -598,7 +632,7 @@ deriv.yac_symbol <- function(expr, vars) {
 #' Find the Jacobian matrix of yac symbol
 #' 
 #' @param expr A `yac_symbol`
-#' @param name variables to take Hessian with respect to
+#' @param name variables to take Jacobian with respect to
 #' 
 #' @concept yac_symbol
 #' 
@@ -619,7 +653,7 @@ Jacobian.yac_symbol <- function(expr, vars) {
 #' Find the Hessian matrix of yac symbol
 #' 
 #' @param expr A `yac_symbol`
-#' @param name variables to take Hessian with respect to
+#' @param vars variables to take Hessian with respect to
 #' 
 #' @concept yac_symbol
 #' 

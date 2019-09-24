@@ -56,6 +56,11 @@ y_fn.default <- function(x, fn, ...) {
 #' 
 #' @export
 y_rmvars <- function(x) {
+  UseMethod("y_rmvars")
+}
+
+#' @export
+y_rmvars.default <- function(x) {
   # FIXME: Best API?
   paste0("((", x, ") /:: { _lhs == _rhs <- rhs })")
 }

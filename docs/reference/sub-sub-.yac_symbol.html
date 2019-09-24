@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find the Jacobian matrix of yac symbol — Jacobian • Ryacas</title>
+<title>Extract or replace parts of an object — [[.yac_symbol • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Find the Jacobian matrix of yac symbol — Jacobian" />
+<meta property="og:title" content="Extract or replace parts of an object — [[.yac_symbol" />
 
-<meta property="og:description" content="Find the Jacobian matrix of yac symbol" />
+<meta property="og:description" content="Extract or replace parts of an object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,29 +129,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find the Jacobian matrix of yac symbol</h1>
+    <h1>Extract or replace parts of an object</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
-    <div class="hidden name"><code>Jacobian.Rd</code></div>
+    <div class="hidden name"><code>sub-sub-.yac_symbol.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Find the Jacobian matrix of yac symbol</p>
+    <p>Extract or replace parts of an object</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>Jacobian</span>(<span class='no'>expr</span>, <span class='no'>vars</span>)</pre>
+    <pre class="usage"># S3 method for yac_symbol
+[[(x, i)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr</th>
-      <td><p>A <code>yac_symbol</code></p></td>
+      <th>x</th>
+      <td><p>A <code>yac_symbol</code>.</p></td>
     </tr>
     <tr>
-      <th>name</th>
-      <td><p>variables to take Jacobian with respect to</p></td>
+      <th>i</th>
+      <td><p>row indices specifying elements to extract or replace</p></td>
+    </tr>
+    <tr>
+      <th>j</th>
+      <td><p>column indices specifying elements to extract or replace</p></td>
     </tr>
     </table>
     

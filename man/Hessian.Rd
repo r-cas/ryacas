@@ -9,7 +9,7 @@ Hessian(expr, vars)
 \arguments{
 \item{expr}{A \code{yac_symbol}}
 
-\item{name}{variables to take Hessian with respect to}
+\item{vars}{variables to take Hessian with respect to}
 }
 \description{
 Find the Hessian matrix of yac symbol

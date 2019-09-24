@@ -9,7 +9,7 @@ Jacobian(expr, vars)
 \arguments{
 \item{expr}{A \code{yac_symbol}}
 
-\item{name}{variables to take Hessian with respect to}
+\item{name}{variables to take Jacobian with respect to}
 }
 \description{
 Find the Jacobian matrix of yac symbol
