@@ -14,6 +14,11 @@ reference:
     Higher order functions.
   contents:
   - has_concept("yac_symbol")
+- title: yacas symbol solving equations
+  desc: >
+    Higher order functions for solving equations.
+  contents:
+  - has_concept("yac_symbol_solve")
 - title: Package
   desc: ~
   contents:

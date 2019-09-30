@@ -364,3 +364,20 @@ test_that("Derivatives", {
 
 })
 
+
+test_that("isolate", {
+  xs <- yac_symbol("x")
+  poly <- xs^2 - xs - 6
+  
+  expect_equal(as.character(poly), "x^2-x-6")
+  
+  zeroes <- isolate(poly, "x")
+  expect_equal(as.character(zeroes), "{x==(-2),x==3}")
+  
+  level_curve <- poly %>% equal_to(3) %>% isolate("x")
+  expect_equal(as.character(level_curve), 
+               "{x==(Sqrt(37)+1)/2,x==(1-Sqrt(37))/2}")
+})
+
+
+

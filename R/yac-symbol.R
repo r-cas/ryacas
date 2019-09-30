@@ -670,3 +670,67 @@ Hessian.yac_symbol <- function(expr, vars) {
   res_sym <- yac_symbol(res)
   return(res_sym)
 }
+
+#' Convert yac symbol to character
+#' 
+#' @param x A `yac_symbol`
+#' @param \dots not used
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+as.character.yac_symbol <- function(x, ...) {
+  return(x$yacas_cmd)
+}
+
+#' Isolate variable in a yac symbol
+#' 
+#' Correspond to solve, but called something 
+#' differently to avoid confusion.
+#' 
+#' @param x A `yac_symbol`
+#' @param var variable to find root with respect to
+#' 
+#' @concept yac_symbol
+#' @concept yac_symbol_solve
+#' 
+#' @export
+isolate <- function(x, var) {
+  UseMethod("isolate")
+}
+
+#' @export
+isolate.yac_symbol <- function(x, var) {
+  stopifnot(length(var) == 1L)
+  
+  res <- paste0("Solve(", x$yacas_cmd, ", ", var, ")")
+  
+  res_sym <- yac_symbol(res)
+  return(res_sym)
+}
+
+
+
+#' Add equality constraint for a yac symbol
+#' 
+#' @param x A `yac_symbol`
+#' @param rhs what `x` must be equal to
+#' 
+#' @concept yac_symbol
+#' @concept yac_symbol_solve
+#' 
+#' @export
+equal_to <- function(x, rhs) {
+  UseMethod("equal_to")
+}
+
+#' @export
+equal_to.yac_symbol <- function(x, rhs) {
+  stopifnot(length(rhs) == 1L)
+  
+  res <- paste0(x$yacas_cmd, " == ", rhs)
+  
+  res_sym <- yac_symbol(res)
+  return(res_sym)
+}
+

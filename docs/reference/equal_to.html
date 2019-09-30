@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lower and upper triangular part of a matrix — lower.tri • Ryacas</title>
+<title>Add equality constraint for a yac symbol — equal_to • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Lower and upper triangular part of a matrix — lower.tri" />
+<meta property="og:title" content="Add equality constraint for a yac symbol — equal_to" />
 
-<meta property="og:description" content="Lower and upper triangular part of a matrix" />
+<meta property="og:description" content="Add equality constraint for a yac symbol" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,30 +129,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Lower and upper triangular part of a matrix</h1>
+    <h1>Add equality constraint for a yac symbol</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
-    <div class="hidden name"><code>lower.tri.Rd</code></div>
+    <div class="hidden name"><code>equal_to.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Lower and upper triangular part of a matrix</p>
+    <p>Add equality constraint for a yac symbol</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>lower.tri</span>(<span class='no'>x</span>, <span class='kw'>diag</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>equal_to</span>(<span class='no'>x</span>, <span class='no'>rhs</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>If <code>yac_symbol</code> treat as such, else
-call <code><a href='https://www.rdocumentation.org/packages/base/topics/lower.tri'>base::lower.tri()</a></code>/<code><a href='https://www.rdocumentation.org/packages/base/topics/lower.tri'>base::upper.tri()</a></code>.</p></td>
+      <td><p>A <code>yac_symbol</code></p></td>
     </tr>
     <tr>
-      <th>diag</th>
-      <td><p>Whether diagonal is included.</p></td>
+      <th>rhs</th>
+      <td><p>what <code>x</code> must be equal to</p></td>
     </tr>
     </table>
     

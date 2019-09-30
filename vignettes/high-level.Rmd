@@ -170,6 +170,39 @@ Jacobian(L2, c("x", "y", "a"))
 ```
 
 
+# Solving equations
+
+Say we want to find roots of a polynomial. First note that the equality in `yacas` is `==` and that the default in yacas's `Solve()` is to find roots if no equality sign is provided:
+
+```{r}
+xs <- yac_symbol("x")
+poly <- xs^2 - xs - 6
+poly
+zeroes <- isolate(poly, "x")
+zeroes
+tex(zeroes)
+```
+
+We can also solve it using yacas's `Solve()` (that by default equates with 0 to find roots):
+
+```{r}
+zeroes <- poly %>% y_fn("Solve", "x")
+zeroes
+tex(zeroes)
+```
+
+We can also find values of `x` where the polynomial equals another constant. 
+If we were working with strings via the low-level interface it would be easy via `paste()`, but as we are working with `yac_symbol()`'s we use the utility function `equal_to()`.
+
+```{r}
+poly %>% equal_to(3)
+poly %>% equal_to(3) %>% isolate("x")
+cmd <- poly %>% as.character() %>% paste("== 3")
+cmd
+res <- cmd %>% y_fn("Solve", "x") %>% yac_str()
+res
+```
+
 
 # `Ryacas` high-level reference
 
@@ -189,6 +222,7 @@ The following functions work with `yac_symbol`s.
   + `yac_silent()`: Do something silently
   + `yac_assign()`: Assign a variable
 * Other
+  + `roots(x, var)`: Find root of the `yac_symbol` `x` with respect to `var`
   + `simplify(x, timeout = 2)`: Try `yacas`'s `Simplify()` function. When the `unix` package is available, the `timeout` (in seconds), stops trying after that amount of time to avoid making the `R` process hang.
   + `tex()`: Convert 
   + `y_fn(x, fn, ...)`: Apply a `yacas` function `fn` to the `yac_symbol` `x`, i.e. `fn(x, ...)`
@@ -197,7 +231,7 @@ The following functions work with `yac_symbol`s.
     - `deriv(expr, vars)`: takes derivative of `yac_symbol` `expr` with respect to `vars`
     - `Jacobian(expr, vars)`: finds Jacobian of `yac_symbol` `expr` (usually a vector of expressions) with respect to `vars`
     - `Hessian(expr, vars)`: finds Hessian matrix of `yac_symbol` `expr` with respect to `vars`
-* Stanard `R` that has been implemented for `yac_symbol`s:
+* Standard `R` that has been implemented for `yac_symbol`s:
   + `print()`
   + `dim()`
   + `[` getter
