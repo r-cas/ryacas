@@ -28,6 +28,9 @@ Examples of this will be shown in multiple examples below.
 A short summary of often-used `yacas` commands are found in the section "`yacas` reference" in the "Getting started" vignette.
 A short summary of `Ryacas`'s low-level functions are also found in the section "`Ryacas` low-level reference" at the end of this document.
 
+Note that the [yacas documentation](https://yacas.readthedocs.io/en/latest/) is 
+a very useful resource.
+
 # Example 1: Simple algebra
 
 First, consider this polynomial:
@@ -48,6 +51,8 @@ yac_str(paste0("TeXForm(Factor(", eq, "))"))
 \[
 `r yac_str(paste0("TeXForm(Factor(", eq, "))"))`
 \]
+
+Also see yacas documentation on [Simplify()](Simplify), [Factor()](https://yacas.readthedocs.io/en/latest/reference_manual/number-theory.html#Factor) and [TeXForm()](https://yacas.readthedocs.io/en/latest/reference_manual/io.html#TeXForm).
 
 Instead of the pattern `paste0("Simplify(", eq, ")")` etc., there exists a 
 helper function `y_fn()` that does this:
@@ -112,12 +117,11 @@ e
 eval(e)
 ```
 
-Also in $\LaTeX$:
+Also in $\LaTeX$ ([yacas documentation on TeXForm()](https://yacas.readthedocs.io/en/latest/reference_manual/io.html#TeXForm)):
 
 ```{r}
 cmd %>% y_fn("TeXForm") %>% yac_str()
 ```
-
 
 But it also works with symbolic contents:
 
@@ -237,6 +241,9 @@ yac_str("Expand(poly)")
 
 # Sums
 
+Yacas can sum an expression. The syntax is `Sum(var, from, to, body)` as described in the [yacas documentation of `Sum()`](https://yacas.readthedocs.io/en/latest/reference_manual/calc.html#Sum).
+For example we can sum $a^k$ for $k = 0$ to $k = n$ as follows:
+
 ```{r}
 yac_str("Sum(k, 0, n, a^k)")
 ``` 
@@ -244,20 +251,36 @@ yac_str("Sum(k, 0, n, a^k)")
 
 # Limits
 
+Yacas can also take the limit of an expression. The syntax is ` Limit(var, val) expr` as described in the [yacas documentation of `Limit()`](https://yacas.readthedocs.io/en/latest/reference_manual/calc.html#Limit).
+For example we can take the limit of $(1+(1/n))^n$ for $n \to \infty$ as follows:
+
 ```{r}
 cmd <- "Limit(n, Infinity) (1+(1/n))^n"
 yac_str(cmd)
 yac_expr(cmd)
-yac_str("Limit(h, 0) (Sin(x+h)-Sin(x))/h")
 ``` 
+
+This can also be used to illustrate taking derivatives, e.g. the derivative of sine:
+
+```{r}
+yac_str("Limit(h, 0) (Sin(x+h)-Sin(x))/h") 
+```
+
 
 
 # Solving equations
 
-Say we want to find roots of `poly`. First note that the equality in `yacas` is `==`. Then_
+Say we want to find roots of `poly`. First note that the equality in `yacas` is `==`. Then:
 
 ```{r}
 cmd <- "Solve(poly == 0, x)"
+cmd %>% yac_str()
+```
+
+Note that the default in yacas's `Solve()` is to find roots if no equality sign is provided:
+
+```{r}
+cmd <- "Solve(poly, x)"
 cmd %>% yac_str()
 ```
 
@@ -273,6 +296,7 @@ We can also use `y_fn()`:
 
 ```{r}
 "poly == 0" %>% y_fn("Solve", "x")
+"poly" %>% y_fn("Solve", "x") # default is == 0
 "poly == 0" %>% y_fn("Solve", "x") %>% y_rmvars() %>% yac_str()
 ```
 

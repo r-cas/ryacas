@@ -46,7 +46,7 @@ tools directly in `R` like
 
 which are helpful in both research and teaching.  With `Ryacas`, these
 tools are conveniently available from within `R` through
-`Ryacas`. Hoever, it must be stressed that `yacas` is nowhere as
+`Ryacas`. However, it must be stressed that `yacas` is nowhere as
 powerful as the larger commercial CASs.
 
 `yacas` is easy to use and extensible so that the user can 
