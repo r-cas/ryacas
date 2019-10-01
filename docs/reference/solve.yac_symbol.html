@@ -33,7 +33,7 @@
 <meta property="og:title" content="Solve a system of equations — solve.yac_symbol" />
 
 <meta property="og:description" content="This generic function solves the
-equation $a " />
+equation $a x = b$ for $x$." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,7 +64,7 @@ equation $a " />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9031</span>
       </span>
     </div>
 
@@ -138,7 +138,7 @@ equation $a " />
     <div class="ref-description">
     
     <p>This generic function solves the
-equation $a <!-- %*% x = b$ for $x$. --></p>
+equation $a x = b$ for $x$.</p>
     
     </div>
 
@@ -150,27 +150,56 @@ equation $a <!-- %*% x = b$ for $x$. --></p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>a</th>
-      <td><p>If <code>yac_symbol</code> treat as such, else
-call <code><a href='https://www.rdocumentation.org/packages/base/topics/solve'>base::solve()</a></code>.</p></td>
+      <td><p>A <code>yac_symbol</code></p></td>
     </tr>
     <tr>
       <th>b</th>
-      <td><p>If <code>yac_symbol</code> treat as such, else
-call <code><a href='https://www.rdocumentation.org/packages/base/topics/solve'>base::solve()</a></code>.</p></td>
+      <td><p>A <code>yac_symbol</code> or a value, see details and examples.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
-      <td><p>Not used</p></td>
+      <td><p>See details and examples.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>When <code>a</code> is a matrix and <code>b</code> not provided,
+this finds the inverse of <code>a</code>.
+When <code>a</code> is a matrix and a vector <code>b</code> is provided, the
+linear system of equations is solved.</p>
+<p>Note that solving non-linear equations:</p><ul>
+<li><p><code><a href='https://www.rdocumentation.org/packages/base/topics/solve'>solve(a, b)</a></code>: find roots of <code>a</code> for variable <code>b</code>, i.e. yacas <code>Solve(a == 0, b)</code></p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/base/topics/solve'>solve(a, b, v)</a></code>: find solutions to <code>a == b</code> for variable <code>v</code>, i.e. yacas <code>Solve(a == b, v)</code></p></li>
+</ul>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/outer'>outer</a></span>(<span class='fl'>0</span>:<span class='fl'>3</span>, <span class='fl'>1</span>:<span class='fl'>4</span>, <span class='st'>"-"</span>) + <span class='fu'><a href='diag.html'>diag</a></span>(<span class='fl'>2</span>:<span class='fl'>5</span>)
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>4</span>
+<span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='yac_symbol.html'>yac_symbol</a></span>(<span class='no'>A</span>)
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='yac_symbol.html'>yac_symbol</a></span>(<span class='no'>a</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/solve'>solve</a></span>(<span class='no'>A</span>)</div><div class='output co'>#&gt;             [,1]        [,2]        [,3]        [,4]
+#&gt; [1,]  0.18316832  0.02970297  0.20297030  0.30693069
+#&gt; [2,] -0.16831683  0.29702970  0.02970297  0.06930693
+#&gt; [3,] -0.09405941 -0.06930693  0.19306931 -0.04950495
+#&gt; [4,] -0.04950495 -0.08910891 -0.10891089  0.07920792</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/solve'>solve</a></span>(<span class='no'>B</span>)</div><div class='output co'>#&gt; {{   37/202,     3/101,    41/202,    31/101},
+#&gt;  {(-17)/101,    30/101,     3/101,     7/101},
+#&gt;  {(-19)/202,  (-7)/101,    39/202,  (-5)/101},
+#&gt;  { (-5)/101,  (-9)/101, (-11)/101,     8/101}} </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/solve'>solve</a></span>(<span class='no'>A</span>, <span class='no'>a</span>)</div><div class='output co'>#&gt; [1]  2.0792079  0.7920792  0.1485149 -0.2376238</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/solve'>solve</a></span>(<span class='no'>B</span>, <span class='no'>b</span>)</div><div class='output co'>#&gt; [1] {210/101,80/101,15/101,(-24)/101}</div><div class='input'>
+<span class='no'>poly</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='yac_symbol.html'>yac_symbol</a></span>(<span class='st'>"x^2 - x - 6"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/solve'>solve</a></span>(<span class='no'>poly</span>, <span class='st'>"x"</span>)    <span class='co'># Solve(poly == 0, x)</span></div><div class='output co'>#&gt; [1] {x==(-2),x==3}</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/solve'>solve</a></span>(<span class='no'>poly</span>, <span class='fl'>3</span>, <span class='st'>"x"</span>) <span class='co'># Solve(poly == 3, x)</span></div><div class='output co'>#&gt; [1] {x==(Sqrt(37)+1)/2,x==(1-Sqrt(37))/2}</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

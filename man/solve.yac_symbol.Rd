@@ -7,15 +7,40 @@
 \method{solve}{yac_symbol}(a, b, ...)
 }
 \arguments{
-\item{a}{If \code{yac_symbol} treat as such, else
-call \code{\link[base:solve]{base::solve()}}.}
+\item{a}{A \code{yac_symbol}}
 
-\item{b}{If \code{yac_symbol} treat as such, else
-call \code{\link[base:solve]{base::solve()}}.}
+\item{b}{A \code{yac_symbol} or a value, see details and examples.}
 
-\item{\dots}{Not used}
+\item{\dots}{See details and examples.}
 }
 \description{
 This generic function solves the
-equation $a %*% x = b$ for $x$.
+equation $a x = b$ for $x$.
+}
+\details{
+When \code{a} is a matrix and \code{b} not provided,
+this finds the inverse of \code{a}.
+When \code{a} is a matrix and a vector \code{b} is provided, the
+linear system of equations is solved.
+
+Note that solving non-linear equations:
+\itemize{
+\item \code{solve(a, b)}: find roots of \code{a} for variable \code{b}, i.e. yacas \code{Solve(a == 0, b)}
+\item \code{solve(a, b, v)}: find solutions to \code{a == b} for variable \code{v}, i.e. yacas \code{Solve(a == b, v)}
+}
+}
+\examples{
+A <- outer(0:3, 1:4, "-") + diag(2:5)
+a <- 1:4
+B <- yac_symbol(A)
+b <- yac_symbol(a)
+solve(A)
+solve(B)
+solve(A, a)
+solve(B, b)
+
+poly <- yac_symbol("x^2 - x - 6")
+solve(poly, "x")    # Solve(poly == 0, x)
+solve(poly, 3, "x") # Solve(poly == 3, x)
+
 }

@@ -365,19 +365,54 @@ test_that("Derivatives", {
 })
 
 
-test_that("isolate", {
-  xs <- yac_symbol("x")
-  poly <- xs^2 - xs - 6
+
+test_that("solve linear system", {
+  # ------------------------------------
+  # Input validation
+  # ------------------------------------
+  poly <- yac_symbol("x^2 - x - 6")
+  expect_error(solve(poly))
   
-  expect_equal(as.character(poly), "x^2-x-6")
+  # ------------------------------------
+  # Matrix inverse
+  # ------------------------------------
+  A <- outer(0:3, 1:4, "-") + diag(2:5)
+  a <- 1:4
+  B <- yac_symbol(A)
+  b <- yac_symbol(a)
+  expect_equal(solve(A), as_r(solve(B)))
   
-  zeroes <- isolate(poly, "x")
-  expect_equal(as.character(zeroes), "{x==(-2),x==3}")
+  # ------------------------------------
+  # Linear system of equations
+  # ------------------------------------
+  # Input validation
+  expect_error(solve(B, poly))
   
-  level_curve <- poly %>% equal_to(3) %>% isolate("x")
-  expect_equal(as.character(level_curve), 
-               "{x==(Sqrt(37)+1)/2,x==(1-Sqrt(37))/2}")
+  # Functionality
+  expect_equal(solve(A, a), as_r(solve(B, b)))
 })
 
+test_that("solve (roots/others)", {
+  A <- outer(0:3, 1:4, "-") + diag(2:5)
+  a <- 1:4
+  B <- yac_symbol(A)
+  b <- yac_symbol(a)
 
+  
+  poly <- yac_symbol("x^2 - x - 6")
+  expect_error(solve(poly))
+  
+  expect_error(solve(B, poly))
+  expect_error(solve(poly, B))
+  expect_error(solve(poly, b))
+  
+  # Roots
+  expect_equal(as.character(solve(poly, "x")), "{x==(-2),x==3}")
+  expect_equal(as_r(y_rmvars(solve(poly, "x"))), c(-2, 3))
+  
+  # Equation
+  expect_equal(as.character(solve(poly, 3, "x")), "{x==(Sqrt(37)+1)/2,x==(1-Sqrt(37))/2}")
+  expect_equal(as.character(solve(poly, 3, "x")), as.character(solve(poly, "3", "x")))
+  expect_equal(as_r(y_rmvars(solve(poly, 3, "x"))), c(3.54138126514911, -2.54138126514911))
+})
 

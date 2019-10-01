@@ -87,6 +87,8 @@ A %*% solve(A)
 B %*% solve(B)
 solve(A %*% t(A))
 solve(B %*% t(B))
+solve(A, a)
+solve(B, b)
 ```
 
 We can also assign a `yacas` variable, but remember that this may be difficult to distinguish:
@@ -172,37 +174,38 @@ Jacobian(L2, c("x", "y", "a"))
 
 # Solving equations
 
-Say we want to find roots of a polynomial. First note that the equality in `yacas` is `==` and that the default in yacas's `Solve()` is to find roots if no equality sign is provided:
+Say we want to find roots of a polynomial. We use the generic `solve(a, b, ...)` function. 
+
+Note the conventions are as follows:
+
+* Linear system of equations (works as `R`'s `solve()` as demonstrated above):
+  + When `a` is a matrix and `b` not provided, this finds the inverse of `a`.
+  + When `a` is a matrix and a vector `b` is provided, the linear system of equations is solved.
+* Else:
+  + `solve(a, b)`: find roots of `a` for variable `b`, i.e. yacas `Solve(a == 0, b)`
+  + `solve(a, b, v)`: find solutions to `a == b` for variable `v`, i.e. yacas `Solve(a == b, v)`
 
 ```{r}
 xs <- yac_symbol("x")
 poly <- xs^2 - xs - 6
 poly
-zeroes <- isolate(poly, "x")
+zeroes <- solve(poly, "x") # Solve(x^2 - x - 6 == 0, x)
 zeroes
 tex(zeroes)
-```
-
-We can also solve it using yacas's `Solve()` (that by default equates with 0 to find roots):
-
-```{r}
-zeroes <- poly %>% y_fn("Solve", "x")
-zeroes
-tex(zeroes)
+zeroes %>% y_rmvars()
 ```
 
 We can also find values of `x` where the polynomial equals another constant. 
-If we were working with strings via the low-level interface it would be easy via `paste()`, but as we are working with `yac_symbol()`'s we use the utility function `equal_to()`.
+If we were working with strings via the low-level interface it would be easy via `paste()`, but as we are working with `yac_symbol()`'s we use the `solve()` function directly:
 
 ```{r}
-poly %>% equal_to(3)
-poly %>% equal_to(3) %>% isolate("x")
-cmd <- poly %>% as.character() %>% paste("== 3")
-cmd
-res <- cmd %>% y_fn("Solve", "x") %>% yac_str()
-res
+solve(poly, 3, "x") # Solve(x^2 - x - 6 == 3, x)
+solve(poly, 3, "x") %>% tex()
 ```
 
+\[
+`r solve(poly, 3, "x") %>% tex()`
+\]
 
 # `Ryacas` high-level reference
 
@@ -222,7 +225,6 @@ The following functions work with `yac_symbol`s.
   + `yac_silent()`: Do something silently
   + `yac_assign()`: Assign a variable
 * Other
-  + `roots(x, var)`: Find root of the `yac_symbol` `x` with respect to `var`
   + `simplify(x, timeout = 2)`: Try `yacas`'s `Simplify()` function. When the `unix` package is available, the `timeout` (in seconds), stops trying after that amount of time to avoid making the `R` process hang.
   + `tex()`: Convert 
   + `y_fn(x, fn, ...)`: Apply a `yacas` function `fn` to the `yac_symbol` `x`, i.e. `fn(x, ...)`
@@ -243,7 +245,7 @@ The following functions work with `yac_symbol`s.
   + `upper.tri()` getter
   + `lower.tri()` getter
   + `t()`
-  + `solve()` (only matrix inverse)
+  + `solve()` (see above and in help page)
   + Ops: `+`, `-`, `*`, `/`, `^`
   + Math functions: `sin()`, `cos()`, `tan()`, 
                     `asin()`, `acos()`, `atan()`, 

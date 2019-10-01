@@ -23,7 +23,7 @@ reference:
   desc: ~
   contents:
   - '`Ryacas-package`'
-- title: Legacy
+- title: Complete reference
   desc: ~
   contents:
-  - has_concept("legacy")
+  - matches(".*")
