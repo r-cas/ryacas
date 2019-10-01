@@ -24,11 +24,11 @@ affiliations:
 # Summary
 
 `Ryacas` is an `R` [@R] package that enables a 
-computer algebra system (CAS) within `R` via the open source computer 
-algebra system (CAS) `yacas` [@Pinkus2002; @yacas], which is short 
+computer algebra system (CAS) within `R` via the open source 
+CAS `yacas` [@Pinkus2002; @yacas], which is short 
 for "**y**et **a**nother **c**omputer **a**lgebra **s**ystem".
 
-`Ryacas` both includes a high-level (symbol) interface 
+`Ryacas` includes both a high-level (symbol) interface 
 using `R` objects like matrices and vectors as well as direct access to 
 the underlying `yacas` such that the user can use the full `yacas` 
 system, including for example defining new summation rules. 
@@ -53,7 +53,7 @@ powerful as the larger commercial CASs.
 define new rules, for example for simplification or summations.
 More information about `yacas` is available at <http://www.yacas.org/>. 
 
-`Ryacas` contains a number of vignettes that described both 
+`Ryacas` contains a number of vignettes that describe both 
 how to use the high-level interface directly with `R` objects and how 
 to use the underlying `yacas` system.
 
