@@ -1,8 +1,9 @@
-Changes in version 1.0.1
+Changes in version 1.1.0
 
 o Removed deprecated functions. 
-  A legacy package Ryacas0 is available: https://github.com/mikldk/ryacas0/ .
+  A legacy package Ryacas0 is available (dev version at https://github.com/mikldk/ryacas0/).
 o Added yac_symbol functions: deriv, Hessian, Jacobian
+o solve() extended; see documentation
 
 Changes in version 1.0.0
 

@@ -7,6 +7,9 @@
 Status](https://travis-ci.org/mikldk/ryacas.svg?branch=master)](https://travis-ci.org/mikldk/ryacas)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true)](https://ci.appveyor.com/project/mikldk/ryacas/branch/master)
+[![JOSS
+status](https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b/status.svg)](https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b)
+[![DOI](https://zenodo.org/badge/36067045.svg)](https://zenodo.org/badge/latestdoi/36067045)
 
 Ryacas is an [R](https://www.r-project.org/) interface to the free
 [yacas](http://www.yacas.org) Computer Algebra System. Ryacas allows one
