@@ -14,3 +14,5 @@ vignettes/*.html
 revdep
 yacas-upstream-update/yacas
 yacas-upstream-update/new-*
+^README.knit.md$
+^README.utf8.md$

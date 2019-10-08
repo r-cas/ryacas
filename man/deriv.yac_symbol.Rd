@@ -4,12 +4,12 @@
 \alias{deriv.yac_symbol}
 \title{Find the derivative of yac symbol}
 \usage{
-\method{deriv}{yac_symbol}(expr, vars)
+\method{deriv}{yac_symbol}(expr, ...)
 }
 \arguments{
 \item{expr}{A \code{yac_symbol}}
 
-\item{name}{variables to take derivate with respect to}
+\item{\dots}{variables as character vector to take derivate with respect to}
 }
 \description{
 Find the derivative of yac symbol

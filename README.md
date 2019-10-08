@@ -186,10 +186,11 @@ B %*% solve(B)
 
 ## Yacas
 
-The package contains stripped-down yacas distribution. For the complete
-yacas source code see <https://github.com/grzegorzmazur/yacas/> . For
-more information on yacas see <http://www.yacas.org/> or the documention
-directly at <https://yacas.readthedocs.io/>.
+The package contains the yacas distribution. The development of the
+yacas source code is available at
+<https://github.com/grzegorzmazur/yacas/> . For more information on
+yacas see <http://www.yacas.org/> or the documention directly at
+<https://yacas.readthedocs.io/>.
 
 -----
 

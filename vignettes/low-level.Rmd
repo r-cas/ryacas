@@ -52,7 +52,7 @@ yac_str(paste0("TeXForm(Factor(", eq, "))"))
 `r yac_str(paste0("TeXForm(Factor(", eq, "))"))`
 \]
 
-Also see yacas documentation on [Simplify()](Simplify), [Factor()](https://yacas.readthedocs.io/en/latest/reference_manual/number-theory.html#Factor) and [TeXForm()](https://yacas.readthedocs.io/en/latest/reference_manual/io.html#TeXForm).
+Also see yacas documentation on [Simplify()](https://yacas.readthedocs.io/en/latest/reference_manual/simplify.html#Simplify), [Factor()](https://yacas.readthedocs.io/en/latest/reference_manual/number-theory.html#Factor) and [TeXForm()](https://yacas.readthedocs.io/en/latest/reference_manual/io.html#TeXForm).
 
 Instead of the pattern `paste0("Simplify(", eq, ")")` etc., there exists a 
 helper function `y_fn()` that does this:

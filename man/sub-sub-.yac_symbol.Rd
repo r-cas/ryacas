@@ -2,17 +2,15 @@
 % Please edit documentation in R/yac-symbol.R
 \name{[[.yac_symbol}
 \alias{[[.yac_symbol}
-\title{Extract or replace parts of an object}
+\title{Extract parts of an object}
 \usage{
 \method{[[}{yac_symbol}(x, i)
 }
 \arguments{
 \item{x}{A \code{yac_symbol}.}
 
-\item{i}{row indices specifying elements to extract or replace}
-
-\item{j}{column indices specifying elements to extract or replace}
+\item{i}{indices specifying elements to extract}
 }
 \description{
-Extract or replace parts of an object
+Extract parts of an object
 }

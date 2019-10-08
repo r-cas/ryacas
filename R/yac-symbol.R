@@ -573,11 +573,10 @@ solve.yac_symbol <- function(a, b, ...) {
 
 
 
-#' Extract or replace parts of an object
+#' Extract parts of an object
 #' 
 #' @param x A `yac_symbol`.
-#' @param i row indices specifying elements to extract or replace
-#' @param j column indices specifying elements to extract or replace
+#' @param i indices specifying elements to extract
 #' 
 #' @export
 `[[.yac_symbol` <- function(x, i) {
@@ -694,12 +693,14 @@ Math.yac_symbol = function(x, ...) {
 #' Find the derivative of yac symbol
 #' 
 #' @param expr A `yac_symbol`
-#' @param name variables to take derivate with respect to
+#' @param \dots variables as character vector to take derivate with respect to
 #' 
 #' @concept yac_symbol
 #' 
 #' @export
-deriv.yac_symbol <- function(expr, vars) {
+deriv.yac_symbol <- function(expr, ...) {
+  vars <- unlist(list(...))
+  
   res <- unlist(lapply(vars, function(var) {
     paste0("(D(", var, ") ", expr$yacas_cmd, ")")
   }))
@@ -712,17 +713,19 @@ deriv.yac_symbol <- function(expr, vars) {
 #' Find the Jacobian matrix of yac symbol
 #' 
 #' @param expr A `yac_symbol`
-#' @param name variables to take Jacobian with respect to
+#' @param \dots variables as character vector to take Jacobian with respect to
 #' 
 #' @concept yac_symbol
 #' 
 #' @export
-Jacobian <- function(expr, vars) {
+Jacobian <- function(expr, ...) {
   UseMethod("Jacobian")
 }
 
 #' @export
-Jacobian.yac_symbol <- function(expr, vars) {
+Jacobian.yac_symbol <- function(expr, ...) {
+  vars <- unlist(list(...))
+  
   res <- paste0("JacobianMatrix( ", expr$yacas_cmd, ", {", 
                 paste0(vars, collapse = ", "), "})")
   
@@ -733,17 +736,19 @@ Jacobian.yac_symbol <- function(expr, vars) {
 #' Find the Hessian matrix of yac symbol
 #' 
 #' @param expr A `yac_symbol`
-#' @param vars variables to take Hessian with respect to
+#' @param \dots variables as character vector to take Hessian with respect to
 #' 
 #' @concept yac_symbol
 #' 
 #' @export
-Hessian <- function(expr, vars) {
+Hessian <- function(expr, ...) {
   UseMethod("Hessian")
 }
 
 #' @export
-Hessian.yac_symbol <- function(expr, vars) {
+Hessian.yac_symbol <- function(expr, ...) {
+  vars <- unlist(list(...))
+  
   res <- paste0("HessianMatrix(", expr$yacas_cmd, ", {", 
                 paste0(vars, collapse = ", "), "})")
   

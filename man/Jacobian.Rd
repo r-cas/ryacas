@@ -4,12 +4,12 @@
 \alias{Jacobian}
 \title{Find the Jacobian matrix of yac symbol}
 \usage{
-Jacobian(expr, vars)
+Jacobian(expr, ...)
 }
 \arguments{
 \item{expr}{A \code{yac_symbol}}
 
-\item{name}{variables to take Jacobian with respect to}
+\item{\dots}{variables as character vector to take Jacobian with respect to}
 }
 \description{
 Find the Jacobian matrix of yac symbol

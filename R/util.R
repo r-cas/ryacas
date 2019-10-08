@@ -13,8 +13,8 @@ strip_start_end_quotes <- function(x) {
 #' 
 #' @export
 get_output_width <- function() {
-  res <- yacas("Print(FormulaMaxWidth())")
-  res <- gsub("\n", "", res$PrettyForm, fixed = TRUE)
+  res <- yac_str("Print(FormulaMaxWidth())")
+  res <- gsub("\n", "", res, fixed = TRUE)
   res <- as.integer(res)
   return(res)
 }
@@ -29,6 +29,6 @@ get_output_width <- function() {
 #' @export
 set_output_width <- function(w) {
   cmd <- paste0("SetFormulaMaxWidth(", w, ")")
-  return(invisible(yacas(cmd)))
+  return(invisible(yac_silent(cmd)))
 }
 

@@ -1,6 +1,7 @@
 ^Meta$
 ^doc$
 ^docs
+^LICENSE$
 [.]aux$
 [.]log$
 [.]out$
@@ -23,3 +24,5 @@ tic.R
 ^_pkgdown\.yml$
 ^paper.md$
 ^paper.bib$
+^README.knit.md$
+^README.utf8.md$

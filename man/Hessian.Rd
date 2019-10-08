@@ -4,12 +4,12 @@
 \alias{Hessian}
 \title{Find the Hessian matrix of yac symbol}
 \usage{
-Hessian(expr, vars)
+Hessian(expr, ...)
 }
 \arguments{
 \item{expr}{A \code{yac_symbol}}
 
-\item{vars}{variables to take Hessian with respect to}
+\item{\dots}{variables as character vector to take Hessian with respect to}
 }
 \description{
 Find the Hessian matrix of yac symbol
