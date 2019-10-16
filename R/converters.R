@@ -6,6 +6,10 @@
 #' 
 #' @export
 as_y <- function(x) {
+  UseMethod("as_y")
+}
+
+as_y.default <- function(x) {
   if (is.matrix(x)) {
     return(y_hlp_to_yacmat(x))
   }
@@ -40,7 +44,6 @@ expr_has_vars <- function(x) {
   
   return(FALSE)
 }
-
 
 #' @export
 as_r.default <- function(x) {

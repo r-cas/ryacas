@@ -2,6 +2,15 @@ context("Ryacas symbol")
 
 ##############################
 
+test_that("Basics", {
+  x <- "x+x+x"
+  xs <- ys(x)
+  expect_equal(as_r(xs), expression(3*x))
+  expect_equal(as_y(xs), "3*x")
+})
+
+##############################
+
 test_that("dim()/length()", {
   for (nrow in 1:4) {
     info <- paste0("length = ", nrow)
@@ -164,6 +173,18 @@ test_that("solve()", {
 
   expect_equal(A1, as_r(B1))
   expect_equal(solve(A1), as_r(solve(B1)))
+})
+
+test_that("solve() for systems", {
+  # Rosenbrock
+  fs <- yac_symbol("(1 - x)^2 + 100*(y - x^2)^2")
+  g <- deriv(fs, c("x", "y"))
+  sol <- solve(g, c("x", "y"))
+  sol_nn <- y_rmvars(sol)
+  expect_equal(dim(sol_nn), c(1, 2))
+  sol_nn_v <- sol_nn[1, ]
+  expect_equal(as.character(sol_nn_v), "{1,1}")
+  expect_equal(as_r(sol_nn_v), c(1, 1))
 })
 
 

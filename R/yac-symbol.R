@@ -7,9 +7,10 @@
 #' 
 #' @return A `yac_symbol`
 #' 
+#' @aliases yac_symbol
 #' @concept yac_symbol
 #' @export
-yac_symbol <- function(x) {
+ys <- function(x) {
   # TODO: Consider NSE: e.g. yac_symbol(4*x + 5*y) directly?
   
   stopifnot(is.vector(x) | is.matrix(x))
@@ -33,6 +34,24 @@ yac_symbol <- function(x) {
   
   class(y) <- c("yac_symbol", "list")
   return(y)
+}
+
+#' Make a yacas symbol
+#' 
+#' This is an alias for [ys()].
+#' 
+#' Note that this results in multiple calls to `yacas` and 
+#' the performance may be slower than manually using e.g. [yac_str()].
+#' 
+#' @param x A vector or a matrix
+#' 
+#' @return A `yac_symbol`
+#' 
+#' @aliases yac_symbol
+#' @concept yac_symbol
+#' @export
+yac_symbol <- function(x) {
+  return(ys(x)) 
 }
 
 # S3 exports
@@ -68,6 +87,11 @@ y_fn.yac_symbol <- function(x, fn, ...) {
   y <- yac_str(x)
   z <- yac_symbol(y)
   return(z)
+}
+
+#' @export
+as_y.yac_symbol <- function(x) {
+  return(x$yacas_cmd)
 }
 
 #' @export
@@ -395,6 +419,8 @@ solve_yac_symbol_linearsolve <- function(a, b) {
 #' * `solve(a, b)`: find roots of `a` for variable `b`, i.e. yacas `Solve(a == 0, b)`
 #' * `solve(a, b, v)`: find solutions to `a == b` for variable `v`, i.e. yacas `Solve(a == b, v)`
 #' 
+#' This also works for a system of equations (when `a` is a vector)
+#' 
 #' @param a A `yac_symbol` 
 #' @param b A `yac_symbol` or a value, see details and examples.
 #' @param \dots See details and examples.
@@ -435,12 +461,53 @@ solve.yac_symbol <- function(a, b, ...) {
   } else {
     # b also given:
     
-    if (a$is_mat && b$is_vec) {
+    if (a$is_mat) {
       if (!is(b, "yac_symbol")) {
         stop("'b' must be a yac_symbol.")
       }
+      if (!b$is_vec) {
+        stop("'b' must be a vector")
+      }
       
       return(solve_yac_symbol_linearsolve(a, b))
+    }
+    
+    # System of equations
+    if (!a$is_mat && a$is_vec) {
+      dots <- list(...)
+      
+      n <- length(a)
+      
+      b_yac <- if (is(b, "yac_symbol")) {
+        b$yacas_cmd
+      } else {
+        paste0("{", paste0(b, collapse = ", "), "}")
+      }
+
+      rhs <- if (length(dots) == 0L) {
+        paste0("{", paste0(rep("0", n), collapse = ", "), "}")
+      } else {
+        if (length(b) != n) {
+          stop("Unequal number of LHSs and RHSs")
+        }
+        b_yac
+      } 
+      
+      vars <- if (length(dots) == 0L) {
+        b_yac
+      } else {
+        v <- unlist(dots)
+        paste0("{", paste0(v, collapse = ", "), "}")
+      }
+      
+      eqs_lhs <- y_hlp_from_yacvec(a$yacas_cmd)
+      eqs_rhs <- y_hlp_from_yacvec(rhs)
+      stopifnot(length(eqs_lhs) == length(eqs_rhs))
+      eqs <- paste0("{", paste0(eqs_lhs, "==", eqs_rhs, collapse = ", "), "}")
+
+      cmd <- paste0("Solve(", eqs, ", ", vars, ")")
+      res <- yac_symbol(cmd)
+      return(res)
     }
     
     if (!a$is_mat && !a$is_vec) {

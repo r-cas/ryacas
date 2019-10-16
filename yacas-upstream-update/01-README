@@ -7,6 +7,19 @@ cd yacas-upstream-update
 #git clone https://github.com/grzegorzmazur/yacas.git --branch "v1.7.0"
 git clone https://github.com/grzegorzmazur/yacas.git
 
+################################
+# IF ONLY yacas/scripts
+################################
+Change LGPL -> GPL
+
+cd yacas/scripts
+egrep -lRZ 'Lesser General Public' . | xargs -0 -l sed -i -e 's/Lesser General Public/General Public/g'
+
+Just copy, that's it!
+
+################################
+
+
 #cd ./yacas
 #mkdir build
 #cd build
