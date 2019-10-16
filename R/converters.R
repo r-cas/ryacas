@@ -9,6 +9,7 @@ as_y <- function(x) {
   UseMethod("as_y")
 }
 
+#' @export
 as_y.default <- function(x) {
   if (is.matrix(x)) {
     return(y_hlp_to_yacmat(x))
