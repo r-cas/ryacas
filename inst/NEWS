@@ -2,7 +2,7 @@ Changes in version 1.1.1
 
 o ys() was introduced as an alias to yac_symbol()
 o as_y() now extracts yacas command from yac_symbols
-o Updated to yacas commit cebec9bcbc3733790be4432f3ad0414eeb47ae49
+o Updated to yacas/scripts commit ef475ce5e6d5b9ce5d7d36e971092e85ef4d6741
 o solve(): extended a system of equations
 
 Changes in version 1.1.0
