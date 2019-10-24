@@ -22,7 +22,7 @@ to R prompt.
 \note{
 Note that command will use R \code{history()} and modify it by default.
 Yacas is given a limited amount of time to complete, otherwise
-\code{\[1\] CommandLine(1) : User interrupted calculation} is returned. E.g.
+\verb{\[1\] CommandLine(1) : User interrupted calculation} is returned. E.g.
 Taylor(x,0,5) 1/(1+x) will work, but Taylor(x,0,12) 1/(1+x) is likely to
 take too long.
 }
