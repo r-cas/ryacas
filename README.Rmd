@@ -69,6 +69,42 @@ If you want to contribute, please either create an issue or make a pull request.
 Below we show a few examples. 
 We highly recommend reading the "[Getting started](http://mikldk.github.io/ryacas/articles/getting-started.html)" vignette (and the other vignettes) for a more thorough introduction to the package.
 
+There are two interfaces: a high-level interface that 
+makes `yacas` objects work similar to `R` objects, 
+and a low-level interface where the user can write `yacas` code 
+and get results as strings or as `R` expressions. Below, we demonstrate both.
+
+### High-level interface
+
+A brief example with a polynomial is:
+```{r}
+x <- ysym("x")
+p <- x^2+x-6
+p
+y_fn(p, "Factor")
+p %>% y_fn("Factor")
+p %>% as_r()
+```
+
+A small matrix example follows:
+
+```{r}
+A <- outer(0:3, 1:4, "-") + diag(2:5)
+a <- 1:4
+B <- ysym(A)
+B
+solve(B)
+B[2, 3] <- "x"
+B
+b <- ysym(a)
+b[1] <- "x"
+b
+B %*% b
+t(B)
+B[, 2:3]
+```
+
+
 ### Low-level interface
 
 Returning strings with `yac_str()`:
@@ -118,35 +154,6 @@ And arbitrary precision (see also the "[Arbitrary-precision arithmetic
 yac_str("N(Pi, 50)")
 ```
 
-
-### High-level interface
-
-A brief example with a polynomial is:
-```{r}
-x <- yac_symbol("x^2+x-6")
-x
-y_fn(x, "Factor")
-x %>% y_fn("Factor")
-x %>% as_r()
-```
-
-A small matrix example follows:
-
-```{r}
-A <- outer(0:3, 1:4, "-") + diag(2:5)
-a <- 1:4
-B <- yac_symbol(A)
-B
-b <- yac_symbol(a)
-b
-y_fn(B, "Transpose")
-y_fn(B, "Inverse")
-y_fn(B, "Trace")
-B %*% b
-t(B)
-B[, 2:3]
-B %*% solve(B)
-```
 
 
 ## Yacas ##

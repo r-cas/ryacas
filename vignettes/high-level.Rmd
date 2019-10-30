@@ -30,7 +30,7 @@ Start with a base symbol what can either be:
 Here, we keep it simple. 
 
 ```{r}
-x <- yac_symbol("x")
+x <- ysym("x")
 2*x^2 - 5
 c(-2, 5)*x
 as_r(c(-2, 5)*x) # or yac_expr(c(-2, 5)*x)
@@ -48,10 +48,10 @@ a
 They are now considered `yacas`-enabled:
 
 ```{r}
-B <- yac_symbol(A)
+B <- ysym(A)
 B
 as_r(B)
-b <- yac_symbol(a)
+b <- ysym(a)
 b
 as_r(b)
 ```
@@ -116,7 +116,7 @@ There are additional functions available:
 To demonstrate these and some additional benefit, we exploit `yacas`'s symbolic availabilities.
 
 ```{r}
-D <- diag(4) %>% yac_symbol()
+D <- diag(4) %>% ysym()
 D
 D <- D/2
 D
@@ -140,7 +140,7 @@ The default `timeout` value used when `unix` is available is `2` seconds.
 We illustrate using the example in <https://mikl.dk/post/2019-pizza-frozen-yogurt-goebner/>:
 
 ```{r}
-L <- yac_symbol("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)")
+L <- ysym("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)")
 L
 ```
 
@@ -164,7 +164,7 @@ eval(as_r(H), list(x = 2, y = 2, a = 2))
 The Jacobian is taken on a vector function denoted by many functions:
 
 ```{r}
-L2 <- yac_symbol(c("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)", 
+L2 <- ysym(c("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)", 
                    "x^3 + 4*a^2")) # just some function
 L2
 Jacobian(L2, "x")
@@ -186,7 +186,7 @@ Note the conventions are as follows:
   + `solve(a, b, v)`: find solutions to `a == b` for variable `v`, i.e. yacas `Solve(a == b, v)`
 
 ```{r}
-xs <- yac_symbol("x")
+xs <- ysym("x")
 poly <- xs^2 - xs - 6
 poly
 zeroes <- solve(poly, "x") # Solve(x^2 - x - 6 == 0, x)
@@ -196,7 +196,7 @@ zeroes %>% y_rmvars()
 ```
 
 We can also find values of `x` where the polynomial equals another constant. 
-If we were working with strings via the low-level interface it would be easy via `paste()`, but as we are working with `yac_symbol()`'s we use the `solve()` function directly:
+If we were working with strings via the low-level interface it would be easy via `paste()`, but as we are working with `ysym()`'s we use the `solve()` function directly:
 
 ```{r}
 solve(poly, 3, "x") # Solve(x^2 - x - 6 == 3, x)
@@ -211,7 +211,7 @@ solve(poly, 3, "x") %>% tex()
 
 Principle:
 
-* `yac_symbol(x)` converts `x` to a `yac_symbol` that automatically runs `yacas` when needed. `x` can both be a text string with `yacas` commands or an `R` vector/matrix.
+* `ysym(x)` converts `x` to a `yac_symbol` that automatically runs `yacas` when needed. `x` can both be a text string with `yacas` commands or an `R` vector/matrix.
 * `as_r(x)`: Is used to convert the `yac_symbol` back to an `R` representation.
 * `y_fn(x, fn, ...)`: Apply a `yacas` function `fn` to the `yac_symbol` `x`, i.e. `fn(x, ...)`; note that this is evaluated immediately when `x` is a `yac_symbol` as opposed to when `x` is a string
 

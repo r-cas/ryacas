@@ -145,7 +145,7 @@ A <- hilbert(8)
 A
 B1 <- hilbert_sym(8)
 B1
-B <- yac_symbol(B1) # convert to yacas symbol
+B <- ysym(B1) # convert to yacas symbol
 B
 ```
 

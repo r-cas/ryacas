@@ -21,7 +21,7 @@ as_y.default <- function(x) {
 #' Convert yacas object to R
 #' 
 #' If `x` is a yacas command as string, convert to a character vector/matrix in R.
-#' If `x` is a `yac_symbol` (e.g. from [yac_symbol()]), then convert it to a numeric object 
+#' If `x` is a `yac_symbol` (e.g. from [ysym()]), then convert it to a numeric object 
 #' if there are no variables or a character type if there are variables.
 #' 
 #' In yacas a vector is a list, and a matrix is a list of lists.

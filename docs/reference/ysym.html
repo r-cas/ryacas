@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract or replace parts of an object — [&lt;-.yac_symbol • Ryacas</title>
+<title>Make a yacas symbol — ysym • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Extract or replace parts of an object — [&lt;-.yac_symbol" />
+<meta property="og:title" content="Make a yacas symbol — ysym" />
 
-<meta property="og:description" content="Extract or replace parts of an object" />
+<meta property="og:description" content="Note that this results in multiple calls to yacas and
+the performance may be slower than manually using e.g. yac_str()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,40 +130,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract or replace parts of an object</h1>
+    <h1>Make a yacas symbol</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
-    <div class="hidden name"><code>subset-.yac_symbol.Rd</code></div>
+    <div class="hidden name"><code>ysym.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Extract or replace parts of an object</p>
+    <p>Note that this results in multiple calls to <code>yacas</code> and
+the performance may be slower than manually using e.g. <code><a href='yac_str.html'>yac_str()</a></code>.</p>
     
     </div>
 
-    <pre class="usage"># S3 method for yac_symbol
-[(x, i, j) <- value</pre>
+    <pre class="usage"><span class='fu'>ysym</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A <code>yac_symbol</code>.</p></td>
-    </tr>
-    <tr>
-      <th>i</th>
-      <td><p>row indices specifying elements to extract or replace</p></td>
-    </tr>
-    <tr>
-      <th>j</th>
-      <td><p>column indices specifying elements to extract or replace</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>the value to replace <code>x[i, j]</code> by</p></td>
+      <td><p>A vector or a matrix</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>yac_symbol</code></p>
     
 
   </div>
@@ -170,7 +163,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

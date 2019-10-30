@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract or replace parts of an object — [&lt;-.yac_symbol • Ryacas</title>
+<title>Limits — lim • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Extract or replace parts of an object — [&lt;-.yac_symbol" />
+<meta property="og:title" content="Limits — lim" />
 
-<meta property="og:description" content="Extract or replace parts of an object" />
+<meta property="og:description" content="If first argument is a yac_symbol, yacas's Limit() is used." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,48 +129,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract or replace parts of an object</h1>
+    <h1>Limits</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
-    <div class="hidden name"><code>subset-.yac_symbol.Rd</code></div>
+    <div class="hidden name"><code>lim.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Extract or replace parts of an object</p>
+    <p>If first argument is a <code>yac_symbol</code>, <code>yacas</code>'s <code>Limit()</code> is used.</p>
     
     </div>
 
-    <pre class="usage"># S3 method for yac_symbol
-[(x, i, j) <- value</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>A <code>yac_symbol</code>.</p></td>
-    </tr>
-    <tr>
-      <th>i</th>
-      <td><p>row indices specifying elements to extract or replace</p></td>
-    </tr>
-    <tr>
-      <th>j</th>
-      <td><p>column indices specifying elements to extract or replace</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>the value to replace <code>x[i, j]</code> by</p></td>
-    </tr>
-    </table>
+    <pre class="usage"><span class='fu'>lim</span>(<span class='no'>...</span>)</pre>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Arguments:</p><ul>
+<li><p><code>yac_symbol</code>: <code>f</code>, <code>var</code>, <code>val</code>, <code>from_left</code>, <code>from_right</code></p></li>
+</ul>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

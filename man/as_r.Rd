@@ -11,7 +11,7 @@ as_r(x)
 }
 \description{
 If \code{x} is a yacas command as string, convert to a character vector/matrix in R.
-If \code{x} is a \code{yac_symbol} (e.g. from \code{\link[=yac_symbol]{yac_symbol()}}), then convert it to a numeric object
+If \code{x} is a \code{yac_symbol} (e.g. from \code{\link[=ysym]{ysym()}}), then convert it to a numeric object
 if there are no variables or a character type if there are variables.
 }
 \details{

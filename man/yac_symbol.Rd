@@ -13,7 +13,7 @@ yac_symbol(x)
 A \code{yac_symbol}
 }
 \description{
-This is an alias for \code{\link[=ys]{ys()}}.
+This is an alias for \code{\link[=ysym]{ysym()}}.
 }
 \details{
 Note that this results in multiple calls to \code{yacas} and

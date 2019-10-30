@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       <h1>The structure of the concentration and covariance matrix in a simple state-space model</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-10-08</h4>
+            <h4 class="date">2019-10-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mikldk/ryacas/blob/master/vignettes/ssm-matrix.Rmd"><code>vignettes/ssm-matrix.Rmd</code></a></small>
       <div class="hidden name"><code>ssm-matrix.Rmd</code></div>
@@ -118,7 +118,7 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">N &lt;-<span class="st"> </span><span class="dv">3</span></a>
 <a class="sourceLine" id="cb2-2" title="2">L1chr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="st">"1"</span>, <span class="dv">1</span> <span class="op">+</span><span class="st"> </span>N)</a>
 <a class="sourceLine" id="cb2-3" title="3">L1chr[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(<span class="dv">1</span><span class="op">+</span>(<span class="dv">1</span><span class="op">:</span>N), <span class="dv">1</span><span class="op">:</span>N)] &lt;-<span class="st"> "-a"</span></a>
-<a class="sourceLine" id="cb2-4" title="4">L1s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/yac_symbol.html">yac_symbol</a></span>(L1chr)</a>
+<a class="sourceLine" id="cb2-4" title="4">L1s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ysym.html">ysym</a></span>(L1chr)</a>
 <a class="sourceLine" id="cb2-5" title="5">L1s</a></code></pre></div>
 <pre><code>## {{ 1,  0,  0,  0},
 ##  {-a,  1,  0,  0},
@@ -143,7 +143,7 @@
 <a class="sourceLine" id="cb6-2" title="2">L2chr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="st">"1"</span>, <span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>N)</a>
 <a class="sourceLine" id="cb6-3" title="3">L2chr[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(<span class="dv">1</span><span class="op">+</span>(<span class="dv">1</span><span class="op">:</span>N), <span class="dv">1</span><span class="op">:</span>N)] &lt;-<span class="st"> "-a"</span></a>
 <a class="sourceLine" id="cb6-4" title="4">L2chr[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>N <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>N), <span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span>N)] &lt;-<span class="st"> "-b"</span></a>
-<a class="sourceLine" id="cb6-5" title="5">L2s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/yac_symbol.html">yac_symbol</a></span>(L2chr)</a>
+<a class="sourceLine" id="cb6-5" title="5">L2s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ysym.html">ysym</a></span>(L2chr)</a>
 <a class="sourceLine" id="cb6-6" title="6">L2s</a></code></pre></div>
 <pre><code>## {{ 1,  0,  0,  0,  0,  0,  0},
 ##  {-a,  1,  0,  0,  0,  0,  0},

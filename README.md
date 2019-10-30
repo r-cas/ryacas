@@ -55,6 +55,68 @@ started](http://mikldk.github.io/ryacas/articles/getting-started.html)”
 vignette (and the other vignettes) for a more thorough introduction to
 the package.
 
+There are two interfaces: a high-level interface that makes `yacas`
+objects work similar to `R` objects, and a low-level interface where the
+user can write `yacas` code and get results as strings or as `R`
+expressions. Below, we demonstrate both.
+
+### High-level interface
+
+A brief example with a polynomial is:
+
+``` r
+x <- ysym("x")
+p <- x^2+x-6
+p
+#> [1] x^2+x-6
+y_fn(p, "Factor")
+#> [1] (x-2)*(x+3)
+p %>% y_fn("Factor")
+#> [1] (x-2)*(x+3)
+p %>% as_r()
+#> expression(x^2 + x - 6)
+```
+
+A small matrix example follows:
+
+``` r
+A <- outer(0:3, 1:4, "-") + diag(2:5)
+a <- 1:4
+B <- ysym(A)
+B
+#> {{ 1, -2, -3, -4},
+#>  { 0,  2, -2, -3},
+#>  { 1,  0,  3, -2},
+#>  { 2,  1,  0,  4}}
+solve(B)
+#> {{   37/202,     3/101,    41/202,    31/101},
+#>  {(-17)/101,    30/101,     3/101,     7/101},
+#>  {(-19)/202,  (-7)/101,    39/202,  (-5)/101},
+#>  { (-5)/101,  (-9)/101, (-11)/101,     8/101}}
+B[2, 3] <- "x"
+B
+#> {{ 1, -2, -3, -4},
+#>  { 0,  2,  x, -3},
+#>  { 1,  0,  3, -2},
+#>  { 2,  1,  0,  4}}
+b <- ysym(a)
+b[1] <- "x"
+b
+#> [1] {x,2,3,4}
+B %*% b
+#> [1] {x-29,3*x+4-12,x+9-8,2*x+18}
+t(B)
+#> {{ 1,  0,  1,  2},
+#>  {-2,  2,  0,  1},
+#>  {-3,  x,  3,  0},
+#>  {-4, -3, -2,  4}}
+B[, 2:3]
+#> {{-2, -3},
+#>  { 2,  x},
+#>  { 0,  3},
+#>  { 1,  0}}
+```
+
 ### Low-level interface
 
 Returning strings with `yac_str()`:
@@ -121,67 +183,6 @@ vignette):
 ``` r
 yac_str("N(Pi, 50)")
 #> [1] "3.1415926535897932384626433832795028841971693993751058209"
-```
-
-### High-level interface
-
-A brief example with a polynomial is:
-
-``` r
-x <- yac_symbol("x^2+x-6")
-x
-#> [1] x^2+x-6
-y_fn(x, "Factor")
-#> [1] (x-2)*(x+3)
-x %>% y_fn("Factor")
-#> [1] (x-2)*(x+3)
-x %>% as_r()
-#> expression(x^2 + x - 6)
-```
-
-A small matrix example follows:
-
-``` r
-A <- outer(0:3, 1:4, "-") + diag(2:5)
-a <- 1:4
-B <- yac_symbol(A)
-B
-#> {{ 1, -2, -3, -4},
-#>  { 0,  2, -2, -3},
-#>  { 1,  0,  3, -2},
-#>  { 2,  1,  0,  4}}
-b <- yac_symbol(a)
-b
-#> [1] {1,2,3,4}
-y_fn(B, "Transpose")
-#> {{ 1,  0,  1,  2},
-#>  {-2,  2,  0,  1},
-#>  {-3, -2,  3,  0},
-#>  {-4, -3, -2,  4}}
-y_fn(B, "Inverse")
-#> {{   37/202,     3/101,    41/202,    31/101},
-#>  {(-17)/101,    30/101,     3/101,     7/101},
-#>  {(-19)/202,  (-7)/101,    39/202,  (-5)/101},
-#>  { (-5)/101,  (-9)/101, (-11)/101,     8/101}}
-y_fn(B, "Trace")
-#> [1] 10
-B %*% b
-#> [1] {-28,-14,2,20}
-t(B)
-#> {{ 1,  0,  1,  2},
-#>  {-2,  2,  0,  1},
-#>  {-3, -2,  3,  0},
-#>  {-4, -3, -2,  4}}
-B[, 2:3]
-#> {{-2, -3},
-#>  { 2, -2},
-#>  { 0,  3},
-#>  { 1,  0}}
-B %*% solve(B)
-#> {{1, 0, 0, 0},
-#>  {0, 1, 0, 0},
-#>  {0, 0, 1, 0},
-#>  {0, 0, 0, 1}}
 ```
 
 ## Yacas

@@ -10,8 +10,8 @@
 #' @aliases yac_symbol
 #' @concept yac_symbol
 #' @export
-ys <- function(x) {
-  # TODO: Consider NSE: e.g. yac_symbol(4*x + 5*y) directly?
+ysym <- function(x) {
+  # TODO: Consider NSE: e.g. ysym(4*x + 5*y) directly?
   
   stopifnot(is.vector(x) | is.matrix(x))
   
@@ -38,7 +38,7 @@ ys <- function(x) {
 
 #' Make a yacas symbol
 #' 
-#' This is an alias for [ys()].
+#' This is an alias for [ysym()].
 #' 
 #' Note that this results in multiple calls to `yacas` and 
 #' the performance may be slower than manually using e.g. [yac_str()].
@@ -51,7 +51,7 @@ ys <- function(x) {
 #' @concept yac_symbol
 #' @export
 yac_symbol <- function(x) {
-  return(ys(x)) 
+  return(ysym(x)) 
 }
 
 # S3 exports
@@ -85,7 +85,7 @@ yac_assign.yac_symbol <- function(value, x) {
 y_fn.yac_symbol <- function(x, fn, ...) {
   x <- y_fn(x$yacas_cmd, fn, ...)
   y <- yac_str(x)
-  z <- yac_symbol(y)
+  z <- ysym(y)
   return(z)
 }
 
@@ -150,7 +150,7 @@ simplify <- function(x, timeout = 2) {
 simplify.yac_symbol <- function(x, timeout = 2) {
   stopifnot(is.null(timeout) || (!is.null(timeout) && timeout > 0))
   
-  x_res <- yac_symbol(yac_str(x$yacas_cmd))
+  x_res <- ysym(yac_str(x$yacas_cmd))
   z <- y_fn(x_res$yacas_cmd, "Simplify")
   
   z_res <- NULL
@@ -164,7 +164,7 @@ simplify.yac_symbol <- function(x, timeout = 2) {
   
   stopifnot(!is.null(z_res))
   
-  v <- yac_symbol(z_res)
+  v <- ysym(z_res)
   
   return(v)
 }
@@ -182,7 +182,7 @@ tex <- function(x) {
 
 #' @export
 tex.yac_symbol <- function(x) {
-  x_res <- yac_symbol(yac_str(x$yacas_cmd))
+  x_res <- ysym(yac_str(x$yacas_cmd))
   
   z <- y_fn(x_res$yacas_cmd, "TeXForm")
   z_res <- yac_str(z)
@@ -212,13 +212,13 @@ tex.yac_symbol <- function(x) {
   stopifnot(methods::is(x, "yac_symbol"))
   stopifnot(methods::is(y, "yac_symbol"))
   
-  x_res <- yac_symbol(yac_str(x$yacas_cmd))
-  y_res <- yac_symbol(yac_str(y$yacas_cmd))
+  x_res <- ysym(yac_str(x$yacas_cmd))
+  y_res <- ysym(yac_str(y$yacas_cmd))
   
   z <- paste0(x_res$yacas_cmd, " * ", y_res$yacas_cmd)
   z_res <- yac_str(z)
   
-  v <- yac_symbol(z_res)
+  v <- ysym(z_res)
   
   return(v)
 }
@@ -247,13 +247,13 @@ diag.yac_symbol <- function(x, ...) {
   stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
-  y <- yac_symbol(y_res)
+  y <- ysym(y_res)
   
   stopifnot(y$is_mat)
   
   w <- as_r(y$yacas_cmd)
   z <- base::diag(w, ...)
-  v <- yac_symbol(as_y(z))
+  v <- ysym(as_y(z))
   
   return(v)
 }
@@ -285,14 +285,14 @@ diag.yac_symbol <- function(x, ...) {
   stopifnot(methods::is(x, "yac_symbol"))
 
   y_res <- yac_str(x$yacas_cmd)
-  y <- yac_symbol(y_res)
+  y <- ysym(y_res)
   stopifnot(y$is_mat)
 
   w <- as_r(y$yacas_cmd)
   
   z <- base::`diag<-`(w, value)
   
-  v <- yac_symbol(as_y(z))
+  v <- ysym(as_y(z))
   
   return(v)
 }
@@ -321,7 +321,7 @@ upper.tri.yac_symbol <- function(x, diag = FALSE) {
   stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
-  y <- yac_symbol(y_res)
+  y <- ysym(y_res)
   
   stopifnot(y$is_mat)
   
@@ -352,7 +352,7 @@ lower.tri.yac_symbol <- function(x, diag = FALSE) {
   stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
-  y <- yac_symbol(y_res)
+  y <- ysym(y_res)
   
   stopifnot(y$is_mat)
   
@@ -372,12 +372,12 @@ lower.tri.yac_symbol <- function(x, diag = FALSE) {
 t.yac_symbol <- function(x) {
   # To see if x is indeed a matrix
   y_res <- yac_str(x$yacas_cmd)
-  y <- yac_symbol(y_res)
+  y <- ysym(y_res)
   
   stopifnot(y$is_mat)
   
   z <- y_fn(x = y_res, fn = "Transpose")
-  v <- yac_symbol(yac_str(z))
+  v <- ysym(yac_str(z))
   
   return(v)
 }
@@ -387,7 +387,7 @@ solve_yac_symbol_matrixinverse <- function(a) {
   
   z <- y_fn(x = a, fn = "Inverse")
   z_res <- yac_str(z)
-  v <- yac_symbol(z_res)
+  v <- ysym(z_res)
   
   return(v)
 }
@@ -399,7 +399,7 @@ solve_yac_symbol_linearsolve <- function(a, b) {
   stopifnot(nrow(a) == length(b))
   
   cmd <- paste0("SolveMatrix(", a$yacas_cmd, ", ", b$yacas_cmd, ")")
-  v <- yac_symbol(cmd)
+  v <- ysym(cmd)
   
   return(v)
 }
@@ -428,14 +428,14 @@ solve_yac_symbol_linearsolve <- function(a, b) {
 #' @examples 
 #' A <- outer(0:3, 1:4, "-") + diag(2:5)
 #' a <- 1:4
-#' B <- yac_symbol(A)
-#' b <- yac_symbol(a)
+#' B <- ysym(A)
+#' b <- ysym(a)
 #' solve(A)
 #' solve(B)
 #' solve(A, a)
 #' solve(B, b)
 #' 
-#' poly <- yac_symbol("x^2 - x - 6")
+#' poly <- ysym("x^2 - x - 6")
 #' solve(poly, "x")    # Solve(poly == 0, x)
 #' solve(poly, 3, "x") # Solve(poly == 3, x)
 #' 
@@ -506,7 +506,7 @@ solve.yac_symbol <- function(a, b, ...) {
       eqs <- paste0("{", paste0(eqs_lhs, "==", eqs_rhs, collapse = ", "), "}")
 
       cmd <- paste0("Solve(", eqs, ", ", vars, ")")
-      res <- yac_symbol(cmd)
+      res <- ysym(cmd)
       return(res)
     }
     
@@ -517,7 +517,7 @@ solve.yac_symbol <- function(a, b, ...) {
         if (is.character(b) && length(b) == 1L) {
           # Solve(a, b)
           cmd <- paste0("Solve(", a$yacas_cmd, ", ", b, ")")
-          res <- yac_symbol(cmd)
+          res <- ysym(cmd)
           return(res)
         }
       } else if (length(dots) == 1L) {
@@ -526,7 +526,7 @@ solve.yac_symbol <- function(a, b, ...) {
         if (is.character(v) && length(v) == 1L) {
           # Solve(a == b, v)
           cmd <- paste0("Solve(", a$yacas_cmd, " == ", b, ", ", v, ")")
-          res <- yac_symbol(cmd)
+          res <- ysym(cmd)
           return(res)
         }
       } 
@@ -548,7 +548,7 @@ solve.yac_symbol <- function(a, b, ...) {
   stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
-  y <- yac_symbol(y_res)
+  y <- ysym(y_res)
   
   stopifnot(y$is_mat | y$is_vec)
   
@@ -578,7 +578,7 @@ solve.yac_symbol <- function(a, b, ...) {
   }
   
   stopifnot(!is.null(z))
-  v <- yac_symbol(as_y(z))
+  v <- ysym(as_y(z))
   
   return(v)
 }
@@ -600,7 +600,7 @@ solve.yac_symbol <- function(a, b, ...) {
   stopifnot(methods::is(x, "yac_symbol"))
   
   y_res <- yac_str(x$yacas_cmd)
-  y <- yac_symbol(y_res)
+  y <- ysym(y_res)
   
   stopifnot(y$is_mat | y$is_vec)
   
@@ -632,7 +632,7 @@ solve.yac_symbol <- function(a, b, ...) {
   }
   
   stopifnot(!is.null(z))
-  v <- yac_symbol(as_y(z))
+  v <- ysym(as_y(z))
   
   return(v)
 }
@@ -683,7 +683,7 @@ str.yac_symbol <- function(object, ...) {
 y_rmvars.yac_symbol <- function(x) {
   # FIXME: Best API?
   y <- y_rmvars(x$yacas_cmd)
-  v <- yac_symbol(y)
+  v <- ysym(y)
   
   return(v)
 }
@@ -701,17 +701,17 @@ Ops.yac_symbol = function(e1, e2) {
   
   # LHS constant, e.g. 2*x: e1 is a number 2
   if (.Method[1] == "") {
-    e1 <- yac_symbol(e1)
+    e1 <- ysym(e1)
   }
   
   # RHS constant, e.g. x*2: e2 is a number 2
   if (.Method[2] == "") {
-    e2 <- yac_symbol(e2)
+    e2 <- ysym(e2)
   }
   
   txt <- paste0("(", e1$yacas_cmd, ")", .Generic, "(", e2$yacas_cmd, ")")
   txt_res <- yac_str(txt)
-  x <- yac_symbol(txt_res)
+  x <- ysym(txt_res)
   
   return(x)
 }
@@ -752,7 +752,7 @@ Math.yac_symbol = function(x, ...) {
   fn <- Math_transtab[i, 2L]
   
   txt <- paste0(fn, "(", x$yacas_cmd, ")")
-  x <- yac_symbol(txt)
+  x <- ysym(txt)
   return(x)
 }
 
@@ -772,7 +772,7 @@ deriv.yac_symbol <- function(expr, ...) {
     paste0("(D(", var, ") ", expr$yacas_cmd, ")")
   }))
   
-  res_sym <- yac_symbol(res)
+  res_sym <- ysym(res)
   
   return(res_sym)
 }
@@ -796,7 +796,7 @@ Jacobian.yac_symbol <- function(expr, ...) {
   res <- paste0("JacobianMatrix( ", expr$yacas_cmd, ", {", 
                 paste0(vars, collapse = ", "), "})")
   
-  res_sym <- yac_symbol(res)
+  res_sym <- ysym(res)
   return(res_sym)
 }
 
@@ -819,7 +819,7 @@ Hessian.yac_symbol <- function(expr, ...) {
   res <- paste0("HessianMatrix(", expr$yacas_cmd, ", {", 
                 paste0(vars, collapse = ", "), "})")
   
-  res_sym <- yac_symbol(res)
+  res_sym <- ysym(res)
   return(res_sym)
 }
 
@@ -835,3 +835,155 @@ as.character.yac_symbol <- function(x, ...) {
   return(x$yacas_cmd)
 }
 
+
+
+
+
+
+
+bound_to_str <- function(b) {
+  if (is.infinite(b)) {
+    if (b > 0) {
+      return("Infinite")
+    } else {
+      return("-Infinite")
+    }
+  }
+  
+  if (is.character(b)) {
+    return(b)
+  }
+  
+  bnd <- deparse(eval(substitute(substitute(b)), parent.frame()))
+  bnd <- gsub("pi", "Pi", bnd, fixed = TRUE)
+  
+  return(bnd)
+}
+
+
+
+
+#' Integration of Functions
+#' 
+#' If `f` is a `yac_symbol`, `yacas`'s `Integrate()` is used. 
+#' Else, [stats::integrate()] is used.
+#' 
+#' Additional arguments:
+#' 
+#' * [`yac_symbol`]: `var`, `lower`, `upper`
+#' * Else ([stats::integrate()]): `lower`, `upper`
+#' 
+#' @param f Function to integrate. See details.
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+integrate <- function(f, ...) {
+  UseMethod("integrate")
+}
+
+#' @export
+integrate.default <- function(...) {
+  x <- stats::integrate(...)
+  return(x)
+}
+
+#' @export
+integrate.yac_symbol <- function(f, var, lower, upper, ...) {
+  cmd <- if (missing(lower) && missing(upper)) {
+    paste0("Integrate(", var, ")")
+  } else {
+    lwr_str <- bound_to_str(lower)
+    upr_str <- bound_to_str(upper)
+    paste0("Integrate(", var, ", ", lwr_str, ", ", upr_str, ")")
+  }
+  
+  z <- paste0(cmd, f$yacas_cmd)
+  z_res <- yac_str(z)
+  
+  v <- ysym(z_res)
+  
+  return(v)
+}
+
+
+
+#' Summation of Functions
+#' 
+#' If first argument is a `yac_symbol`, `yacas`'s `Sum()` is used. 
+#' Else, [base::sum()] is used.
+#' 
+#' Additional arguments:
+#' 
+#' * [`yac_symbol`]: `f`, `var`, `lower`, `upper`
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+sum <- function(...) {
+  UseMethod("sum")
+}
+
+#' @export
+sum.default <- function(...) {
+  x <- base::sum(...)
+  return(x)
+}
+
+#' @export
+sum.yac_symbol <- function(f, var, lower, upper, ...) {
+  lwr_str <- bound_to_str(lower)
+  upr_str <- bound_to_str(upper)
+  cmd <- paste0("Sum(", var, ", ", lwr_str, ", ", upr_str, ", ", f$yacas_cmd, ")")
+  z_res <- yac_str(cmd)
+  
+  v <- ysym(z_res)
+  
+  return(v)
+}
+
+
+
+
+#' Limits
+#' 
+#' If first argument is a `yac_symbol`, `yacas`'s `Limit()` is used. 
+#' 
+#' Arguments:
+#' 
+#' * [`yac_symbol`]: `f`, `var`, `val`, `from_left`, `from_right`
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+lim <- function(...) {
+  UseMethod("lim")
+}
+
+#' @export
+lim.default <- function(...) {
+  stop("Not implemented for anything else than yac_symbol's created with ysym()")
+}
+
+#' @export
+lim.yac_symbol <- function(f, var, val, ...) {
+  dots <- list(...)
+  
+  val_str <- bound_to_str(val)
+
+  cmd_add <- if (!is.null(dots$from_left) && length(dots$from_left) == 1L && dots$from_left == TRUE) {
+    ", Left"
+  } else if (!is.null(dots$from_right) && length(dots$from_right) == 1L && dots$from_right == TRUE) {
+    ", Right"
+  } else {
+    ""
+  }
+  
+  cmd <- paste0("Limit(", var, ", ", val_str, cmd_add, ") (", f$yacas_cmd, ")")
+  
+  z_res <- yac_str(cmd)
+  
+  v <- ysym(z_res)
+  
+  return(v)
+}

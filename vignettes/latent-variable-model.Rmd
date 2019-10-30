@@ -33,7 +33,7 @@ where $L_1$ has the form
 ```{r}
 L1chr <- diag(4)
 L1chr[2:4, 1] <- "-a"
-L1 <- yac_symbol(L1chr)
+L1 <- ysym(L1chr)
 L1
 ```
 
@@ -58,11 +58,11 @@ Slightly more elaborate:
 ```{r}
 L2chr <- diag(4)
 L2chr[2:4, 1] <- c("-a1", "-a2", "-a3")
-L2 <- yac_symbol(L2chr)
+L2 <- ysym(L2chr)
 L2
 Vechr <- diag(4)
 Vechr[cbind(1:4, 1:4)] <- c("w1", "w2", "w2", "w2")
-Ve <- yac_symbol(Vechr)
+Ve <- ysym(Vechr)
 Ve
 ```
 

@@ -4,7 +4,7 @@ context("Ryacas symbol")
 
 test_that("Basics", {
   x <- "x+x+x"
-  xs <- ys(x)
+  xs <- ysym(x)
   expect_equal(as_r(xs), expression(3*x))
   expect_equal(as_y(xs), "3*x")
 })
@@ -24,7 +24,7 @@ test_that("dim()/length()", {
       mat <- matrix(0, nrow = nrow, ncol = ncol)
       expect_equal(dim(mat), c(nrow, ncol), info = info)
       
-      B <- yac_symbol(mat)
+      B <- ysym(mat)
       expect_equal(dim(B), dim(mat), info = info)
       expect_equal(length(B), length(mat), info = info)
     }
@@ -36,9 +36,9 @@ test_that("dim()/length()", {
 A <- matrix(1:16, nrow = 4, ncol = 4)
 a <- 1:4
 
-test_that("yac_symbol()", {
-  B <- yac_symbol(A)
-  b <- yac_symbol(a)
+test_that("ysym()", {
+  B <- ysym(A)
+  b <- ysym(a)
 
   expect_s3_class(B, "yac_symbol")
   expect_s3_class(b, "yac_symbol")
@@ -52,8 +52,8 @@ test_that("yac_symbol()", {
   expect_equal(eval(yac_expr(x)), c(A %*% a))
 })
 
-B <- yac_symbol(A)
-b <- yac_symbol(a)
+B <- ysym(A)
+b <- ysym(a)
 
 test_that("yac_str()", {
   expect_equal(yac_str(B), gsub(" ", "", as_y(A), fixed = TRUE))
@@ -83,13 +83,13 @@ test_that("as_r", {
   
   # A1 <- A
   # A1[2, 2] <- "x"
-  # B1 <- yac_symbol(A1)
+  # B1 <- ysym(A1)
   # 
   # expect_equal(as_r(B1), A1)
   
   A1 <- A
   A1[2, 2] <- "x"
-  B1 <- yac_symbol(A1)
+  B1 <- ysym(A1)
   
   A2 <- A
   A2[2, 2] <- 999
@@ -169,7 +169,7 @@ test_that("solve()", {
   }
   
   A1 <- hilbert_r(4)
-  B1 <- yac_symbol(as_y(hilbert_y(4)))
+  B1 <- ysym(as_y(hilbert_y(4)))
 
   expect_equal(A1, as_r(B1))
   expect_equal(solve(A1), as_r(solve(B1)))
@@ -177,7 +177,7 @@ test_that("solve()", {
 
 test_that("solve() for systems", {
   # Rosenbrock
-  fs <- yac_symbol("(1 - x)^2 + 100*(y - x^2)^2")
+  fs <- ysym("(1 - x)^2 + 100*(y - x^2)^2")
   g <- deriv(fs, c("x", "y"))
   sol <- solve(g, c("x", "y"))
   sol_nn <- y_rmvars(sol)
@@ -360,7 +360,7 @@ test_that("Setters for matrices", {
 })
 
 test_that("Derivatives", {
-  L <- yac_symbol("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)")
+  L <- ysym("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)")
   
   # derivative
   expect_equal(as.character(as_r(deriv(L, "x"))), 
@@ -375,7 +375,7 @@ test_that("Derivatives", {
                "rbind(c(y/2, x/2, -3), c(x/2, 0, -3/2), c(-3, -3/2, 0))")
   
   # Jacobian
-  L2 <- yac_symbol(c("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)", 
+  L2 <- ysym(c("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)", 
                      "x^3 + 4*a^2")) # just some function
   expect_equal(as.character(as_r(Jacobian(L2, "x"))), 
                "rbind(c((x * y)/2 - 3 * a), c(3 * x^2))")
@@ -391,7 +391,7 @@ test_that("solve linear system", {
   # ------------------------------------
   # Input validation
   # ------------------------------------
-  poly <- yac_symbol("x^2 - x - 6")
+  poly <- ysym("x^2 - x - 6")
   expect_error(solve(poly))
   
   # ------------------------------------
@@ -399,8 +399,8 @@ test_that("solve linear system", {
   # ------------------------------------
   A <- outer(0:3, 1:4, "-") + diag(2:5)
   a <- 1:4
-  B <- yac_symbol(A)
-  b <- yac_symbol(a)
+  B <- ysym(A)
+  b <- ysym(a)
   expect_equal(solve(A), as_r(solve(B)))
   
   # ------------------------------------
@@ -416,11 +416,11 @@ test_that("solve linear system", {
 test_that("solve (roots/others)", {
   A <- outer(0:3, 1:4, "-") + diag(2:5)
   a <- 1:4
-  B <- yac_symbol(A)
-  b <- yac_symbol(a)
+  B <- ysym(A)
+  b <- ysym(a)
 
   
-  poly <- yac_symbol("x^2 - x - 6")
+  poly <- ysym("x^2 - x - 6")
   expect_error(solve(poly))
   
   expect_error(solve(B, poly))
@@ -437,3 +437,48 @@ test_that("solve (roots/others)", {
   expect_equal(as_r(y_rmvars(solve(poly, 3, "x"))), c(3.54138126514911, -2.54138126514911))
 })
 
+
+
+test_that("integrate", {
+  res <- integrate(function(x) x^2, 0, 1)
+  expect_equal(res$value, 1/3)
+  
+  xs <- ysym("x")
+  f <- xs*log(xs)
+  res <- integrate(f, "x")
+  expect_equal(as.character(res), "(Ln(x)*x^2)/2-x^2/4")
+  expect_equal(eval(as_r(res), list(x = 1)), -0.25)
+})
+
+
+test_that("sum", {
+  res <- sum(1:10)
+  expect_equal(res, 55)
+  
+  xs <- ysym("x")
+  ks <- ysym("k")
+  res <- sum(xs^ks, "k", 0, "n")
+  expect_equal(as.character(res), "(1-x^(n+1))/(1-x)")
+})
+
+test_that("sum", {
+  xs <- ysym("x")
+  
+  res <- lim(sin(xs)/xs, "x", 0)
+  expect_equal(as.character(res), "1")
+  
+  res <- lim((sin(xs)-tan(xs))/xs^3, "x", 0)
+  expect_equal(as.character(res), "(-1)/2")
+  
+  res <- lim(1/xs, "x", 0)
+  expect_equal(as.character(res), "Undefined")
+  expect_equal(as_r(res), NaN)
+  
+  res <- lim(1/xs, "x", 0, from_left = TRUE)
+  expect_equal(as.character(res), "-Infinity")
+  expect_equal(as_r(res), -Inf)
+  
+  res <- lim(1/xs, "x", 0, from_right = TRUE)
+  expect_equal(as.character(res), "Infinity")
+  expect_equal(as_r(res), Inf)
+})

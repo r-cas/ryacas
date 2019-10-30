@@ -29,7 +29,7 @@ where $e=(e_0, \dots, e_3)$ and $x=(x_0, \dots x_3)$ and where $L_1$ has the for
 N <- 3
 L1chr <- diag("1", 1 + N)
 L1chr[cbind(1+(1:N), 1:N)] <- "-a"
-L1s <- yac_symbol(L1chr)
+L1s <- ysym(L1chr)
 L1s
 ```
 
@@ -59,7 +59,7 @@ N <- 3
 L2chr <- diag("1", 1 + 2*N)
 L2chr[cbind(1+(1:N), 1:N)] <- "-a"
 L2chr[cbind(1 + N + (1:N), 1 + 1:N)] <- "-b"
-L2s <- yac_symbol(L2chr)
+L2s <- ysym(L2chr)
 L2s
 ```
 

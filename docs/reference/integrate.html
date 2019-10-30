@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract or replace parts of an object — [&lt;-.yac_symbol • Ryacas</title>
+<title>Integration of Functions — integrate • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Extract or replace parts of an object — [&lt;-.yac_symbol" />
+<meta property="og:title" content="Integration of Functions — integrate" />
 
-<meta property="og:description" content="Extract or replace parts of an object" />
+<meta property="og:description" content="If f is a yac_symbol, yacas's Integrate() is used.
+Else, stats::integrate() is used." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,40 +130,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract or replace parts of an object</h1>
+    <h1>Integration of Functions</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
-    <div class="hidden name"><code>subset-.yac_symbol.Rd</code></div>
+    <div class="hidden name"><code>integrate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Extract or replace parts of an object</p>
+    <p>If <code>f</code> is a <code>yac_symbol</code>, <code>yacas</code>'s <code>Integrate()</code> is used.
+Else, <code><a href='https://www.rdocumentation.org/packages/stats/topics/integrate'>stats::integrate()</a></code> is used.</p>
     
     </div>
 
-    <pre class="usage"># S3 method for yac_symbol
-[(x, i, j) <- value</pre>
+    <pre class="usage"><span class='fu'>integrate</span>(<span class='no'>f</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A <code>yac_symbol</code>.</p></td>
-    </tr>
-    <tr>
-      <th>i</th>
-      <td><p>row indices specifying elements to extract or replace</p></td>
-    </tr>
-    <tr>
-      <th>j</th>
-      <td><p>column indices specifying elements to extract or replace</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>the value to replace <code>x[i, j]</code> by</p></td>
+      <th>f</th>
+      <td><p>Function to integrate. See details.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Additional arguments:</p><ul>
+<li><p><code>yac_symbol</code>: <code>var</code>, <code>lower</code>, <code>upper</code></p></li>
+<li><p>Else (<code><a href='https://www.rdocumentation.org/packages/stats/topics/integrate'>stats::integrate()</a></code>): <code>lower</code>, <code>upper</code></p></li>
+</ul>
     
 
   </div>
@@ -170,7 +166,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
