@@ -208,6 +208,44 @@ solve(poly, 3, "x") %>% tex()
 `r solve(poly, 3, "x") %>% tex()`
 \]
 
+## Solving a system of equations
+
+
+
+```{r}
+x <- ysym("x")
+y <- ysym("y")
+lhs <- c(3*x*y - y, x)
+rhs <- c(-5*x, y+4)
+```
+
+$$\begin{align}
+`r tex(lhs[[1]])` &= `r tex(rhs[[1]])` \\
+`r tex(lhs[[2]])` &= `r tex(rhs[[2]])`
+\end{align}$$
+
+
+```{r}
+sol <- solve(lhs, rhs, c("x", "y"))
+sol
+sol_vals <- lapply(seq_len(nrow(sol)), function(sol_no) {
+  y_rmvars(sol[sol_no, ])
+})
+sol_vals
+sol_envir <- lapply(sol_vals, function(l) {
+  list(x = as_r(l[1]), y = as_r(l[2]))
+})
+sol_envir
+do.call(rbind, lapply(seq_along(sol_envir), function(sol_no) {
+  sol_val <- sol_envir[[sol_no]]
+  data.frame(sol_no = sol_no,
+             eq_no = seq_along(sol_val),
+             lhs = eval(as_r(lhs), sol_val),
+             rhs = eval(as_r(rhs), sol_val))
+}))
+```
+
+
 # `Ryacas` high-level reference
 
 Principle:

@@ -21,6 +21,7 @@ tic.R
 ^TODO$
 ^yacas-upstream-update
 ^README\.Rmd$
+^README\.md$
 ^_pkgdown\.yml$
 ^paper.md$
 ^paper.bib$
