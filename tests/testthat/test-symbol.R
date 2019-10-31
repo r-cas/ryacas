@@ -466,8 +466,7 @@ test_that("integrate", {
   expect_equal(eval(as_r(res), list(x = 1)), -0.25)
 })
 
-
-test_that("sum", {
+test_that("sum(x, var, lwr, upr)", {
   res <- sum(1:10)
   expect_equal(res, 55)
   
@@ -479,6 +478,86 @@ test_that("sum", {
   res <- sum(1/ks^2, "k", 1, Inf)
   expect_equal(as.character(res), "Pi^2/6")
   expect_equal(as_r(res), pi^2/6)
+})
+
+test_that("c()", {
+  x <- ysym("x")
+  
+  vec <- c(2*x^2, x+2, 4-x/2)
+  expect_equal(as.character(vec), "{2*x^2,x+2,4-x/2}")
+  expect_equal(as_y(vec), "{2*x^2,x+2,4-x/2}")
+  
+  vec2 <- c(vec, vec)
+  expect_equal(as.character(vec2), "{2*x^2,x+2,4-x/2,2*x^2,x+2,4-x/2}")
+  expect_equal(as_y(vec2), "{2*x^2,x+2,4-x/2,2*x^2,x+2,4-x/2}")
+  
+  man_x <- ysym("{x, 2}")
+  vec3 <- c(man_x, man_x)
+  expect_equal(as.character(vec3), "{x,2,x,2}")
+  expect_equal(as_y(vec3), "{x,2,x,2}")
+})
+
+test_that("c()", {
+  x <- ysym("x")
+  
+  vec <- c(2*x^2, x+2, 4-x/2)
+  expect_equal(as.character(vec), "{2*x^2,x+2,4-x/2}")
+  expect_equal(as_y(vec), "{2*x^2,x+2,4-x/2}")
+  
+  vec2 <- c(vec, vec)
+  expect_equal(as.character(vec2), "{2*x^2,x+2,4-x/2,2*x^2,x+2,4-x/2}")
+  expect_equal(as_y(vec2), "{2*x^2,x+2,4-x/2,2*x^2,x+2,4-x/2}")
+  
+  man_x <- ysym("{x, 2}")
+  vec3 <- c(man_x, man_x)
+  expect_equal(as.character(vec3), "{x,2,x,2}")
+  expect_equal(as_y(vec3), "{x,2,x,2}")
+})
+
+test_that("rbind()", {
+  x <- ysym("x")
+  
+  m <- rbind(x, x)
+  expect_equal(dim(m), c(2, 1))
+  expect_equal(as_y(m), "{{x},{x}}")
+  
+  vec <- c(2*x^2, x+2, 4-x/2)
+  expect_error(rbind(vec, x))
+  m2 <- rbind(vec, vec)
+  expect_equal(dim(m2), c(2, length(vec)))
+  expect_equal(as_y(m2), "{{2*x^2,x+2,4-x/2},{2*x^2,x+2,4-x/2}}")
+})
+
+test_that("cbind()", {
+  x <- ysym("x")
+  
+  m <- cbind(x, x)
+  expect_equal(dim(m), c(1, 2))
+  expect_equal(as_y(m), "{{x,x}}")
+  
+  vec <- c(2*x^2, x+2, 4-x/2)
+  expect_error(cbind(vec, x))
+  m2 <- cbind(vec, vec)
+  expect_equal(dim(m2), c(length(vec), 2))
+  expect_equal(as_y(m2), "{{2*x^2,2*x^2},{x+2,x+2},{4-x/2,4-x/2}}")
+})
+
+
+test_that("sum(x)/prod(x)", {
+  x <- ysym("x")
+  
+  res <- sum(c(4*x, 3))
+  expect_equal(as.character(res), "4*x+3")
+  
+  res <- prod(c(4*x, 3))
+  expect_equal(as.character(res), "12*x")
+  
+  vec <- c(2*x^2, x+2, 4-x/2)
+  res <- sum(vec)
+  expect_equal(as.character(res), "2*x^2+x-x/2+6")
+  
+  res <- prod(vec)
+  expect_equal(as.character(res), "2*x^2*(x+2)*(4-x/2)")
 })
 
 test_that("lim", {

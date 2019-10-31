@@ -273,11 +273,14 @@ The following functions work with `yac_symbol`s.
   + Other
     - `integrate()`
     - `sum()`
+    - `prod()`
     - `lim()`
 * Standard `R` that has been implemented for `yac_symbol`s:
   + `print()`
   + `c()`
   + `dim()`
+  + `cbind()`
+  + `rbind()`
   + `[` getter
   + `[<-` setter
   + `[[` getter

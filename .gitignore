@@ -16,3 +16,6 @@ yacas-upstream-update/yacas
 yacas-upstream-update/new-*
 ^README.knit.md$
 ^README.utf8.md$
+release-featured-images/*.pdf
+release-featured-images/*.tex
+release-featured-images/*.png

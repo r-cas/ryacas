@@ -143,7 +143,9 @@ c.yac_symbol <- function(...) {
   }
   
   elements <- lapply(args, function(x) {
-    x$yacas_cmd
+    z <- x$yacas_cmd
+    z <- gsub("[{}]*", "", z)
+    return(z)
   })
   
   cmd <- paste0("{", paste0(elements, collapse = ", "), "}")
@@ -942,11 +944,37 @@ integrate.yac_symbol <- function(f, var, lower, upper, ...) {
   return(v)
 }
 
+flat_op <- function(expr, op, identity) {
+  z <- expr
+  
+  while (grepl("{", z$yacas_cmd, fixed = TRUE)) {
+    z <- y_fn(z, "UnFlatten", op, identity)
+  }
+  
+  return(z)
+}
+
+
+#' Product of Vector Elements
+#' 
+#' @param expr Expression to be multiplied
+#' @param \dots Not used
+#' @param na.rm Not used
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+prod.yac_symbol <- function(expr, ..., na.rm = FALSE) {
+  z <- flat_op(expr, '"*"', '1')
+  return(z)
+}
 
 
 #' Summation
 #' 
-#' Sums `expr` by letting `var` taking values 
+#' If only `expr` given: sum elements.
+#' 
+#' Else: sums `expr` by letting `var` taking values 
 #' from `lower` to `upper` (potentially `Inf`)
 #' 
 #' @param expr Expression to be summed
@@ -960,6 +988,11 @@ integrate.yac_symbol <- function(f, var, lower, upper, ...) {
 #' 
 #' @export
 sum.yac_symbol <- function(expr, var, lower, upper, ..., na.rm = FALSE) {
+  if (missing(var) && missing(lower) && missing(upper)) {
+    z <- flat_op(expr, '"+"', '0')
+    return(z)
+  }
+  
   lwr_str <- bound_to_str(lower)
   upr_str <- bound_to_str(upper)
   
@@ -969,6 +1002,57 @@ sum.yac_symbol <- function(expr, var, lower, upper, ..., na.rm = FALSE) {
   v <- ysym(z_res)
   
   return(v)
+}
+
+
+
+#' Combine R Objects by Rows
+#' 
+#' @param \dots Objects to bind
+#' @param deparse.level Not used
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+rbind.yac_symbol <- function(..., deparse.level = 1) {
+  args <- list(...)
+  ls <- lapply(args, length)
+  
+  if (length(unique(ls)) != 1L) {
+    stop("All must have same length")
+  }
+  
+  v <- unlist(lapply(args, function(x) {
+    if (x$is_mat) {
+      stop("Cannot bind matrices")
+    }
+    
+    # x$is_mat == FALSE
+    if (!x$is_vec) {
+      return(paste0("{", x$yacas_cmd, "}"))
+    }
+    
+    return(x$yacas_cmd)
+  }))
+  
+  z <- paste0("{", paste0(v, collapse = ", "), "}")
+  z <- ysym(z)
+  
+  return(z)
+}
+
+
+#' Combine R Objects by Columns
+#' 
+#' @param \dots Objects to bind
+#' @param deparse.level Not used
+#' 
+#' @concept yac_symbol
+#' 
+#' @export
+cbind.yac_symbol <- function(..., deparse.level = 1) {
+  # Not efficient, but easy for now...
+  return(t(rbind(..., deparse.level = deparse.level)))
 }
 
 

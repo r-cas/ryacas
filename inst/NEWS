@@ -1,3 +1,9 @@
+Changes in version 1.1.2
+
+o Minor bug fixes.
+o rbind() and cbind() implented
+o sum(x) and prod(x) now also works as expected
+
 Changes in version 1.1.1
 
 o Minor bug fixes.

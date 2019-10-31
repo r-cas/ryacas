@@ -20,7 +20,10 @@
 \item{na.rm}{Not used}
 }
 \description{
-Sums \code{expr} by letting \code{var} taking values
+If only \code{expr} given: sum elements.
+}
+\details{
+Else: sums \code{expr} by letting \code{var} taking values
 from \code{lower} to \code{upper} (potentially \code{Inf})
 }
 \concept{yac_symbol}
