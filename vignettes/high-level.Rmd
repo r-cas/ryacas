@@ -33,6 +33,7 @@ Here, we keep it simple.
 x <- ysym("x")
 2*x^2 - 5
 c(-2, 5)*x
+c(2*x, -x^3)
 as_r(c(-2, 5)*x) # or yac_expr(c(-2, 5)*x)
 ```
 
@@ -233,8 +234,13 @@ The following functions work with `yac_symbol`s.
     - `deriv(expr, vars)`: takes derivative of `yac_symbol` `expr` with respect to `vars`
     - `Jacobian(expr, vars)`: finds Jacobian of `yac_symbol` `expr` (usually a vector of expressions) with respect to `vars`
     - `Hessian(expr, vars)`: finds Hessian matrix of `yac_symbol` `expr` with respect to `vars`
+  + Other
+    - `integrate()`
+    - `sum()`
+    - `lim()`
 * Standard `R` that has been implemented for `yac_symbol`s:
   + `print()`
+  + `c()`
   + `dim()`
   + `[` getter
   + `[<-` setter

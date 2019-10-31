@@ -4,7 +4,7 @@ o ysym() was introduced instead of yac_symbol() (yac_symbol() is still an alias 
 o as_y() now extracts yacas command from yac_symbols
 o Updated to yacas/scripts commit ef475ce5e6d5b9ce5d7d36e971092e85ef4d6741
 o solve(): extended a system of equations
-o Added integrate(), sum(), lim() for yac_symbol's.
+o Added c(), integrate(), sum(), lim() for yac_symbol's.
 
 Changes in version 1.1.0
 
