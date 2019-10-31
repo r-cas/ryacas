@@ -1,0 +1,93 @@
+---
+output: 
+  pdf_document: 
+    keep_tex: yes
+    pandoc_args: --pdf-engine=xelatex
+    highlight: espresso
+header-includes:
+   - \usepackage{multicol}
+   - \newcommand{\btwocol}{\begin{multicols}{2}}
+   - \newcommand{\etwocol}{\end{multicols}}
+   - \usepackage{palatino}
+   - \pagenumbering{gobble}
+   - \setlength{\OuterFrameSep}{-2pt}
+---
+
+```{r setup, include=FALSE}
+# - \usepackage[fontsize=11pt]{scrextend}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(Ryacas)
+packageVersion("Ryacas")
+```
+
+\btwocol
+
+## Sums
+
+```{r}
+k <- ysym("k")
+s <- sum(1/k^2, "k", 1, Inf)
+s
+as_r(s)
+tex(s)
+```
+
+Also:
+
+* **Integrals** (`integrate()`)
+* **Limits** (`lim()`)
+
+<!---
+### Integrals
+
+```{r}
+x <- ysym("x")
+a <- ysym("a")
+integrate(x^a, "x")
+```
+--->
+
+\vfill\null
+
+\columnbreak
+
+## Solving systems of non-linear equations
+
+```{r}
+x <- ysym("x"); y <- ysym("y")
+lhs <- c(3*x*y - y, x)
+rhs <- c(-5*x, y + 4)
+```
+
+\vspace{-1em}
+
+\[
+`r tex(lhs[[1]])` = `r tex(rhs[[1]])` \quad \text{and} \quad
+`r tex(lhs[[2]])` = `r tex(rhs[[2]])`
+\]
+
+```{r}
+sol <- solve(lhs, rhs, c("x", "y")) 
+sol
+y_rmvars(sol)
+```
+
+\etwocol
+
+
+
+```{r, include=FALSE}
+if (FALSE) {
+  system2('pdfcrop', c('release-featured-images/v1_1_1.pdf',
+                       'release-featured-images/v1_1_1--cropped.pdf'))
+  system2('convert', c('-flatten', 
+                       '-density 100',
+                       '-quality 75', 
+                       'release-featured-images/v1_1_1--cropped.pdf',
+                       'release-featured-images/v1_1_1.png'))
+}
+```
+

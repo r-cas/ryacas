@@ -481,7 +481,7 @@ test_that("sum", {
   expect_equal(as_r(res), pi^2/6)
 })
 
-test_that("sum", {
+test_that("lim", {
   xs <- ysym("x")
   
   res <- lim(sin(xs)/xs, "x", 0)

@@ -210,8 +210,6 @@ solve(poly, 3, "x") %>% tex()
 
 ## Solving a system of equations
 
-
-
 ```{r}
 x <- ysym("x")
 y <- ysym("y")
