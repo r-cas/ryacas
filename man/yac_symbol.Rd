@@ -14,9 +14,6 @@ A \code{yac_symbol}
 }
 \description{
 This is an alias for \code{\link[=ysym]{ysym()}}.
-}
-\details{
-Note that this results in multiple calls to \code{yacas} and
-the performance may be slower than manually using e.g. \code{\link[=yac_str]{yac_str()}}.
+See description there.
 }
 \concept{yac_symbol}

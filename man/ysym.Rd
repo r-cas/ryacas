@@ -2,7 +2,6 @@
 % Please edit documentation in R/yac-symbol.R
 \name{ysym}
 \alias{ysym}
-\alias{yac_symbol}
 \title{Make a yacas symbol}
 \usage{
 ysym(x)

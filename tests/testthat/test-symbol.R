@@ -475,6 +475,10 @@ test_that("sum", {
   ks <- ysym("k")
   res <- sum(xs^ks, "k", 0, "n")
   expect_equal(as.character(res), "(1-x^(n+1))/(1-x)")
+  
+  res <- sum(1/ks^2, "k", 1, Inf)
+  expect_equal(as.character(res), "Pi^2/6")
+  expect_equal(as_r(res), pi^2/6)
 })
 
 test_that("sum", {

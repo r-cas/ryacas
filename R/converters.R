@@ -39,6 +39,10 @@ as_r <- function(x) {
 expr_has_vars <- function(x) {
   y_vars <- all.vars(x)
   
+  # Known "vars"
+  y_vars <- setdiff(y_vars, 
+                    c("pi"))
+  
   if (length(y_vars) > 0L) {
     return(TRUE)
   }
@@ -61,6 +65,7 @@ as_r.default <- function(x) {
   }
   
   y <- yac_expr(x)
+  
   if (expr_has_vars(y)) {
     return(y)
   }

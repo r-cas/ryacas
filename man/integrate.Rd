@@ -8,6 +8,8 @@ integrate(f, ...)
 }
 \arguments{
 \item{f}{Function to integrate. See details.}
+
+\item{\dots}{See details.}
 }
 \description{
 If \code{f} is a \code{yac_symbol}, \code{yacas}'s \code{Integrate()} is used.

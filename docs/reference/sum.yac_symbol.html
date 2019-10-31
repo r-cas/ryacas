@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Limits — lim • Ryacas</title>
+<title>Summation — sum.yac_symbol • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Limits — lim" />
+<meta property="og:title" content="Summation — sum.yac_symbol" />
 
-<meta property="og:description" content="If first argument is a yac_symbol, yacas's Limit() is used." />
+<meta property="og:description" content="Sums expr by letting var taking values
+from lower to upper (potentially Inf)" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,33 +130,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Limits</h1>
+    <h1>Summation</h1>
     <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
-    <div class="hidden name"><code>lim.Rd</code></div>
+    <div class="hidden name"><code>sum.yac_symbol.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>If first argument is a <code>yac_symbol</code>, <code>yacas</code>'s <code>Limit()</code> is used.</p>
+    <p>Sums <code>expr</code> by letting <code>var</code> taking values
+from <code>lower</code> to <code>upper</code> (potentially <code>Inf</code>)</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>lim</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for yac_symbol</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>expr</span>, <span class='no'>var</span>, <span class='no'>lower</span>, <span class='no'>upper</span>, <span class='no'>...</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>expr</th>
+      <td><p>Expression to be summed</p></td>
+    </tr>
+    <tr>
+      <th>var</th>
+      <td><p>Variable to sum</p></td>
+    </tr>
+    <tr>
+      <th>lower</th>
+      <td><p>Lower limit</p></td>
+    </tr>
+    <tr>
+      <th>upper</th>
+      <td><p>Upper limit</p></td>
+    </tr>
+    <tr>
       <th>&#8230;</th>
-      <td><p>See details.</p></td>
+      <td><p>Not used</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>Not used</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Arguments:</p><ul>
-<li><p><code><a href='yac_symbol.html'>yac_symbol</a></code>: <code>f</code>, <code>var</code>, <code>val</code>, <code>from_left</code>, <code>from_right</code></p></li>
-</ul>
     
 
   </div>
@@ -163,9 +180,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

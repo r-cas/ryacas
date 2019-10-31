@@ -7,7 +7,6 @@
 #' 
 #' @return A `yac_symbol`
 #' 
-#' @aliases yac_symbol
 #' @concept yac_symbol
 #' @export
 ysym <- function(x) {
@@ -38,16 +37,13 @@ ysym <- function(x) {
 
 #' Make a yacas symbol
 #' 
-#' This is an alias for [ysym()].
-#' 
-#' Note that this results in multiple calls to `yacas` and 
-#' the performance may be slower than manually using e.g. [yac_str()].
+#' This is an alias for [ysym()]. 
+#' See description there.
 #' 
 #' @param x A vector or a matrix
 #' 
 #' @return A `yac_symbol`
 #' 
-#' @aliases yac_symbol
 #' @concept yac_symbol
 #' @export
 yac_symbol <- function(x) {
@@ -882,9 +878,9 @@ as.character.yac_symbol <- function(x, ...) {
 bound_to_str <- function(b) {
   if (is.infinite(b)) {
     if (b > 0) {
-      return("Infinite")
+      return("Infinity")
     } else {
-      return("-Infinite")
+      return("-Infinity")
     }
   }
   
@@ -912,6 +908,7 @@ bound_to_str <- function(b) {
 #' * Else ([stats::integrate()]): `lower`, `upper`
 #' 
 #' @param f Function to integrate. See details.
+#' @param \dots See details.
 #' 
 #' @concept yac_symbol
 #' 
@@ -920,6 +917,7 @@ integrate <- function(f, ...) {
   UseMethod("integrate")
 }
 
+#' @importFrom stats integrate
 #' @export
 integrate.default <- function(...) {
   x <- stats::integrate(...)
@@ -946,33 +944,26 @@ integrate.yac_symbol <- function(f, var, lower, upper, ...) {
 
 
 
-#' Summation of Functions
+#' Summation
 #' 
-#' If first argument is a `yac_symbol`, `yacas`'s `Sum()` is used. 
-#' Else, [base::sum()] is used.
+#' Sums `expr` by letting `var` taking values 
+#' from `lower` to `upper` (potentially `Inf`)
 #' 
-#' Additional arguments:
-#' 
-#' * [`yac_symbol`]: `f`, `var`, `lower`, `upper`
+#' @param expr Expression to be summed
+#' @param var Variable to sum
+#' @param lower Lower limit
+#' @param upper Upper limit
+#' @param \dots Not used
+#' @param na.rm Not used
 #' 
 #' @concept yac_symbol
 #' 
 #' @export
-sum <- function(...) {
-  UseMethod("sum")
-}
-
-#' @export
-sum.default <- function(...) {
-  x <- base::sum(...)
-  return(x)
-}
-
-#' @export
-sum.yac_symbol <- function(f, var, lower, upper, ...) {
+sum.yac_symbol <- function(expr, var, lower, upper, ..., na.rm = FALSE) {
   lwr_str <- bound_to_str(lower)
   upr_str <- bound_to_str(upper)
-  cmd <- paste0("Sum(", var, ", ", lwr_str, ", ", upr_str, ", ", f$yacas_cmd, ")")
+  
+  cmd <- paste0("Sum(", var, ", ", lwr_str, ", ", upr_str, ", ", expr$yacas_cmd, ")")
   z_res <- yac_str(cmd)
   
   v <- ysym(z_res)
@@ -990,6 +981,8 @@ sum.yac_symbol <- function(f, var, lower, upper, ...) {
 #' Arguments:
 #' 
 #' * [`yac_symbol`]: `f`, `var`, `val`, `from_left`, `from_right`
+#' 
+#' @param \dots See details.
 #' 
 #' @concept yac_symbol
 #' 

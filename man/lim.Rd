@@ -6,6 +6,9 @@
 \usage{
 lim(...)
 }
+\arguments{
+\item{\dots}{See details.}
+}
 \description{
 If first argument is a \code{yac_symbol}, \code{yacas}'s \code{Limit()} is used.
 }
