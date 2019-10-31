@@ -699,6 +699,19 @@ Ops.yac_symbol = function(e1, e2) {
     stop("Function '", .Generic, "' not yet implemented for yac_symbol")
   } 
   
+  if (missing(e2)) {
+    if (.Method[1] == "") {
+      e1 <- ysym(e1)
+    }
+    
+    txt <- paste0(.Generic, "(", e1$yacas_cmd, ")")
+    txt_res <- yac_str(txt)
+    x <- ysym(txt_res)
+    return(x)
+  }
+  
+  # Both e1 and e2 given:
+  
   # LHS constant, e.g. 2*x: e1 is a number 2
   if (.Method[1] == "") {
     e1 <- ysym(e1)
