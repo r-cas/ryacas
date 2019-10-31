@@ -12,6 +12,9 @@ test_that("Basics", {
 ##############################
 
 test_that("dim()/length()", {
+  x <- ysym("x")
+  expect_equal(length(x), 1L)
+  
   for (nrow in 1:4) {
     info <- paste0("length = ", nrow)
     vec <- integer(nrow)
@@ -29,6 +32,19 @@ test_that("dim()/length()", {
       expect_equal(length(B), length(mat), info = info)
     }
   }
+})
+
+
+
+test_that("c()", {
+  x <- ysym("x")
+  y <- ysym("y")
+  z <- c(x, y)
+  expect_equal(length(z), length(x) + length(y))
+  
+  z <- c(2*x, -y)
+  expect_equal(as.character(z), "{2*x,-y}")
+  expect_equal(as_r(z), expression(c(2 * x, -y)))
 })
 
 ##############################

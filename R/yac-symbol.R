@@ -123,7 +123,8 @@ dim.yac_symbol <- function(x) {
 #' @export
 length.yac_symbol <- function(x) {
   if (!(x$is_vec || x$is_mat)) {
-    return(NULL)
+    #return(NULL)
+    return(1L)
   }
   
   if (x$is_vec) {
@@ -132,6 +133,30 @@ length.yac_symbol <- function(x) {
   
   return(prod(dim(x)))
 }
+
+
+
+#' @export
+c.yac_symbol <- function(...) {
+  args <- list(...)
+
+  for (i in seq_along(args)) {
+    if (!is(args[[i]], "yac_symbol")) {
+      args[[i]] <- ysym(args[[i]])
+    }
+  }
+  
+  elements <- lapply(args, function(x) {
+    x$yacas_cmd
+  })
+  
+  cmd <- paste0("{", paste0(elements, collapse = ", "), "}")
+  
+  v <- ysym(cmd)
+  
+  return(v)
+}
+
 
 #' Simplify expression
 #' 
