@@ -15,6 +15,10 @@ as_y.default <- function(x) {
     return(y_hlp_to_yacmat(x))
   }
   
+  if (is.vector(x) && length(x) == 1L) {
+    return(x)
+  }
+  
   return(y_hlp_to_yacvec(x))
 }
 

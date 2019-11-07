@@ -596,12 +596,13 @@ solve.yac_symbol <- function(a, b, ...) {
         z <- base::`[`(x = w, i = i, )
       }
     } else {
+      # x[1:2,2]
       z <- base::`[`(x = w, i = i, j = j)
     }
   }
   
   stopifnot(!is.null(z))
-  v <- ysym(as_y(z))
+  v <- ysym(z)
   
   return(v)
 }

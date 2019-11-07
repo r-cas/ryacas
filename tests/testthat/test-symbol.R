@@ -264,8 +264,19 @@ test_that("Getters for matrices", {
       for (i2 in (i1+1L):ncol(idx)) {
         i2_idx <- idx[, i2]
         
+        expect_equal(gsub(" ", "", as_y(A[i1_idx, i2_idx]), fixed = TRUE),
+                     gsub(" ", "", as_y(B[i1_idx, i2_idx]), fixed = TRUE), 
+                     info = paste0("y: indices_count = ", indices_count, 
+                                   ", i1 = ", i1, "; i2 = ", i2))
+        
+        expect_equal(ysym(as_y(A[i1_idx, i2_idx])),
+                     B[i1_idx, i2_idx], 
+                     info = paste0("chr: indices_count = ", indices_count, 
+                                   ", i1 = ", i1, "; i2 = ", i2))
+        
         expect_equal(A[i1_idx, i2_idx], as_r(B[i1_idx, i2_idx]), 
-                     info = paste0("i1 = ", i1, "; i2 = ", i2))
+                     info = paste0("as_r: indices_count = ", indices_count, 
+                                   ", i1 = ", i1, "; i2 = ", i2))
       }
     }
   }
