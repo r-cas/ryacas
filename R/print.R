@@ -21,10 +21,15 @@ y_print <- function(x) {
     # Matrix
     z <- y_hlp_to_yacmat_print(as_r(x))
     cat(z, "\n")
+  } else if (grepl("^\\{.*\\}$", x)) {
+    # Vector
+    z <- y_hlp_to_yacvec(as_r(x))
+    cat(z, "\n")
   } else {
     # Something else:
     #print(x)
-    print(x, quote = FALSE)
+    #print(paste0("y: ", x), quote = FALSE)
+    cat("y: ", x, "\n", sep = "")
   }
 
   return(invisible(x))
