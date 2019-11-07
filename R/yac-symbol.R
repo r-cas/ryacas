@@ -1107,7 +1107,7 @@ lim.yac_symbol <- function(f, var, val, ...) {
 
 
 
-#' Assume a variable has a value
+#' Give a variable a value
 #' 
 #' @param x yac_symbol
 #' @param var Variable
@@ -1116,17 +1116,17 @@ lim.yac_symbol <- function(f, var, val, ...) {
 #' @concept yac_symbol
 #' 
 #' @export
-assume <- function(x, var, val) {
-  UseMethod("assume")
+with_value <- function(x, var, val) {
+  UseMethod("with_value")
 }
 
 #' @export
-assume.default <- function(x, var, val) {
+with_value.default <- function(x, var, val) {
   stop("Not implemented for anything else than yac_symbol's created with ysym()")
 }
 
 #' @export
-assume.yac_symbol <- function(x, var, val) {
+with_value.yac_symbol <- function(x, var, val) {
   # WithValue(var, val, expr)
   
   cmd <- paste0("WithValue(", var, ", ", 
