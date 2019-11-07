@@ -592,3 +592,22 @@ test_that("lim", {
   expect_equal(as.character(res), "Infinity")
   expect_equal(as_r(res), Inf)
 })
+
+
+
+test_that("assume", {
+  xs <- ysym("x")
+  ys <- ysym("y")
+  
+  expr1 <- 2*xs + 4*ys
+  expect_equal(as.character(assume(expr1, xs, 2)), "4*y+4")
+  expect_equal(as.character(assume(expr1, "x", 2)), "4*y+4")
+  expect_equal(as.character(assume(expr1, xs, 0)), "4*y")
+  expect_equal(as.character(assume(expr1, "x", 0)), "4*y")
+  
+  expr2 <- c(expr1, 2*expr1)
+  expect_equal(as.character(assume(expr2, xs, 2)), "{4*y+4,2*(4*y+4)}")
+  expect_equal(as.character(assume(expr2, "x", 2)), "{4*y+4,2*(4*y+4)}")
+  expect_equal(as.character(assume(assume(expr2, xs, 2), ys, 4)), "{20,40}")
+  expect_equal(as.character(assume(assume(expr2, xs, 0), ys, 0)), "{0,0}")
+})
