@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepare simple <code>yacas</code> call — y_fn • Ryacas</title>
+<title>Give a variable a value — with_value • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Prepare simple <code>yacas</code> call — y_fn" />
+<meta property="og:title" content="Give a variable a value — with_value" />
 
-<meta property="og:description" content="Prepare simple yacas call" />
+<meta property="og:description" content="Give a variable a value" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,52 +129,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepare simple <code>yacas</code> call</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/y-fn.R'><code>R/y-fn.R</code></a></small>
-    <div class="hidden name"><code>y_fn.Rd</code></div>
+    <h1>Give a variable a value</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
+    <div class="hidden name"><code>with_value.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Prepare simple <code>yacas</code> call</p>
+    <p>Give a variable a value</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>y_fn</span>(<span class='no'>x</span>, <span class='no'>fn</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>with_value</span>(<span class='no'>x</span>, <span class='no'>var</span>, <span class='no'>val</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>parameter to function <code>fn</code></p></td>
+      <td><p>yac_symbol</p></td>
     </tr>
     <tr>
-      <th>fn</th>
-      <td><p>function with parameter <code>x</code></p></td>
+      <th>var</th>
+      <td><p>Variable</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
-      <td><p>additional arguments to <code>fn</code></p></td>
+      <th>val</th>
+      <td><p>Value</p></td>
     </tr>
     </table>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>y_fn</span>(<span class='st'>"x^2 - 1"</span>, <span class='st'>"TeXForm"</span>)</div><div class='output co'>#&gt; [1] "TeXForm(x^2 - 1)"</div><div class='input'><span class='fu'><a href='yac_str.html'>yac_str</a></span>(<span class='fu'>y_fn</span>(<span class='st'>"x^2 - 1"</span>, <span class='st'>"TeXForm"</span>))</div><div class='output co'>#&gt; [1] "x ^{2} - 1"</div><div class='input'>
-<span class='fu'>y_fn</span>(<span class='st'>"x^2 - 1"</span>, <span class='st'>"Factor"</span>)</div><div class='output co'>#&gt; [1] "Factor(x^2 - 1)"</div><div class='input'><span class='fu'><a href='yac_str.html'>yac_str</a></span>(<span class='fu'>y_fn</span>(<span class='st'>"x^2 - 1"</span>, <span class='st'>"Factor"</span>))</div><div class='output co'>#&gt; [1] "(x+1)*(x-1)"</div><div class='input'>
-<span class='no'>cmd</span> <span class='kw'>&lt;-</span> <span class='st'>"x^2 - 1 == 0"</span> <span class='kw'>%&gt;%</span> <span class='fu'>y_fn</span>(<span class='st'>"Solve"</span>, <span class='st'>"x"</span>)
-<span class='no'>cmd</span></div><div class='output co'>#&gt; [1] "Solve(x^2 - 1 == 0, x)"</div><div class='input'><span class='no'>sol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='yac_str.html'>yac_str</a></span>(<span class='no'>cmd</span>)
-<span class='no'>sol</span></div><div class='output co'>#&gt; [1] "{x==1,x==(-1)}"</div><div class='input'><span class='fu'><a href='yac_str.html'>yac_str</a></span>(<span class='fu'><a href='y_rmvars.html'>y_rmvars</a></span>(<span class='no'>sol</span>))</div><div class='output co'>#&gt; [1] "{1,-1}"</div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepare simple <code>yacas</code> call — y_fn • Ryacas</title>
+<title>Construct and assign a vector of variables — ysym_make • Ryacas</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Prepare simple <code>yacas</code> call — y_fn" />
+<meta property="og:title" content="Construct and assign a vector of variables — ysym_make" />
 
-<meta property="og:description" content="Prepare simple yacas call" />
+<meta property="og:description" content="If unnamed vector, the content is the variables." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,50 +129,77 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepare simple <code>yacas</code> call</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/y-fn.R'><code>R/y-fn.R</code></a></small>
-    <div class="hidden name"><code>y_fn.Rd</code></div>
+    <h1>Construct and assign a vector of variables</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mikldk/ryacas/blob/master/R/yac-symbol.R'><code>R/yac-symbol.R</code></a></small>
+    <div class="hidden name"><code>ysym_make.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Prepare simple <code>yacas</code> call</p>
+    <p>If unnamed vector, the content is the variables.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>y_fn</span>(<span class='no'>x</span>, <span class='no'>fn</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ysym_make</span>(<span class='no'>x</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>parameter to function <code>fn</code></p></td>
+      <td><p>Vector of variable names. If named, the names are the variables
+and the content is the value.</p></td>
     </tr>
     <tr>
-      <th>fn</th>
-      <td><p>function with parameter <code>x</code></p></td>
+      <th>overwrite</th>
+      <td><p>overwrite if exists already</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
-      <td><p>additional arguments to <code>fn</code></p></td>
+      <th>warn</th>
+      <td><p>warn if name already exists in <code>.GlobalEnv</code></p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Invisibly names assigned</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If named vector, the names are the variables,
+and the values are the content.</p>
+<p>Note, that it has the side effect that it assigns variables in
+<code>.GlobalEnv</code>.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>y_fn</span>(<span class='st'>"x^2 - 1"</span>, <span class='st'>"TeXForm"</span>)</div><div class='output co'>#&gt; [1] "TeXForm(x^2 - 1)"</div><div class='input'><span class='fu'><a href='yac_str.html'>yac_str</a></span>(<span class='fu'>y_fn</span>(<span class='st'>"x^2 - 1"</span>, <span class='st'>"TeXForm"</span>))</div><div class='output co'>#&gt; [1] "x ^{2} - 1"</div><div class='input'>
-<span class='fu'>y_fn</span>(<span class='st'>"x^2 - 1"</span>, <span class='st'>"Factor"</span>)</div><div class='output co'>#&gt; [1] "Factor(x^2 - 1)"</div><div class='input'><span class='fu'><a href='yac_str.html'>yac_str</a></span>(<span class='fu'>y_fn</span>(<span class='st'>"x^2 - 1"</span>, <span class='st'>"Factor"</span>))</div><div class='output co'>#&gt; [1] "(x+1)*(x-1)"</div><div class='input'>
-<span class='no'>cmd</span> <span class='kw'>&lt;-</span> <span class='st'>"x^2 - 1 == 0"</span> <span class='kw'>%&gt;%</span> <span class='fu'>y_fn</span>(<span class='st'>"Solve"</span>, <span class='st'>"x"</span>)
-<span class='no'>cmd</span></div><div class='output co'>#&gt; [1] "Solve(x^2 - 1 == 0, x)"</div><div class='input'><span class='no'>sol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='yac_str.html'>yac_str</a></span>(<span class='no'>cmd</span>)
-<span class='no'>sol</span></div><div class='output co'>#&gt; [1] "{x==1,x==(-1)}"</div><div class='input'><span class='fu'><a href='yac_str.html'>yac_str</a></span>(<span class='fu'><a href='y_rmvars.html'>y_rmvars</a></span>(<span class='no'>sol</span>))</div><div class='output co'>#&gt; [1] "{1,-1}"</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='ysym_ls.html'>ysym_ls</a></span>()
+<span class='fu'>ysym_make</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>))
+<span class='fu'><a href='ysym_ls.html'>ysym_ls</a></span>()</div><div class='output co'>#&gt; [1] "a" "b"</div><div class='input'><span class='no'>a</span></div><div class='output co'>#&gt; y: a</div><div class='input'>
+<span class='fu'>ysym_make</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"xt"</span> <span class='kw'>=</span> <span class='st'>"{{1, t}}"</span>, <span class='st'>"xtk"</span> <span class='kw'>=</span> <span class='st'>"{{1, t+k}}"</span>))
+<span class='fu'><a href='ysym_ls.html'>ysym_ls</a></span>()</div><div class='output co'>#&gt; [1] "a"   "b"   "xt"  "xtk"</div><div class='input'><span class='no'>xt</span></div><div class='output co'>#&gt; {{1, t}} </div><div class='input'><span class='fu'><a href='ysym_ls.html'>ysym_ls</a></span>(<span class='kw'>print_details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; a:
+#&gt; y: a
+#&gt; b:
+#&gt; y: b
+#&gt; xt:
+#&gt; {{1, t}} 
+#&gt; xtk:
+#&gt; {{1, t+k}} </div><div class='input'>
+<span class='co'># Warning</span>
+<span class='co'># ysym_make(c("a", "b"))</span>
+<span class='fu'>ysym_make</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span> <span class='kw'>=</span> <span class='st'>"2"</span>, <span class='st'>"b"</span> <span class='kw'>=</span> <span class='st'>"3"</span>), <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>a</span></div><div class='output co'>#&gt; y: 2</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

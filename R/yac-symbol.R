@@ -50,7 +50,109 @@ yac_symbol <- function(x) {
   return(ysym(x)) 
 }
 
+#' List defined yac_symbols
+#' 
+#' @param print_details print content of symbols
+#' 
+#' @export
+ysym_ls <- function(print_details = FALSE) {
+  x <- ls(envir = .GlobalEnv)
+  
+  idx <- sapply(x, function(v) is(get(v, envir = .GlobalEnv), "yac_symbol"))
+  
+  if (!any(idx)) {
+    return(invisible(c()))
+  }
+  
+  res <- x[idx]
+  
+  if (print_details) {
+    for (i in which(idx)) {
+      v <- x[i]
+      cat(v, ":\n", sep = "")
+      print(get(v, envir = .GlobalEnv))
+    }
+    
+    return(invisible(res))
+  }
+  
+  return(res)
+}
+
+#' Construct and assign a vector of variables
+#' 
+#' If unnamed vector, the content is the variables.
+#' 
+#' If named vector, the names are the variables, 
+#' and the values are the content.
+#' 
+#' Note, that it has the side effect that it assigns variables in 
+#' `.GlobalEnv`.
+#' 
+#' @param x Vector of variable names. If named, the names are the variables 
+#' and the content is the value.
+#' @param overwrite overwrite if exists already
+#' @param warn warn if name already exists in `.GlobalEnv`
+#' 
+#' @return Invisibly names assigned
+#' 
+#' @examples 
+#' ysym_ls()
+#' ysym_make(c("a", "b"))
+#' ysym_ls()
+#' a
+#' 
+#' ysym_make(c("xt" = "{{1, t}}", "xtk" = "{{1, t+k}}"))
+#' ysym_ls()
+#' xt
+#' ysym_ls(print_details = TRUE)
+#' 
+#' # Warning
+#' # ysym_make(c("a", "b"))
+#' ysym_make(c("a" = "2", "b" = "3"), overwrite = TRUE, warn = FALSE)
+#' a
+#' 
+#' @export
+ysym_make <- function(x, overwrite = FALSE, warn = TRUE) {
+  nms <- x
+  vals <- x
+  succ <- character(length(nms))
+  
+  if (!is.null(names(x))) {
+    nms <- names(x)
+  }
+  
+  res <- sapply(seq_along(nms), function(i) {
+    do_assign <- TRUE
+    
+    # Check if name already exists
+    if (exists(nms[i], envir = .GlobalEnv)) {
+      if (warn && overwrite) {
+        warning(paste0(nms[i], " already exists, overwriting"))
+        do_assign <- TRUE
+      } else if (warn && !overwrite) {
+        warning(paste0(nms[i], " already exists, skipping"))
+        do_assign <- FALSE
+      } else {
+        # warn == TRUE
+        do_assign <- overwrite
+      }
+    }
+    
+    if (do_assign) {
+      assign(nms[i], ysym(vals[i]), envir = .GlobalEnv)
+      succ[i] <- nms[i]
+    } else {
+      succ[i] <- NA_character_
+    }
+  })
+  
+  return(invisible(succ))
+}
+
+#########################################
 # S3 exports
+#########################################
 
 #' @export
 yac_str.yac_symbol <- function(x) {

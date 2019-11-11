@@ -244,6 +244,31 @@ do.call(rbind, lapply(seq_along(sol_envir), function(sol_no) {
 ```
 
 
+# Making `yac_symbol`s more easily
+
+Say you want to define multiple `yac_symbol`s, e.g. `v1`, `v2` and `v3`. 
+Instead of having three expressions `v1 <- ysym("v1")` etc. 
+you can do:
+
+```{r}
+ysym_make(c("v1", "v2", "v3"))
+ysym_ls()
+v1
+```
+
+Sometimes you want the variables to have a specific value. 
+This can be done with a named vector:
+
+```{r}
+ysym_make(c("w1" = "1", "w2" = "2", "w3" = "3"))
+ysym_ls()
+w1
+w3
+```
+
+
+
+
 # `Ryacas` high-level reference
 
 Principle:
@@ -256,6 +281,9 @@ Reference:
 
 The following functions work with `yac_symbol`s.
 
+* `ysym()`: Create `yac_symbol`
+  + `ysym_make()`: Make a vector of `yac_symbol`s
+  + `ysym_ls()`: List declared `yac_symbol`s
 * `yac_*()` functions (see the "Getting started" vignette)
   + `yac_str()`: Return `yacas` string
   + `yac_expr()`: Return `R` expression
@@ -271,9 +299,6 @@ The following functions work with `yac_symbol`s.
     - `Jacobian(expr, vars)`: finds Jacobian of `yac_symbol` `expr` (usually a vector of expressions) with respect to `vars`
     - `Hessian(expr, vars)`: finds Hessian matrix of `yac_symbol` `expr` with respect to `vars`
   + Other
-    - `integrate()`
-    - `sum()`
-    - `prod()`
     - `lim()`
 * Standard `R` that has been implemented for `yac_symbol`s:
   + `print()`
@@ -291,6 +316,9 @@ The following functions work with `yac_symbol`s.
   + `lower.tri()` getter
   + `t()`
   + `solve()` (see above and in help page)
+  + `integrate()`
+  + `sum()`
+  + `prod()`
   + Ops: `+`, `-`, `*`, `/`, `^`
   + Math functions: `sin()`, `cos()`, `tan()`, 
                     `asin()`, `acos()`, `atan()`, 
