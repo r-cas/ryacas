@@ -183,6 +183,12 @@ yac_assign.yac_symbol <- function(value, x) {
 y_fn.yac_symbol <- function(x, fn, ...) {
   x <- y_fn(x$yacas_cmd, fn, ...)
   y <- yac_str(x)
+  
+  # Special case returning string
+  if (fn == "TeXForm") {
+    return(y)
+  }
+  
   z <- ysym(y)
   return(z)
 }

@@ -55,7 +55,7 @@ a <- 1:4
 test_that("ysym()", {
   B <- ysym(A)
   b <- ysym(a)
-
+  
   expect_s3_class(B, "yac_symbol")
   expect_s3_class(b, "yac_symbol")
   
@@ -98,6 +98,8 @@ test_that("tex()", {
 test_that("y_fn", {
   expect_equal(t(A), as_r(y_fn(B, "Transpose")))
   expect_equal(sum(diag(A)), as_r(y_fn(B, "Trace")))
+  
+  expect_equal(y_fn(ysym(a), "TeXForm"), "\\left( 1, 2, 3, 4\\right) ")
 })
 
 test_that("as_r", {
@@ -192,7 +194,7 @@ test_that("solve()", {
   
   A1 <- hilbert_r(4)
   B1 <- ysym(as_y(hilbert_y(4)))
-
+  
   expect_equal(A1, as_r(B1))
   expect_equal(solve(A1), as_r(solve(B1)))
 })
@@ -246,7 +248,7 @@ test_that("Getters for matrices", {
   # Subsets of size 1, 2, ..., nrow(A)
   for (indices_count in src) {
     idx <- combn(src, indices_count)
-
+    
     # All rows
     for (i in 1L:ncol(idx)) {
       i_idx <- idx[, i]
@@ -303,7 +305,7 @@ test_that("Setters for matrices", {
     
     A1[i] <- 999
     B1[i] <- 999
-
+    
     expect_equal(A1, as_r(B1))
   }
   
@@ -316,7 +318,7 @@ test_that("Setters for matrices", {
     # All rows
     for (i in 1L:ncol(idx)) {
       i_idx <- idx[, i]
-
+      
       A1 <- A
       B1 <- B
       A1[i_idx, ] <- 999
@@ -409,13 +411,13 @@ test_that("Derivatives", {
   
   # Jacobian
   L2 <- ysym(c("x^2 * (y/4) - a*(3*x + 3*y/2 - 45)", 
-                     "x^3 + 4*a^2")) # just some function
+               "x^3 + 4*a^2")) # just some function
   expect_equal(as.character(as_r(Jacobian(L2, "x"))), 
                "rbind(c((x * y)/2 - 3 * a), c(3 * x^2))")
   expect_equal(as.character(as_r(Jacobian(L2, c("x", "y", "a")))), 
                paste0("rbind(c((x * y)/2 - 3 * a, x^2/4 - (3 * a)/2, ", 
                       "45 - (3 * x + (3 * y)/2)), c(3 * x^2, 0, 8 * a))"))
-
+  
 })
 
 
@@ -451,7 +453,7 @@ test_that("solve (roots/others)", {
   a <- 1:4
   B <- ysym(A)
   b <- ysym(a)
-
+  
   
   poly <- ysym("x^2 - x - 6")
   expect_error(solve(poly))
