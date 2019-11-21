@@ -312,6 +312,10 @@ tex.yac_symbol <- function(x) {
   z <- y_fn(x_res$yacas_cmd, "TeXForm")
   z_res <- yac_str(z)
   
+  # Trim
+  z_res <- gsub("^[ ]*", "", z_res)
+  z_res <- gsub("[ ]*$", "", z_res)
+  
   return(z_res)
 }
 

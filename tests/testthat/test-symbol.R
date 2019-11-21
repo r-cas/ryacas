@@ -85,8 +85,14 @@ test_that("yac_silent()", {
 })
 
 test_that("tex()", {
-  expect_equal(tex(B), yac_str(y_fn(as_y(A), "TeXForm")))
-  expect_equal(tex(B), yac_str(y_fn(as_y(A), "TeXForm")))
+  trm <- function(x) {
+    x <- gsub("^[ ]*", "", x)
+    x <- gsub("[ ]*$", "", x)
+    x
+  }
+  
+  expect_equal(tex(B), trm(yac_str(y_fn(as_y(A), "TeXForm"))))
+  expect_equal(tex(B), trm(yac_str(y_fn(as_y(A), "TeXForm"))))
 })
 
 test_that("y_fn", {
