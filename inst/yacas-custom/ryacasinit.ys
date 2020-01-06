@@ -5,3 +5,6 @@
 // Test:
 // PrettyPrinter'Set("PrettyForm");
 
+// https://github.com/grzegorzmazur/yacas/issues/285
+TeXForm'FuncPrec := OpPrecedence("^");
+

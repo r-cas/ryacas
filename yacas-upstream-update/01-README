@@ -17,6 +17,8 @@ egrep -lRZ 'Lesser General Public' . | xargs -0 -l sed -i -e 's/Lesser General P
 
 Just copy, that's it!
 
+APPLY PATCHES!
+
 ################################
 
 
@@ -140,3 +142,8 @@ std::string& rtrim(std::string& s)
     return s;
 }
 
+###########################
+07
+###########################
+
+APPLY PATCHES!
