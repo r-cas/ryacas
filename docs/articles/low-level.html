@@ -79,7 +79,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mikldk/ryacas">
+  <a href="https://github.com/r-cas/ryacas">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -102,7 +102,7 @@
             
             <h4 class="date">2020-01-06</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mikldk/ryacas/blob/master/vignettes/low-level.Rmd"><code>vignettes/low-level.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/master/vignettes/low-level.Rmd"><code>vignettes/low-level.Rmd</code></a></small>
       <div class="hidden name"><code>low-level.Rmd</code></div>
 
     </div>
@@ -318,7 +318,7 @@
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw"><a href="../reference/yac_silent.html">yac_silent</a></span>(<span class="st">"poly := (x-3)*(x+2)"</span>)</a></code></pre></div>
 <p>We can now list <code>yacas</code> variables (<code>I</code> is the imaginary unit):</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Variables()"</span>)</a></code></pre></div>
-<pre><code>## [1] "{poly,TeXForm'FuncPrec,rformBitwiseOps,j,I}"</code></pre>
+<pre><code>## [1] "{poly,I,rformBitwiseOps,j,TeXForm'FuncPrec}"</code></pre>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Expand(poly)"</span>)</a></code></pre></div>
 <pre><code>## [1] "x^2-x-6"</code></pre>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="st">"poly"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/y_fn.html">y_fn</a></span>(<span class="st">"Expand"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/yac_str.html">yac_str</a></span>()</a></code></pre></div>
