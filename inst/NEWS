@@ -4,6 +4,7 @@ o Minor bug fixes.
 o rbind() and cbind() implented
 o sum(x) and prod(x) now also works as expected
 o More brackets in tex form
+o Repository moved to https://github.com/r-cas/ryacas
 
 Changes in version 1.1.1
 
