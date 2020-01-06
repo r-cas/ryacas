@@ -34,7 +34,7 @@ documentation contains many examples.
 This version of `Ryacas` is somewhat different to previous versions of `Ryacas` 
 because we have tried to make the interface a lot simpler.
 
-The old version of `Ryacas` is available as a legacy version called `Ryacas0` at <https://github.com/mikldk/ryacas0/> with documentation directly available at <https://mikldk.github.io/ryacas0/>.
+The old version of `Ryacas` is available as a legacy version called `Ryacas0` at <https://github.com/r-cas/ryacas0/> with documentation directly available at <https://r-cas.github.io/ryacas0/>.
 
 # Interfaces to `yacas`
 

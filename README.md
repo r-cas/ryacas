@@ -4,9 +4,9 @@
 # Ryacas
 
 [![Build
-Status](https://travis-ci.org/mikldk/ryacas.svg?branch=master)](https://travis-ci.org/mikldk/ryacas)
+Status](https://travis-ci.org/r-cas/ryacas.svg?branch=master)](https://travis-ci.org/r-cas/ryacas)
 [![Build
-status](https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true)](https://ci.appveyor.com/project/mikldk/ryacas/branch/master)
+status](https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true)](https://ci.appveyor.com/project/r-cas/ryacas/branch/master)
 [![JOSS
 status](https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b/status.svg)](https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b)
 [![DOI](https://zenodo.org/badge/36067045.svg)](https://zenodo.org/badge/latestdoi/36067045)
@@ -26,32 +26,31 @@ pretty printing and translating R to TeX.
 To build and install from Github using R 3.3.0 (or later) and the R
 `devtools` package 1.11.0 (or later) run this command from within `R`:
 
-    devtools::install_github("mikldk/ryacas0", 
+    devtools::install_github("r-cas/ryacas0", 
                              build_opts = c("--no-resave-data", "--no-manual"))
 
 You can also install the package without vignettes if needed as follows:
 
-    devtools::install_github("mikldk/ryacas")
+    devtools::install_github("r-cas/ryacas")
 
 ## Online info
 
 For vignettes, overview, pointers to additional information,
 installation instructions and a sample session see
-<http://mikldk.github.io/ryacas/>.
+<http://r-cas.github.io/ryacas/>.
 
 Yacas documentation can be found at <http://yacas.readthedocs.org/>.
 
 ## Contribute, issues, and support
 
-Please use the issue tracker at
-<https://github.com/mikldk/ryacas/issues> if you want to notify us of an
-issue or need support. If you want to contribute, please either create
-an issue or make a pull request.
+Please use the issue tracker at <https://github.com/r-cas/ryacas/issues>
+if you want to notify us of an issue or need support. If you want to
+contribute, please either create an issue or make a pull request.
 
 ## Brief examples
 
 Below we show a few examples. We highly recommend reading the “[Getting
-started](http://mikldk.github.io/ryacas/articles/getting-started.html)”
+started](http://r-cas.github.io/ryacas/articles/getting-started.html)”
 vignette (and the other vignettes) for a more thorough introduction to
 the package.
 
@@ -68,11 +67,11 @@ A brief example with a polynomial is:
 x <- ysym("x")
 p <- x^2+x-6
 p
-#> [1] x^2+x-6
+#> y: x^2+x-6
 y_fn(p, "Factor")
-#> [1] (x-2)*(x+3)
+#> y: (x-2)*(x+3)
 p %>% y_fn("Factor")
-#> [1] (x-2)*(x+3)
+#> y: (x-2)*(x+3)
 p %>% as_r()
 #> expression(x^2 + x - 6)
 ```
@@ -102,9 +101,9 @@ B
 b <- ysym(a)
 b[1] <- "x"
 b
-#> [1] {x,2,3,4}
+#> {x, 2, 3, 4}
 B %*% b
-#> [1] {x-29,3*x+4-12,x+9-8,2*x+18}
+#> {x-29, 3*x+4-12, x+9-8, 2*x+18}
 t(B)
 #> {{ 1,  0,  1,  2},
 #>  {-2,  2,  0,  1},
@@ -177,7 +176,7 @@ And output in TeX:
 ```
 
 And arbitrary precision (see also the “[Arbitrary-precision
-arithmetic](http://mikldk.github.io/ryacas/articles/arbitrary-precision.html)”
+arithmetic](http://r-cas.github.io/ryacas/articles/arbitrary-precision.html)”
 vignette):
 
 ``` r

@@ -106,26 +106,26 @@
 <h2 class="hasAnchor">
 <a href="#install-from-github" class="anchor"></a>Install from GitHub</h2>
 <p>To build and install from Github using R 3.3.0 (or later) and the R <code>devtools</code> package 1.11.0 (or later) run this command from within <code>R</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"mikldk/ryacas0"</span>, </a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"r-cas/ryacas0"</span>, </a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">                         <span class="dt">build_opts =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"--no-resave-data"</span>, <span class="st">"--no-manual"</span>))</a></code></pre></div>
 <p>You can also install the package without vignettes if needed as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"mikldk/ryacas"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"r-cas/ryacas"</span>)</a></code></pre></div>
 </div>
 <div id="online-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#online-info" class="anchor"></a>Online info</h2>
-<p>For vignettes, overview, pointers to additional information, installation instructions and a sample session see <a href="http://mikldk.github.io/ryacas/" class="uri">http://mikldk.github.io/ryacas/</a>.</p>
+<p>For vignettes, overview, pointers to additional information, installation instructions and a sample session see <a href="http://r-cas.github.io/ryacas/" class="uri">http://r-cas.github.io/ryacas/</a>.</p>
 <p>Yacas documentation can be found at <a href="http://yacas.readthedocs.org/" class="uri">http://yacas.readthedocs.org/</a>.</p>
 </div>
 <div id="contribute-issues-and-support" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contribute-issues-and-support" class="anchor"></a>Contribute, issues, and support</h2>
-<p>Please use the issue tracker at <a href="https://github.com/mikldk/ryacas/issues" class="uri">https://github.com/mikldk/ryacas/issues</a> if you want to notify us of an issue or need support. If you want to contribute, please either create an issue or make a pull request.</p>
+<p>Please use the issue tracker at <a href="https://github.com/r-cas/ryacas/issues" class="uri">https://github.com/r-cas/ryacas/issues</a> if you want to notify us of an issue or need support. If you want to contribute, please either create an issue or make a pull request.</p>
 </div>
 <div id="brief-examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brief-examples" class="anchor"></a>Brief examples</h2>
-<p>Below we show a few examples. We highly recommend reading the “<a href="http://mikldk.github.io/ryacas/articles/getting-started.html">Getting started</a>” vignette (and the other vignettes) for a more thorough introduction to the package.</p>
+<p>Below we show a few examples. We highly recommend reading the “<a href="http://r-cas.github.io/ryacas/articles/getting-started.html">Getting started</a>” vignette (and the other vignettes) for a more thorough introduction to the package.</p>
 <p>There are two interfaces: a high-level interface that makes <code>yacas</code> objects work similar to <code>R</code> objects, and a low-level interface where the user can write <code>yacas</code> code and get results as strings or as <code>R</code> expressions. Below, we demonstrate both.</p>
 <div id="high-level-interface" class="section level3">
 <h3 class="hasAnchor">
@@ -134,11 +134,11 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="reference/ysym.html">ysym</a></span>(<span class="st">"x"</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">p &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">2</span><span class="op">+</span>x<span class="dv">-6</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">p</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; [1] x^2+x-6</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; y: x^2+x-6</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(p, <span class="st">"Factor"</span>)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; [1] (x-2)*(x+3)</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; y: (x-2)*(x+3)</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">p <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"Factor"</span>)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; [1] (x-2)*(x+3)</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; y: (x-2)*(x+3)</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">p <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/as_r.html">as_r</a></span>()</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; expression(x^2 + x - 6)</span></a></code></pre></div>
 <p>A small matrix example follows:</p>
@@ -164,9 +164,9 @@
 <a class="sourceLine" id="cb4-20" data-line-number="20">b &lt;-<span class="st"> </span><span class="kw"><a href="reference/ysym.html">ysym</a></span>(a)</a>
 <a class="sourceLine" id="cb4-21" data-line-number="21">b[<span class="dv">1</span>] &lt;-<span class="st"> "x"</span></a>
 <a class="sourceLine" id="cb4-22" data-line-number="22">b</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; [1] {x,2,3,4}</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; {x, 2, 3, 4}</span></a>
 <a class="sourceLine" id="cb4-24" data-line-number="24">B <span class="op">%*%</span><span class="st"> </span>b</a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; [1] {x-29,3*x+4-12,x+9-8,2*x+18}</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; {x-29, 3*x+4-12, x+9-8, 2*x+18}</span></a>
 <a class="sourceLine" id="cb4-26" data-line-number="26"><span class="kw"><a href="reference/t.html">t</a></span>(B)</a>
 <a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; {{ 1,  0,  1,  2},</span></a>
 <a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt;  {-2,  2,  0,  1},</span></a>
@@ -215,7 +215,7 @@
 <p>And output in TeX:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="st">"3/4 + Pi/8"</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"Simplify"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/y_fn.html">y_fn</a></span>(<span class="st">"TeXForm"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>()</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; [1] "\\frac{\\pi  + 6}{8} "</span></a></code></pre></div>
-<p>And arbitrary precision (see also the “<a href="http://mikldk.github.io/ryacas/articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>” vignette):</p>
+<p>And arbitrary precision (see also the “<a href="http://r-cas.github.io/ryacas/articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>” vignette):</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="reference/yac_str.html">yac_str</a></span>(<span class="st">"N(Pi, 50)"</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; [1] "3.1415926535897932384626433832795028841971693993751058209"</span></a></code></pre></div>
 </div>
@@ -269,8 +269,8 @@ Grzegorz Mazur, teoretyk at gmail dot com</p>
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/mikldk/ryacas"><img src="https://travis-ci.org/mikldk/ryacas.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/mikldk/ryacas/branch/master"><img src="https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true" alt="Build status"></a></li>
+<li><a href="https://travis-ci.org/r-cas/ryacas"><img src="https://travis-ci.org/r-cas/ryacas.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/r-cas/ryacas/branch/master"><img src="https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true" alt="Build status"></a></li>
 <li><a href="https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b"><img src="https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b/status.svg" alt="JOSS status"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/36067045"><img src="https://zenodo.org/badge/36067045.svg" alt="DOI"></a></li>
 </ul>

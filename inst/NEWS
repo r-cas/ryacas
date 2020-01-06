@@ -18,7 +18,7 @@ o Added c(), integrate(), sum(), lim() for yac_symbol's.
 Changes in version 1.1.0
 
 o Removed deprecated functions. 
-  A legacy package Ryacas0 is available (dev version at https://github.com/mikldk/ryacas0/).
+  A legacy package Ryacas0 is available (dev version at https://github.com/r-cas/ryacas0/).
 o Added yac_symbol functions: deriv, Hessian, Jacobian
 o solve() extended; see documentation
 
@@ -26,7 +26,7 @@ Changes in version 1.0.0
 
 o A WHOLE NEW INTERFACE - READ "GETTING STARTED" VIGNETTE.
   Old functions throw a warning, and will be removed in the next version. 
-  A legacy package Ryacas0 is available: https://github.com/mikldk/ryacas0/ .
+  A legacy package Ryacas0 is available: https://github.com/r-cas/ryacas0/ .
 o Yacas errors are now provided to the user instead of just an empty result.
 o Vignette on making exercises via the exams package.
 o Updated Yacas to 1.7.1 (check with yac_str("Version()")).
@@ -50,7 +50,7 @@ o Internal
   - Enabled use of devtools::load_all() via .onLoad() and .yacas_init_force()
   - Converted to Roxygen documentation
   - Vignettes in Rmarkdown format
-  - pkgdown for GitHub Pages for http://mikldk.github.io/ryacas/
+  - pkgdown for GitHub Pages for http://r-cas.github.io/ryacas/
 
 Changes in version 0.3-4
 
