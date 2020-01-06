@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The structure of the concentration and covariance matrix in a naive Bayes model • Ryacas</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="The structure of the concentration and covariance matrix in a naive Bayes model">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.2</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -78,8 +79,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mikldk/ryacas">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/r-cas/ryacas">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -92,22 +93,23 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>The structure of the concentration and covariance matrix in a naive Bayes model</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2019-11-11</h4>
+            <h4 class="date">2020-01-06</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mikldk/ryacas/blob/master/vignettes/latent-variable-model.Rmd"><code>vignettes/latent-variable-model.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/master/vignettes/latent-variable-model.Rmd"><code>vignettes/latent-variable-model.Rmd</code></a></small>
       <div class="hidden name"><code>latent-variable-model.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Ryacas)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Ryacas)</a></code></pre></div>
 <div id="naive-bayes-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#naive-bayes-model" class="anchor"></a>Naive Bayes model</h2>
@@ -116,60 +118,61 @@ x_i = a x_0 + e_i, \quad i=1, \dots, 4
 \]</span> and <span class="math inline">\(x_0=e_0\)</span>. All terms <span class="math inline">\(e_0, \dots, e_3\)</span> are independent and <span class="math inline">\(N(0,1)\)</span> distributed. Let <span class="math inline">\(e=(e_0, \dots, e_3)\)</span> and <span class="math inline">\(x=(x_0, \dots x_3)\)</span>. Isolating error terms gives that <span class="math display">\[
  e = L_1 x
 \]</span> where <span class="math inline">\(L_1\)</span> has the form</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">L1chr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb2-2" title="2">L1chr[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>] &lt;-<span class="st"> "-a"</span></a>
-<a class="sourceLine" id="cb2-3" title="3">L1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ysym.html">ysym</a></span>(L1chr)</a>
-<a class="sourceLine" id="cb2-4" title="4">L1</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">L1chr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">L1chr[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>] &lt;-<span class="st"> "-a"</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">L1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ysym.html">ysym</a></span>(L1chr)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">L1</a></code></pre></div>
 <pre><code>## {{ 1,  0,  0,  0},
 ##  {-a,  1,  0,  0},
 ##  {-a,  0,  1,  0},
 ##  {-a,  0,  0,  1}}</code></pre>
 <p>If error terms have variance <span class="math inline">\(1\)</span> then <span class="math inline">\(\mathbf{Var}(e)=L \mathbf{Var}(x) L'\)</span> so the covariance matrix is <span class="math inline">\(V1=\mathbf{Var}(x) = L^- (L^-)'\)</span> while the concentration matrix (the inverse covariances matrix) is <span class="math inline">\(K=L' L\)</span>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">L1inv &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(L1)</a>
-<a class="sourceLine" id="cb4-2" title="2">K1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(L1) <span class="op">%*%</span><span class="st"> </span>L1</a>
-<a class="sourceLine" id="cb4-3" title="3">V1 &lt;-<span class="st"> </span>L1inv <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(L1inv)</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(</a>
-<a class="sourceLine" id="cb5-2" title="2">  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="st">    K_1 &amp;= "</span>, <span class="kw"><a href="../reference/tex.html">tex</a></span>(K1), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">   V_1 &amp;= "</span>, <span class="kw"><a href="../reference/tex.html">tex</a></span>(V1), <span class="st">" </span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">L1inv &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/solve.html">solve</a></span>(L1)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">K1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(L1) <span class="op">%*%</span><span class="st"> </span>L1</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">V1 &lt;-<span class="st"> </span>L1inv <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(L1inv)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">    K_1 &amp;= "</span>, <span class="kw"><a href="../reference/tex.html">tex</a></span>(K1), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">   V_1 &amp;= "</span>, <span class="kw"><a href="../reference/tex.html">tex</a></span>(V1), <span class="st">" </span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</a></code></pre></div>
 <p><span class="math display">\[\begin{align} 
-    K_1 &amp;= \left( \begin{array}{cccc} 3 a ^{2} + 1 &amp;  - a &amp;  - a &amp;  - a \\  - a &amp; 1 &amp; 0 &amp; 0 \\  - a &amp; 0 &amp; 1 &amp; 0 \\  - a &amp; 0 &amp; 0 &amp; 1 \end{array} \right)  \\ 
-   V_1 &amp;= \left( \begin{array}{cccc} 1 &amp; a &amp; a &amp; a \\ a &amp; a ^{2} + 1 &amp; a ^{2} &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} + 1 &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} &amp; a ^{2} + 1 \end{array} \right)  
+    K_1 &amp;= \left( \begin{array}{cccc} 3 a ^{2} + 1 &amp;  - a &amp;  - a &amp;  - a \\  - a &amp; 1 &amp; 0 &amp; 0 \\  - a &amp; 0 &amp; 1 &amp; 0 \\  - a &amp; 0 &amp; 0 &amp; 1 \end{array} \right) \\ 
+   V_1 &amp;= \left( \begin{array}{cccc} 1 &amp; a &amp; a &amp; a \\ a &amp; a ^{2} + 1 &amp; a ^{2} &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} + 1 &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} &amp; a ^{2} + 1 \end{array} \right) 
   \end{align}\]</span></p>
 <p>Slightly more elaborate:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">L2chr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb6-2" title="2">L2chr[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"-a1"</span>, <span class="st">"-a2"</span>, <span class="st">"-a3"</span>)</a>
-<a class="sourceLine" id="cb6-3" title="3">L2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ysym.html">ysym</a></span>(L2chr)</a>
-<a class="sourceLine" id="cb6-4" title="4">L2</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">L2chr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">L2chr[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"-a1"</span>, <span class="st">"-a2"</span>, <span class="st">"-a3"</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">L2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ysym.html">ysym</a></span>(L2chr)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">L2</a></code></pre></div>
 <pre><code>## {{  1,   0,   0,   0},
 ##  {-a1,   1,   0,   0},
 ##  {-a2,   0,   1,   0},
 ##  {-a3,   0,   0,   1}}</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">Vechr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb8-2" title="2">Vechr[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"w1"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>)</a>
-<a class="sourceLine" id="cb8-3" title="3">Ve &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ysym.html">ysym</a></span>(Vechr)</a>
-<a class="sourceLine" id="cb8-4" title="4">Ve</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">Vechr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/diag.html">diag</a></span>(<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">Vechr[<span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"w1"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">Ve &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ysym.html">ysym</a></span>(Vechr)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">Ve</a></code></pre></div>
 <pre><code>## {{w1,  0,  0,  0},
 ##  { 0, w2,  0,  0},
 ##  { 0,  0, w2,  0},
 ##  { 0,  0,  0, w2}}</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">L2inv &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(L2)</a>
-<a class="sourceLine" id="cb10-2" title="2">K2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(L2) <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/solve">solve</a></span>(Ve) <span class="op">%*%</span><span class="st"> </span>L2</a>
-<a class="sourceLine" id="cb10-3" title="3">V2 &lt;-<span class="st"> </span>L2inv <span class="op">%*%</span><span class="st"> </span>Ve <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(L2inv)</a></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(</a>
-<a class="sourceLine" id="cb11-2" title="2">  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="st">    K_2 &amp;= "</span>, <span class="kw"><a href="../reference/tex.html">tex</a></span>(K2), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="st">   V_2 &amp;= "</span>, <span class="kw"><a href="../reference/tex.html">tex</a></span>(V2), <span class="st">" </span></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">L2inv &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/solve.html">solve</a></span>(L2)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">K2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(L2) <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/solve.html">solve</a></span>(Ve) <span class="op">%*%</span><span class="st"> </span>L2</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">V2 &lt;-<span class="st"> </span>L2inv <span class="op">%*%</span><span class="st"> </span>Ve <span class="op">%*%</span><span class="st"> </span><span class="kw"><a href="../reference/t.html">t</a></span>(L2inv)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="st">"</span><span class="ch">\\</span><span class="st">begin{align} </span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">    K_2 &amp;= "</span>, <span class="kw"><a href="../reference/tex.html">tex</a></span>(K2), <span class="st">" </span><span class="ch">\\\\</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">   V_2 &amp;= "</span>, <span class="kw"><a href="../reference/tex.html">tex</a></span>(V2), <span class="st">" </span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="ch">\\</span><span class="st">end{align}"</span>, <span class="dt">sep =</span> <span class="st">""</span>)</a></code></pre></div>
 <p><span class="math display">\[\begin{align} 
-    K_2 &amp;= \left( \begin{array}{cccc} \frac{1}{w_{1}}  + \frac{a_{1} ^{2}}{w_{2}}  + \frac{a_{2} ^{2}}{w_{2}}  + \frac{a_{3} ^{2}}{w_{2}}  &amp; \frac{ - a_{1}}{w_{2}}  &amp; \frac{ - a_{2}}{w_{2}}  &amp; \frac{ - a_{3}}{w_{2}}  \\ \frac{ - a_{1}}{w_{2}}  &amp; \frac{1}{w_{2}}  &amp; 0 &amp; 0 \\ \frac{ - a_{2}}{w_{2}}  &amp; 0 &amp; \frac{1}{w_{2}}  &amp; 0 \\ \frac{ - a_{3}}{w_{2}}  &amp; 0 &amp; 0 &amp; \frac{1}{w_{2}}  \end{array} \right)  \\ 
-   V_2 &amp;= \left( \begin{array}{cccc} w_{1} &amp; w_{1} a_{1} &amp; w_{1} a_{2} &amp; w_{1} a_{3} \\ a_{1} w_{1} &amp; w_{1} a_{1} ^{2} + w_{2} &amp; a_{1} w_{1} a_{2} &amp; a_{1} w_{1} a_{3} \\ a_{2} w_{1} &amp; a_{2} w_{1} a_{1} &amp; w_{1} a_{2} ^{2} + w_{2} &amp; a_{2} w_{1} a_{3} \\ a_{3} w_{1} &amp; a_{3} w_{1} a_{1} &amp; a_{3} w_{1} a_{2} &amp; w_{1} a_{3} ^{2} + w_{2} \end{array} \right)  
+    K_2 &amp;= \left( \begin{array}{cccc} \frac{1}{w_{1}}  + \frac{a_{1} ^{2}}{w_{2}}  + \frac{a_{2} ^{2}}{w_{2}}  + \frac{a_{3} ^{2}}{w_{2}}  &amp; \frac{ - a_{1}}{w_{2}}  &amp; \frac{ - a_{2}}{w_{2}}  &amp; \frac{ - a_{3}}{w_{2}}  \\ \frac{ - a_{1}}{w_{2}}  &amp; \frac{1}{w_{2}}  &amp; 0 &amp; 0 \\ \frac{ - a_{2}}{w_{2}}  &amp; 0 &amp; \frac{1}{w_{2}}  &amp; 0 \\ \frac{ - a_{3}}{w_{2}}  &amp; 0 &amp; 0 &amp; \frac{1}{w_{2}}  \end{array} \right) \\ 
+   V_2 &amp;= \left( \begin{array}{cccc} w_{1} &amp; w_{1} a_{1} &amp; w_{1} a_{2} &amp; w_{1} a_{3} \\ a_{1} w_{1} &amp; w_{1} a_{1} ^{2} + w_{2} &amp; a_{1} w_{1} a_{2} &amp; a_{1} w_{1} a_{3} \\ a_{2} w_{1} &amp; a_{2} w_{1} a_{1} &amp; w_{1} a_{2} ^{2} + w_{2} &amp; a_{2} w_{1} a_{3} \\ a_{3} w_{1} &amp; a_{3} w_{1} a_{1} &amp; a_{3} w_{1} a_{2} &amp; w_{1} a_{3} ^{2} + w_{2} \end{array} \right) 
   \end{align}\]</span></p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -182,17 +185,20 @@ x_i = a x_0 + e_i, \quad i=1, \dots, 4
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
