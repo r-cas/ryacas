@@ -244,28 +244,29 @@ do.call(rbind, lapply(seq_along(sol_envir), function(sol_no) {
 ```
 
 
+<!---
 # Making `yac_symbol`s more easily
 
 Say you want to define multiple `yac_symbol`s, e.g. `v1`, `v2` and `v3`. 
 Instead of having three expressions `v1 <- ysym("v1")` etc. 
 you can do:
 
-```{r}
+---
 ysym_make(c("v1", "v2", "v3"))
 ysym_ls()
 v1
-```
+---
 
 Sometimes you want the variables to have a specific value. 
 This can be done with a named vector:
 
-```{r}
+---
 ysym_make(c("w1" = "1", "w2" = "2", "w3" = "3"))
 ysym_ls()
 w1
 w3
-```
-
+---
+--->
 
 
 
