@@ -1,0 +1,18 @@
+citHeader("To cite the 'Ryacas' package in publications use:")
+
+citEntry(entry = "article",
+         title = "{Ryacas: A computer algebra system in R}",
+         author = personList(person("Mikkel Meyer", "Andersen"), 
+                             person("Søren", "Højsgaard")),
+         journal = "Journal of Open Source Software",
+         year = "2019",
+         volume = "4",
+         number = "42",
+         url = "https://doi.org/10.21105/joss.01763",
+         
+         textVersion =
+         paste("Andersen MM, Højsgaard S (2019).", 
+               "Ryacas: A computer algebra system in R.", 
+               "Journal of Open Source Software, 4(42), 1763,",
+               "URL https://doi.org/10.21105/joss.01763")
+)
