@@ -14,3 +14,8 @@ test_that("# 50", {
   e <- cmd %>% yac_str()
   expect_equal(e, "(-2)*(x+1)*Exp(-x)-x^2*Exp(-x)")
 })
+
+test_that("# 48 - Ceil() -> ceiling()", {
+  e <- yac_expr("Ceil(x)")
+  expect_equal(1, eval(e, list(x = 0.5)))
+})
