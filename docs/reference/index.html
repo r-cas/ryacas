@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -53,7 +57,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.1</span>
       </span>
     </div>
 
@@ -115,7 +119,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/r-cas/ryacas">
+  <a href="https://github.com/r-cas/ryacas/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -151,6 +155,11 @@
           <p class="section-desc"><p><code>yac_*(x)</code> functions evaluate/run <code>yacas</code> command <code>x</code>. The result varies depending on which of the functions used (see below). These functions are the only ones that call <code>yacas</code>.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -195,6 +204,11 @@
           <p class="section-desc"><p>These are various utility functions that do not call <code>yacas</code>.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -233,6 +247,11 @@
           <p class="section-desc"><p>Higher order functions.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -266,7 +285,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="diag-set.html">`diag<-`()</a></code> </p>
+          <p><code><a href="diag-set.html">`diag&lt;-`()</a></code> </p>
         </td>
         <td><p>Matrix diagonals</p></td>
       </tr><tr>
@@ -403,247 +422,12 @@
           <p class="section-desc"><p>Higher order functions for solving equations.</p></p>
         </th>
       </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="Hessian.html">Hessian()</a></code> </p>
-        </td>
-        <td><p>Find the Hessian matrix of yac symbol</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Jacobian.html">Jacobian()</a></code> </p>
-        </td>
-        <td><p>Find the Jacobian matrix of yac symbol</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Math.yac_symbol.html">Math(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Math functions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Ops.yac_symbol.html">Ops(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Math operators</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Ryacas-package.html">Ryacas-package</a></code> </p>
-        </td>
-        <td><p>R interface to yacas computer algebra package</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.character.yac_symbol.html">as.character(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Convert yac symbol to character</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_r.html">as_r()</a></code> </p>
-        </td>
-        <td><p>Convert yacas object to R</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_y.html">as_y()</a></code> </p>
-        </td>
-        <td><p>Convert R vector/matrix to yacas vector (list) or matrix (list of lists)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cbind.yac_symbol.html">cbind(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Combine R Objects by Columns</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="deriv.yac_symbol.html">deriv(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Find the derivative of yac symbol</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="diag-set.html">`diag<-`()</a></code> </p>
-        </td>
-        <td><p>Matrix diagonals</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="diag.html">diag()</a></code> </p>
-        </td>
-        <td><p>Matrix diagonals</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="grapes-times-grapes.html">`%*%`</a></code> </p>
-        </td>
-        <td><p>Matrix multiplication</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="integrate.html">integrate()</a></code> </p>
-        </td>
-        <td><p>Integration of Functions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lim.html">lim()</a></code> </p>
-        </td>
-        <td><p>Limits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lower.tri.html">lower.tri()</a></code> </p>
-        </td>
-        <td><p>Lower and upper triangular part of a matrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="prod.yac_symbol.html">prod(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Product of Vector Elements</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rbind.yac_symbol.html">rbind(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Combine R Objects by Rows</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="simplify.html">simplify()</a></code> </p>
-        </td>
-        <td><p>Simplify expression</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="solve.yac_symbol.html">solve(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Solve a system of equations</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sub-.yac_symbol.html">`[`(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Extract or replace parts of an object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sub-sub-.yac_symbol.html">`[[`(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Extract parts of an object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="subset-.yac_symbol.html">`[<-`(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Extract or replace parts of an object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sum.yac_symbol.html">sum(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Summation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="t.html">t(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>t</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tex.html">tex()</a></code> </p>
-        </td>
-        <td><p>Export object to TeX</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="upper.tri.html">upper.tri()</a></code> </p>
-        </td>
-        <td><p>Lower and upper triangular part of a matrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="with_value.html">with_value()</a></code> </p>
-        </td>
-        <td><p>Give a variable a value</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="y_fn.html">y_fn()</a></code> </p>
-        </td>
-        <td><p>Prepare simple <code>yacas</code> call</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="y_print.html">y_print()</a></code> </p>
-        </td>
-        <td><p>Pretty print yacas strings</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="y_rmvars.html">y_rmvars()</a></code> </p>
-        </td>
-        <td><p>Remove/strip variable names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yac.html">yac()</a></code> </p>
-        </td>
-        <td><p>Run yacas command</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yac_assign.html">yac_assign()</a></code> </p>
-        </td>
-        <td><p>Assign yacas variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yac_cli.html">yac_cli()</a></code> </p>
-        </td>
-        <td><p>yacas command line interface</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yac_expr.html">yac_expr()</a></code> </p>
-        </td>
-        <td><p>Run yacas command returning R expression</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yac_silent.html">yac_silent()</a></code> </p>
-        </td>
-        <td><p>Run yacas command silently</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yac_str.html">yac_str()</a></code> </p>
-        </td>
-        <td><p>Run yacas command returning string/character</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yac_symbol.html">yac_symbol()</a></code> </p>
-        </td>
-        <td><p>Make a yacas symbol</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ysym.html">ysym()</a></code> </p>
-        </td>
-        <td><p>Make a yacas symbol</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ysym_ls.html">ysym_ls()</a></code> </p>
-        </td>
-        <td><p>List defined yac_symbols</p></td>
-      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      
     </tbody><tbody>
       <tr>
         <th colspan="2">
@@ -651,6 +435,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -665,6 +454,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -728,7 +522,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="diag-set.html">`diag<-`()</a></code> </p>
+          <p><code><a href="diag-set.html">`diag&lt;-`()</a></code> </p>
         </td>
         <td><p>Matrix diagonals</p></td>
       </tr><tr>
@@ -800,7 +594,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="subset-.yac_symbol.html">`[<-`(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
+          <p><code><a href="subset-.yac_symbol.html">`[&lt;-`(<i>&lt;yac_symbol&gt;</i>)</a></code> </p>
         </td>
         <td><p>Extract or replace parts of an object</p></td>
       </tr><tr>
@@ -911,15 +705,9 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-evaluate-run-yacas-commands">Evaluate/run yacas commands</a></li>
-      <li><a href="#section-various-utility-functions">Various utility functions</a></li>
-      <li><a href="#section-yacas-symbol">yacas symbol</a></li>
-      <li><a href="#section-yacas-symbol-solving-equations">yacas symbol solving equations</a></li>
-      <li><a href="#section-package">Package</a></li>
-      <li><a href="#section-complete-reference">Complete reference</a></li>
-    </ul>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -930,7 +718,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
