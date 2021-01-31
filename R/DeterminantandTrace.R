@@ -13,7 +13,7 @@ det.yac_symbol <- function(expr, ...) {
 
 tr.default <- function(x, ...) {
   return(
-    sum(diag(x))
+    sum(base::diag(x))
   )
 }
 
