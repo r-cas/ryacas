@@ -1,3 +1,7 @@
+det.default <- function(x, ...) {
+  return(base::det(x))
+}
+
 det.yac_symbol <- function(expr, ...) {
   vars <- unlist(list(...))
   
@@ -5,6 +9,12 @@ det.yac_symbol <- function(expr, ...) {
   
   res_sym <- ysym(res)
   return(res_sym)
+}
+
+tr.default <- function(x, ...) {
+  return(
+    sum(diag(x))
+  )
 }
 
 tr.yac_symbol <- function(expr, ...) {
