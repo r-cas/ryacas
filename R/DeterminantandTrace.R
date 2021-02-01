@@ -1,27 +1,72 @@
+#' Matrix Determinant
+#' 
+#' From [base::det()].
+#' 
+#' @param x If `yac_symbol` treat as such, else call [base::det()].
+#' @param \dots further arguments passed to [base::det()]
+#' 
+#' @concept yac_symbol
+#' 
+#' @examples
+#' (x <- matrix(1:4, ncol = 2))
+#' det(x)
+#' det(ysym(x))
+#' @export
+det <- function(x, ...) {
+  UseMethod("det")
+}
+
+#' @export
 det.default <- function(x, ...) {
-  return(base::det(x))
+  return(base::det(x = x, ...))
 }
 
-det.yac_symbol <- function(expr, ...) {
-  vars <- unlist(list(...))
+#' @export
+det.yac_symbol <- function(x, ...) {
+  stopifnot(methods::is(x, "yac_symbol"))
   
-  res <- paste0("Determinant(", expr$yacas_cmd, ")")
+  y_res <- yac_str(x$yacas_cmd)
+  y <- ysym(y_res)
   
-  res_sym <- ysym(res)
-  return(res_sym)
+  stopifnot(y$is_mat)
+
+  return(y_fn(x, "Determinant"))
 }
 
+
+#' Matrix Trace
+#' 
+#' 
+#' @param x If `yac_symbol` treat as such, else call [tr.default()].
+#' @param \dots further arguments passed to [tr.default()]
+#' 
+#' @concept yac_symbol
+#' 
+#' @examples
+#' (x <- matrix(1:4, ncol = 2))
+#' tr(x)
+#' tr(ysym(x))
+#' @export
+tr <- function(x, ...) {
+  UseMethod("tr")
+}
+
+#' @export
 tr.default <- function(x, ...) {
-  return(
-    sum(base::diag(x))
-  )
+  stopifnot(is.numeric(x)) # numeric
+  stopifnot(is.matrix(x))  # matrix
+  stopifnot(dim(x)[1] == dim(x)[2]) # square
+  return(sum(diag(x)))
 }
 
-tr.yac_symbol <- function(expr, ...) {
-  vars <- unlist(list(...))
+#' @export
+tr.yac_symbol <- function(x, ...) {
+  stopifnot(methods::is(x, "yac_symbol"))
   
-  res <- paste0("Trace(", expr$yacas_cmd, ")")
+  y_res <- yac_str(x$yacas_cmd)
+  y <- ysym(y_res)
   
-  res_sym <- ysym(res)
-  return(res_sym)
+  stopifnot(y$is_mat)
+
+  return(y_fn(x, "Trace"))
 }
