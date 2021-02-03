@@ -1,3 +1,5 @@
+# Determinant
+
 # Example 1
 A <- mtcars[, c(1, 3, 4, 5, 6, 7)]
 Sigma <- cov(A)
@@ -63,5 +65,38 @@ test_that("0.3125", {
   expect_equal(
     ex3.default,
     eval(yac_expr(ex3.yac_symbol))
+  )
+})
+
+# Trace
+
+# Example 4
+
+E <- matrix(
+  c("x1", "x4", "x7",
+    "x2", "x5", "x8",
+    "x3", "x6", "x9"),
+  ncol = 3
+)
+F <- matrix(
+  c(1, 11, 6, 0, 5, 12, 3, 2, -5),
+  ncol = 3
+)
+ex4.yac_symbol <- tr(ysym(E))
+test_that("x1+x5+x9", {
+  expect_equal(
+    "x1+x5+x9",
+    ex4.yac_symbol$yacas_cmd
+  )
+})
+
+# Example 5
+
+ex5.yac_symbol <- tr(ysym(F))
+ex5.default <- tr(F)
+test_that("1", {
+  expect_equal(
+    ex5.default,
+    eval(yac_expr(ex5.yac_symbol))
   )
 })
