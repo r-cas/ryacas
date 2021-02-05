@@ -68,6 +68,20 @@ test_that("0.3125", {
   )
 })
 
+# Errors
+
+test_that("x is not of class yac_symbol", {
+  expect_error(
+    det.yac_symbol(C)
+  )
+})
+
+test_that("x is not a yac_symbol matrix", {
+  expect_error(
+    det(ysym(c(1:5)))
+  )
+})
+
 # Trace
 
 # Example 4
@@ -98,5 +112,37 @@ test_that("1", {
   expect_equal(
     ex5.default,
     eval(yac_expr(ex5.yac_symbol))
+  )
+})
+
+# Errors
+
+test_that("x is not of class yac_symbol", {
+  expect_error(
+    tr.yac_symbol(E)
+  )
+})
+
+test_that("x is not a yac_symbol matrix", {
+  expect_error(
+    tr(ysym(c(1:5)))
+  )
+})
+
+test_that("x is not numeric", {
+  expect_error(
+    tr(E)
+  )
+})
+
+test_that("x is not a matrix", {
+  expect_error(
+    tr(c(1:10))
+  )
+})
+
+test_that("x is not square", {
+  expect_error(
+    tr(matrix(c(1:10), ncol = 2))
   )
 })
