@@ -159,3 +159,8 @@ test_that("x is not square", {
 
 tr(ysym(matrix(c(1:10), ncol = 2)))
 
+## In yacas, if the input is a vector, `Trace` simply gets the sum of all the elements of the vector.
+## Should we remove the requirement in tr.yac_symbol that the input is a matrix?
+## x := {1, 2, 3, 4};
+## Trace(x);
+## 10
