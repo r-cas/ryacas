@@ -82,6 +82,12 @@ test_that("x is not a yac_symbol matrix", {
   )
 })
 
+test_that("x is not square", {
+  expect_error(
+    det(ysym(matrix(c(1:10), ncol = 2)))
+  )
+})
+
 # Trace
 
 # Example 4
@@ -146,3 +152,10 @@ test_that("x is not square", {
     tr(matrix(c(1:10), ncol = 2))
   )
 })
+
+## yacas does not require a square matrix for `Trace`.
+## It simply gets the sum of the diagonal elements of a matrix.
+## Should we remove the requirement in tr.default that the input is a square matrix?
+
+tr(ysym(matrix(c(1:10), ncol = 2)))
+
