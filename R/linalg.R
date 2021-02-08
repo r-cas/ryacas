@@ -72,3 +72,56 @@ tr.yac_symbol <- function(x, ...) {
 
   return(y_fn(x, "Trace"))
 }
+
+#' Matrix Power
+#'
+#' @param x If `yac_symbol` treat as such, else call [pow.default()].
+#' @param n `n`th power of the square matrix.
+#' @param \dots further arguments passed to [pow.default()]
+#'
+#' @concept yac_symbol
+#'
+#' @examples
+#' (x <- matrix(1:9, ncol = 3))
+#' pow(x, 2)
+#' pow(ysym(x), 2)
+#' @export
+pow <- function(x, n, ...) {
+  UseMethod("pow")
+}
+
+#' @export
+pow.default <- function(x, n, ...) {
+  stopifnot(is.numeric(x)) # numeric
+  stopifnot(is.matrix(x)) # matrix
+  stopifnot(dim(x)[1] == dim(x)[2]) # square
+  n <- as.integer(n) # coerce n to integer
+  if (n == 0) {
+    return(diag(dim(x)[1])) # identity matrix
+  }
+  if (n < 0) {
+    # for negative power
+    # get the inverse first before matrix multiplication
+    x <- solve(x)
+    n <- abs(n)
+  }
+  # out is a placeholder
+  out <- x
+  iter <- n - 1
+  for (i in 1:iter) {
+    out <- out %*% x
+  }
+  return(out)
+}
+
+#' @export
+pow.yac_symbol <- function(x, n, ...) {
+  stopifnot(methods::is(x, "yac_symbol"))
+
+  y_res <- yac_str(x$yacas_cmd)
+  y <- ysym(y_res)
+
+  stopifnot(y$is_mat)
+
+  return(y_fn(x, "MatrixPower", n))
+}
