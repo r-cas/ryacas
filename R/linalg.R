@@ -105,6 +105,9 @@ pow.default <- function(x, n, ...) {
     x <- solve(x)
     n <- abs(n)
   }
+  if (n == 1) {
+    return(x)
+  }
   # out is a placeholder
   out <- x
   iter <- n - 1
