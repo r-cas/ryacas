@@ -212,7 +212,7 @@ test_that("G", {
 
 # Example 9
 
-## yacas does not accept negative powers
+## pow.yac_symbol does not accept negative powers
 
 InverseG <- solve(G)
 ex9.default <- pow(G, -4)
@@ -229,7 +229,7 @@ test_that("Negative power", {
 
 # Example 10
 
-## yacas does not accept negative powers
+## pow.yac_symbol does not accept negative powers
 
 ex10.default <- pow(G, -1)
 #ex10.yac_symbol <- as_r(pow(ysym(G), -1))
