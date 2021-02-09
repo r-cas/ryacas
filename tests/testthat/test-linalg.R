@@ -164,3 +164,81 @@ tr(ysym(matrix(c(1:10), ncol = 2)))
 ## x := {1, 2, 3, 4};
 ## Trace(x);
 ## 10
+
+# MatrixPower
+
+# Example 6
+
+G <- unname(Sigma)
+ex6.default <- pow(G, 4)
+ex6.yac_symbol <- as_r(pow(ysym(G), 4))
+test_that("Equal to matrix multiplication", {
+  expect_true(
+    all.equal(
+      ex6.default,
+      ex6.yac_symbol,
+      G %*% G %*% G %*% G
+    )
+  )
+})
+
+# Example 7
+
+ex7.default <- pow(G, 0)
+ex7.yac_symbol <- as_r(pow(ysym(G), 0))
+test_that("Identity Matrix", {
+  expect_true(
+    all.equal(
+      ex7.default,
+      ex7.yac_symbol,
+      diag(dim(G)[1])
+    )
+  )
+})
+
+# Example 8
+
+ex8.default <- pow(G, 1)
+ex8.yac_symbol <- as_r(pow(ysym(G), 1))
+test_that("G", {
+  expect_true(
+    all.equal(
+      ex8.default,
+      ex8.yac_symbol,
+      G
+    )
+  )
+})
+
+# Example 9
+
+## yacas does not accept negative powers
+
+InverseG <- solve(G)
+ex9.default <- pow(G, -4)
+#ex9.yac_symbol <- as_r(pow(ysym(G), -4))
+test_that("Negative power", {
+  expect_true(
+    all.equal(
+      ex9.default,
+      #ex9.yac_symbol,
+      InverseG %*% InverseG %*% InverseG %*% InverseG
+    )
+  )
+})
+
+# Example 10
+
+## yacas does not accept negative powers
+
+ex10.default <- pow(G, -1)
+#ex10.yac_symbol <- as_r(pow(ysym(G), -1))
+test_that("Inverse", {
+  expect_true(
+    all.equal(
+      ex10.default,
+      #ex10.yac_symbol,
+      InverseG
+    )
+  )
+})
