@@ -105,16 +105,23 @@ pow.default <- function(x, n, ...) {
     x <- solve(x)
     n <- abs(n)
   }
+  # using https://simple.wikipedia.org/wiki/Exponentiation_by_squaring#:~:text=Exponentiating%20by%20squaring%20is%20an,binary%20expansion%20of%20the%20exponent.
   if (n == 1) {
     return(x)
   }
-  # out is a placeholder
-  out <- x
-  iter <- n - 1
-  for (i in 1:iter) {
-    out <- out %*% x
+  foo <- function(x, n) {
+    y <- x
+    for (i in 2:n) {
+      y <- y %*% x 
+    }
+    return(y)
   }
-  return(out)
+  z <- foo(x, n%/%2)
+  if (n %% 2 == 0) {
+    return(z %*% z)
+  } else {
+    return(z %*% z %*% x)
+  }
 }
 
 #' @export
