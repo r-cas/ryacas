@@ -135,3 +135,5 @@ pow.yac_symbol <- function(x, n, ...) {
 
   return(y_fn(x, "MatrixPower", n))
 }
+
+# vec and vech
