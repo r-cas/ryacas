@@ -1,7 +1,7 @@
 context("Ryacas smoke tests")
 
 test_that("Version", {
-  expect_equal(yac_str("Version()"), "1.7.1")
+  expect_equal(yac_str("Version()"), "1.9.2")
 })
 
 test_that("yac_str()", {
@@ -29,10 +29,10 @@ test_that("yac_core()", {
 })
 
 test_that("yac()", {
-  expect_equal(yac("Version()"), "1.7.1")
-  expect_equal(yac("Version()", rettype = "str"), "1.7.1")
-  expect_equal(yac("Version()", rettype = "expr"), expression("1.7.1"))
-  expect_equal(yac("Version()", rettype = "silent"), invisible("1.7.1"))
+  expect_equal(yac("Version()"), "1.9.2")
+  expect_equal(yac("Version()", rettype = "str"), "1.9.2")
+  expect_equal(yac("Version()", rettype = "expr"), expression("1.9.2"))
+  expect_equal(yac("Version()", rettype = "silent"), invisible("1.9.2"))
 })
 
 test_that("y_*()", {

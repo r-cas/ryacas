@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.9001</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -121,7 +121,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/r-cas/ryacas/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
     <p>Pretty print yacas strings</p>
     </div>
 
-    <pre class="usage"><span class='fu'>y_print</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>y_print</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,16 +160,19 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='diag.html'>diag</a></span>(<span class='fl'>4</span>)
-<span class='no'>Ayac</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_y.html'>as_y</a></span>(<span class='no'>A</span>)
-<span class='fu'>y_print</span>(<span class='no'>Ayac</span>)</div><div class='output co'>#&gt; {{1, 0, 0, 0},
+    <pre class="examples"><div class='input'><span class='va'>A</span> <span class='op'>&lt;-</span> <span class='fu'><a href='diag.html'>diag</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>Ayac</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_y.html'>as_y</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
+<span class='fu'>y_print</span><span class='op'>(</span><span class='va'>Ayac</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {{1, 0, 0, 0},
 #&gt;  {0, 1, 0, 0},
 #&gt;  {0, 0, 1, 0},
 #&gt;  {0, 0, 0, 1}} </div><div class='input'>
-<span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='no'>A</span>
-<span class='no'>B</span>[<span class='fl'>2</span>, <span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='st'>"-t"</span>
-<span class='no'>Byac</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_y.html'>as_y</a></span>(<span class='no'>B</span>)
-<span class='no'>Byac</span></div><div class='output co'>#&gt; [1] "{{1, 0, 0, 0}, {0, -t, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}"</div><div class='input'><span class='fu'>y_print</span>(<span class='no'>Byac</span>)</div><div class='output co'>#&gt; {{ 1,  0,  0,  0},
+<span class='va'>B</span> <span class='op'>&lt;-</span> <span class='va'>A</span>
+<span class='va'>B</span><span class='op'>[</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"-t"</span>
+<span class='va'>Byac</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_y.html'>as_y</a></span><span class='op'>(</span><span class='va'>B</span><span class='op'>)</span>
+<span class='va'>Byac</span>
+</div><div class='output co'>#&gt; [1] "{{1, 0, 0, 0}, {0, -t, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}"</div><div class='input'><span class='fu'>y_print</span><span class='op'>(</span><span class='va'>Byac</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {{ 1,  0,  0,  0},
 #&gt;  { 0, -t,  0,  0},
 #&gt;  { 0,  0,  1,  0},
 #&gt;  { 0,  0,  0,  1}} </div><div class='input'>
@@ -189,7 +192,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

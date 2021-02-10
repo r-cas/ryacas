@@ -1,4 +1,5 @@
-#? sudo apt-get install libboost1.62-dev libboost-date-time1.62-dev libjsoncpp-dev libzmq3-dev libzmqpp-dev
+#? sudo apt-get install libboost1.71-dev libboost-date-time1.71-dev libjsoncpp-dev libzmq3-dev libzmqpp-dev
+sudo apt install libboost1.71-all-dev libboost1.71-tools-dev
 
 # First
 cd yacas-upstream-update
@@ -22,11 +23,11 @@ APPLY PATCHES!
 ################################
 
 
-#cd ./yacas
-#mkdir build
-#cd build
-#cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_CYACAS_GUI=No -DENABLE_CYACAS_KERNEL=Yes -DENABLE_CYACAS_BENCHMARKS=No -DBUILD_TESTING=No -DENABLE_CYACAS_UNIT_TESTS=No -DENABLE_CYACAS_CONSOLE=No -DENABLE_JYACAS=No -DENABLE_DOCS=No ..
-#cd ../../../yacas-upstream-update
+cd ./yacas
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_CYACAS_GUI=No -DENABLE_CYACAS_KERNEL=Yes -DENABLE_CYACAS_BENCHMARKS=No -DBUILD_TESTING=No -DENABLE_CYACAS_UNIT_TESTS=No -DENABLE_CYACAS_CONSOLE=No -DENABLE_JYACAS=No -DENABLE_DOCS=No ..
+cd ../../../yacas-upstream-update
 
 # Compare versions:
 # Upstream:
@@ -50,10 +51,17 @@ meld ../inst/yacas/ ./new-inst-yacas/
 ###########################
 ./03-merge.sh
 
+cat ./yacas/build/cyacas/libyacas/config/yacas/yacas_version.h
+# Current:
+cp ./yacas/build/cyacas/libyacas/config/yacas/yacas_version.h ../src/yacas/include/yacas/yacas_version.h
+
 
 ###########################
 04
 ###########################
+cd ../src/yacas
+grep -iHR "string_view" .
+
 "std::string_view" -> "std::string"
   yacas/include/yacas/mp/nn.hpp
   yacas/include/yacas/mp/zz.hpp
@@ -63,7 +71,8 @@ meld ../inst/yacas/ ./new-inst-yacas/
 delete "#include <string_view>"
   yacas/include/yacas/mp/nn.hpp
   
-replace 'abort();' with 'throw std::invalid_argument("abort()");'
+#replace 'abort();' with 'throw std::invalid_argument("abort()");'
+grep -iHR "abort();" .
   yacas/src/yacasnumbers.cpp
 
 
@@ -147,3 +156,6 @@ std::string& rtrim(std::string& s)
 ###########################
 
 APPLY PATCHES!
+
+
+

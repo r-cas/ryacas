@@ -30,24 +30,13 @@ namespace {
 
     void _mul(const Limb* __restrict p, unsigned n, Limb a, Limb* __restrict r)
     {
-        Limb carry = 0;
-
-        for (unsigned j = 0; j < n; ++j) {
-            const Limb2 v = static_cast<Limb2>(*p++) * a + carry;
-            carry = static_cast<Limb>(v >> LIMB_BITS);
-            *r += static_cast<Limb>(v);
-            carry += *r++ < static_cast<Limb>(v);
+        if (n == 1) {
+            const Limb2 v = static_cast<Limb2>(*p) * a;
+            r[0] = static_cast<Limb>(v);
+            r[1] = static_cast<Limb>(v >> LIMB_BITS);
+            return;
         }
 
-        while (carry) {
-            const Limb v = *r + carry;
-            carry = v < *r;
-            *r++ = v;
-        }
-    }
-
-    void _mul(Limb a, unsigned n, const Limb* __restrict p, Limb* __restrict r)
-    {
         Limb carry = 0;
 
         for (unsigned j = 0; j < n; ++j) {
@@ -138,13 +127,7 @@ namespace yacas {
 
             while (p != q && std::isalnum(*p)) {
                 const char c = *p++;
-                Limb d;
-                if (std::isdigit(c))
-                    d = c - '0';
-                else if (std::isalpha(c))
-                    d = (c | 0x20) - 'a' + 10;
-                else
-                    throw ParseError(s, std::distance(s.cbegin(), q));
+                const Limb d = std::isdigit(c) ? Limb(c - '0') : Limb((c | 0x20) - 'a' + 10);
 
                 if (d >= b)
                     throw ParseError(s, std::distance(s.cbegin(), q));
@@ -262,6 +245,11 @@ namespace yacas {
             if (a == 0)
                 return;
 
+            if (_limbs.empty()) {
+                _limbs.push_back(a);
+                return;
+            }
+
             _limbs.push_back(0);
 
             Limb* __restrict p = _limbs.data();
@@ -314,7 +302,7 @@ namespace yacas {
                 return;
             }
 
-            const unsigned n = _limbs.size();
+            const unsigned n = static_cast<unsigned>(_limbs.size());
             _limbs.push_back(0);
             Limb* __restrict p = _limbs.data();
 
@@ -348,7 +336,7 @@ namespace yacas {
             if (a == 0)
                 throw DivisionByZeroError(to_string());
 
-            const unsigned n = _limbs.size();
+            const unsigned n = static_cast<unsigned>(_limbs.size());
             Limbs q(n);
 
             Limb2 t = 0;
@@ -359,14 +347,14 @@ namespace yacas {
             for (unsigned i = 0; i < n; ++i) {
                 t <<= LIMB_BITS;
                 t += *p--;
-                *qp-- = t / a;
+                *qp-- = static_cast<Limb>(t / a);
                 t %= a;
             }
 
             _limbs = std::move(q);
             drop_zeros();
 
-            return t;
+            return static_cast<Limb>(t);
         }
 
         void NN::add(const NN& a, unsigned shift)
@@ -466,8 +454,8 @@ namespace yacas {
 
         void NN::mul_bc(const NN& a)
         {
-            const unsigned m = _limbs.size();
-            const unsigned n = a._limbs.size();
+            const unsigned m = static_cast<unsigned>(_limbs.size());
+            const unsigned n = static_cast<unsigned>(a._limbs.size());
 
             Limbs result(m + n, 0);
 
@@ -477,12 +465,12 @@ namespace yacas {
                 const Limb* __restrict p = _limbs.data();
                 for (unsigned i = 0; i < n; ++i)
                     if (const Limb u = a._limbs[i])
-                        _mul(u, m, p, r + i);
+                        _mul(p, m, u, r + i);
             } else {
                 const Limb* __restrict q = a._limbs.data();
                 for (unsigned i = 0; i < m; ++i)
                     if (const Limb u = _limbs[i])
-                        _mul(u, n, q, r + i);
+                        _mul(q, n, u, r + i);
             }
 
             _limbs = std::move(result);
@@ -492,7 +480,7 @@ namespace yacas {
 
         void NN::sqr()
         {
-            const unsigned n = _limbs.size();
+            const unsigned n = static_cast<unsigned>(_limbs.size());
 
             if (n < MUL_TOOM22_THRESHOLD)
                 sqr_bc();
@@ -507,7 +495,7 @@ namespace yacas {
             if (_limbs.empty())
                 return;
 
-            const unsigned n = _limbs.size();
+            const unsigned n = static_cast<unsigned>(_limbs.size());
 
             Limbs c(2 * n, 0);
 
@@ -525,7 +513,7 @@ namespace yacas {
 
         void NN::sqr_toom22()
         {
-            const unsigned n = _limbs.size();
+            const unsigned n = static_cast<unsigned>(_limbs.size());
 
             assert(n >= 2);
 
@@ -560,7 +548,7 @@ namespace yacas {
 
         void NN::sqr_toom33()
         {
-            const unsigned n = _limbs.size();
+            const unsigned n = static_cast<unsigned>(_limbs.size());
 
             assert(n >= 3);
 
@@ -704,7 +692,6 @@ namespace yacas {
             unsigned long index = 0;
             _BitScanReverse(&index, B._limbs.back());
             const unsigned k = 31 - index;
-
 #else
             const unsigned k = __builtin_clz(B._limbs.back());
 #endif
@@ -712,8 +699,8 @@ namespace yacas {
             B <<= k;
             A <<= k;
 
-            const unsigned n = B._limbs.size();
-            const unsigned m = A._limbs.size() - n;
+            const unsigned n = static_cast<unsigned>(B._limbs.size());
+            const unsigned m = static_cast<unsigned>(A._limbs.size() - n);
 
             B._limbs.insert(B._limbs.begin(), m, 0);
 
@@ -747,7 +734,7 @@ namespace yacas {
 
                 qs /= B_leading_digit;
 
-                _limbs[j] = std::min(qs, static_cast<Limb2>(LIMB_MAX));
+                _limbs[j] = static_cast<Limb>(std::min(qs, static_cast<Limb2>(LIMB_MAX)));
 
                 NN T;
 

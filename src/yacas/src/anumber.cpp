@@ -19,7 +19,6 @@
 void BaseAddFull(ANumber& aResult, ANumber& a1, ANumber& a2);
 void BaseSubtract(ANumber& aResult, ANumber& a1, ANumber& a2);
 void BaseMultiplyFull(ANumber& aResult, ANumber& a1, ANumber& a2);
-void BaseSqrt(ANumber& aResult, const ANumber& N);
 
 void ANumber::Print(std::ostream& os, const std::string& prefix) const
 {
@@ -92,8 +91,20 @@ ANumber::ANumber(const std::string& aString, int aPrecision, int aBase) :
     iTensExp(0)
 {
     reserve(16);
-    SetPrecision(aPrecision);
     SetTo(aString, aBase);
+}
+
+ANumber::ANumber(const yacas::mp::ZZ& zz, int aPrecision):
+    std::vector<PlatWord>(zz.to_NN().limbs()),
+    iExp(0),
+    iNegative(zz.is_negative()),
+    iPrecision(aPrecision),
+    iTensExp(0)
+{
+    reserve(16);
+
+    if (zz.is_zero())
+        push_back(0);
 }
 
 std::string IntToBaseString(PlatDoubleWord aInt, int aBase)
@@ -428,47 +439,47 @@ void Add(ANumber& aResult, ANumber& a1, ANumber& a2)
     }
 }
 
-void Subtract(ANumber& aResult, ANumber& a1, ANumber& a2)
-{
-    BalanceFractions(a1, a2);
-    if (!a1.IsNegative() && a2.IsNegative()) {
-        BaseAddFull(aResult, a1, a2);
-        aResult.iNegative = false;
-    } else if (a1.IsNegative() && !a2.IsNegative()) {
-        BaseAddFull(aResult, a1, a2);
-        aResult.iNegative = true;
-    } else if (a1.IsNegative() && a2.IsNegative()) {
-        // if |a1|<|a2| then BaseSubtract(a2,a1)
-        if (BaseLessThan(a1, a2)) {
-            BaseSubtract(aResult, a2, a1);
-            aResult.iNegative = false;
-        } else if (BaseGreaterThan(a1, a2)) { // else if (|a1| > |a2|
-                                              // Negate(BaseSubtract(a1,a2))
-            BaseSubtract(aResult, a1, a2);
-            aResult.iNegative = true;
-        } else {
-            ANumber zero(/*???"0",*/ aResult.iPrecision);
-            aResult.CopyFrom(zero);
-        }
-    }
-    // Positive plus Negative
-    else {
-        assert(!(a1.IsNegative() || a2.IsNegative()));
-        // if |a1|>|a2| then BaseSubtract(a2,a1)
-        if (BaseGreaterThan(a1, a2)) {
-            BaseSubtract(aResult, a1, a2);
-            aResult.iNegative = false;
-        } else if (BaseLessThan(a1, a2)) { // else if (|a1| > |a2|
-                                           // Negate(BaseSubtract(a1,a2))
-            BaseSubtract(aResult, a2, a1);
-            aResult.iNegative = true;
-        } else {
-            ANumber zero(/*???"0",*/ aResult.iPrecision);
-            aResult.CopyFrom(zero);
-        }
-    }
-    aResult.DropTrailZeroes();
-}
+// void Subtract(ANumber& aResult, ANumber& a1, ANumber& a2)
+// {
+//     BalanceFractions(a1, a2);
+//     if (!a1.IsNegative() && a2.IsNegative()) {
+//         BaseAddFull(aResult, a1, a2);
+//         aResult.iNegative = false;
+//     } else if (a1.IsNegative() && !a2.IsNegative()) {
+//         BaseAddFull(aResult, a1, a2);
+//         aResult.iNegative = true;
+//     } else if (a1.IsNegative() && a2.IsNegative()) {
+//         // if |a1|<|a2| then BaseSubtract(a2,a1)
+//         if (BaseLessThan(a1, a2)) {
+//             BaseSubtract(aResult, a2, a1);
+//             aResult.iNegative = false;
+//         } else if (BaseGreaterThan(a1, a2)) { // else if (|a1| > |a2|
+//                                               // Negate(BaseSubtract(a1,a2))
+//             BaseSubtract(aResult, a1, a2);
+//             aResult.iNegative = true;
+//         } else {
+//             ANumber zero(/*???"0",*/ aResult.iPrecision);
+//             aResult.CopyFrom(zero);
+//         }
+//     }
+//     // Positive plus Negative
+//     else {
+//         assert(!(a1.IsNegative() || a2.IsNegative()));
+//         // if |a1|>|a2| then BaseSubtract(a2,a1)
+//         if (BaseGreaterThan(a1, a2)) {
+//             BaseSubtract(aResult, a1, a2);
+//             aResult.iNegative = false;
+//         } else if (BaseLessThan(a1, a2)) { // else if (|a1| > |a2|
+//                                            // Negate(BaseSubtract(a1,a2))
+//             BaseSubtract(aResult, a2, a1);
+//             aResult.iNegative = true;
+//         } else {
+//             ANumber zero(/*???"0",*/ aResult.iPrecision);
+//             aResult.CopyFrom(zero);
+//         }
+//     }
+//     aResult.DropTrailZeroes();
+// }
 
 bool GreaterThan(ANumber& a1, ANumber& a2)
 {
@@ -559,7 +570,6 @@ void ANumberToString(std::string& aResult,
         // Remove trailing zeroes (most significant side)
         while (aResult.size() > 1 && aResult.back() == 0)
             aResult.pop_back();
-        nr = aResult.size();
 
         std::reverse(aResult.begin(), aResult.end());
 
@@ -782,66 +792,66 @@ void BaseShiftLeft(ANumber& a, int aNrBits)
     }
 }
 
-/* Binary Greatest common divisor algorithm. */
-void BaseGcd(ANumber& aResult, ANumber& a1, ANumber& a2)
-{
-    ANumber zero(aResult.Precision());
-    ANumber u(aResult.Precision());
-    ANumber v(aResult.Precision());
-    u.CopyFrom(a1);
-    v.CopyFrom(a2);
-    u.iNegative = v.iNegative = false;
+// /* Binary Greatest common divisor algorithm. */
+// void BaseGcd(ANumber& aResult, ANumber& a1, ANumber& a2)
+// {
+//     ANumber zero(aResult.Precision());
+//     ANumber u(aResult.Precision());
+//     ANumber v(aResult.Precision());
+//     u.CopyFrom(a1);
+//     v.CopyFrom(a2);
+//     u.iNegative = v.iNegative = false;
 
-    int k = 0;
+//     int k = 0;
 
-    {
-        int i = 0;
-        PlatWord bit = 1;
-        while (u[i] == 0 && v[i] == 0)
-            i++;
-        k += WordBits * i;
-        while ((u[i] & bit) == 0 && (v[i] & bit) == 0) {
-            bit <<= 1;
-            k++;
-        }
-        BaseShiftRight(u, k);
-        BaseShiftRight(v, k);
-    }
-    ANumber t(/*???"0",*/ 10);
+//     {
+//         int i = 0;
+//         PlatWord bit = 1;
+//         while (u[i] == 0 && v[i] == 0)
+//             i++;
+//         k += WordBits * i;
+//         while ((u[i] & bit) == 0 && (v[i] & bit) == 0) {
+//             bit <<= 1;
+//             k++;
+//         }
+//         BaseShiftRight(u, k);
+//         BaseShiftRight(v, k);
+//     }
+//     ANumber t(/*???"0",*/ 10);
 
-    if (!u.IsEven()) {
-        t.CopyFrom(v);
-        t.Negate();
-    } else
-        t.CopyFrom(u);
+//     if (!u.IsEven()) {
+//         t.CopyFrom(v);
+//         t.Negate();
+//     } else
+//         t.CopyFrom(u);
 
-    while (!IsZero(t)) {
+//     while (!IsZero(t)) {
 
-        {
-            int k = 0;
-            int i = 0;
-            PlatWord bit = 1;
-            while (t[i] == 0)
-                i++;
-            k += WordBits * i;
-            while ((t[i] & bit) == 0) {
-                bit <<= 1;
-                k++;
-            }
-            BaseShiftRight(t, k);
-        }
-        if (GreaterThan(t, zero)) {
-            u.CopyFrom(t);
-        } else {
-            v.CopyFrom(t);
-            v.Negate();
-        }
-        Subtract(t, u, v);
-    }
-    aResult.CopyFrom(u);
-    aResult.iNegative = false;
-    BaseShiftLeft(aResult, k);
-}
+//         {
+//             int k = 0;
+//             int i = 0;
+//             PlatWord bit = 1;
+//             while (t[i] == 0)
+//                 i++;
+//             k += WordBits * i;
+//             while ((t[i] & bit) == 0) {
+//                 bit <<= 1;
+//                 k++;
+//             }
+//             BaseShiftRight(t, k);
+//         }
+//         if (GreaterThan(t, zero)) {
+//             u.CopyFrom(t);
+//         } else {
+//             v.CopyFrom(t);
+//             v.Negate();
+//         }
+//         Subtract(t, u, v);
+//     }
+//     aResult.CopyFrom(u);
+//     aResult.iNegative = false;
+//     BaseShiftLeft(aResult, k);
+// }
 
 void BaseDivide(ANumber& aQuotient,
                 ANumber& aRemainder,
@@ -890,7 +900,6 @@ void BaseDivide(ANumber& aQuotient,
         sub.push_back(0);
 
         PlatSignedDoubleWord carry;
-        int digit;
         { // Subtract the two
             // TODO this can be generalized!!!!
             //
@@ -899,7 +908,7 @@ void BaseDivide(ANumber& aQuotient,
 
             // First check if qv isn't too big...
             carry = 0;
-            for (digit = 0; digit <= n; digit++) {
+            for (int digit = 0; digit <= n; digit++) {
                 PlatSignedDoubleWord word;
                 word = ((PlatSignedDoubleWord)a1[digit + j]) -
                        ((PlatSignedDoubleWord)sub[digit]) +
@@ -918,7 +927,7 @@ void BaseDivide(ANumber& aQuotient,
             }
 
             carry = 0;
-            for (digit = 0; digit <= n; digit++) {
+            for (int digit = 0; digit <= n; digit++) {
                 PlatSignedDoubleWord word;
                 word = ((PlatSignedDoubleWord)a1[digit + j]) -
                        ((PlatSignedDoubleWord)sub[digit]) +
@@ -1044,91 +1053,91 @@ void Divide(ANumber& aQuotient, ANumber& aRemainder, ANumber& a1, ANumber& a2)
     NormalizeFloat(aQuotient, digitsNeeded);
 }
 
-void BaseSqrt(ANumber& aResult, const ANumber& N)
-{
+// void BaseSqrt(ANumber& aResult, const ANumber& N)
+// {
 
-    int l2;
-    ANumber u(aResult.Precision());
-    ANumber v(aResult.Precision());
-    ANumber u2(aResult.Precision());
-    ANumber v2(aResult.Precision());
-    ANumber uv2(aResult.Precision());
-    ANumber n(aResult.Precision());
-    ANumber two("2", 10);
+//     int l2;
+//     ANumber u(aResult.Precision());
+//     ANumber v(aResult.Precision());
+//     ANumber u2(aResult.Precision());
+//     ANumber v2(aResult.Precision());
+//     ANumber uv2(aResult.Precision());
+//     ANumber n(aResult.Precision());
+//     ANumber two("2", 10);
 
-    // sqrt(1) = 1, sqrt(0) = 0
-    if (BaseGreaterThan(two, N)) {
-        aResult.CopyFrom(N);
-        return;
-    }
+//     // sqrt(1) = 1, sqrt(0) = 0
+//     if (BaseGreaterThan(two, N)) {
+//         aResult.CopyFrom(N);
+//         return;
+//     }
 
-    // Find highest set bit, l2
-    u.CopyFrom(N);
-    l2 = 0;
-    while (!u.IsZero()) {
-        BaseShiftRight(u, 1);
-        l2++;
-    }
-    l2--;
+//     // Find highest set bit, l2
+//     u.CopyFrom(N);
+//     l2 = 0;
+//     while (!u.IsZero()) {
+//         BaseShiftRight(u, 1);
+//         l2++;
+//     }
+//     l2--;
 
-    // 1<<(l2/2) now would be a good under estimate for the square root.
-    // 1<<(l2/2) is definitely set in the result. Also it is the highest
-    // set bit.
-    l2 >>= 1;
+//     // 1<<(l2/2) now would be a good under estimate for the square root.
+//     // 1<<(l2/2) is definitely set in the result. Also it is the highest
+//     // set bit.
+//     l2 >>= 1;
 
-    // initialize u and u2 (u2==u^2).
-    u.SetTo("1");
-    BaseShiftLeft(u, l2);
-    u2.CopyFrom(u);
-    BaseShiftLeft(u2, l2);
+//     // initialize u and u2 (u2==u^2).
+//     u.SetTo("1");
+//     BaseShiftLeft(u, l2);
+//     u2.CopyFrom(u);
+//     BaseShiftLeft(u2, l2);
 
-    // Now for each lower bit:
-    while (l2--) {
-        // Get that bit in v, and v2 == v^2.
-        v.SetTo("1");
-        BaseShiftLeft(v, l2);
-        v2.CopyFrom(v);
-        BaseShiftLeft(v2, l2);
+//     // Now for each lower bit:
+//     while (l2--) {
+//         // Get that bit in v, and v2 == v^2.
+//         v.SetTo("1");
+//         BaseShiftLeft(v, l2);
+//         v2.CopyFrom(v);
+//         BaseShiftLeft(v2, l2);
 
-        // uv2 == 2*u*v
-        uv2.CopyFrom(u);
-        BaseShiftLeft(uv2, (l2 + 1));
+//         // uv2 == 2*u*v
+//         uv2.CopyFrom(u);
+//         BaseShiftLeft(uv2, (l2 + 1));
 
-        // n = (u+v)^2  =  u^2 + 2*u*v + v^2 = u2+uv2+v2
-        n.CopyFrom(u2);
-        WordBaseAdd(n, uv2);
-        WordBaseAdd(n, v2);
-        // if n (possible new best estimate for sqrt(N)^2 is smaller than
-        // N, then the bit l2 is set in the result, and add v to u.
-        if (!BaseGreaterThan(n, N)) {
-            WordBaseAdd(u, v); // u <- u+v
-            u2.CopyFrom(n);    // u^2 <- u^2 + 2*u*v + v^2
-        }
-    }
-    aResult.CopyFrom(u);
-}
+//         // n = (u+v)^2  =  u^2 + 2*u*v + v^2 = u2+uv2+v2
+//         n.CopyFrom(u2);
+//         WordBaseAdd(n, uv2);
+//         WordBaseAdd(n, v2);
+//         // if n (possible new best estimate for sqrt(N)^2 is smaller than
+//         // N, then the bit l2 is set in the result, and add v to u.
+//         if (!BaseGreaterThan(n, N)) {
+//             WordBaseAdd(u, v); // u <- u+v
+//             u2.CopyFrom(n);    // u^2 <- u^2 + 2*u*v + v^2
+//         }
+//     }
+//     aResult.CopyFrom(u);
+// }
 
-void Sqrt(ANumber& aResult, ANumber& N)
-{
-    int digs = WordDigits(N.iPrecision, 10);
-    PlatWord zero = 0;
-    if ((N.iTensExp & 1) != 0) {
-        WordBaseTimesInt(N, 10);
-        N.iTensExp--;
-    }
-    while (N.iExp < 2 * digs || (N.iExp & 1)) {
-        N.insert(N.begin(), zero);
-        N.iExp++;
-    }
+// void Sqrt(ANumber& aResult, ANumber& N)
+// {
+//     int digs = WordDigits(N.iPrecision, 10);
+//     PlatWord zero = 0;
+//     if ((N.iTensExp & 1) != 0) {
+//         WordBaseTimesInt(N, 10);
+//         N.iTensExp--;
+//     }
+//     while (N.iExp < 2 * digs || (N.iExp & 1)) {
+//         N.insert(N.begin(), zero);
+//         N.iExp++;
+//     }
 
-    const int resultDigits = N.iExp / 2;
-    const int resultTensExp = N.iTensExp / 2;
+//     const int resultDigits = N.iExp / 2;
+//     const int resultTensExp = N.iTensExp / 2;
 
-    BaseSqrt(aResult, N);
+//     BaseSqrt(aResult, N);
 
-    aResult.iExp = resultDigits;
-    aResult.iTensExp = resultTensExp;
-}
+//     aResult.iExp = resultDigits;
+//     aResult.iTensExp = resultTensExp;
+// }
 
 /*** Significant : return whether this number is not zero, up to
  * the number of digits specified behind the dot (as per aPrecision).
