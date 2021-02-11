@@ -71,7 +71,21 @@ LocalSymbols(omindent) [
      OMEcho("</OMOBJ>");
      ];
 
-10 # OMFormExpression(i_IsString)  <-- OMEcho("<OMSTR>":i:"</OMSTR>");
+10 # OMFormExpression(i_IsString)  <-- [
+  Local (p, s);
+  s := "";
+  For (p := 1, p <= Length(i), p++) [
+    Local (c);
+    c := i[p];
+    c := If (c = "&", "&amp;", c);
+    c := If (c = "<", "&lt;", c);
+    c := If (c = ">", "&gt;", c);
+    c := If (c = "\"", "&quot;", c);
+    c := If (c = "'", "&apos;", c);
+    s := s : c;
+  ];
+  OMEcho("<OMSTR>":s:"</OMSTR>");
+];
 11 # OMFormExpression(i_IsInteger) <-- OMEcho("<OMI>":String(i):"</OMI>");
 12 # OMFormExpression(i_IsNumber)  <-- OMEcho("<OMF dec=\"":String(i):"\"/>");
 13 # OMFormExpression(i_IsConstant)_(OMSymbol()[ String(i) ] != Empty)
@@ -387,16 +401,42 @@ FromString(str:" EndOfFile")
 10 # ReadOMOBJ(XmlTag("OMF",{{"DEC",_dec}},"OpenClose")) <--
 [
   OMNextToken();
-  Atom(dec);
+  If (dec = "INF", Infinity,
+    If (dec = "-INF", -Infinity,
+      If (dec = "NaN", Undefined,
+        Atom(dec) + 0.0
+      )
+    )
+  );
 ];
 
 10 # ReadOMOBJ(XmlTag("OMSTR",{},"Open")) <--
 [
-  Local(result);
+  Local(result,s,i);
   OMNextToken();
   If(IsString(OMToken()), [result := OMToken(); OMNextToken();], result := "");
   MatchClose(XmlTag("OMSTR",{},"Close"));
-  result;
+  s := "";
+  For (i := 1, i <= Length(result), i++) [
+    Local(c);
+    c := result[i];
+    If (c != "&", s := s : c, [
+      Local(j,ec);
+      j := i;
+      While (j <= Length(result) And result[j] != ";")
+        j := j + 1;
+
+      ec := result[i .. j];
+      If (ec = "&amp;", s := s : "&");
+      If (ec = "&lt;", s := s : "<");
+      If (ec = "&gt;", s := s : ">");
+      If (ec = "&quot;", s := s : "\"");
+      If (ec = "&apos;", s := s : "'");
+
+      i := j;
+    ]);
+  ];
+  s;
 ];
 10 # ReadOMOBJ(XmlTag("OMSTR",{},"OpenClose")) <--
 [
@@ -467,9 +507,9 @@ FromString(str:" EndOfFile")
   Local(expandRules, result);
   expandRules := { _(_path) <- OMPathSelect(path, function) };
   expandRules[1][2][2] := function;// the "function" variable is not expanded above.
-  
+
   mapping := (mapping /: expandRules);// "/:" has lower precedence than ":=".
-  
+
   Local(ruleMatched);
   ruleMatched := False;
   If(Type(mapping) = "|",
@@ -496,7 +536,7 @@ FromString(str:" EndOfFile")
      ruleMatched := True;
      ]
     );
-  
+
   If(ruleMatched,
      If(Type(result) = ":",
         If(Length(result) = 2,
@@ -688,3 +728,4 @@ Use("sums.rep/om.ys");
 Use("limit.rep/om.ys");
 //Use("numbers.rep/om.ys");// Sqrt is loaded before (stubs.rep) than IntNthRoot.
 Use("functional.rep/om.ys");
+Use("solve.rep/om.ys");

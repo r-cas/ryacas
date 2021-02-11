@@ -196,16 +196,6 @@ LispObject* PowerFloat(LispObject* int1,
     return FloatToString(result, aEnvironment);
 }
 
-LispObject*
-SqrtFloat(LispObject* int1, LispEnvironment& aEnvironment, int aPrecision)
-{
-    ANumber i1(*int1->Number(aPrecision)->iNumber);
-    ANumber res(aPrecision);
-    i1.ChangePrecision(aPrecision);
-    Sqrt(res, i1);
-    return FloatToString(res, aEnvironment);
-}
-
 LispObject* ShiftLeft(LispObject* int1,
                       LispObject* int2,
                       LispEnvironment& aEnvironment,
@@ -316,6 +306,8 @@ BigNumber& BigNumber::operator=(const BigNumber& bn)
             iNumber->CopyFrom(*bn.iNumber);
         else
             iNumber.reset(new ANumber(*bn.iNumber));
+
+        _zz.reset();
     }
 
     if (bn._zz) {
@@ -323,6 +315,8 @@ BigNumber& BigNumber::operator=(const BigNumber& bn)
             *_zz = *bn._zz;
         else
             _zz.reset(new mp::ZZ(*bn._zz));
+
+        iNumber.reset();
     }
     return *this;
 }
@@ -579,16 +573,14 @@ void BigNumber::BitXor(const BigNumber& aX, const BigNumber& aY)
 
 void BigNumber::BitNot(const BigNumber& aX)
 {
-    //abort();
-    throw std::invalid_argument("abort()");
-    // BecomeInt();
+    BecomeInt();
 
-    // BigNumber x(aX);
-    // x.BecomeInt();
+    BigNumber x(aX);
+    x.BecomeInt();
 
-    // *_zz = *x._zz;
-    // _zz->neg();
-    // _zz->abs();
+    *_zz = *x._zz;
+    _zz->neg();
+    _zz->abs();
 }
 
 /// Bit count operation: return the number of significant bits if integer,

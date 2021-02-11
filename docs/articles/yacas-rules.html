@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.9001</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -80,7 +80,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/r-cas/ryacas/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -100,7 +100,7 @@
       <h1 data-toc-skip>User-defined yacas rules</h1>
                         <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2020-11-15</h4>
+            <h4 class="date">2021-02-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/master/vignettes/yacas-rules.Rmd"><code>vignettes/yacas-rules.Rmd</code></a></small>
       <div class="hidden name"><code>yacas-rules.Rmd</code></div>
@@ -109,13 +109,15 @@
 
     
     
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">Ryacas</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas">Ryacas</a></span><span class="op">)</span></code></pre></div>
 <div id="included-rules" class="section level1">
 <h1 class="hasAnchor">
 <a href="#included-rules" class="anchor"></a>Included rules</h1>
 <p><code>yacas</code> comes with a number of rules all defined in the <code>yacas</code> directory of the installed package:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="kw">package</span> <span class="kw">=</span> <span class="st">"Ryacas"</span>, <span class="st">"yacas"</span>)</pre></body></html></div>
-<pre><code>## [1] "/tmp/RtmpF21yyg/temp_libpath23644021dfd0/Ryacas/yacas"</code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"Ryacas"</span>, <span class="st">"yacas"</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "/tmp/Rtmp4Xv0cd/temp_libpath132232b001b44/Ryacas/yacas"</code></pre>
 <p>For example in the <code>sums.rep</code> folder, a number of rules for sums are defined in the <code>code.ys</code> file.</p>
 <p>As an example, the fact that <span class="math display">\[
   \sum_{k = 1}^n (2k-1) = n^2
@@ -124,12 +126,15 @@
 <p>and the geometric sum is defined as</p>
 <pre><code>SumFunc(_k,0,_n,(r_IsFreeOf(k))^(_k), (1-r^(n+1))/(1-r) );</code></pre>
 <p>These can be verified:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Sum(i, 1, m, 2*i-1)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Sum(i, 1, m, 2*i-1)"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "m^2"</code></pre>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Sum(i, 0, m, 2^i)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Sum(i, 0, m, 2^i)"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "2^(m+1)-1"</code></pre>
 <p>There are also rules in <code>yacas</code> that are able to let the user change some limits of some sums, e.g. for the geometric sum:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Sum(i, 1, m, 2^i)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Sum(i, 1, m, 2^i)"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "2^(m+1)-2"</code></pre>
 </div>
 <div id="custom-rules" class="section level1">
@@ -140,12 +145,15 @@
 \]</span> then know that <span class="math display">\[
   \sum_{k = 0}^n (2k-1) = -1 + \sum_{k = 1}^n (2k-1) = n^2 - 1 .
 \]</span> But what does <code>yacas</code> say?</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Sum(i, 0, m, 2*i-1)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Sum(i, 0, m, 2*i-1)"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "Sum(i,0,m,2*i-1)"</code></pre>
 <p>We can then add our own rule by:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="../reference/yac_silent.html">yac_silent</a></span>(<span class="st">"SumFunc(_k,0,_n,2*_k-1, n^2 - 1)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/yac_silent.html">yac_silent</a></span><span class="op">(</span><span class="st">"SumFunc(_k,0,_n,2*_k-1, n^2 - 1)"</span><span class="op">)</span></code></pre></div>
 <p>And then try again:</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span>(<span class="st">"Sum(i, 0, m, 2*i-1)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Sum(i, 0, m, 2*i-1)"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "m^2-1"</code></pre>
 <p>A good source of inspiration for writing custom rules is reading the included rules, but there is a lot to programming in <code>yacas</code> and we refer to <code>yacas</code>’s documentation, specifically the chapter <a href="https://yacas.readthedocs.io/en/latest/programming_in_yacas/">Programming in Yacas</a>.</p>
 </div>
@@ -166,7 +174,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

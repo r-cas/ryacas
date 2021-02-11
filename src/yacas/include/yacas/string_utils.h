@@ -37,23 +37,5 @@ std::string& trim(std::string& s)
     return ltrim(rtrim(s));
 }
 
-
-
-/*
-inline
-std::string& ltrim_old(std::string& s)
-{
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) { return !std::isspace(c); }));
-    return s;
-}
-
-inline
-std::string& rtrim_old(std::string& s)
-{
-    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
-    return s;
-}
-*/
-
 #endif
 
