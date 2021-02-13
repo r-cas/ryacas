@@ -189,7 +189,7 @@ vech <- function(x, ...) {
 #' @export
 vech.default <- function(x, ...) {
   stopifnot(dim(x)[1] == dim(x)[2]) # square
-  stopifnot(all(A == t(A))) # symmetric
+  stopifnot(all(x == t(x))) # symmetric
   return(x[lower.tri(x, diag = TRUE)])
 }
 
