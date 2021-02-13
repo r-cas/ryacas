@@ -247,15 +247,13 @@ test_that("Inverse", {
 
 # Example 11
 
-## vec.yac_symbol has extra brackets {}
-
 ex11.default <- vec(G)
 ex11.yac_symbol <- vec(ysym(G))
 test_that("vec", {
   expect_true(
     all.equal(
       ex11.default,
-      #ex11.yac_symbol,
+      ex11.yac_symbol,
       as.vector(G)
     )
   )
@@ -265,15 +263,33 @@ test_that("vec", {
 
 # Example 12
 
-## vech.yac_symbol has extra brackets {}
-
-ex12.default <- vech(G)
-ex12.yac_symbol <- vech(ysym(G))
-test_that("vech", {
+H <- matrix(
+  c(1, 2, 2, 3),
+  ncol = 2
+)
+ex12.default <- vech(H)
+ex12.yac_symbol <- vech(ysym(H))
+test_that("vech 2 by 2", {
   expect_true(
     all.equal(
       ex12.default,
-      #ex12.yac_symbol
+      ex12.yac_symbol
+    )
+  )
+})
+
+I <- matrix(
+  c(1, 2, 3, 2, 4, 5, 3, 5, 6),
+  ncol = 3
+)
+
+ex13.default <- vech(I)
+ex13.yac_symbol <- vech(ysym(I))
+test_that("vech 3 by 3", {
+  expect_true(
+    all.equal(
+      ex13.default,
+      ex13.yac_symbol
     )
   )
 })
