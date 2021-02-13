@@ -249,7 +249,7 @@ test_that("Inverse", {
 
 ex11.default <- vec(G)
 ex11.yac_symbol <- as_r(vec(ysym(G)))
-test_that("vec", {
+test_that("vec numeric", {
   expect_true(
     all.equal(
       ex11.default,
@@ -259,37 +259,82 @@ test_that("vec", {
   )
 })
 
-# HalfVectorize
-
 # Example 12
 
 H <- matrix(
-  c(1, 2, 2, 3),
-  ncol = 2
+  c("a", "b", "c", "d", "e", "f", "g", "h", "i"),
+  ncol = 3,
+  byrow = FALSE
 )
-ex12.default <- vech(H)
-ex12.yac_symbol <- as_r(vech(ysym(H)))
-test_that("vech 2 by 2", {
+
+ex12.default <- vec(H)
+ex12.yac_symbol <- vec(ysym(H))
+ex12.yac_symbol <- unlist(strsplit(gsub("[\\{\\}]", "", ex12.yac_symbol), ","))
+
+test_that("vec symbolic", {
   expect_true(
     all.equal(
       ex12.default,
-      ex12.yac_symbol
+      ex12.yac_symbol,
+      as.vector(H)
     )
   )
 })
 
-I <- matrix(
-  c(1, 2, 3, 2, 4, 5, 3, 5, 6),
-  ncol = 3
-)
+# HalfVectorize
 
+############################################################
+# yacas returns results in different order for 3 by 3 matrix
+############################################################
+
+# Example 13
+
+I <- matrix(
+  c(1, 2, 2, 3),
+  ncol = 2
+)
 ex13.default <- vech(I)
 ex13.yac_symbol <- as_r(vech(ysym(I)))
-test_that("vech 3 by 3", {
+test_that("vech 2 by 2", {
   expect_true(
     all.equal(
       ex13.default,
       ex13.yac_symbol
+    )
+  )
+})
+
+J <- matrix(
+  c(1, 2, 3, 2, 4, 5, 3, 5, 6),
+  ncol = 3
+)
+
+ex14.default <- vech(J)
+ex14.yac_symbol <- as_r(vech(ysym(J)))
+test_that("vech 3 by 3", {
+  expect_true(
+    all.equal(
+      ex14.default,
+      ex14.yac_symbol
+    )
+  )
+})
+
+# Symbolic
+
+K <- matrix(
+  c("a", "b", "c", "b", "d", "e", "c", "e", "f"),
+  ncol = 3
+)
+
+ex15.default <- vech(K)
+ex15.yac_symbol <- vech(ysym(K))
+ex15.yac_symbol <- unlist(strsplit(gsub("[\\{\\}]", "", ex15.yac_symbol), ","))
+test_that("a, b, c, d, e, f", {
+  expect_true(
+    all.equal(
+      c("a", "b", "c", "d", "e", "f"),
+      ex15.yac_symbol
     )
   )
 })
