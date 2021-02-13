@@ -166,9 +166,7 @@ vec.yac_symbol <- function(x, ...) {
 
   stopifnot(y$is_mat)
 
-  return(
-    as_r(y_fn(x, "Vectorize"))
-  )
+  return(y_fn(x, "Vectorize"))
 }
 
 #' Half-Vectorize
@@ -204,7 +202,5 @@ vech.yac_symbol <- function(x, ...) {
 
   stopifnot(y$is_mat)
 
-  return(
-    as_r(y_fn(x, "HalfVectorize"))
-  )
+  return(y_fn(x, "HalfVectorize"))
 }
