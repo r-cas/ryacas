@@ -333,8 +333,9 @@ ex15.yac_symbol <- unlist(strsplit(gsub("[\\{\\}]", "", ex15.yac_symbol), ","))
 test_that("a, b, c, d, e, f", {
   expect_true(
     all.equal(
-      c("a", "b", "c", "d", "e", "f"),
-      ex15.yac_symbol
+      ex15.default,
+      ex15.yac_symbol,
+      c("a", "b", "c", "d", "e", "f")
     )
   )
 })
