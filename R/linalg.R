@@ -169,3 +169,35 @@ vec.yac_symbol <- function(x, ...) {
   return(y_fn(x, "Vectorize"))
 }
 
+#' Half-Vectorize
+#'
+#' @param x If `yac_symbol` treat as such, else call [vech.default()].
+#' @param \dots further arguments passed to [vech.default()]
+#'
+#' @concept yac_symbol
+#'
+#' @examples
+#' (x <- matrix(1:9, ncol = 3))
+#' vech(x)
+#' vech(ysym(x))
+#' @export
+vech <- function(x, ...) {
+  UseMethod("vech")
+}
+
+#' @export
+vech.default <- function(x, ...) {
+  return(x[lower.tri(x, diag = TRUE)])
+}
+
+#' @export
+vech.yac_symbol <- function(x, ...) {
+  stopifnot(methods::is(x, "yac_symbol"))
+
+  y_res <- yac_str(x$yacas_cmd)
+  y <- ysym(y_res)
+
+  stopifnot(y$is_mat)
+
+  return(y_fn(x, "HalfVectorize"))
+}
