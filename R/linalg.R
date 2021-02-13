@@ -177,7 +177,8 @@ vec.yac_symbol <- function(x, ...) {
 #' @concept yac_symbol
 #'
 #' @examples
-#' (x <- matrix(1:9, ncol = 3))
+#' A <- mtcars[, c(1, 3, 4, 5, 6, 7)]
+#' x <- cov(A)
 #' vech(x)
 #' vech(ysym(x))
 #' @export
@@ -187,6 +188,8 @@ vech <- function(x, ...) {
 
 #' @export
 vech.default <- function(x, ...) {
+  stopifnot(dim(x)[1] == dim(x)[2] # square
+  stopifnot(all(A == t(A))) # symmetric
   return(x[lower.tri(x, diag = TRUE)])
 }
 
