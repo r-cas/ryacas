@@ -248,7 +248,7 @@ test_that("Inverse", {
 # Example 11
 
 ex11.default <- vec(G)
-ex11.yac_symbol <- vec(ysym(G))
+ex11.yac_symbol <- as_r(vec(ysym(G)))
 test_that("vec", {
   expect_true(
     all.equal(
@@ -268,7 +268,7 @@ H <- matrix(
   ncol = 2
 )
 ex12.default <- vech(H)
-ex12.yac_symbol <- vech(ysym(H))
+ex12.yac_symbol <- as_r(vech(ysym(H)))
 test_that("vech 2 by 2", {
   expect_true(
     all.equal(
@@ -284,7 +284,7 @@ I <- matrix(
 )
 
 ex13.default <- vech(I)
-ex13.yac_symbol <- vech(ysym(I))
+ex13.yac_symbol <- as_r(vech(ysym(I)))
 test_that("vech 3 by 3", {
   expect_true(
     all.equal(
