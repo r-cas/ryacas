@@ -136,4 +136,36 @@ pow.yac_symbol <- function(x, n, ...) {
   return(y_fn(x, "MatrixPower", n))
 }
 
-# vec and vech
+#' Vectorize
+#'
+#' @param x If `yac_symbol` treat as such, else call [base::as.vector()].
+#' @param \dots further arguments passed to [base::as.vector()]
+#'
+#' @concept yac_symbol
+#'
+#' @examples
+#' (x <- matrix(1:9, ncol = 3))
+#' vec(x)
+#' vec(ysym(x))
+#' @export
+vec <- function(x, ...) {
+  UseMethod("vec")
+}
+
+#' @export
+vec.default <- function(x, ...) {
+  return(as.vector(x, ...))
+}
+
+#' @export
+vec.yac_symbol <- function(x, ...) {
+  stopifnot(methods::is(x, "yac_symbol"))
+
+  y_res <- yac_str(x$yacas_cmd)
+  y <- ysym(y_res)
+
+  stopifnot(y$is_mat)
+
+  return(y_fn(x, "Vectorize"))
+}
+
