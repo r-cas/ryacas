@@ -242,3 +242,52 @@ test_that("Inverse", {
     )
   )
 })
+
+# Vectorize
+
+# Example 11
+
+## vec.yac_symbol has extra brackets {}
+
+ex11.default <- vec(G)
+ex11.yac_symbol <- vec(ysym(G))
+test_that("vec", {
+  expect_true(
+    all.equal(
+      ex11.default,
+      #ex11.yac_symbol,
+      as.vector(G)
+    )
+  )
+})
+
+# HalfVectorize
+
+# Example 12
+
+## vech.yac_symbol has extra brackets {}
+
+ex12.default <- vech(G)
+ex12.yac_symbol <- vech(ysym(G))
+test_that("vech", {
+  expect_true(
+    all.equal(
+      ex12.default,
+      #ex12.yac_symbol
+    )
+  )
+})
+
+# Errors
+
+test_that("Square", {
+  expect_error(
+    vech(matrix(1:10, ncol = 2))
+  )
+})
+
+test_that("Symmetric", {
+  expect_error(
+    vech(matrix(1:9, ncol = 3))
+  )
+})
