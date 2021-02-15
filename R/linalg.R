@@ -105,7 +105,6 @@ pow.default <- function(x, n, ...) {
     x <- solve(x)
     n <- abs(n)
   }
-  # using https://simple.wikipedia.org/wiki/Exponentiation_by_squaring#:~:text=Exponentiating%20by%20squaring%20is%20an,binary%20expansion%20of%20the%20exponent.
   if (n == 1) {
     return(x)
   }
