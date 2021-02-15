@@ -169,14 +169,21 @@ tr(ysym(matrix(c(1:10), ncol = 2)))
 
 # Example 6
 
-G <- matrix(c(1, 2, 2, 3), ncol = 2)
+a <- 1
+b <- 2
+c <- 3
+G <- matrix(c(a, b, b, c), ncol = 2)
 ex6.default <- pow(G, 4)
 ex6.yac_symbol <- as_r(pow(ysym(G), 4))
+ex6.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), 4))
+)
 test_that("Equal to matrix multiplication", {
   expect_true(
     all.equal(
       ex6.default,
       ex6.yac_symbol,
+      ex6.yac_symbol2,
       G %*% G %*% G %*% G
     )
   )
@@ -186,11 +193,15 @@ test_that("Equal to matrix multiplication", {
 
 ex7.default <- pow(G, 0)
 ex7.yac_symbol <- as_r(pow(ysym(G), 0))
+ex7.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), 0))
+)
 test_that("Identity Matrix", {
   expect_true(
     all.equal(
       ex7.default,
       ex7.yac_symbol,
+      ex7.yac_symbol2,
       diag(dim(G)[1])
     )
   )
@@ -200,11 +211,15 @@ test_that("Identity Matrix", {
 
 ex8.default <- pow(G, 1)
 ex8.yac_symbol <- as_r(pow(ysym(G), 1))
+ex8.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), 1))
+)
 test_that("G", {
   expect_true(
     all.equal(
       ex8.default,
       ex8.yac_symbol,
+      ex8.yac_symbol2,
       G
     )
   )
@@ -215,11 +230,15 @@ test_that("G", {
 InverseG <- solve(G)
 ex9.default <- pow(G, -4)
 ex9.yac_symbol <- as_r(pow(ysym(G), -4))
+ex9.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), -4))
+)
 test_that("Negative power", {
   expect_true(
     all.equal(
       ex9.default,
       ex9.yac_symbol,
+      ex9.yac_symbol2,
       InverseG %*% InverseG %*% InverseG %*% InverseG
     )
   )
@@ -229,11 +248,15 @@ test_that("Negative power", {
 
 ex10.default <- pow(G, -1)
 ex10.yac_symbol <- as_r(pow(ysym(G), -1))
+ex10.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), -1))
+)
 test_that("Inverse", {
   expect_true(
     all.equal(
       ex10.default,
       ex10.yac_symbol,
+      ex10.yac_symbol2,
       InverseG
     )
   )
