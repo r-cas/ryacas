@@ -82,7 +82,7 @@ tr.yac_symbol <- function(x, ...) {
 #' @concept yac_symbol
 #'
 #' @examples
-#' (x <- matrix(1:9, ncol = 3))
+#' (x <- matrix(c(1, 2, 2, 3), ncol = 2))
 #' pow(x, 2)
 #' pow(ysym(x), 2)
 #' @export
