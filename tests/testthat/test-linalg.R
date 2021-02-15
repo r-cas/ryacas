@@ -169,7 +169,7 @@ tr(ysym(matrix(c(1:10), ncol = 2)))
 
 # Example 6
 
-G <- unname(Sigma)
+G <- matrix(c(1, 2, 2, 3), ncol = 2)
 ex6.default <- pow(G, 4)
 ex6.yac_symbol <- as_r(pow(ysym(G), 4))
 test_that("Equal to matrix multiplication", {
@@ -212,16 +212,14 @@ test_that("G", {
 
 # Example 9
 
-## pow.yac_symbol does not accept negative powers
-
 InverseG <- solve(G)
 ex9.default <- pow(G, -4)
-#ex9.yac_symbol <- as_r(pow(ysym(G), -4))
+ex9.yac_symbol <- as_r(pow(ysym(G), -4))
 test_that("Negative power", {
   expect_true(
     all.equal(
       ex9.default,
-      #ex9.yac_symbol,
+      ex9.yac_symbol,
       InverseG %*% InverseG %*% InverseG %*% InverseG
     )
   )
@@ -229,15 +227,13 @@ test_that("Negative power", {
 
 # Example 10
 
-## pow.yac_symbol does not accept negative powers
-
 ex10.default <- pow(G, -1)
-#ex10.yac_symbol <- as_r(pow(ysym(G), -1))
+ex10.yac_symbol <- as_r(pow(ysym(G), -1))
 test_that("Inverse", {
   expect_true(
     all.equal(
       ex10.default,
-      #ex10.yac_symbol,
+      ex10.yac_symbol,
       InverseG
     )
   )
@@ -282,10 +278,6 @@ test_that("vec symbolic", {
 })
 
 # HalfVectorize
-
-############################################################
-# yacas returns results in different order for 3 by 3 matrix
-############################################################
 
 # Example 13
 
