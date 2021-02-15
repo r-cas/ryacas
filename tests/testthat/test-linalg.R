@@ -82,7 +82,7 @@ test_that("x is not a yac_symbol matrix", {
   )
 })
 
-test_that("x is not square", {
+test_that("x is not a square matrix", {
   expect_error(
     det(ysym(matrix(c(1:10), ncol = 2)))
   )
@@ -147,7 +147,7 @@ test_that("x is not a matrix", {
   )
 })
 
-test_that("x is not square", {
+test_that("x is not a square matrix", {
   expect_error(
     tr(matrix(c(1:10), ncol = 2))
   )
@@ -239,6 +239,38 @@ test_that("Inverse", {
   )
 })
 
+# Errors
+
+test_that("x is not of class yac_symbol", {
+  expect_error(
+    pow.yac_symbol(G)
+  )
+})
+
+test_that("x is not a yac_symbol matrix", {
+  expect_error(
+    pow(ysym(c(1:5)))
+  )
+})
+
+test_that("x is not numeric", {
+  expect_error(
+    pow(E)
+  )
+})
+
+test_that("x is not a matrix", {
+  expect_error(
+    pow(c(1:10))
+  )
+})
+
+test_that("x is not a square matrix", {
+  expect_error(
+    pow(matrix(1:10, ncol = 2))
+  )
+})
+
 # Vectorize
 
 # Example 11
@@ -274,6 +306,26 @@ test_that("vec symbolic", {
       ex12.yac_symbol,
       as.vector(H)
     )
+  )
+})
+
+# Errors
+
+test_that("x is not of class yac_symbol", {
+  expect_error(
+    vec.yac_symbol(G)
+  )
+})
+
+test_that("x is not a yac_symbol matrix", {
+  expect_error(
+    vec(ysym(c(1:5)))
+  )
+})
+
+test_that("x is not a matrix", {
+  expect_error(
+    vec(c(1:10))
   )
 })
 
@@ -334,13 +386,31 @@ test_that("a, b, c, d, e, f", {
 
 # Errors
 
-test_that("Square", {
+test_that("x is not of class yac_symbol", {
+  expect_error(
+    vech.yac_symbol(G)
+  )
+})
+
+test_that("x is not a yac_symbol matrix", {
+  expect_error(
+    vech(ysym(c(1:5)))
+  )
+})
+
+test_that("x is not a matrix", {
+  expect_error(
+    vech(c(1:10))
+  )
+})
+
+test_that("x is not a square matrix", {
   expect_error(
     vech(matrix(1:10, ncol = 2))
   )
 })
 
-test_that("Symmetric", {
+test_that("x is not a symmetric matrix", {
   expect_error(
     vech(matrix(1:9, ncol = 3))
   )
