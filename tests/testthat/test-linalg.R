@@ -346,12 +346,6 @@ test_that("x is not a yac_symbol matrix", {
   )
 })
 
-test_that("x is not a matrix", {
-  expect_error(
-    vec(c(1:10))
-  )
-})
-
 # HalfVectorize
 
 # Example 13
@@ -418,12 +412,6 @@ test_that("x is not of class yac_symbol", {
 test_that("x is not a yac_symbol matrix", {
   expect_error(
     vech(ysym(c(1:5)))
-  )
-})
-
-test_that("x is not a matrix", {
-  expect_error(
-    vech(c(1:10))
   )
 })
 
