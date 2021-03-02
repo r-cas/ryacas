@@ -82,7 +82,7 @@ test_that("x is not a yac_symbol matrix", {
   )
 })
 
-test_that("x is not square", {
+test_that("x is not a square matrix", {
   expect_error(
     det(ysym(matrix(c(1:10), ncol = 2)))
   )
@@ -147,7 +147,7 @@ test_that("x is not a matrix", {
   )
 })
 
-test_that("x is not square", {
+test_that("x is not a square matrix", {
   expect_error(
     tr(matrix(c(1:10), ncol = 2))
   )
@@ -164,3 +164,265 @@ tr(ysym(matrix(c(1:10), ncol = 2)))
 ## x := {1, 2, 3, 4};
 ## Trace(x);
 ## 10
+
+# MatrixPower
+
+# Example 6
+
+a <- 1
+b <- 2
+c <- 3
+G <- matrix(c(a, b, b, c), ncol = 2)
+ex6.default <- pow(G, 4)
+ex6.yac_symbol <- as_r(pow(ysym(G), 4))
+ex6.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), 4))
+)
+test_that("Equal to matrix multiplication", {
+  expect_true(
+    all.equal(
+      ex6.default,
+      ex6.yac_symbol,
+      ex6.yac_symbol2,
+      G %*% G %*% G %*% G
+    )
+  )
+})
+
+# Example 7
+
+ex7.default <- pow(G, 0)
+ex7.yac_symbol <- as_r(pow(ysym(G), 0))
+ex7.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), 0))
+)
+test_that("Identity Matrix", {
+  expect_true(
+    all.equal(
+      ex7.default,
+      ex7.yac_symbol,
+      ex7.yac_symbol2,
+      diag(dim(G)[1])
+    )
+  )
+})
+
+# Example 8
+
+ex8.default <- pow(G, 1)
+ex8.yac_symbol <- as_r(pow(ysym(G), 1))
+ex8.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), 1))
+)
+test_that("G", {
+  expect_true(
+    all.equal(
+      ex8.default,
+      ex8.yac_symbol,
+      ex8.yac_symbol2,
+      G
+    )
+  )
+})
+
+# Example 9
+
+InverseG <- solve(G)
+ex9.default <- pow(G, -4)
+ex9.yac_symbol <- as_r(pow(ysym(G), -4))
+ex9.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), -4))
+)
+test_that("Negative power", {
+  expect_true(
+    all.equal(
+      ex9.default,
+      ex9.yac_symbol,
+      ex9.yac_symbol2,
+      InverseG %*% InverseG %*% InverseG %*% InverseG
+    )
+  )
+})
+
+# Example 10
+
+ex10.default <- pow(G, -1)
+ex10.yac_symbol <- as_r(pow(ysym(G), -1))
+ex10.yac_symbol2 <- eval(
+  as_r(pow(ysym(matrix(c("a", "b", "b", "c"), ncol = 2)), -1))
+)
+test_that("Inverse", {
+  expect_true(
+    all.equal(
+      ex10.default,
+      ex10.yac_symbol,
+      ex10.yac_symbol2,
+      InverseG
+    )
+  )
+})
+
+# Errors
+
+test_that("x is not of class yac_symbol", {
+  expect_error(
+    pow.yac_symbol(G)
+  )
+})
+
+test_that("x is not a yac_symbol matrix", {
+  expect_error(
+    pow(ysym(c(1:5)))
+  )
+})
+
+test_that("x is not numeric", {
+  expect_error(
+    pow(E)
+  )
+})
+
+test_that("x is not a matrix", {
+  expect_error(
+    pow(c(1:10))
+  )
+})
+
+test_that("x is not a square matrix", {
+  expect_error(
+    pow(matrix(1:10, ncol = 2))
+  )
+})
+
+# Vectorize
+
+# Example 11
+
+ex11.default <- vec(G)
+ex11.yac_symbol <- as_r(vec(ysym(G)))
+test_that("vec numeric", {
+  expect_true(
+    all.equal(
+      ex11.default,
+      ex11.yac_symbol,
+      as.vector(G)
+    )
+  )
+})
+
+# Example 12
+
+H <- matrix(
+  c("a", "b", "c", "d", "e", "f", "g", "h", "i"),
+  ncol = 3,
+  byrow = FALSE
+)
+
+ex12.default <- vec(H)
+ex12.yac_symbol <- vec(ysym(H))
+ex12.yac_symbol <- unlist(strsplit(gsub("[\\{\\}]", "", ex12.yac_symbol), ","))
+
+test_that("vec symbolic", {
+  expect_true(
+    all.equal(
+      ex12.default,
+      ex12.yac_symbol,
+      as.vector(H)
+    )
+  )
+})
+
+# Errors
+
+test_that("x is not of class yac_symbol", {
+  expect_error(
+    vec.yac_symbol(G)
+  )
+})
+
+test_that("x is not a yac_symbol matrix", {
+  expect_error(
+    vec(ysym(c(1:5)))
+  )
+})
+
+# HalfVectorize
+
+# Example 13
+
+I <- matrix(
+  c(1, 2, 2, 3),
+  ncol = 2
+)
+ex13.default <- vech(I)
+ex13.yac_symbol <- as_r(vech(ysym(I)))
+test_that("vech 2 by 2", {
+  expect_true(
+    all.equal(
+      ex13.default,
+      ex13.yac_symbol
+    )
+  )
+})
+
+J <- matrix(
+  c(1, 2, 3, 2, 4, 5, 3, 5, 6),
+  ncol = 3
+)
+
+ex14.default <- vech(J)
+ex14.yac_symbol <- as_r(vech(ysym(J)))
+test_that("vech 3 by 3", {
+  expect_true(
+    all.equal(
+      ex14.default,
+      ex14.yac_symbol
+    )
+  )
+})
+
+# Symbolic
+
+K <- matrix(
+  c("a", "b", "c", "b", "d", "e", "c", "e", "f"),
+  ncol = 3
+)
+
+ex15.default <- vech(K)
+ex15.yac_symbol <- vech(ysym(K))
+ex15.yac_symbol <- unlist(strsplit(gsub("[\\{\\}]", "", ex15.yac_symbol), ","))
+test_that("a, b, c, d, e, f", {
+  expect_true(
+    all.equal(
+      ex15.default,
+      ex15.yac_symbol,
+      c("a", "b", "c", "d", "e", "f")
+    )
+  )
+})
+
+# Errors
+
+test_that("x is not of class yac_symbol", {
+  expect_error(
+    vech.yac_symbol(G)
+  )
+})
+
+test_that("x is not a yac_symbol matrix", {
+  expect_error(
+    vech(ysym(c(1:5)))
+  )
+})
+
+test_that("x is not a square matrix", {
+  expect_error(
+    vech(matrix(1:10, ncol = 2))
+  )
+})
+
+test_that("x is not a symmetric matrix", {
+  expect_error(
+    vech(matrix(1:9, ncol = 3))
+  )
+})
