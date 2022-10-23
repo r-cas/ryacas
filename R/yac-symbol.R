@@ -358,6 +358,24 @@ tex.yac_symbol <- function(x) {
   return(v)
 }
 
+#' @export
+matrix_product <- function(x, y){
+  stopifnot(methods::is(x, "yac_symbol"))
+  stopifnot(methods::is(y, "yac_symbol"))
+  
+  x_res <- ysym(yac_str(x$yacas_cmd))
+  y_res <- ysym(yac_str(y$yacas_cmd))
+  
+  z <- paste0(x_res$yacas_cmd, " * ", y_res$yacas_cmd)
+  z_res <- yac_str(z)
+  
+  v <- ysym(z_res)
+  
+  return(v)    
+}
+
+
+
 #' Matrix diagonals
 #' 
 #' From [base::diag()].
