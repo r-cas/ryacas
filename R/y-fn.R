@@ -64,3 +64,27 @@ y_rmvars.default <- function(x) {
   # FIXME: Best API?
   paste0("((", x, ") /:: { _lhs == _rhs <- rhs })")
 }
+
+
+#' Evaluate a yacas expression
+#' 
+#' Evaluate a yacas expression by replacing variables with values as for the
+#' given list.
+#'
+#' @param expr a valid yacas expression
+#'
+#' @concept helper
+#' 
+#' @examples
+#' eq <- ysym("2*y+x^2+2*x-3")
+#' y_eval(eq, list(x=3, y=2))
+#'
+#' @export
+y_eval <- function(expr, varlist) {
+  UseMethod("y_eval")
+}
+
+#' @export
+y_eval.default <- function(expr, varlist) {
+  eval(as_r(expr), varlist)
+}
