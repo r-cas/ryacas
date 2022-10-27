@@ -10,6 +10,10 @@ y_eval(expr, ..., as.r = FALSE)
 \item{expr}{a valid yacas expression}
 
 \item{...}{a list of assignements (see example)}
+
+\item{as.r}{if TRUE, then the expression is evaluated as R (if any variable
+to be substituted in the expression is a vector, then a vector is returned).
+If it is FALSE (default), a yacc expression is returned, replacing scalar variables.}
 }
 \description{
 Evaluate a yacas expression by replacing variables with values as for the

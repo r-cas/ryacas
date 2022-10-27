@@ -74,6 +74,10 @@ y_rmvars.default <- function(x) {
 #' @param expr a valid yacas expression
 #' 
 #' @param ... a list of assignements (see example)
+#' 
+#' @param as.r if TRUE, then the expression is evaluated as R (if any variable 
+#' to be substituted in the expression is a vector, then a vector is returned). 
+#' If it is FALSE (default), a yacc expression is returned, replacing scalar variables.
 #'
 #' @concept helper
 #' 
