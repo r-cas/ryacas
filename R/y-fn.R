@@ -72,19 +72,26 @@ y_rmvars.default <- function(x) {
 #' given list.
 #'
 #' @param expr a valid yacas expression
+#' 
+#' @param ... a list of assignements (see example)
 #'
 #' @concept helper
 #' 
 #' @examples
 #' eq <- ysym("2*y+x^2+2*x-3")
-#' y_eval(eq, list(x=3, y=2))
+#' y_eval(eq, x=3, y=2)
 #'
 #' @export
-y_eval <- function(expr, varlist) {
+y_eval <- function(expr, ...) {
   UseMethod("y_eval")
 }
 
 #' @export
-y_eval.default <- function(expr, varlist) {
-  eval(as_r(expr), varlist)
+y_eval.default <- function(expr, ...) {
+  args <-  list(...)
+  assign <- c()
+  for (v in names(args)) {
+    assign <- c(assign, paste0(v, "==", args[[v]]))
+  }
+  y_fn(expr, "Where", paste(assign, collapse=" And "))
 }

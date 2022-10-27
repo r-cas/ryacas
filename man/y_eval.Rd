@@ -4,10 +4,12 @@
 \alias{y_eval}
 \title{Evaluate a yacas expression}
 \usage{
-y_eval(expr, varlist)
+y_eval(expr, ...)
 }
 \arguments{
 \item{expr}{a valid yacas expression}
+
+\item{...}{a list of assignements (see example)}
 }
 \description{
 Evaluate a yacas expression by replacing variables with values as for the
@@ -15,7 +17,7 @@ given list.
 }
 \examples{
 eq <- ysym("2*y+x^2+2*x-3")
-y_eval(eq, list(x=3, y=2))
+y_eval(eq, x=3, y=2)
 
 }
 \concept{helper}
