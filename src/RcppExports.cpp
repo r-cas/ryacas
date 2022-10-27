@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // yacas_init_force_path
 void yacas_init_force_path(std::string path, bool ryacas_init);
 RcppExport SEXP _Ryacas_yacas_init_force_path(SEXP pathSEXP, SEXP ryacas_initSEXP) {
