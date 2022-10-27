@@ -78,20 +78,31 @@ y_rmvars.default <- function(x) {
 #' @concept helper
 #' 
 #' @examples
+#' # Evaluate as yacas object
 #' eq <- ysym("2*y+x^2+2*x-3")
 #' y_eval(eq, x=3, y=2)
-#'
+#' 
+#' # Evaluate as R expression:
+#' y_eval(eq, x=3, y=2, as.r=T)
+#' # This allows to use vectors:
+#' y_eval(eq, x=1:10, y=2, as.r=T)
+#' # and to plot functions:
+#' curve(y_eval(eq, x=x, y=2, as.r=T), xlim=c(0,10))
 #' @export
-y_eval <- function(expr, ...) {
+y_eval <- function(expr, ..., as.r=FALSE) {
   UseMethod("y_eval")
 }
 
 #' @export
-y_eval.default <- function(expr, ...) {
+y_eval.default <- function(expr, ..., as.r=FALSE) {
   args <-  list(...)
-  assign <- c()
-  for (v in names(args)) {
-    assign <- c(assign, paste0(v, "==", args[[v]]))
+  if (as.r) {
+    expr %>% as_r() %>% eval(args)
+  } else {
+    assign <- c()
+    for (v in names(args)) {
+      assign <- c(assign, paste0(v, "==", args[[v]]))
+    }
+    y_fn(expr, "Where", paste(assign, collapse=" And "))
   }
-  y_fn(expr, "Where", paste(assign, collapse=" And "))
 }
