@@ -4,7 +4,7 @@
 \alias{y_eval}
 \title{Evaluate a yacas expression}
 \usage{
-y_eval(expr, ...)
+y_eval(expr, ..., as.r = FALSE)
 }
 \arguments{
 \item{expr}{a valid yacas expression}
@@ -16,8 +16,15 @@ Evaluate a yacas expression by replacing variables with values as for the
 given list.
 }
 \examples{
+# Evaluate as yacas object
 eq <- ysym("2*y+x^2+2*x-3")
 y_eval(eq, x=3, y=2)
 
+# Evaluate as R expression:
+y_eval(eq, x=3, y=2, as.r=T)
+# This allows to use vectors:
+y_eval(eq, x=1:10, y=2, as.r=T)
+# and to plot functions:
+curve(y_eval(eq, x=x, y=2, as.r=T), xlim=c(0,10))
 }
 \concept{helper}
