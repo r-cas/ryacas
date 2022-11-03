@@ -101,7 +101,7 @@ y_eval <- function(expr, ..., as.r=FALSE) {
 y_eval.default <- function(expr, ..., as.r=FALSE) {
   args <-  list(...)
   if (as.r) {
-    expr %>% as_r() %>% eval(args)
+    eval(as_r(expr), args)
   } else {
     assign <- c()
     for (v in names(args)) {
