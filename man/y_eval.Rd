@@ -25,10 +25,10 @@ eq <- ysym("2*y+x^2+2*x-3")
 y_eval(eq, x=3, y=2)
 
 # Evaluate as R expression:
-y_eval(eq, x=3, y=2, as.r=T)
+y_eval(eq, x=3, y=2, as.r=TRUE)
 # This allows to use vectors:
-y_eval(eq, x=1:10, y=2, as.r=T)
+y_eval(eq, x=1:10, y=2, as.r=TRUE)
 # and to plot functions:
-curve(y_eval(eq, x=x, y=2, as.r=T), xlim=c(0,10))
+curve(y_eval(eq, x=x, y=2, as.r=TRUE), xlim=c(0,10))
 }
 \concept{helper}

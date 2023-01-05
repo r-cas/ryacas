@@ -19,3 +19,5 @@ yacas-upstream-update/new-*
 release-featured-images/*.pdf
 release-featured-images/*.tex
 release-featured-images/*.png
+/doc/
+/Meta/

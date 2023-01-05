@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/r-cas/ryacas/">
+  <a href="https://github.com/r-cas/ryacas/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -96,142 +92,142 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="ryacas" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#ryacas" class="anchor"></a>Ryacas</h1></div>
-
-<p>Ryacas is an <a href="https://www.r-project.org/">R</a> interface to the free <a href="http://www.yacas.org">yacas</a> Computer Algebra System. Ryacas allows one to send unprocessed yacas strings and certain other R objects to yacas process from R and get back the result. It also has facilities for manipulating yacas strings and R expressions destined for yacas processing.</p>
+<div class="section level1">
+<div class="page-header"><h1 id="ryacas">Ryacas<a class="anchor" aria-label="anchor" href="#ryacas"></a>
+</h1></div>
+<p><a href="https://travis-ci.org/r-cas/ryacas" class="external-link"><img src="https://travis-ci.org/r-cas/ryacas.svg?branch=master" alt="Build Status"></a> <a href="https://ci.appveyor.com/project/r-cas/ryacas/branch/master" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true" alt="Build status"></a> <a href="https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b" class="external-link"><img src="https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b/status.svg" alt="JOSS status"></a> <a href="https://zenodo.org/badge/latestdoi/36067045" class="external-link"><img src="https://zenodo.org/badge/36067045.svg" alt="DOI"></a></p>
+<p>Ryacas is an <a href="https://www.r-project.org/" class="external-link">R</a> interface to the free <a href="http://www.yacas.org" class="external-link">yacas</a> Computer Algebra System. Ryacas allows one to send unprocessed yacas strings and certain other R objects to yacas process from R and get back the result. It also has facilities for manipulating yacas strings and R expressions destined for yacas processing.</p>
 <p>It can be used for arbitrary-precision arithmetic, symbolic math, ASCII pretty printing and translating R to TeX.</p>
-<div id="install-from-github" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install-from-github" class="anchor"></a>Install from GitHub</h2>
+<div class="section level2">
+<h2 id="install-from-github">Install from GitHub<a class="anchor" aria-label="anchor" href="#install-from-github"></a>
+</h2>
 <p>To build and install from Github using R 3.3.0 (or later) and the R <code>devtools</code> package 1.11.0 (or later) run this command from within <code>R</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"r-cas/ryacas"</span>, </a>
-<a class="sourceLine" id="cb1-2" title="2">                         <span class="dt">build_opts =</span> <span class="kw">c</span>(<span class="st">"--no-resave-data"</span>, <span class="st">"--no-manual"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"r-cas/ryacas"</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">build_opts =</span> <span class="fu">c</span>(<span class="st">"--no-resave-data"</span>, <span class="st">"--no-manual"</span>))</span></code></pre></div>
 <p>You can also install the package without vignettes if needed as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"r-cas/ryacas"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"r-cas/ryacas"</span>)</span></code></pre></div>
 </div>
-<div id="online-info" class="section level2">
-<h2 class="hasAnchor">
-<a href="#online-info" class="anchor"></a>Online info</h2>
-<p>For vignettes, overview, pointers to additional information, installation instructions and a sample session see <a href="http://r-cas.github.io/ryacas/" class="uri">http://r-cas.github.io/ryacas/</a>.</p>
-<p>Yacas documentation can be found at <a href="http://yacas.readthedocs.org/" class="uri">http://yacas.readthedocs.org/</a>.</p>
+<div class="section level2">
+<h2 id="online-info">Online info<a class="anchor" aria-label="anchor" href="#online-info"></a>
+</h2>
+<p>For vignettes, overview, pointers to additional information, installation instructions and a sample session see <a href="http://r-cas.github.io/ryacas/" class="external-link uri">http://r-cas.github.io/ryacas/</a>.</p>
+<p>Yacas documentation can be found at <a href="http://yacas.readthedocs.org/" class="external-link uri">http://yacas.readthedocs.org/</a>.</p>
 </div>
-<div id="contribute-issues-and-support" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contribute-issues-and-support" class="anchor"></a>Contribute, issues, and support</h2>
-<p>Please use the issue tracker at <a href="https://github.com/r-cas/ryacas/issues" class="uri">https://github.com/r-cas/ryacas/issues</a> if you want to notify us of an issue or need support. If you want to contribute, please either create an issue or make a pull request.</p>
+<div class="section level2">
+<h2 id="contribute-issues-and-support">Contribute, issues, and support<a class="anchor" aria-label="anchor" href="#contribute-issues-and-support"></a>
+</h2>
+<p>Please use the issue tracker at <a href="https://github.com/r-cas/ryacas/issues" class="external-link uri">https://github.com/r-cas/ryacas/issues</a> if you want to notify us of an issue or need support. If you want to contribute, please either create an issue or make a pull request.</p>
 </div>
-<div id="brief-examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#brief-examples" class="anchor"></a>Brief examples</h2>
-<p>Below we show a few examples. We highly recommend reading the “<a href="http://r-cas.github.io/ryacas/articles/getting-started.html">Getting started</a>” vignette (and the other vignettes) for a more thorough introduction to the package.</p>
+<div class="section level2">
+<h2 id="brief-examples">Brief examples<a class="anchor" aria-label="anchor" href="#brief-examples"></a>
+</h2>
+<p>Below we show a few examples. We highly recommend reading the “<a href="http://r-cas.github.io/ryacas/articles/getting-started.html" class="external-link">Getting started</a>” vignette (and the other vignettes) for a more thorough introduction to the package.</p>
 <p>There are two interfaces: a high-level interface that makes <code>yacas</code> objects work similar to <code>R</code> objects, and a low-level interface where the user can write <code>yacas</code> code and get results as strings or as <code>R</code> expressions. Below, we demonstrate both.</p>
-<div id="high-level-interface" class="section level3">
-<h3 class="hasAnchor">
-<a href="#high-level-interface" class="anchor"></a>High-level interface</h3>
+<div class="section level3">
+<h3 id="high-level-interface">High-level interface<a class="anchor" aria-label="anchor" href="#high-level-interface"></a>
+</h3>
 <p>A brief example with a polynomial is:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ysym.html">ysym</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">+</span><span class="va">x</span><span class="op">-</span><span class="fl">6</span>
-<span class="va">p</span>
-<span class="co">#&gt; y: x^2+x-6</span>
-<span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">p</span>, <span class="st">"Factor"</span><span class="op">)</span>
-<span class="co">#&gt; y: (x-2)*(x+3)</span>
-<span class="va">p</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span>
-<span class="co">#&gt; y: (x-2)*(x+3)</span>
-<span class="va">p</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; expression(x^2 + x - 6)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ysym.html">ysym</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">+</span><span class="va">x</span><span class="op">-</span><span class="fl">6</span></span>
+<span><span class="va">p</span></span>
+<span><span class="co">#&gt; y: x^2+x-6</span></span>
+<span><span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">p</span>, <span class="st">"Factor"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; y: (x-2)*(x+3)</span></span>
+<span><span class="va">p</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; y: (x-2)*(x+3)</span></span>
+<span><span class="va">p</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; expression(x^2 + x - 6)</span></span></code></pre></div>
 <p>A small matrix example follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="st">"-"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>
-<span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>
-<span class="va">B</span>
-<span class="co">#&gt; {{ 1, -2, -3, -4},</span>
-<span class="co">#&gt;  { 0,  2, -2, -3},</span>
-<span class="co">#&gt;  { 1,  0,  3, -2},</span>
-<span class="co">#&gt;  { 2,  1,  0,  4}}</span>
-<span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span>
-<span class="co">#&gt; {{   37/202,     3/101,    41/202,    31/101},</span>
-<span class="co">#&gt;  {(-17)/101,    30/101,     3/101,     7/101},</span>
-<span class="co">#&gt;  {(-19)/202,  (-7)/101,    39/202,  (-5)/101},</span>
-<span class="co">#&gt;  { (-5)/101,  (-9)/101, (-11)/101,     8/101}}</span>
-<span class="va">B</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"x"</span>
-<span class="va">B</span>
-<span class="co">#&gt; {{ 1, -2, -3, -4},</span>
-<span class="co">#&gt;  { 0,  2,  x, -3},</span>
-<span class="co">#&gt;  { 1,  0,  3, -2},</span>
-<span class="co">#&gt;  { 2,  1,  0,  4}}</span>
-<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
-<span class="va">b</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"x"</span>
-<span class="va">b</span>
-<span class="co">#&gt; {x, 2, 3, 4}</span>
-<span class="va">B</span> <span class="op">%*%</span> <span class="va">b</span>
-<span class="co">#&gt; {x-29, 3*x+4-12, x+9-8, 2*x+18}</span>
-<span class="fu"><a href="reference/t.html">t</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span>
-<span class="co">#&gt; {{ 1,  0,  1,  2},</span>
-<span class="co">#&gt;  {-2,  2,  0,  1},</span>
-<span class="co">#&gt;  {-3,  x,  3,  0},</span>
-<span class="co">#&gt;  {-4, -3, -2,  4}}</span>
-<span class="va">B</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
-<span class="co">#&gt; {{-2, -3},</span>
-<span class="co">#&gt;  { 2,  x},</span>
-<span class="co">#&gt;  { 0,  3},</span>
-<span class="co">#&gt;  { 1,  0}}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="st">"-"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span>
+<span><span class="va">B</span></span>
+<span><span class="co">#&gt; {{ 1, -2, -3, -4},</span></span>
+<span><span class="co">#&gt;  { 0,  2, -2, -3},</span></span>
+<span><span class="co">#&gt;  { 1,  0,  3, -2},</span></span>
+<span><span class="co">#&gt;  { 2,  1,  0,  4}}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span>
+<span><span class="co">#&gt; {{   37/202,     3/101,    41/202,    31/101},</span></span>
+<span><span class="co">#&gt;  {(-17)/101,    30/101,     3/101,     7/101},</span></span>
+<span><span class="co">#&gt;  {(-19)/202,  (-7)/101,    39/202,  (-5)/101},</span></span>
+<span><span class="co">#&gt;  { (-5)/101,  (-9)/101, (-11)/101,     8/101}}</span></span>
+<span><span class="va">B</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"x"</span></span>
+<span><span class="va">B</span></span>
+<span><span class="co">#&gt; {{ 1, -2, -3, -4},</span></span>
+<span><span class="co">#&gt;  { 0,  2,  x, -3},</span></span>
+<span><span class="co">#&gt;  { 1,  0,  3, -2},</span></span>
+<span><span class="co">#&gt;  { 2,  1,  0,  4}}</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
+<span><span class="va">b</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"x"</span></span>
+<span><span class="va">b</span></span>
+<span><span class="co">#&gt; {x, 2, 3, 4}</span></span>
+<span><span class="va">B</span> <span class="op"><a href="reference/grapes-times-grapes.html">%*%</a></span> <span class="va">b</span></span>
+<span><span class="co">#&gt; {x-29, 3*x+4-12, x+9-8, 2*x+18}</span></span>
+<span><span class="fu"><a href="reference/t.html">t</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span>
+<span><span class="co">#&gt; {{ 1,  0,  1,  2},</span></span>
+<span><span class="co">#&gt;  {-2,  2,  0,  1},</span></span>
+<span><span class="co">#&gt;  {-3,  x,  3,  0},</span></span>
+<span><span class="co">#&gt;  {-4, -3, -2,  4}}</span></span>
+<span><span class="va">B</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">#&gt; {{-2, -3},</span></span>
+<span><span class="co">#&gt;  { 2,  x},</span></span>
+<span><span class="co">#&gt;  { 0,  3},</span></span>
+<span><span class="co">#&gt;  { 1,  0}}</span></span></code></pre></div>
 </div>
-<div id="low-level-interface" class="section level3">
-<h3 class="hasAnchor">
-<a href="#low-level-interface" class="anchor"></a>Low-level interface</h3>
+<div class="section level3">
+<h3 id="low-level-interface">Low-level interface<a class="anchor" aria-label="anchor" href="#low-level-interface"></a>
+</h3>
 <p>Returning strings with <code><a href="reference/yac_str.html">yac_str()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"x+x+x+x"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "4*x"</span>
-<span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Factor(x^2+x-6)"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "(x-2)*(x+3)"</span>
-<span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"D(x) x^2+x-6"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2*x+1"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"x+x+x+x"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "4*x"</span></span>
+<span><span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Factor(x^2+x-6)"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "(x-2)*(x+3)"</span></span>
+<span><span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"D(x) x^2+x-6"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2*x+1"</span></span></code></pre></div>
 <p>Returning <code>R</code> expressions with <code><a href="reference/yac_expr.html">yac_expr()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="st">"x+x+x+x"</span><span class="op">)</span>
-<span class="co">#&gt; expression(4 * x)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="st">"x+x+x+x"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 16</span>
-<span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="st">"Factor(x^2+x-6)"</span><span class="op">)</span>
-<span class="co">#&gt; expression((x - 2) * (x + 3))</span>
-<span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="st">"D(x) x^2+x-6"</span><span class="op">)</span>
-<span class="co">#&gt; expression(2 * x + 1)</span></code></pre></div>
-<p>Using functions easier (using <a href="https://cran.r-project.org/package=magrittr"><code>magrittr</code></a>’s pipe, <code><a href="reference/%&gt;%.html">%&gt;%</a></code>):</p>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="st">"x+x+x+x"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; expression(4 * x)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="st">"x+x+x+x"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 16</span></span>
+<span><span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="st">"Factor(x^2+x-6)"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; expression((x - 2) * (x + 3))</span></span>
+<span><span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="st">"D(x) x^2+x-6"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; expression(2 * x + 1)</span></span></code></pre></div>
+<p>Using functions easier (using <a href="https://cran.r-project.org/package=magrittr" class="external-link"><code>magrittr</code></a>’s pipe, <code>%&gt;%</code>):</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="st">"x^2+x-6"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "(x-2)*(x+3)"</span>
-<span class="st">"x^2+x-6"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"D(x)"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; expression(2 * x + 1)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="st">"x^2+x-6"</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "(x-2)*(x+3)"</span></span>
+<span><span class="st">"x^2+x-6"</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"D(x)"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; expression(2 * x + 1)</span></span></code></pre></div>
 <p>Solving equations (removes the <code>x==</code> from <code>yacas</code> with the <code><a href="reference/y_rmvars.html">y_rmvars()</a></code> function):</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Solve(x^2+x-6 == 0, x)"</span><span class="op">)</span>
-<span class="va">sol</span>
-<span class="co">#&gt; [1] "{x==2,x==(-3)}"</span>
-<span class="va">sol</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "{2,-3}"</span>
-<span class="va">sol</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; expression(c(2, -3))</span>
-<span class="va">sol</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1]  2 -3</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Solve(x^2+x-6 == 0, x)"</span><span class="op">)</span></span>
+<span><span class="va">sol</span></span>
+<span><span class="co">#&gt; [1] "{x==2,x==(-3)}"</span></span>
+<span><span class="va">sol</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "{2,-3}"</span></span>
+<span><span class="va">sol</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; expression(c(2, -3))</span></span>
+<span><span class="va">sol</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]  2 -3</span></span></code></pre></div>
 <p>And output in TeX:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="st">"3/4 + Pi/8"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Simplify"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "\\frac{\\pi  + 6}{8} "</span></code></pre></div>
-<p>And arbitrary precision (see also the “<a href="http://r-cas.github.io/ryacas/articles/arbitrary-precision.html">Arbitrary-precision arithmetic</a>” vignette):</p>
+<code class="sourceCode R"><span><span class="st">"3/4 + Pi/8"</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Simplify"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "\\frac{\\pi  + 6}{8} "</span></span></code></pre></div>
+<p>And arbitrary precision (see also the “<a href="http://r-cas.github.io/ryacas/articles/arbitrary-precision.html" class="external-link">Arbitrary-precision arithmetic</a>” vignette):</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"N(Pi, 50)"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "3.1415926535897932384626433832795028841971693993751058209"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"N(Pi, 50)"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "3.1415926535897932384626433832795028841971693993751058209"</span></span></code></pre></div>
 </div>
 </div>
-<div id="yacas" class="section level2">
-<h2 class="hasAnchor">
-<a href="#yacas" class="anchor"></a>Yacas</h2>
-<p>The package contains the yacas distribution. The development of the yacas source code is available at <a href="https://github.com/grzegorzmazur/yacas/" class="uri">https://github.com/grzegorzmazur/yacas/</a> . For more information on yacas see <a href="http://www.yacas.org/" class="uri">http://www.yacas.org/</a> or the documention directly at <a href="https://yacas.readthedocs.io/" class="uri">https://yacas.readthedocs.io/</a>.</p>
+<div class="section level2">
+<h2 id="yacas">Yacas<a class="anchor" aria-label="anchor" href="#yacas"></a>
+</h2>
+<p>The package contains the yacas distribution. The development of the yacas source code is available at <a href="https://github.com/grzegorzmazur/yacas/" class="external-link uri">https://github.com/grzegorzmazur/yacas/</a> . For more information on yacas see <a href="http://www.yacas.org/" class="external-link uri">http://www.yacas.org/</a> or the documention directly at <a href="https://yacas.readthedocs.io/" class="external-link uri">https://yacas.readthedocs.io/</a>.</p>
 <hr>
 <p>Mikkel Meyer Andersen, mikl at math dot aau dot dk<br>
 Rob Goedman, goedman at mac dot com<br>
@@ -245,30 +241,31 @@ Grzegorz Mazur, teoretyk at gmail dot com</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=Ryacas">https://​cloud.r-project.org/​package=Ryacas</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/r-cas/ryacas/">https://​github.com/​r-cas/​ryacas/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/r-cas/ryacas/issues">https://​github.com/​r-cas/​ryacas/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=Ryacas" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/r-cas/ryacas/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/r-cas/ryacas/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL</li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing Ryacas</a></li>
+<li><a href="authors.html#citation">Citing Ryacas</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Mikkel Meyer Andersen <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
 <li>Rob Goedman <br><small class="roles"> Author, copyright holder </small>  </li>
@@ -276,29 +273,24 @@ Grzegorz Mazur, teoretyk at gmail dot com</p>
 <li>Søren Højsgaard <br><small class="roles"> Author, copyright holder </small>  </li>
 <li>Grzegorz Mazur <br><small class="roles"> Author, copyright holder </small>  </li>
 <li>Ayal Pinkus <br><small class="roles"> Author, copyright holder </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://travis-ci.org/r-cas/ryacas"><img src="https://travis-ci.org/r-cas/ryacas.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/r-cas/ryacas/branch/master"><img src="https://ci.appveyor.com/api/projects/status/c8fsb1dvj5gmh703/branch/master?svg=true" alt="Build status"></a></li>
-<li><a href="https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b"><img src="https://joss.theoj.org/papers/69b3947f8900504a25aa36f65d14500b/status.svg" alt="JOSS status"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/36067045"><img src="https://zenodo.org/badge/36067045.svg" alt="DOI"></a></li>
-</ul>
-</div>
-</div>
+
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
+  <p></p>
+<p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -306,6 +298,8 @@ Grzegorz Mazur, teoretyk at gmail dot com</p>
 
   
 
+
+  
 
   </body>
 </html>

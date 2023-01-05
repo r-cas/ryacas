@@ -37,7 +37,7 @@ yac_cli()
 
 }
 \references{
-\url{http://yacas.sourceforge.net}
+\url{https://yacas.sourceforge.net}
 }
 \concept{yac_communication}
 \keyword{symbolmath}

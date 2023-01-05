@@ -90,6 +90,7 @@ pow <- function(x, n, ...) {
   UseMethod("pow")
 }
 
+#' @rdname pow
 #' @export
 pow.default <- function(x, n, ...) {
   stopifnot(is.numeric(x)) # numeric
@@ -151,6 +152,7 @@ vec <- function(x, ...) {
   UseMethod("vec")
 }
 
+#' @rdname vec
 #' @export
 vec.default <- function(x, ...) {
   return(as.vector(x, ...))
@@ -185,6 +187,7 @@ vech <- function(x, ...) {
   UseMethod("vech")
 }
 
+#' @rdname vech
 #' @export
 vech.default <- function(x, ...) {
   stopifnot(dim(x)[1] == dim(x)[2]) # square

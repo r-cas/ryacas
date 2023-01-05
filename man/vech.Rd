@@ -2,9 +2,12 @@
 % Please edit documentation in R/linalg.R
 \name{vech}
 \alias{vech}
+\alias{vech.default}
 \title{Half-Vectorize}
 \usage{
 vech(x, ...)
+
+\method{vech}{default}(x, ...)
 }
 \arguments{
 \item{x}{If \code{yac_symbol} treat as such, else call \code{\link[=vech.default]{vech.default()}}.}
