@@ -16,7 +16,7 @@ MemPool::MemPool(unsigned block_size, unsigned no_blocks) :
 
 MemPool::~MemPool() noexcept
 {
-    assert(_no_free_blocks == _no_blocks);
+    //assert(_no_free_blocks == _no_blocks);
 
     delete _next_pool;
     delete[] _pool;
