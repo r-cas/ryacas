@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.5</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
                         <h4 data-toc-skip class="author">Mikkel Meyer
 Andersen and Søren Højsgaard</h4>
             
-            <h4 data-toc-skip class="date">2023-01-11</h4>
+            <h4 data-toc-skip class="date">2023-01-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/HEAD/vignettes/high-level.Rmd" class="external-link"><code>vignettes/high-level.Rmd</code></a></small>
       <div class="hidden name"><code>high-level.Rmd</code></div>
@@ -308,7 +308,7 @@ this may be difficult to distinguish:</p>
 <pre><code><span><span class="co">## [1] "W"</span></span></code></pre>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Variables()"</span><span class="op">)</span> <span class="co"># ...or list variables</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "{j,I,TeXForm'FuncPrec,rformBitwiseOps}"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "{I,j,rformBitwiseOps,TeXForm'FuncPrec}"</span></span></code></pre>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">B</span></span></code></pre></div>
 <pre><code><span><span class="co">## {{1, 1, 1, 1},</span></span>
@@ -321,11 +321,11 @@ this may be difficult to distinguish:</p>
 <pre><code><span><span class="co">## [1] "{{1,1,1,1},{0,2,1,1},{1,0,3,1},{2,1,0,4}}"</span></span></code></pre>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Variables()"</span><span class="op">)</span> <span class="co"># ...or list variables</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "{W,j,I,TeXForm'FuncPrec,rformBitwiseOps}"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "{I,j,W,rformBitwiseOps,TeXForm'FuncPrec}"</span></span></code></pre>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_silent.html">yac_silent</a></span><span class="op">(</span><span class="st">"Clear(W)"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Variables()"</span><span class="op">)</span> <span class="co"># List variables</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "{j,I,TeXForm'FuncPrec,rformBitwiseOps}"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "{I,j,rformBitwiseOps,TeXForm'FuncPrec}"</span></span></code></pre>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"W"</span><span class="op">)</span> <span class="co"># Get variable W if exists, or else just a symbol</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "W"</span></span></code></pre>
