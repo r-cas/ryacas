@@ -64,3 +64,49 @@ y_rmvars.default <- function(x) {
   # FIXME: Best API?
   paste0("((", x, ") /:: { _lhs == _rhs <- rhs })")
 }
+
+
+#' Evaluate a yacas expression
+#' 
+#' Evaluate a yacas expression by replacing variables with values as for the
+#' given list.
+#'
+#' @param expr a valid yacas expression
+#' 
+#' @param ... a list of assignements (see example)
+#' 
+#' @param as.r if TRUE, then the expression is evaluated as R (if any variable 
+#' to be substituted in the expression is a vector, then a vector is returned). 
+#' If it is FALSE (default), a yacc expression is returned, replacing scalar variables.
+#'
+#' @concept helper
+#' 
+#' @examples
+#' # Evaluate as yacas object
+#' eq <- ysym("2*y+x^2+2*x-3")
+#' y_eval(eq, x=3, y=2)
+#' 
+#' # Evaluate as R expression:
+#' y_eval(eq, x=3, y=2, as.r=TRUE)
+#' # This allows to use vectors:
+#' y_eval(eq, x=1:10, y=2, as.r=TRUE)
+#' # and to plot functions:
+#' curve(y_eval(eq, x=x, y=2, as.r=TRUE), xlim=c(0,10))
+#' @export
+y_eval <- function(expr, ..., as.r=FALSE) {
+  UseMethod("y_eval")
+}
+
+#' @export
+y_eval.default <- function(expr, ..., as.r=FALSE) {
+  args <-  list(...)
+  if (as.r) {
+    eval(as_r(expr), args)
+  } else {
+    assign <- c()
+    for (v in names(args)) {
+      assign <- c(assign, paste0(v, "==", args[[v]]))
+    }
+    y_fn(expr, "Where", paste(assign, collapse=" And "))
+  }
+}

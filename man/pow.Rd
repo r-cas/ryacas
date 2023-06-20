@@ -2,9 +2,12 @@
 % Please edit documentation in R/linalg.R
 \name{pow}
 \alias{pow}
+\alias{pow.default}
 \title{Matrix Power}
 \usage{
 pow(x, n, ...)
+
+\method{pow}{default}(x, n, ...)
 }
 \arguments{
 \item{x}{If \code{yac_symbol} treat as such, else call \code{\link[=pow.default]{pow.default()}}.}

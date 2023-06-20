@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.5</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/r-cas/ryacas/">
+  <a href="https://github.com/r-cas/ryacas/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,12 +93,14 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>The structure of the concentration and covariance matrix in a simple state-space model</h1>
-                        <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
+      <h1 data-toc-skip>The structure of the concentration and
+covariance matrix in a simple state-space model</h1>
+                        <h4 data-toc-skip class="author">Mikkel Meyer
+Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2021-02-10</h4>
+            <h4 data-toc-skip class="date">2023-01-16</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/master/vignettes/ssm-matrix.Rmd"><code>vignettes/ssm-matrix.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/HEAD/vignettes/ssm-matrix.Rmd" class="external-link"><code>vignettes/ssm-matrix.Rmd</code></a></small>
       <div class="hidden name"><code>ssm-matrix.Rmd</code></div>
 
     </div>
@@ -110,145 +108,184 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas">Ryacas</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://Matrix.R-forge.R-project.org/">Matrix</a></span><span class="op">)</span></code></pre></div>
-<div id="autoregression-ar1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#autoregression-ar1" class="anchor"></a>Autoregression (<span class="math inline">\(AR(1)\)</span>)</h2>
-<p>Consider <span class="math inline">\(AR(1)\)</span> process: <span class="math inline">\(x_i = a x_{i-1} + e_i\)</span> where <span class="math inline">\(i=1,2,3\)</span> and where <span class="math inline">\(x_0=e_0\)</span>. Isolating error terms gives that <span class="math display">\[
- e = L_1 x
-\]</span> where <span class="math inline">\(e=(e_0, \dots, e_3)\)</span> and <span class="math inline">\(x=(x_0, \dots x_3)\)</span> and where <span class="math inline">\(L_1\)</span> has the form</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas" class="external-link">Ryacas</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Matrix.R-forge.R-project.org/" class="external-link">Matrix</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="autoregression-ar1">Autoregression (<span class="math inline">\(AR(1)\)</span>)<a class="anchor" aria-label="anchor" href="#autoregression-ar1"></a>
+</h2>
+<p>Consider <span class="math inline">\(AR(1)\)</span> process: <span class="math inline">\(x_i = a x_{i-1} + e_i\)</span> where <span class="math inline">\(i=1,2,3\)</span> and where <span class="math inline">\(x_0=e_0\)</span>. Isolating error terms gives that
+<span class="math display">\[
+e = L_1 x
+\]</span> where <span class="math inline">\(e=(e_0, \dots, e_3)\)</span>
+and <span class="math inline">\(x=(x_0, \dots x_3)\)</span> and where
+<span class="math inline">\(L_1\)</span> has the form</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span>
-<span class="va">L1chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="fl">1</span> <span class="op">+</span> <span class="va">N</span><span class="op">)</span>
-<span class="va">L1chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"-a"</span>
-<span class="va">L1s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">L1chr</span><span class="op">)</span>
-<span class="va">L1s</span></code></pre></div>
-<pre><code>## {{ 1,  0,  0,  0},
-##  {-a,  1,  0,  0},
-##  { 0, -a,  1,  0},
-##  { 0,  0, -a,  1}}</code></pre>
-<p>If error terms have variance <span class="math inline">\(1\)</span> then <span class="math inline">\(\mathbf{Var}(e)=L \mathbf{Var}(x) L'\)</span> so the covariance matrix <span class="math inline">\(V1=\mathbf{Var}(x) = L^- (L^-)'\)</span> while the concentration matrix is <span class="math inline">\(K=L L'\)</span></p>
+<code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="va">L1chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="fl">1</span> <span class="op">+</span> <span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">L1chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"-a"</span></span>
+<span><span class="va">L1s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">L1chr</span><span class="op">)</span></span>
+<span><span class="va">L1s</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{ 1,  0,  0,  0},</span></span>
+<span><span class="co">##  {-a,  1,  0,  0},</span></span>
+<span><span class="co">##  { 0, -a,  1,  0},</span></span>
+<span><span class="co">##  { 0,  0, -a,  1}}</span></span></code></pre>
+<p>If error terms have variance <span class="math inline">\(1\)</span>
+then <span class="math inline">\(\mathbf{Var}(e)=L \mathbf{Var}(x)
+L'\)</span> so the covariance matrix <span class="math inline">\(V1=\mathbf{Var}(x) = L^- (L^-)'\)</span> while
+the concentration matrix is <span class="math inline">\(K=L
+L'\)</span></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">K1s</span> <span class="op">&lt;-</span> <span class="va">L1s</span> <span class="op">%*%</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L1s</span><span class="op">)</span>
-<span class="va">V1s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html">solve</a></span><span class="op">(</span><span class="va">K1s</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">K1s</span> <span class="op">&lt;-</span> <span class="va">L1s</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L1s</span><span class="op">)</span></span>
+<span><span class="va">V1s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">K1s</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span>
-  <span class="st">"\\begin{align} K_1 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">K1s</span><span class="op">)</span>, <span class="st">" \\\\ 
-                  V_1 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">V1s</span><span class="op">)</span>, <span class="st">" \\end{align}"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[\begin{align} K_1 &amp;= \left( \begin{array}{cccc} 1 &amp;  - a &amp; 0 &amp; 0 \\  - a &amp; a ^{2} + 1 &amp;  - a &amp; 0 \\ 0 &amp;  - a &amp; a ^{2} + 1 &amp;  - a \\ 0 &amp; 0 &amp;  - a &amp; a ^{2} + 1 \end{array} \right) \\ 
-                  V_1 &amp;= \left( \begin{array}{cccc} a ^{2} + a ^{4} + a ^{6} + 1 &amp; a + a ^{3} + a ^{5} &amp; a ^{2} + a ^{4} &amp; a ^{3} \\ a + a ^{3} + a ^{5} &amp; a ^{2} + a ^{4} + 1 &amp; a + a ^{3} &amp; a ^{2} \\ a ^{2} + a ^{4} &amp; a + a ^{3} &amp; a ^{2} + 1 &amp; a \\ a ^{3} &amp; a ^{2} &amp; a &amp; 1 \end{array} \right) \end{align}\]</span></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span></span>
+<span>  <span class="st">"\\begin{align} K_1 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">K1s</span><span class="op">)</span>, <span class="st">" \\\\ </span></span>
+<span><span class="st">                  V_1 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">V1s</span><span class="op">)</span>, <span class="st">" \\end{align}"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
+<p><span class="math display">\[\begin{align} K_1 &amp;= \left(
+\begin{array}{cccc} 1 &amp;  - a &amp; 0 &amp; 0 \\  - a &amp; a ^{2} +
+1 &amp;  - a &amp; 0 \\ 0 &amp;  - a &amp; a ^{2} + 1 &amp;  - a \\ 0
+&amp; 0 &amp;  - a &amp; a ^{2} + 1 \end{array} \right) \\
+                  V_1 &amp;= \left( \begin{array}{cccc} a ^{2} + a ^{4}
++ a ^{6} + 1 &amp; a + a ^{3} + a ^{5} &amp; a ^{2} + a ^{4} &amp; a
+^{3} \\ a + a ^{3} + a ^{5} &amp; a ^{2} + a ^{4} + 1 &amp; a + a ^{3}
+&amp; a ^{2} \\ a ^{2} + a ^{4} &amp; a + a ^{3} &amp; a ^{2} + 1 &amp;
+a \\ a ^{3} &amp; a ^{2} &amp; a &amp; 1 \end{array} \right)
+\end{align}\]</span></p>
 </div>
-<div id="dynamic-linear-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dynamic-linear-model" class="anchor"></a>Dynamic linear model</h2>
-<p>Augument the <span class="math inline">\(AR(1)\)</span> process above with <span class="math inline">\(y_i=b x_i + u_i\)</span>. Then <span class="math inline">\((e,u)\)</span> can be expressed in terms of <span class="math inline">\((x,y)\)</span> as <span class="math display">\[
+<div class="section level2">
+<h2 id="dynamic-linear-model">Dynamic linear model<a class="anchor" aria-label="anchor" href="#dynamic-linear-model"></a>
+</h2>
+<p>Augument the <span class="math inline">\(AR(1)\)</span> process above
+with <span class="math inline">\(y_i=b x_i + u_i\)</span>. Then <span class="math inline">\((e,u)\)</span> can be expressed in terms of <span class="math inline">\((x,y)\)</span> as <span class="math display">\[
 (e,u) = L_2(x,y)
 \]</span> where</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span>
-<span class="va">L2chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">)</span>
-<span class="va">L2chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"-a"</span>
-<span class="va">L2chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">N</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"-b"</span>
-<span class="va">L2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">L2chr</span><span class="op">)</span>
-<span class="va">L2s</span></code></pre></div>
-<pre><code>## {{ 1,  0,  0,  0,  0,  0,  0},
-##  {-a,  1,  0,  0,  0,  0,  0},
-##  { 0, -a,  1,  0,  0,  0,  0},
-##  { 0,  0, -a,  1,  0,  0,  0},
-##  { 0, -b,  0,  0,  1,  0,  0},
-##  { 0,  0, -b,  0,  0,  1,  0},
-##  { 0,  0,  0, -b,  0,  0,  1}}</code></pre>
+<code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="va">L2chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">L2chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"-a"</span></span>
+<span><span class="va">L2chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">N</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"-b"</span></span>
+<span><span class="va">L2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">L2chr</span><span class="op">)</span></span>
+<span><span class="va">L2s</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{ 1,  0,  0,  0,  0,  0,  0},</span></span>
+<span><span class="co">##  {-a,  1,  0,  0,  0,  0,  0},</span></span>
+<span><span class="co">##  { 0, -a,  1,  0,  0,  0,  0},</span></span>
+<span><span class="co">##  { 0,  0, -a,  1,  0,  0,  0},</span></span>
+<span><span class="co">##  { 0, -b,  0,  0,  1,  0,  0},</span></span>
+<span><span class="co">##  { 0,  0, -b,  0,  0,  1,  0},</span></span>
+<span><span class="co">##  { 0,  0,  0, -b,  0,  0,  1}}</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">K2s</span> <span class="op">&lt;-</span> <span class="va">L2s</span> <span class="op">%*%</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L2s</span><span class="op">)</span>
-<span class="va">V2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html">solve</a></span><span class="op">(</span><span class="va">K2s</span><span class="op">)</span>
-<span class="co"># Try simplify; causes timeout on CRAN Fedora, hence in try() call.</span>
-<span class="co"># Else, just use </span>
-<span class="co"># V2s &lt;- simplify(solve(K2s))</span>
-<span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="va">V2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simplify.html">simplify</a></span><span class="op">(</span><span class="va">V2s</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">K2s</span> <span class="op">&lt;-</span> <span class="va">L2s</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L2s</span><span class="op">)</span></span>
+<span><span class="va">V2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">K2s</span><span class="op">)</span></span>
+<span><span class="co"># Try simplify; causes timeout on CRAN Fedora, hence in try() call.</span></span>
+<span><span class="co"># Else, just use </span></span>
+<span><span class="co"># V2s &lt;- simplify(solve(K2s))</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">V2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simplify.html">simplify</a></span><span class="op">(</span><span class="va">V2s</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span>
-  <span class="st">"\\begin{align} K_2 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">K2s</span><span class="op">)</span>, <span class="st">" \\\\ 
-                  V_2 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">V2s</span><span class="op">)</span>, <span class="st">" \\end{align}"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[\begin{align} K_2 &amp;= \left( \begin{array}{ccccccc} 1 &amp;  - a &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\  - a &amp; a ^{2} + 1 &amp;  - a &amp; 0 &amp;  - b &amp; 0 &amp; 0 \\ 0 &amp;  - a &amp; a ^{2} + 1 &amp;  - a &amp; a b &amp;  - b &amp; 0 \\ 0 &amp; 0 &amp;  - a &amp; a ^{2} + 1 &amp; 0 &amp; a b &amp;  - b \\ 0 &amp;  - b &amp; b a &amp; 0 &amp; b ^{2} + 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp;  - b &amp; b a &amp; 0 &amp; b ^{2} + 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;  - b &amp; 0 &amp; 0 &amp; b ^{2} + 1 \end{array} \right) \\ 
-                  V_2 &amp;= \left( \begin{array}{ccccccc} a ^{6} b ^{2} + a ^{6} + a ^{4} b ^{2} + a ^{4} + a ^{2} b ^{2} + a ^{2} + 1 &amp; a ^{5} b ^{2} + a ^{5} + a ^{3} b ^{2} + a ^{3} + a b ^{2} + a &amp; a ^{4} b ^{2} + a ^{4} + a ^{2} b ^{2} + a ^{2} &amp; a ^{3} b ^{2} + a ^{3} &amp; a b &amp; b a ^{2} &amp; b a ^{3} \\ a ^{5} b ^{2} + a ^{5} + a ^{3} b ^{2} + a ^{3} + a b ^{2} + a &amp; a ^{4} b ^{2} + a ^{4} + a ^{2} b ^{2} + a ^{2} + b ^{2} + 1 &amp; a ^{3} b ^{2} + a ^{3} + a b ^{2} + a &amp; a ^{2} b ^{2} + a ^{2} &amp; b &amp; a b &amp; b a ^{2} \\ a ^{4} b ^{2} + a ^{4} + a ^{2} b ^{2} + a ^{2} &amp; a ^{3} b ^{2} + a ^{3} + a b ^{2} + a &amp; a ^{2} b ^{2} + a ^{2} + b ^{2} + 1 &amp; a b ^{2} + a &amp; 0 &amp; b &amp; a b \\ a ^{3} b ^{2} + a ^{3} &amp; a ^{2} b ^{2} + a ^{2} &amp; a b ^{2} + a &amp; b ^{2} + 1 &amp; 0 &amp; 0 &amp; b \\ b a &amp; b &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ b a ^{2} &amp; b a &amp; b &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ b a ^{3} &amp; b a ^{2} &amp; b a &amp; b &amp; 0 &amp; 0 &amp; 1 \end{array} \right) \end{align}\]</span></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span></span>
+<span>  <span class="st">"\\begin{align} K_2 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">K2s</span><span class="op">)</span>, <span class="st">" \\\\ </span></span>
+<span><span class="st">                  V_2 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">V2s</span><span class="op">)</span>, <span class="st">" \\end{align}"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
+<p><span class="math display">\[\begin{align} K_2 &amp;= \left(
+\begin{array}{ccccccc} 1 &amp;  - a &amp; 0 &amp; 0 &amp; 0 &amp; 0
+&amp; 0 \\  - a &amp; a ^{2} + 1 &amp;  - a &amp; 0 &amp;  - b &amp; 0
+&amp; 0 \\ 0 &amp;  - a &amp; a ^{2} + 1 &amp;  - a &amp; a b &amp;  - b
+&amp; 0 \\ 0 &amp; 0 &amp;  - a &amp; a ^{2} + 1 &amp; 0 &amp; a b
+&amp;  - b \\ 0 &amp;  - b &amp; b a &amp; 0 &amp; b ^{2} + 1 &amp; 0
+&amp; 0 \\ 0 &amp; 0 &amp;  - b &amp; b a &amp; 0 &amp; b ^{2} + 1 &amp;
+0 \\ 0 &amp; 0 &amp; 0 &amp;  - b &amp; 0 &amp; 0 &amp; b ^{2} + 1
+\end{array} \right) \\
+                  V_2 &amp;= \left( \begin{array}{ccccccc} a ^{6} b ^{2}
++ a ^{6} + a ^{4} b ^{2} + a ^{4} + a ^{2} b ^{2} + a ^{2} + 1 &amp; a
+^{5} b ^{2} + a ^{5} + a ^{3} b ^{2} + a ^{3} + a b ^{2} + a &amp; a
+^{4} b ^{2} + a ^{4} + a ^{2} b ^{2} + a ^{2} &amp; a ^{3} b ^{2} + a
+^{3} &amp; a b &amp; b a ^{2} &amp; b a ^{3} \\ a ^{5} b ^{2} + a ^{5} +
+a ^{3} b ^{2} + a ^{3} + a b ^{2} + a &amp; a ^{4} b ^{2} + a ^{4} + a
+^{2} b ^{2} + a ^{2} + b ^{2} + 1 &amp; a ^{3} b ^{2} + a ^{3} + a b
+^{2} + a &amp; a ^{2} b ^{2} + a ^{2} &amp; b &amp; a b &amp; b a ^{2}
+\\ a ^{4} b ^{2} + a ^{4} + a ^{2} b ^{2} + a ^{2} &amp; a ^{3} b ^{2} +
+a ^{3} + a b ^{2} + a &amp; a ^{2} b ^{2} + a ^{2} + b ^{2} + 1 &amp; a
+b ^{2} + a &amp; 0 &amp; b &amp; a b \\ a ^{3} b ^{2} + a ^{3} &amp; a
+^{2} b ^{2} + a ^{2} &amp; a b ^{2} + a &amp; b ^{2} + 1 &amp; 0 &amp; 0
+&amp; b \\ b a &amp; b &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ b a
+^{2} &amp; b a &amp; b &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ b a ^{3} &amp;
+b a ^{2} &amp; b a &amp; b &amp; 0 &amp; 0 &amp; 1 \end{array} \right)
+\end{align}\]</span></p>
 </div>
-<div id="numerical-evalation-in-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#numerical-evalation-in-r" class="anchor"></a>Numerical evalation in R</h2>
+<div class="section level2">
+<h2 id="numerical-evalation-in-r">Numerical evalation in R<a class="anchor" aria-label="anchor" href="#numerical-evalation-in-r"></a>
+</h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sparsify</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"Matrix"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://Matrix.R-forge.R-project.org/">Matrix</a></span><span class="op">)</span>
-    
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html">Matrix</a></span><span class="op">(</span><span class="va">x</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span>
-  
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>
-<span class="va">beta</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">0.3</span>
-
-<span class="co">## AR(1)</span>
-<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span>
-<span class="va">L1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span> <span class="op">+</span> <span class="va">N</span><span class="op">)</span>
-<span class="va">L1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">alpha</span>
-<span class="va">K1</span> <span class="op">&lt;-</span> <span class="va">L1</span> <span class="op">%*%</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L1</span><span class="op">)</span>
-<span class="va">V1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html">solve</a></span><span class="op">(</span><span class="va">K1</span><span class="op">)</span>
-<span class="fu">sparsify</span><span class="op">(</span><span class="va">K1</span><span class="op">)</span></code></pre></div>
-<pre><code>## 4 x 4 sparse Matrix of class "dsCMatrix"
-##                            
-## [1,]  1.0 -0.50  .     .   
-## [2,] -0.5  1.25 -0.50  .   
-## [3,]  .   -0.50  1.25 -0.50
-## [4,]  .    .    -0.50  1.25</code></pre>
+<code class="sourceCode R"><span><span class="va">sparsify</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Matrix"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Matrix.R-forge.R-project.org/" class="external-link">Matrix</a></span><span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html" class="external-link">Matrix</a></span><span class="op">(</span><span class="va">x</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
+<span><span class="va">beta</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">0.3</span></span>
+<span></span>
+<span><span class="co">## AR(1)</span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="va">L1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span> <span class="op">+</span> <span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">L1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">alpha</span></span>
+<span><span class="va">K1</span> <span class="op">&lt;-</span> <span class="va">L1</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L1</span><span class="op">)</span></span>
+<span><span class="va">V1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">K1</span><span class="op">)</span></span>
+<span><span class="fu">sparsify</span><span class="op">(</span><span class="va">K1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 4 x 4 sparse Matrix of class "dsCMatrix"</span></span>
+<span><span class="co">##                            </span></span>
+<span><span class="co">## [1,]  1.0 -0.50  .     .   </span></span>
+<span><span class="co">## [2,] -0.5  1.25 -0.50  .   </span></span>
+<span><span class="co">## [3,]  .   -0.50  1.25 -0.50</span></span>
+<span><span class="co">## [4,]  .    .    -0.50  1.25</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">sparsify</span><span class="op">(</span><span class="va">V1</span><span class="op">)</span></code></pre></div>
-<pre><code>## 4 x 4 sparse Matrix of class "dsCMatrix"
-##                                   
-## [1,] 1.328125 0.65625 0.3125 0.125
-## [2,] 0.656250 1.31250 0.6250 0.250
-## [3,] 0.312500 0.62500 1.2500 0.500
-## [4,] 0.125000 0.25000 0.5000 1.000</code></pre>
+<code class="sourceCode R"><span><span class="fu">sparsify</span><span class="op">(</span><span class="va">V1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 4 x 4 sparse Matrix of class "dsCMatrix"</span></span>
+<span><span class="co">##                                   </span></span>
+<span><span class="co">## [1,] 1.328125 0.65625 0.3125 0.125</span></span>
+<span><span class="co">## [2,] 0.656250 1.31250 0.6250 0.250</span></span>
+<span><span class="co">## [3,] 0.312500 0.62500 1.2500 0.500</span></span>
+<span><span class="co">## [4,] 0.125000 0.25000 0.5000 1.000</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Dynamic linear models</span>
-<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span>
-<span class="va">L2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">)</span>
-<span class="va">L2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">alpha</span>
-<span class="va">L2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">N</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">beta</span>
-<span class="va">K2</span> <span class="op">&lt;-</span> <span class="va">L2</span> <span class="op">%*%</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L2</span><span class="op">)</span>
-<span class="va">V2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html">solve</a></span><span class="op">(</span><span class="va">K2</span><span class="op">)</span>
-<span class="fu">sparsify</span><span class="op">(</span><span class="va">K2</span><span class="op">)</span></code></pre></div>
-<pre><code>## 7 x 7 sparse Matrix of class "dsCMatrix"
-##                                             
-## [1,]  1.0 -0.50  .     .     .     .    .   
-## [2,] -0.5  1.25 -0.50  .     0.30  .    .   
-## [3,]  .   -0.50  1.25 -0.50 -0.15  0.30 .   
-## [4,]  .    .    -0.50  1.25  .    -0.15 0.30
-## [5,]  .    0.30 -0.15  .     1.09  .    .   
-## [6,]  .    .     0.30 -0.15  .     1.09 .   
-## [7,]  .    .     .     0.30  .     .    1.09</code></pre>
+<code class="sourceCode R"><span><span class="co">## Dynamic linear models</span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="va">L2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">L2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">alpha</span></span>
+<span><span class="va">L2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">N</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">beta</span></span>
+<span><span class="va">K2</span> <span class="op">&lt;-</span> <span class="va">L2</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L2</span><span class="op">)</span></span>
+<span><span class="va">V2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">K2</span><span class="op">)</span></span>
+<span><span class="fu">sparsify</span><span class="op">(</span><span class="va">K2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 7 x 7 sparse Matrix of class "dsCMatrix"</span></span>
+<span><span class="co">##                                             </span></span>
+<span><span class="co">## [1,]  1.0 -0.50  .     .     .     .    .   </span></span>
+<span><span class="co">## [2,] -0.5  1.25 -0.50  .     0.30  .    .   </span></span>
+<span><span class="co">## [3,]  .   -0.50  1.25 -0.50 -0.15  0.30 .   </span></span>
+<span><span class="co">## [4,]  .    .    -0.50  1.25  .    -0.15 0.30</span></span>
+<span><span class="co">## [5,]  .    0.30 -0.15  .     1.09  .    .   </span></span>
+<span><span class="co">## [6,]  .    .     0.30 -0.15  .     1.09 .   </span></span>
+<span><span class="co">## [7,]  .    .     .     0.30  .     .    1.09</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">sparsify</span><span class="op">(</span><span class="va">V2</span><span class="op">)</span></code></pre></div>
-<pre><code>## 7 x 7 sparse Matrix of class "dsCMatrix"
-##                                                                   
-## [1,]  1.3576563  0.7153125  0.340625  0.13625 -0.15 -0.075 -0.0375
-## [2,]  0.7153125  1.4306250  0.681250  0.27250 -0.30 -0.150 -0.0750
-## [3,]  0.3406250  0.6812500  1.362500  0.54500  .    -0.300 -0.1500
-## [4,]  0.1362500  0.2725000  0.545000  1.09000  .     .     -0.3000
-## [5,] -0.1500000 -0.3000000  .         .        1.00  .      .     
-## [6,] -0.0750000 -0.1500000 -0.300000  .        .     1.000  .     
-## [7,] -0.0375000 -0.0750000 -0.150000 -0.30000  .     .      1.0000</code></pre>
+<code class="sourceCode R"><span><span class="fu">sparsify</span><span class="op">(</span><span class="va">V2</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 7 x 7 sparse Matrix of class "dsCMatrix"</span></span>
+<span><span class="co">##                                                                   </span></span>
+<span><span class="co">## [1,]  1.3576563  0.7153125  0.340625  0.13625 -0.15 -0.075 -0.0375</span></span>
+<span><span class="co">## [2,]  0.7153125  1.4306250  0.681250  0.27250 -0.30 -0.150 -0.0750</span></span>
+<span><span class="co">## [3,]  0.3406250  0.6812500  1.362500  0.54500  .    -0.300 -0.1500</span></span>
+<span><span class="co">## [4,]  0.1362500  0.2725000  0.545000  1.09000  .     .     -0.3000</span></span>
+<span><span class="co">## [5,] -0.1500000 -0.3000000  .         .        1.00  .      .     </span></span>
+<span><span class="co">## [6,] -0.0750000 -0.1500000 -0.300000  .        .     1.000  .     </span></span>
+<span><span class="co">## [7,] -0.0375000 -0.0750000 -0.150000 -0.30000  .     .      1.0000</span></span></code></pre>
 <p>Comparing with results calculated by yacas:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">V1s_eval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">V1s</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">alpha</span><span class="op">)</span><span class="op">)</span>
-<span class="va">V2s_eval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">V2s</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">alpha</span>, b <span class="op">=</span> <span class="va">beta</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="va">V1</span>, <span class="va">V1s_eval</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<code class="sourceCode R"><span><span class="va">V1s_eval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">V1s</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">alpha</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">V2s_eval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">V2s</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">alpha</span>, b <span class="op">=</span> <span class="va">beta</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">V1</span>, <span class="va">V1s_eval</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="va">V2</span>, <span class="va">V2s_eval</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">V2</span>, <span class="va">V2s_eval</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 </div>
   </div>
 
@@ -263,11 +300,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
+  <p></p>
+<p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -275,6 +314,8 @@
 
   
 
+
+  
 
   </body>
 </html>

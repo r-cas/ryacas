@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.5</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/r-cas/ryacas/">
+  <a href="https://github.com/r-cas/ryacas/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,11 +94,12 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Arbitrary-precision arithmetic</h1>
-                        <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
+                        <h4 data-toc-skip class="author">Mikkel Meyer
+Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2021-02-10</h4>
+            <h4 data-toc-skip class="date">2023-01-16</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/master/vignettes/arbitrary-precision.Rmd"><code>vignettes/arbitrary-precision.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/HEAD/vignettes/arbitrary-precision.Rmd" class="external-link"><code>vignettes/arbitrary-precision.Rmd</code></a></small>
       <div class="hidden name"><code>arbitrary-precision.Rmd</code></div>
 
     </div>
@@ -110,260 +107,282 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas">Ryacas</a></span><span class="op">)</span></code></pre></div>
-<p>In <code>R</code>, the package <code>Rmpfr</code> package provide some functions for arbitrary-precision arithmetic. The way it is done is to allow for using more memory for storing numbers. This is very good for some use-cases, e.g. the example in <code>Rmpfr</code>’s a vignette “Accurately Computing <span class="math inline">\(\log(1 - \exp(-|a|))\)</span>”.</p>
-<p>Here, we demonstrate how to do investigate other aspects of arbitrary-precision arithmetic using <code>Ryacas</code>, e.g. solving systems of linear equations and matrix inverses.</p>
-<div id="arbitrary-precision-arithmetic" class="section level1">
-<h1 class="hasAnchor">
-<a href="#arbitrary-precision-arithmetic" class="anchor"></a>Arbitrary-precision arithmetic</h1>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas" class="external-link">Ryacas</a></span><span class="op">)</span></span></code></pre></div>
+<p>In <code>R</code>, the package <code>Rmpfr</code> package provide
+some functions for arbitrary-precision arithmetic. The way it is done is
+to allow for using more memory for storing numbers. This is very good
+for some use-cases, e.g. the example in <code>Rmpfr</code>’s a vignette
+“Accurately Computing <span class="math inline">\(\log(1 -
+\exp(-|a|))\)</span>”.</p>
+<p>Here, we demonstrate how to do investigate other aspects of
+arbitrary-precision arithmetic using <code>Ryacas</code>, e.g. solving
+systems of linear equations and matrix inverses.</p>
+<div class="section level2">
+<h2 id="arbitrary-precision-arithmetic">Arbitrary-precision arithmetic<a class="anchor" aria-label="anchor" href="#arbitrary-precision-arithmetic"></a>
+</h2>
 <p>First see the problem when using floating-point arithmetic:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="fl">0.3</span> <span class="op">-</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.1</span></code></pre></div>
-<pre><code>## [1] -2.775558e-17</code></pre>
+<code class="sourceCode R"><span><span class="op">(</span><span class="fl">0.3</span> <span class="op">-</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.1</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] -2.775558e-17</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"(0.3 - 0.2) - 0.1"</span><span class="op">)</span> <span class="co"># decimal number does not </span></code></pre></div>
-<pre><code>## [1] "0"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"(0.3 - 0.2) - 0.1"</span><span class="op">)</span> <span class="co"># decimal number does not </span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "0"</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">                             <span class="co"># always work well; often </span>
-                             <span class="co"># it is better to represent as </span>
-                             <span class="co"># rational number if possible</span>
-
-<span class="co"># (1/3 - 1/5) = 5/15 - 3/15 = 2/15</span>
-<span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span> <span class="op">-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">-</span> <span class="fl">2</span><span class="op">/</span><span class="fl">15</span></code></pre></div>
-<pre><code>## [1] -2.775558e-17</code></pre>
+<code class="sourceCode R"><span>                             <span class="co"># always work well; often </span></span>
+<span>                             <span class="co"># it is better to represent as </span></span>
+<span>                             <span class="co"># rational number if possible</span></span>
+<span></span>
+<span><span class="co"># (1/3 - 1/5) = 5/15 - 3/15 = 2/15</span></span>
+<span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span> <span class="op">-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">-</span> <span class="fl">2</span><span class="op">/</span><span class="fl">15</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] -2.775558e-17</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"(1/3 - 1/5) - 2/15"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "0"</code></pre>
-<p>The <code>yacas</code> function <a href="https://yacas.readthedocs.io/en/latest/reference_manual/arithmetic.html#N"><code>N()</code></a> gives the numeric (floating-point) value for a precision.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"(1/3 - 1/5) - 2/15"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "0"</span></span></code></pre>
+<p>The <code>yacas</code> function <a href="https://yacas.readthedocs.io/en/latest/reference_manual/arithmetic.html#N" class="external-link"><code>N()</code></a>
+gives the numeric (floating-point) value for a precision.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"1/3"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "1/3"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"1/3"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "1/3"</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"N(1/3)"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "0.3333333333"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"N(1/3)"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "0.3333333333"</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"N(1/3, 1)"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "0.3"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"N(1/3, 1)"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "0.3"</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"N(1/3, 200)"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"N(1/3, 200)"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333"</span></span></code></pre>
 </div>
-<div id="evaluating-polynomials" class="section level1">
-<h1 class="hasAnchor">
-<a href="#evaluating-polynomials" class="anchor"></a>Evaluating polynomials</h1>
-<p>Consider the polynomial <span class="math inline">\((x-1)^7\)</span> with root 1 (with multiplicity 7). We can consider it both in factorised form and in expanded form:</p>
+<div class="section level2">
+<h2 id="evaluating-polynomials">Evaluating polynomials<a class="anchor" aria-label="anchor" href="#evaluating-polynomials"></a>
+</h2>
+<p>Consider the polynomial <span class="math inline">\((x-1)^7\)</span>
+with root 1 (with multiplicity 7). We can consider it both in factorised
+form and in expanded form:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pol</span> <span class="op">&lt;-</span> <span class="st">"(x-1)^7"</span>
-<span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">pol</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">p1</span></code></pre></div>
-<pre><code>## expression((x - 1)^7)</code></pre>
+<code class="sourceCode R"><span><span class="va">pol</span> <span class="op">&lt;-</span> <span class="st">"(x-1)^7"</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">pol</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">p1</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression((x - 1)^7)</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">pol</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Expand"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">p2</span></code></pre></div>
-<pre><code>## expression(x^7 - 7 * x^6 + 21 * x^5 - 35 * x^4 + 35 * x^3 - 21 * 
-##     x^2 + 7 * x - 1)</code></pre>
-<p>Mathematically, these are the same objects, but when it comes to numerical computations, the picture is different:</p>
+<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">pol</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Expand"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">p2</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression(x^7 - 7 * x^6 + 21 * x^5 - 35 * x^4 + 35 * x^3 - 21 * </span></span>
+<span><span class="co">##     x^2 + 7 * x - 1)</span></span></code></pre>
+<p>Mathematically, these are the same objects, but when it comes to
+numerical computations, the picture is different:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">p1</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.001</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 1e-21</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">p1</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.001</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1e-21</span></span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">p2</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.001</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 8.881784e-15</code></pre>
-<p>We can of course also evaluate the polynomials in the different forms in <code>yacas</code> using <a href="https://yacas.readthedocs.io/en/latest/reference_manual/controlflow.html#WithValue"><code>WithValue()</code></a>:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">p2</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.001</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 8.881784e-15</span></span></code></pre>
+<p>We can of course also evaluate the polynomials in the different forms
+in <code>yacas</code> using <a href="https://yacas.readthedocs.io/en/latest/reference_manual/controlflow.html#WithValue" class="external-link"><code>WithValue()</code></a>:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># First try with 1.001:</span>
-<span class="va">pol_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"WithValue(x, 1.001, "</span>, <span class="va">pol</span>, <span class="st">")"</span><span class="op">)</span>
-<span class="va">pol_val</span></code></pre></div>
-<pre><code>## [1] "WithValue(x, 1.001, (x-1)^7)"</code></pre>
+<code class="sourceCode R"><span><span class="co"># First try with 1.001:</span></span>
+<span><span class="va">pol_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"WithValue(x, 1.001, "</span>, <span class="va">pol</span>, <span class="st">")"</span><span class="op">)</span></span>
+<span><span class="va">pol_val</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "WithValue(x, 1.001, (x-1)^7)"</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">pol_val</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "0"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">pol_val</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "0"</span></span></code></pre>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#... to get result symbolically, use instead the number as a fraction</span>
-<span class="va">pol_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"WithValue(x, 1001/1000, "</span>, <span class="va">pol</span>, <span class="st">")"</span><span class="op">)</span>
-<span class="va">pol_val</span></code></pre></div>
-<pre><code>## [1] "WithValue(x, 1001/1000, (x-1)^7)"</code></pre>
+<code class="sourceCode R"><span><span class="co">#... to get result symbolically, use instead the number as a fraction</span></span>
+<span><span class="va">pol_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"WithValue(x, 1001/1000, "</span>, <span class="va">pol</span>, <span class="st">")"</span><span class="op">)</span></span>
+<span><span class="va">pol_val</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "WithValue(x, 1001/1000, (x-1)^7)"</span></span></code></pre>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">pol_val</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "1/1000000000000000000000"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">pol_val</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "1/1000000000000000000000"</span></span></code></pre>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pol_val</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Denom"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "1000000000000000000000"</code></pre>
+<code class="sourceCode R"><span><span class="va">pol_val</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Denom"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "1000000000000000000000"</span></span></code></pre>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pol_val</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Denom"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"IntLog"</span>, <span class="st">"10"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "21"</code></pre>
+<code class="sourceCode R"><span><span class="va">pol_val</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Denom"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"IntLog"</span>, <span class="st">"10"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "21"</span></span></code></pre>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pol_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"WithValue(x, 1001/1000, Expand("</span>, <span class="va">pol</span>, <span class="st">"))"</span><span class="op">)</span>
-<span class="va">pol_val</span></code></pre></div>
-<pre><code>## [1] "WithValue(x, 1001/1000, Expand((x-1)^7))"</code></pre>
+<code class="sourceCode R"><span><span class="va">pol_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"WithValue(x, 1001/1000, Expand("</span>, <span class="va">pol</span>, <span class="st">"))"</span><span class="op">)</span></span>
+<span><span class="va">pol_val</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "WithValue(x, 1001/1000, Expand((x-1)^7))"</span></span></code></pre>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">pol_val</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "1/1000000000000000000000"</code></pre>
-<p>The reason for the difference is the near cancellation problem when using floating-point representation: Subtraction of nearly identical quantities. This phenomenon is illustrated in the plot below.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">pol_val</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "1/1000000000000000000000"</span></span></code></pre>
+<p>The reason for the difference is the near cancellation problem when
+using floating-point representation: Subtraction of nearly identical
+quantities. This phenomenon is illustrated in the plot below.</p>
 <div class="figure">
 <img src="arbitrary-precision_files/figure-html/unnamed-chunk-7-1.png" alt="solid line: $(x-1)^7$; dashed line: factorization of $(x-1)^7$." width="576"><p class="caption">
-solid line: <span class="math inline">\((x-1)^7\)</span>; dashed line: factorization of <span class="math inline">\((x-1)^7\)</span>.
+solid line: <span class="math inline">\((x-1)^7\)</span>; dashed line:
+factorization of <span class="math inline">\((x-1)^7\)</span>.
 </p>
 </div>
-<p>This example could of course have been illustrated directly in <code>R</code> but it is convenient that <code>Ryacas</code> provides expansion of polynomials directly so that students can experiment with other polynomials themselves.</p>
+<p>This example could of course have been illustrated directly in
+<code>R</code> but it is convenient that <code>Ryacas</code> provides
+expansion of polynomials directly so that students can experiment with
+other polynomials themselves.</p>
 </div>
-<div id="inverse-of-hilbert-matrix" class="section level1">
-<h1 class="hasAnchor">
-<a href="#inverse-of-hilbert-matrix" class="anchor"></a>Inverse of Hilbert matrix</h1>
-<p>In <code>R</code>’s <code><a href="https://rdrr.io/r/base/solve.html">solve()</a></code> help file the <a href="https://en.wikipedia.org/wiki/Hilbert_matrix">Hilbert matrix</a> is introduced:</p>
+<div class="section level2">
+<h2 id="inverse-of-hilbert-matrix">Inverse of Hilbert matrix<a class="anchor" aria-label="anchor" href="#inverse-of-hilbert-matrix"></a>
+</h2>
+<p>In <code>R</code>’s <code><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve()</a></code> help file the <a href="https://en.wikipedia.org/wiki/Hilbert_matrix" class="external-link">Hilbert matrix</a>
+is introduced:</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hilbert</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span> 
-  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span>
-  <span class="va">H</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span>, <span class="va">i</span>, <span class="st">"+"</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p>We will now demonstrate the known fact that it is ill-conditioned (meaning e.g. that it is difficult to determine its inverse numerically).</p>
+<code class="sourceCode R"><span><span class="va">hilbert</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span> </span>
+<span>  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span></span>
+<span>  <span class="va">H</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span>, <span class="va">i</span>, <span class="st">"+"</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>We will now demonstrate the known fact that it is ill-conditioned
+(meaning e.g. that it is difficult to determine its inverse
+numerically).</p>
 <p>First we make the Hilbert matrix symbolically:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hilbert_sym</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span> 
-  <span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="st">""</span>, nrow <span class="op">=</span> <span class="va">n</span>, ncol <span class="op">=</span> <span class="va">n</span><span class="op">)</span>
-  
-  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-    <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">mat</span><span class="op">[</span><span class="va">i</span>, <span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"1 / ("</span>, <span class="op">(</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="st">" + "</span>, <span class="va">j</span>, <span class="st">")"</span><span class="op">)</span>
-    <span class="op">}</span>
-  <span class="op">}</span>
-  
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">hilbert_sym</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span> </span>
+<span>  <span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="st">""</span>, nrow <span class="op">=</span> <span class="va">n</span>, ncol <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">mat</span><span class="op">[</span><span class="va">i</span>, <span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"1 / ("</span>, <span class="op">(</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="st">" + "</span>, <span class="va">j</span>, <span class="st">")"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu">hilbert</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>
-<span class="va">A</span></code></pre></div>
-<pre><code>##           [,1]      [,2]      [,3]       [,4]       [,5]       [,6]       [,7]
-## [1,] 1.0000000 0.5000000 0.3333333 0.25000000 0.20000000 0.16666667 0.14285714
-## [2,] 0.5000000 0.3333333 0.2500000 0.20000000 0.16666667 0.14285714 0.12500000
-## [3,] 0.3333333 0.2500000 0.2000000 0.16666667 0.14285714 0.12500000 0.11111111
-## [4,] 0.2500000 0.2000000 0.1666667 0.14285714 0.12500000 0.11111111 0.10000000
-## [5,] 0.2000000 0.1666667 0.1428571 0.12500000 0.11111111 0.10000000 0.09090909
-## [6,] 0.1666667 0.1428571 0.1250000 0.11111111 0.10000000 0.09090909 0.08333333
-## [7,] 0.1428571 0.1250000 0.1111111 0.10000000 0.09090909 0.08333333 0.07692308
-## [8,] 0.1250000 0.1111111 0.1000000 0.09090909 0.08333333 0.07692308 0.07142857
-##            [,8]
-## [1,] 0.12500000
-## [2,] 0.11111111
-## [3,] 0.10000000
-## [4,] 0.09090909
-## [5,] 0.08333333
-## [6,] 0.07692308
-## [7,] 0.07142857
-## [8,] 0.06666667</code></pre>
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu">hilbert</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
+<span><span class="va">A</span></span></code></pre></div>
+<pre><code><span><span class="co">##           [,1]      [,2]      [,3]       [,4]       [,5]       [,6]       [,7]</span></span>
+<span><span class="co">## [1,] 1.0000000 0.5000000 0.3333333 0.25000000 0.20000000 0.16666667 0.14285714</span></span>
+<span><span class="co">## [2,] 0.5000000 0.3333333 0.2500000 0.20000000 0.16666667 0.14285714 0.12500000</span></span>
+<span><span class="co">## [3,] 0.3333333 0.2500000 0.2000000 0.16666667 0.14285714 0.12500000 0.11111111</span></span>
+<span><span class="co">## [4,] 0.2500000 0.2000000 0.1666667 0.14285714 0.12500000 0.11111111 0.10000000</span></span>
+<span><span class="co">## [5,] 0.2000000 0.1666667 0.1428571 0.12500000 0.11111111 0.10000000 0.09090909</span></span>
+<span><span class="co">## [6,] 0.1666667 0.1428571 0.1250000 0.11111111 0.10000000 0.09090909 0.08333333</span></span>
+<span><span class="co">## [7,] 0.1428571 0.1250000 0.1111111 0.10000000 0.09090909 0.08333333 0.07692308</span></span>
+<span><span class="co">## [8,] 0.1250000 0.1111111 0.1000000 0.09090909 0.08333333 0.07692308 0.07142857</span></span>
+<span><span class="co">##            [,8]</span></span>
+<span><span class="co">## [1,] 0.12500000</span></span>
+<span><span class="co">## [2,] 0.11111111</span></span>
+<span><span class="co">## [3,] 0.10000000</span></span>
+<span><span class="co">## [4,] 0.09090909</span></span>
+<span><span class="co">## [5,] 0.08333333</span></span>
+<span><span class="co">## [6,] 0.07692308</span></span>
+<span><span class="co">## [7,] 0.07142857</span></span>
+<span><span class="co">## [8,] 0.06666667</span></span></code></pre>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B1</span> <span class="op">&lt;-</span> <span class="fu">hilbert_sym</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>
-<span class="va">B1</span></code></pre></div>
-<pre><code>##      [,1]          [,2]          [,3]          [,4]          [,5]         
-## [1,] "1 / (0 + 1)" "1 / (0 + 2)" "1 / (0 + 3)" "1 / (0 + 4)" "1 / (0 + 5)"
-## [2,] "1 / (1 + 1)" "1 / (1 + 2)" "1 / (1 + 3)" "1 / (1 + 4)" "1 / (1 + 5)"
-## [3,] "1 / (2 + 1)" "1 / (2 + 2)" "1 / (2 + 3)" "1 / (2 + 4)" "1 / (2 + 5)"
-## [4,] "1 / (3 + 1)" "1 / (3 + 2)" "1 / (3 + 3)" "1 / (3 + 4)" "1 / (3 + 5)"
-## [5,] "1 / (4 + 1)" "1 / (4 + 2)" "1 / (4 + 3)" "1 / (4 + 4)" "1 / (4 + 5)"
-## [6,] "1 / (5 + 1)" "1 / (5 + 2)" "1 / (5 + 3)" "1 / (5 + 4)" "1 / (5 + 5)"
-## [7,] "1 / (6 + 1)" "1 / (6 + 2)" "1 / (6 + 3)" "1 / (6 + 4)" "1 / (6 + 5)"
-## [8,] "1 / (7 + 1)" "1 / (7 + 2)" "1 / (7 + 3)" "1 / (7 + 4)" "1 / (7 + 5)"
-##      [,6]          [,7]          [,8]         
-## [1,] "1 / (0 + 6)" "1 / (0 + 7)" "1 / (0 + 8)"
-## [2,] "1 / (1 + 6)" "1 / (1 + 7)" "1 / (1 + 8)"
-## [3,] "1 / (2 + 6)" "1 / (2 + 7)" "1 / (2 + 8)"
-## [4,] "1 / (3 + 6)" "1 / (3 + 7)" "1 / (3 + 8)"
-## [5,] "1 / (4 + 6)" "1 / (4 + 7)" "1 / (4 + 8)"
-## [6,] "1 / (5 + 6)" "1 / (5 + 7)" "1 / (5 + 8)"
-## [7,] "1 / (6 + 6)" "1 / (6 + 7)" "1 / (6 + 8)"
-## [8,] "1 / (7 + 6)" "1 / (7 + 7)" "1 / (7 + 8)"</code></pre>
+<code class="sourceCode R"><span><span class="va">B1</span> <span class="op">&lt;-</span> <span class="fu">hilbert_sym</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
+<span><span class="va">B1</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1]          [,2]          [,3]          [,4]          [,5]         </span></span>
+<span><span class="co">## [1,] "1 / (0 + 1)" "1 / (0 + 2)" "1 / (0 + 3)" "1 / (0 + 4)" "1 / (0 + 5)"</span></span>
+<span><span class="co">## [2,] "1 / (1 + 1)" "1 / (1 + 2)" "1 / (1 + 3)" "1 / (1 + 4)" "1 / (1 + 5)"</span></span>
+<span><span class="co">## [3,] "1 / (2 + 1)" "1 / (2 + 2)" "1 / (2 + 3)" "1 / (2 + 4)" "1 / (2 + 5)"</span></span>
+<span><span class="co">## [4,] "1 / (3 + 1)" "1 / (3 + 2)" "1 / (3 + 3)" "1 / (3 + 4)" "1 / (3 + 5)"</span></span>
+<span><span class="co">## [5,] "1 / (4 + 1)" "1 / (4 + 2)" "1 / (4 + 3)" "1 / (4 + 4)" "1 / (4 + 5)"</span></span>
+<span><span class="co">## [6,] "1 / (5 + 1)" "1 / (5 + 2)" "1 / (5 + 3)" "1 / (5 + 4)" "1 / (5 + 5)"</span></span>
+<span><span class="co">## [7,] "1 / (6 + 1)" "1 / (6 + 2)" "1 / (6 + 3)" "1 / (6 + 4)" "1 / (6 + 5)"</span></span>
+<span><span class="co">## [8,] "1 / (7 + 1)" "1 / (7 + 2)" "1 / (7 + 3)" "1 / (7 + 4)" "1 / (7 + 5)"</span></span>
+<span><span class="co">##      [,6]          [,7]          [,8]         </span></span>
+<span><span class="co">## [1,] "1 / (0 + 6)" "1 / (0 + 7)" "1 / (0 + 8)"</span></span>
+<span><span class="co">## [2,] "1 / (1 + 6)" "1 / (1 + 7)" "1 / (1 + 8)"</span></span>
+<span><span class="co">## [3,] "1 / (2 + 6)" "1 / (2 + 7)" "1 / (2 + 8)"</span></span>
+<span><span class="co">## [4,] "1 / (3 + 6)" "1 / (3 + 7)" "1 / (3 + 8)"</span></span>
+<span><span class="co">## [5,] "1 / (4 + 6)" "1 / (4 + 7)" "1 / (4 + 8)"</span></span>
+<span><span class="co">## [6,] "1 / (5 + 6)" "1 / (5 + 7)" "1 / (5 + 8)"</span></span>
+<span><span class="co">## [7,] "1 / (6 + 6)" "1 / (6 + 7)" "1 / (6 + 8)"</span></span>
+<span><span class="co">## [8,] "1 / (7 + 6)" "1 / (7 + 7)" "1 / (7 + 8)"</span></span></code></pre>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">B1</span><span class="op">)</span> <span class="co"># convert to yacas symbol</span>
-<span class="va">B</span></code></pre></div>
-<pre><code>## {{   1,  1/2,  1/3,  1/4,  1/5,  1/6,  1/7,  1/8},
-##  { 1/2,  1/3,  1/4,  1/5,  1/6,  1/7,  1/8,  1/9},
-##  { 1/3,  1/4,  1/5,  1/6,  1/7,  1/8,  1/9, 1/10},
-##  { 1/4,  1/5,  1/6,  1/7,  1/8,  1/9, 1/10, 1/11},
-##  { 1/5,  1/6,  1/7,  1/8,  1/9, 1/10, 1/11, 1/12},
-##  { 1/6,  1/7,  1/8,  1/9, 1/10, 1/11, 1/12, 1/13},
-##  { 1/7,  1/8,  1/9, 1/10, 1/11, 1/12, 1/13, 1/14},
-##  { 1/8,  1/9, 1/10, 1/11, 1/12, 1/13, 1/14, 1/15}}</code></pre>
+<code class="sourceCode R"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">B1</span><span class="op">)</span> <span class="co"># convert to yacas symbol</span></span>
+<span><span class="va">B</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{   1,  1/2,  1/3,  1/4,  1/5,  1/6,  1/7,  1/8},</span></span>
+<span><span class="co">##  { 1/2,  1/3,  1/4,  1/5,  1/6,  1/7,  1/8,  1/9},</span></span>
+<span><span class="co">##  { 1/3,  1/4,  1/5,  1/6,  1/7,  1/8,  1/9, 1/10},</span></span>
+<span><span class="co">##  { 1/4,  1/5,  1/6,  1/7,  1/8,  1/9, 1/10, 1/11},</span></span>
+<span><span class="co">##  { 1/5,  1/6,  1/7,  1/8,  1/9, 1/10, 1/11, 1/12},</span></span>
+<span><span class="co">##  { 1/6,  1/7,  1/8,  1/9, 1/10, 1/11, 1/12, 1/13},</span></span>
+<span><span class="co">##  { 1/7,  1/8,  1/9, 1/10, 1/11, 1/12, 1/13, 1/14},</span></span>
+<span><span class="co">##  { 1/8,  1/9, 1/10, 1/11, 1/12, 1/13, 1/14, 1/15}}</span></span></code></pre>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Ainv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>
-<span class="va">Ainv</span></code></pre></div>
-<pre><code>##         [,1]      [,2]       [,3]       [,4]        [,5]        [,6]
-## [1,]      64     -2016      20160     -92400      221760     -288288
-## [2,]   -2016     84672    -952560    4656960   -11642400    15567552
-## [3,]   20160   -952560   11430720  -58212000   149688000  -204324119
-## [4,]  -92400   4656960  -58212000  304919999  -800414996  1109908794
-## [5,]  221760 -11642400  149688000 -800414996  2134439987 -2996753738
-## [6,] -288288  15567552 -204324119 1109908793 -2996753738  4249941661
-## [7,]  192192 -10594584  141261119 -776936154  2118916782 -3030050996
-## [8,]  -51480   2882880  -38918880  216215998  -594593995   856215351
-##             [,7]       [,8]
-## [1,]      192192     -51480
-## [2,]   -10594584    2882880
-## [3,]   141261119  -38918880
-## [4,]  -776936155  216215998
-## [5,]  2118916783 -594593995
-## [6,] -3030050996  856215352
-## [7,]  2175421226 -618377753
-## [8,]  -618377753  176679358</code></pre>
+<code class="sourceCode R"><span><span class="va">Ainv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span>
+<span><span class="va">Ainv</span></span></code></pre></div>
+<pre><code><span><span class="co">##         [,1]      [,2]       [,3]       [,4]        [,5]        [,6]</span></span>
+<span><span class="co">## [1,]      64     -2016      20160     -92400      221760     -288288</span></span>
+<span><span class="co">## [2,]   -2016     84672    -952560    4656960   -11642400    15567552</span></span>
+<span><span class="co">## [3,]   20160   -952560   11430720  -58212000   149688000  -204324119</span></span>
+<span><span class="co">## [4,]  -92400   4656960  -58212000  304919999  -800414996  1109908794</span></span>
+<span><span class="co">## [5,]  221760 -11642400  149688000 -800414996  2134439987 -2996753738</span></span>
+<span><span class="co">## [6,] -288288  15567552 -204324119 1109908793 -2996753738  4249941661</span></span>
+<span><span class="co">## [7,]  192192 -10594584  141261119 -776936154  2118916782 -3030050996</span></span>
+<span><span class="co">## [8,]  -51480   2882880  -38918880  216215998  -594593995   856215351</span></span>
+<span><span class="co">##             [,7]       [,8]</span></span>
+<span><span class="co">## [1,]      192192     -51480</span></span>
+<span><span class="co">## [2,]   -10594584    2882880</span></span>
+<span><span class="co">## [3,]   141261119  -38918880</span></span>
+<span><span class="co">## [4,]  -776936155  216215998</span></span>
+<span><span class="co">## [5,]  2118916783 -594593995</span></span>
+<span><span class="co">## [6,] -3030050996  856215352</span></span>
+<span><span class="co">## [7,]  2175421226 -618377753</span></span>
+<span><span class="co">## [8,]  -618377753  176679358</span></span></code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Binv1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="co"># result is still yacas symbol</span>
-<span class="va">Binv1</span></code></pre></div>
-<pre><code>## {{         64,       -2016,       20160,      -92400,      221760,     -288288,      192192,      -51480},
-##  {      -2016,       84672,     -952560,     4656960,   -11642400,    15567552,   -10594584,     2882880},
-##  {      20160,     -952560,    11430720,   -58212000,   149688000,  -204324120,   141261120,   -38918880},
-##  {     -92400,     4656960,   -58212000,   304920000,  -800415000,  1109908800,  -776936160,   216216000},
-##  {     221760,   -11642400,   149688000,  -800415000,  2134440000, -2996753760,  2118916800,  -594594000},
-##  {    -288288,    15567552,  -204324120,  1109908800, -2996753760,  4249941696, -3030051024,   856215360},
-##  {     192192,   -10594584,   141261120,  -776936160,  2118916800, -3030051024,  2175421248,  -618377760},
-##  {     -51480,     2882880,   -38918880,   216216000,  -594594000,   856215360,  -618377760,   176679360}}</code></pre>
+<code class="sourceCode R"><span><span class="va">Binv1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="co"># result is still yacas symbol</span></span>
+<span><span class="va">Binv1</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{         64,       -2016,       20160,      -92400,      221760,     -288288,      192192,      -51480},</span></span>
+<span><span class="co">##  {      -2016,       84672,     -952560,     4656960,   -11642400,    15567552,   -10594584,     2882880},</span></span>
+<span><span class="co">##  {      20160,     -952560,    11430720,   -58212000,   149688000,  -204324120,   141261120,   -38918880},</span></span>
+<span><span class="co">##  {     -92400,     4656960,   -58212000,   304920000,  -800415000,  1109908800,  -776936160,   216216000},</span></span>
+<span><span class="co">##  {     221760,   -11642400,   149688000,  -800415000,  2134440000, -2996753760,  2118916800,  -594594000},</span></span>
+<span><span class="co">##  {    -288288,    15567552,  -204324120,  1109908800, -2996753760,  4249941696, -3030051024,   856215360},</span></span>
+<span><span class="co">##  {     192192,   -10594584,   141261120,  -776936160,  2118916800, -3030051024,  2175421248,  -618377760},</span></span>
+<span><span class="co">##  {     -51480,     2882880,   -38918880,   216216000,  -594594000,   856215360,  -618377760,   176679360}}</span></span></code></pre>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Binv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="va">Binv1</span><span class="op">)</span> <span class="co"># convert to R numeric matrix</span>
-<span class="va">Binv</span></code></pre></div>
-<pre><code>##         [,1]      [,2]       [,3]       [,4]        [,5]        [,6]
-## [1,]      64     -2016      20160     -92400      221760     -288288
-## [2,]   -2016     84672    -952560    4656960   -11642400    15567552
-## [3,]   20160   -952560   11430720  -58212000   149688000  -204324120
-## [4,]  -92400   4656960  -58212000  304920000  -800415000  1109908800
-## [5,]  221760 -11642400  149688000 -800415000  2134440000 -2996753760
-## [6,] -288288  15567552 -204324120 1109908800 -2996753760  4249941696
-## [7,]  192192 -10594584  141261120 -776936160  2118916800 -3030051024
-## [8,]  -51480   2882880  -38918880  216216000  -594594000   856215360
-##             [,7]       [,8]
-## [1,]      192192     -51480
-## [2,]   -10594584    2882880
-## [3,]   141261120  -38918880
-## [4,]  -776936160  216216000
-## [5,]  2118916800 -594594000
-## [6,] -3030051024  856215360
-## [7,]  2175421248 -618377760
-## [8,]  -618377760  176679360</code></pre>
+<code class="sourceCode R"><span><span class="va">Binv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="va">Binv1</span><span class="op">)</span> <span class="co"># convert to R numeric matrix</span></span>
+<span><span class="va">Binv</span></span></code></pre></div>
+<pre><code><span><span class="co">##         [,1]      [,2]       [,3]       [,4]        [,5]        [,6]</span></span>
+<span><span class="co">## [1,]      64     -2016      20160     -92400      221760     -288288</span></span>
+<span><span class="co">## [2,]   -2016     84672    -952560    4656960   -11642400    15567552</span></span>
+<span><span class="co">## [3,]   20160   -952560   11430720  -58212000   149688000  -204324120</span></span>
+<span><span class="co">## [4,]  -92400   4656960  -58212000  304920000  -800415000  1109908800</span></span>
+<span><span class="co">## [5,]  221760 -11642400  149688000 -800415000  2134440000 -2996753760</span></span>
+<span><span class="co">## [6,] -288288  15567552 -204324120 1109908800 -2996753760  4249941696</span></span>
+<span><span class="co">## [7,]  192192 -10594584  141261120 -776936160  2118916800 -3030051024</span></span>
+<span><span class="co">## [8,]  -51480   2882880  -38918880  216216000  -594594000   856215360</span></span>
+<span><span class="co">##             [,7]       [,8]</span></span>
+<span><span class="co">## [1,]      192192     -51480</span></span>
+<span><span class="co">## [2,]   -10594584    2882880</span></span>
+<span><span class="co">## [3,]   141261120  -38918880</span></span>
+<span><span class="co">## [4,]  -776936160  216216000</span></span>
+<span><span class="co">## [5,]  2118916800 -594594000</span></span>
+<span><span class="co">## [6,] -3030051024  856215360</span></span>
+<span><span class="co">## [7,]  2175421248 -618377760</span></span>
+<span><span class="co">## [8,]  -618377760  176679360</span></span></code></pre>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Ainv</span> <span class="op">-</span> <span class="va">Binv</span></code></pre></div>
-<pre><code>##               [,1]          [,2]          [,3]          [,4]          [,5]
-## [1,]  2.022656e-07 -7.897346e-06  0.0000742203 -0.0002794876  4.892563e-04
-## [2,] -7.516163e-06  2.443442e-04 -0.0016348482  0.0022857217  8.007960e-03
-## [3,]  6.596705e-05 -1.459678e-03 -0.0013010856  0.0928798467 -4.353278e-01
-## [4,] -2.222202e-04  6.508809e-04  0.1018696651 -1.0164485574  3.740381e+00
-## [5,]  3.084455e-04  1.383389e-02 -0.4781522453  3.8412284851 -1.304656e+01
-## [6,] -1.008651e-04 -3.762038e-02  0.9126323462 -6.7141628265  2.190641e+01
-## [7,] -1.274265e-04  3.748520e-02 -0.7896100283  5.5373635292 -1.763533e+01
-## [8,]  8.357911e-05 -1.313744e-02  0.2562877908 -1.7438534796  5.464779e+00
-##               [,6]          [,7]          [,8]
-## [1,] -3.859913e-04  9.308662e-05  1.726509e-05
-## [2,] -2.777486e-02  2.954033e-02 -1.067452e-02
-## [3,]  8.310004e-01 -7.192242e-01  2.335241e-01
-## [4,] -6.457403e+00  5.287978e+00 -1.657728e+00
-## [5,]  2.159914e+01 -1.723701e+01  5.309898e+00
-## [6,] -3.544080e+01  2.786332e+01 -8.493719e+00
-## [7,]  2.811761e+01 -2.189091e+01  6.626538e+00
-## [8,] -8.625638e+00  6.669370e+00 -2.008779e+00</code></pre>
+<code class="sourceCode R"><span><span class="va">Ainv</span> <span class="op">-</span> <span class="va">Binv</span></span></code></pre></div>
+<pre><code><span><span class="co">##               [,1]          [,2]          [,3]          [,4]          [,5]</span></span>
+<span><span class="co">## [1,]  2.022656e-07 -7.897346e-06  0.0000742203 -0.0002794876  4.892563e-04</span></span>
+<span><span class="co">## [2,] -7.516163e-06  2.443442e-04 -0.0016348482  0.0022857217  8.007960e-03</span></span>
+<span><span class="co">## [3,]  6.596705e-05 -1.459678e-03 -0.0013010856  0.0928798467 -4.353278e-01</span></span>
+<span><span class="co">## [4,] -2.222202e-04  6.508809e-04  0.1018696651 -1.0164485574  3.740381e+00</span></span>
+<span><span class="co">## [5,]  3.084455e-04  1.383389e-02 -0.4781522453  3.8412284851 -1.304656e+01</span></span>
+<span><span class="co">## [6,] -1.008651e-04 -3.762038e-02  0.9126323462 -6.7141628265  2.190641e+01</span></span>
+<span><span class="co">## [7,] -1.274265e-04  3.748520e-02 -0.7896100283  5.5373635292 -1.763533e+01</span></span>
+<span><span class="co">## [8,]  8.357911e-05 -1.313744e-02  0.2562877908 -1.7438534796  5.464779e+00</span></span>
+<span><span class="co">##               [,6]          [,7]          [,8]</span></span>
+<span><span class="co">## [1,] -3.859913e-04  9.308662e-05  1.726509e-05</span></span>
+<span><span class="co">## [2,] -2.777486e-02  2.954033e-02 -1.067452e-02</span></span>
+<span><span class="co">## [3,]  8.310004e-01 -7.192242e-01  2.335241e-01</span></span>
+<span><span class="co">## [4,] -6.457403e+00  5.287978e+00 -1.657728e+00</span></span>
+<span><span class="co">## [5,]  2.159914e+01 -1.723701e+01  5.309898e+00</span></span>
+<span><span class="co">## [6,] -3.544080e+01  2.786332e+01 -8.493719e+00</span></span>
+<span><span class="co">## [7,]  2.811761e+01 -2.189091e+01  6.626538e+00</span></span>
+<span><span class="co">## [8,] -8.625638e+00  6.669370e+00 -2.008779e+00</span></span></code></pre>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">Ainv</span> <span class="op">-</span> <span class="va">Binv</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 35.4408</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Ainv</span> <span class="op">-</span> <span class="va">Binv</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 35.4408</span></span></code></pre>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="op">(</span><span class="va">Ainv</span> <span class="op">-</span> <span class="va">Binv</span><span class="op">)</span> <span class="op">/</span> <span class="va">Binv</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 1.136963e-08</code></pre>
-<p>As seen, already for <span class="math inline">\(n=8\)</span> is the numeric solution inaccurate.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="op">(</span><span class="va">Ainv</span> <span class="op">-</span> <span class="va">Binv</span><span class="op">)</span> <span class="op">/</span> <span class="va">Binv</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1.136963e-08</span></span></code></pre>
+<p>As seen, already for <span class="math inline">\(n=8\)</span> is the
+numeric solution inaccurate.</p>
 </div>
   </div>
 
@@ -378,11 +397,13 @@ solid line: <span class="math inline">\((x-1)^7\)</span>; dashed line: factoriza
 
 
       <footer><div class="copyright">
-  <p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
+  <p></p>
+<p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -390,6 +411,8 @@ solid line: <span class="math inline">\((x-1)^7\)</span>; dashed line: factoriza
 
   
 
+
+  
 
   </body>
 </html>

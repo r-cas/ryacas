@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.5</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/r-cas/ryacas/">
+  <a href="https://github.com/r-cas/ryacas/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,11 +94,12 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>The low-level interface</h1>
-                        <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
+                        <h4 data-toc-skip class="author">Mikkel Meyer
+Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2021-02-10</h4>
+            <h4 data-toc-skip class="date">2023-01-16</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/master/vignettes/low-level.Rmd"><code>vignettes/low-level.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/HEAD/vignettes/low-level.Rmd" class="external-link"><code>vignettes/low-level.Rmd</code></a></small>
       <div class="hidden name"><code>low-level.Rmd</code></div>
 
     </div>
@@ -110,428 +107,511 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas">Ryacas</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas" class="external-link">Ryacas</a></span><span class="op">)</span></span></code></pre></div>
 <p>The low-level interface consists of these two main functions:</p>
 <ul>
 <li>
-<code><a href="../reference/yac_str.html">yac_str(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string) and get result as <strong>string/character</strong>.</li>
+<code>yac_str(x)</code>: Evaluate <code>yacas</code> command
+<code>x</code> (a string) and get result as
+<strong>string/character</strong>.</li>
 <li>
-<code><a href="../reference/yac_expr.html">yac_expr(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string) and get result as an <strong><code>R</code> expression</strong>.</li>
+<code>yac_expr(x)</code>: Evaluate <code>yacas</code> command
+<code>x</code> (a string) and get result as an <strong><code>R</code>
+expression</strong>.</li>
 </ul>
-<p>Note, that the <code>yacas</code> command <code>x</code> is a string and must often be built op using <code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code>/<code><a href="https://rdrr.io/r/base/paste.html">paste0()</a></code>. Examples of this will be shown in multiple examples below.</p>
-<p>A short summary of often-used <code>yacas</code> commands are found in the section “<code>yacas</code> reference” in the “Getting started” vignette. A short summary of <code>Ryacas</code>’s low-level functions are also found in the section “<code>Ryacas</code> low-level reference” at the end of this document.</p>
-<p>Note that the <a href="https://yacas.readthedocs.io/en/latest/">yacas documentation</a> is a very useful resource.</p>
-<div id="example-1-simple-algebra" class="section level1">
-<h1 class="hasAnchor">
-<a href="#example-1-simple-algebra" class="anchor"></a>Example 1: Simple algebra</h1>
+<p>Note, that the <code>yacas</code> command <code>x</code> is a string
+and must often be built op using
+<code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste()</a></code>/<code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code>. Examples of this will be
+shown in multiple examples below.</p>
+<p>A short summary of often-used <code>yacas</code> commands are found
+in the section “<code>yacas</code> reference” in the “Getting started”
+vignette. A short summary of <code>Ryacas</code>’s low-level functions
+are also found in the section “<code>Ryacas</code> low-level reference”
+at the end of this document.</p>
+<p>Note that the <a href="https://yacas.readthedocs.io/en/latest/" class="external-link">yacas
+documentation</a> is a very useful resource.</p>
+<div class="section level2">
+<h2 id="example-1-simple-algebra">Example 1: Simple algebra<a class="anchor" aria-label="anchor" href="#example-1-simple-algebra"></a>
+</h2>
 <p>First, consider this polynomial:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">eq</span> <span class="op">&lt;-</span> <span class="st">"x^2 + 4 + 2*x + 2*x"</span></code></pre></div>
-<p>Now, perform <code>yacas</code> operations, and get result as string/character:</p>
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="st">"x^2 + 4 + 2*x + 2*x"</span></span></code></pre></div>
+<p>Now, perform <code>yacas</code> operations, and get result as
+string/character:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span> <span class="co"># No task was given to yacas, so we simply get the same returned</span></code></pre></div>
-<pre><code>## [1] "x^2+2*x+2*x+4"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span> <span class="co"># No task was given to yacas, so we simply get the same returned</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "x^2+2*x+2*x+4"</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Simplify("</span>, <span class="va">eq</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "x^2+4*x+4"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Simplify("</span>, <span class="va">eq</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "x^2+4*x+4"</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Factor("</span>, <span class="va">eq</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "(x+2)^2"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Factor("</span>, <span class="va">eq</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "(x+2)^2"</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"TeXForm(Factor("</span>, <span class="va">eq</span>, <span class="st">"))"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "\\left( x + 2\\right)  ^{2}"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"TeXForm(Factor("</span>, <span class="va">eq</span>, <span class="st">"))"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "\\left( x + 2\\right)  ^{2}"</span></span></code></pre>
 <p><span class="math display">\[
 \left( x + 2\right)  ^{2}
 \]</span></p>
-<p>Also see yacas documentation on <a href="https://yacas.readthedocs.io/en/latest/reference_manual/simplify.html#Simplify">Simplify()</a>, <a href="https://yacas.readthedocs.io/en/latest/reference_manual/number-theory.html#Factor">Factor()</a> and <a href="https://yacas.readthedocs.io/en/latest/reference_manual/io.html#TeXForm">TeXForm()</a>.</p>
-<p>Instead of the pattern <code><a href="https://rdrr.io/r/base/paste.html">paste0("Simplify(", eq, ")")</a></code> etc., there exists a helper function <code><a href="../reference/y_fn.html">y_fn()</a></code> that does this:</p>
+<p>Also see yacas documentation on <a href="https://yacas.readthedocs.io/en/latest/reference_manual/simplify.html#Simplify" class="external-link">Simplify()</a>,
+<a href="https://yacas.readthedocs.io/en/latest/reference_manual/number-theory.html#Factor" class="external-link">Factor()</a>
+and <a href="https://yacas.readthedocs.io/en/latest/reference_manual/io.html#TeXForm" class="external-link">TeXForm()</a>.</p>
+<p>Instead of the pattern <code>paste0("Simplify(", eq, ")")</code>
+etc., there exists a helper function <code><a href="../reference/y_fn.html">y_fn()</a></code> that does
+this:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">eq</span>, <span class="st">"Simplify"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Simplify(x^2 + 4 + 2*x + 2*x)"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">eq</span>, <span class="st">"Simplify"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Simplify(x^2 + 4 + 2*x + 2*x)"</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">eq</span>, <span class="st">"Simplify"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "x^2+4*x+4"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">eq</span>, <span class="st">"Simplify"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "x^2+4*x+4"</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">eq</span>, <span class="st">"Factor"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "(x+2)^2"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">eq</span>, <span class="st">"Factor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "(x+2)^2"</span></span></code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">eq</span>, <span class="st">"Factor"</span><span class="op">)</span>, <span class="st">"TeXForm"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "\\left( x + 2\\right)  ^{2}"</code></pre>
-<p>As you see, there are a lot of nested function calls. That can be avoided by using <code>magrittr</code>’s pipe <code><a href="../reference/%&gt;%.html">%&gt;%</a></code> (automatically available with <code>Ryacas</code>) together with the helper function <code><a href="../reference/y_fn.html">y_fn()</a></code>:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="va">eq</span>, <span class="st">"Factor"</span><span class="op">)</span>, <span class="st">"TeXForm"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "\\left( x + 2\\right)  ^{2}"</span></span></code></pre>
+<p>As you see, there are a lot of nested function calls. That can be
+avoided by using <code>magrittr</code>’s pipe <code>%&gt;%</code>
+(automatically available with <code>Ryacas</code>) together with the
+helper function <code><a href="../reference/y_fn.html">y_fn()</a></code>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">eq</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Simplify"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Simplify(x^2 + 4 + 2*x + 2*x)"</code></pre>
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Simplify"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Simplify(x^2 + 4 + 2*x + 2*x)"</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">eq</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Simplify"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "x^2+4*x+4"</code></pre>
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Simplify"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "x^2+4*x+4"</span></span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">eq</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "(x+2)^2"</code></pre>
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "(x+2)^2"</span></span></code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">eq</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "\\left( x + 2\\right)  ^{2}"</code></pre>
-<p>Below, we will stick to the standard way of calling the functions, and not using the pipe, but now it has been demonstrated if the user prefers that way.</p>
-<p>We will not use the pipe operator below, but just demonstrate its usage.</p>
-<p>Now, again perform <code>yacas</code> operations, but get result as an <code>R</code> expression, e.g. for continued computations:</p>
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "\\left( x + 2\\right)  ^{2}"</span></span></code></pre>
+<p>Below, we will stick to the standard way of calling the functions,
+and not using the pipe, but now it has been demonstrated if the user
+prefers that way.</p>
+<p>We will not use the pipe operator below, but just demonstrate its
+usage.</p>
+<p>Now, again perform <code>yacas</code> operations, but get result as
+an <code>R</code> expression, e.g. for continued computations:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">eq</span></code></pre></div>
-<pre><code>## [1] "x^2 + 4 + 2*x + 2*x"</code></pre>
+<code class="sourceCode R"><span><span class="va">eq</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "x^2 + 4 + 2*x + 2*x"</span></span></code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">eq</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Alternative to "yac_expr(eq)"</span></code></pre></div>
-<pre><code>## expression(x^2 + 2 * x + 2 * x + 4)</code></pre>
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Alternative to "yac_expr(eq)"</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression(x^2 + 2 * x + 2 * x + 4)</span></span></code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="va">eq</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span>
-<span class="va">cmd</span></code></pre></div>
-<pre><code>## [1] "Factor(x^2 + 4 + 2*x + 2*x)"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="va">eq</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Factor"</span><span class="op">)</span></span>
+<span><span class="va">cmd</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Factor(x^2 + 4 + 2*x + 2*x)"</span></span></code></pre>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span>
-<span class="va">e</span></code></pre></div>
-<pre><code>## expression((x + 2)^2)</code></pre>
+<code class="sourceCode R"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span></span>
+<span><span class="va">e</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression((x + 2)^2)</span></span></code></pre>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">e</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 16</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 16</span></span></code></pre>
 </div>
-<div id="example-2-linear-algebra" class="section level1">
-<h1 class="hasAnchor">
-<a href="#example-2-linear-algebra" class="anchor"></a>Example 2: Linear algebra</h1>
-<p>To work with matrices and vectors, you need to realise that <code>yacas</code> and <code>R</code> has different ways of representing these objects. <code>yacas</code> represents vectors as a list, and a matrix as a list of lists (each list is a row).</p>
-<div id="simple-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#simple-example" class="anchor"></a>Simple example</h2>
+<div class="section level2">
+<h2 id="example-2-linear-algebra">Example 2: Linear algebra<a class="anchor" aria-label="anchor" href="#example-2-linear-algebra"></a>
+</h2>
+<p>To work with matrices and vectors, you need to realise that
+<code>yacas</code> and <code>R</code> has different ways of representing
+these objects. <code>yacas</code> represents vectors as a list, and a
+matrix as a list of lists (each list is a row).</p>
+<div class="section level3">
+<h3 id="simple-example">Simple example<a class="anchor" aria-label="anchor" href="#simple-example"></a>
+</h3>
 <p>You can work with these directly. Here illutrated with vectors:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"2*{x, x^2, x^3}"</span>
-<span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{2*x,2*x^2,2*x^3}"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"2*{x, x^2, x^3}"</span></span>
+<span><span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{2*x,2*x^2,2*x^3}"</span></span></code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">e</span></code></pre></div>
-<pre><code>## expression(c(2 * x, 2 * x^2, 2 * x^3))</code></pre>
+<code class="sourceCode R"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">e</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression(c(2 * x, 2 * x^2, 2 * x^3))</span></span></code></pre>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">e</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 3.00 4.50 6.75</code></pre>
-<p>And then illutrated with matrices. First with purely numeric contents:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 3.00 4.50 6.75</span></span></code></pre>
+<p>And then illutrated with matrices. First with purely numeric
+contents:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"{{1, 2}, {3, 4}}"</span>
-<span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{{1,2},{3,4}}"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"{{1, 2}, {3, 4}}"</span></span>
+<span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{{1,2},{3,4}}"</span></span></code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/y_print.html">y_print</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span> <span class="co"># Convenience function for prettier print</span></code></pre></div>
-<pre><code>## {{1, 2},
-##  {3, 4}}</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/y_print.html">y_print</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span> <span class="co"># Convenience function for prettier print</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{1, 2},</span></span>
+<span><span class="co">##  {3, 4}}</span></span></code></pre>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">e</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">e</span></code></pre></div>
-<pre><code>## expression(rbind(c(1, 2), c(3, 4)))</code></pre>
+<code class="sourceCode R"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">e</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression(rbind(c(1, 2), c(3, 4)))</span></span></code></pre>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></code></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,]    1    2
-## [2,]    3    4</code></pre>
-<p>Also in <span class="math inline">\(\LaTeX\)</span> (<a href="https://yacas.readthedocs.io/en/latest/reference_manual/io.html#TeXForm">yacas documentation on TeXForm()</a>):</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2]</span></span>
+<span><span class="co">## [1,]    1    2</span></span>
+<span><span class="co">## [2,]    3    4</span></span></code></pre>
+<p>Also in <span class="math inline">\(\LaTeX\)</span> (<a href="https://yacas.readthedocs.io/en/latest/reference_manual/io.html#TeXForm" class="external-link">yacas
+documentation on TeXForm()</a>):</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "\\left( \\begin{array}{cc} 1 &amp; 2 \\\\ 3 &amp; 4 \\end{array} \\right) "</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "\\left( \\begin{array}{cc} 1 &amp; 2 \\\\ 3 &amp; 4 \\end{array} \\right) "</span></span></code></pre>
 <p>But it also works with symbolic contents:</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"a * "</span>, <span class="va">cmd</span>, <span class="st">""</span><span class="op">)</span>
-<span class="va">cmd2</span> <span class="op">&lt;-</span> <span class="va">cmd1</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Inverse"</span><span class="op">)</span>
-<span class="va">cmd2</span></code></pre></div>
-<pre><code>## [1] "Inverse(a * {{1, 2}, {3, 4}})"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"a * "</span>, <span class="va">cmd</span>, <span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">cmd2</span> <span class="op">&lt;-</span> <span class="va">cmd1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Inverse"</span><span class="op">)</span></span>
+<span><span class="va">cmd2</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Inverse(a * {{1, 2}, {3, 4}})"</span></span></code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd2</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{{1/a+(6*a^2)/(a^2*(4*a-(6*a^2)/a)),(-(2*a)/a)/(4*a-(6*a^2)/a)},{(-(3*a)/a)/(4*a-(6*a^2)/a),1/(4*a-(6*a^2)/a)}}"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{{1/a+(6*a^2)/(a^2*(4*a-(6*a^2)/a)),(-(2*a)/a)/(4*a-(6*a^2)/a)},{(-(3*a)/a)/(4*a-(6*a^2)/a),1/(4*a-(6*a^2)/a)}}"</span></span></code></pre>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd2</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "\\left( \\begin{array}{cc} \\frac{1}{a}  + \\frac{6 a ^{2}}{a ^{2} \\left( 4 a - \\frac{6 a ^{2}}{a} \\right) }  &amp; \\frac{ - \\frac{2 a}{a} }{4 a - \\frac{6 a ^{2}}{a} }  \\\\ \\frac{ - \\frac{3 a}{a} }{4 a - \\frac{6 a ^{2}}{a} }  &amp; \\frac{1}{4 a - \\frac{6 a ^{2}}{a} }  \\end{array} \\right) "</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "\\left( \\begin{array}{cc} \\frac{1}{a}  + \\frac{6 a ^{2}}{a ^{2} \\left( 4 a - \\frac{6 a ^{2}}{a} \\right) }  &amp; \\frac{ - \\frac{2 a}{a} }{4 a - \\frac{6 a ^{2}}{a} }  \\\\ \\frac{ - \\frac{3 a}{a} }{4 a - \\frac{6 a ^{2}}{a} }  &amp; \\frac{1}{4 a - \\frac{6 a ^{2}}{a} }  \\end{array} \\right) "</span></span></code></pre>
 <p><span class="math display">\[
-\left( \begin{array}{cc} \frac{1}{a}  + \frac{6 a ^{2}}{a ^{2} \left( 4 a - \frac{6 a ^{2}}{a} \right) }  &amp; \frac{ - \frac{2 a}{a} }{4 a - \frac{6 a ^{2}}{a} }  \\ \frac{ - \frac{3 a}{a} }{4 a - \frac{6 a ^{2}}{a} }  &amp; \frac{1}{4 a - \frac{6 a ^{2}}{a} }  \end{array} \right) 
+\left( \begin{array}{cc} \frac{1}{a}  + \frac{6 a ^{2}}{a ^{2} \left( 4
+a - \frac{6 a ^{2}}{a} \right) }  &amp; \frac{ - \frac{2 a}{a} }{4 a -
+\frac{6 a ^{2}}{a} }  \\ \frac{ - \frac{3 a}{a} }{4 a - \frac{6 a
+^{2}}{a} }  &amp; \frac{1}{4 a - \frac{6 a ^{2}}{a} }  \end{array}
+\right)
 \]</span></p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">cmd2</span>, <span class="st">"*"</span>, <span class="va">cmd1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Simplify"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{{1,0},{0,1}}"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">cmd2</span>, <span class="st">"*"</span>, <span class="va">cmd1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Simplify"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{{1,0},{0,1}}"</span></span></code></pre>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">e2</span> <span class="op">&lt;-</span> <span class="va">cmd2</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/eval.html">eval</a></span><span class="op">(</span><span class="va">e2</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">2.2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>##            [,1]       [,2]
-## [1,] -0.9090909  0.4545455
-## [2,]  0.6818182 -0.2272727</code></pre>
+<code class="sourceCode R"><span><span class="va">e2</span> <span class="op">&lt;-</span> <span class="va">cmd2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e2</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">2.2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##            [,1]       [,2]</span></span>
+<span><span class="co">## [1,] -0.9090909  0.4545455</span></span>
+<span><span class="co">## [2,]  0.6818182 -0.2272727</span></span></code></pre>
 </div>
-<div id="using-rs-character-matrices" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-rs-character-matrices" class="anchor"></a>Using <code>R</code>’s character matrices</h2>
-<p>The above is fine when writing <code>yacas</code> vectors and matrices by hand. But often one would want to exploit <code>R</code>’s convenient functions to work with matrices.</p>
-<p>The central idea to make this possible is to work with <code>R</code> character matrices. We provide two helper functions to go back and forth between <code>R</code> and <code>yacas</code>:</p>
+<div class="section level3">
+<h3 id="using-rs-character-matrices">Using <code>R</code>’s character matrices<a class="anchor" aria-label="anchor" href="#using-rs-character-matrices"></a>
+</h3>
+<p>The above is fine when writing <code>yacas</code> vectors and
+matrices by hand. But often one would want to exploit <code>R</code>’s
+convenient functions to work with matrices.</p>
+<p>The central idea to make this possible is to work with <code>R</code>
+character matrices. We provide two helper functions to go back and forth
+between <code>R</code> and <code>yacas</code>:</p>
 <ul>
 <li>
-<code><a href="../reference/as_y.html">as_y(x)</a></code>: Convert <code>R</code> character matrix <code>x</code> to a <code>yacas</code> representation</li>
+<code>as_y(x)</code>: Convert <code>R</code> character matrix
+<code>x</code> to a <code>yacas</code> representation</li>
 <li>
-<code><a href="../reference/as_r.html">as_r(x)</a></code>: Convert a <code>yacas</code> representation <code>x</code> to a <code>R</code> character matrix</li>
+<code>as_r(x)</code>: Convert a <code>yacas</code> representation
+<code>x</code> to a <code>R</code> character matrix</li>
 </ul>
 <p>Below, we illustrate the usage of both functions.</p>
 <p>First, we create a character matrix using <code>R</code>:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Achr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="va">Achr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="va">Achr</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"a"</span>
-<span class="va">Achr</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"a"</span>
-<span class="va">Achr</span></code></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,] "1"  "0"  "a" 
-## [2,] "0"  "1"  "a" 
-## [3,] "0"  "0"  "1"</code></pre>
-<p>Note how this is a character matrix. If we want to find it’s inverse symbolically using <code>yacas</code>, it must first be represented as a <code>yacas</code> matrix:</p>
+<code class="sourceCode R"><span><span class="va">Achr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="va">Achr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="va">Achr</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"a"</span></span>
+<span><span class="va">Achr</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"a"</span></span>
+<span><span class="va">Achr</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,] "1"  "0"  "a" </span></span>
+<span><span class="co">## [2,] "0"  "1"  "a" </span></span>
+<span><span class="co">## [3,] "0"  "0"  "1"</span></span></code></pre>
+<p>Note how this is a character matrix. If we want to find it’s inverse
+symbolically using <code>yacas</code>, it must first be represented as a
+<code>yacas</code> matrix:</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Ayac</span> <span class="op">&lt;-</span> <span class="va">Achr</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/as_y.html">as_y</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">Ayac</span></code></pre></div>
-<pre><code>## [1] "{{1, 0, a}, {0, 1, a}, {0, 0, 1}}"</code></pre>
+<code class="sourceCode R"><span><span class="va">Ayac</span> <span class="op">&lt;-</span> <span class="va">Achr</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/as_y.html">as_y</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">Ayac</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{{1, 0, a}, {0, 1, a}, {0, 0, 1}}"</span></span></code></pre>
 <p>Now, we can find the inverse:</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="va">Ayac</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Inverse"</span><span class="op">)</span>
-<span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{{1,0,-a},{0,1,-a},{0,0,1}}"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="va">Ayac</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Inverse"</span><span class="op">)</span></span>
+<span><span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{{1,0,-a},{0,1,-a},{0,0,1}}"</span></span></code></pre>
 <p>A nicer representation can be obtained in (at least) four ways:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">way1</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">way1</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_print.html">y_print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## {{ 1,  0, -a},
-##  { 0,  1, -a},
-##  { 0,  0,  1}}</code></pre>
+<code class="sourceCode R"><span><span class="va">way1</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">way1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_print.html">y_print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{ 1,  0, -a},</span></span>
+<span><span class="co">##  { 0,  1, -a},</span></span>
+<span><span class="co">##  { 0,  0,  1}}</span></span></code></pre>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">way2</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">way2</span></code></pre></div>
-<pre><code>## [1] "\\left( \\begin{array}{ccc} 1 &amp; 0 &amp;  - a \\\\ 0 &amp; 1 &amp;  - a \\\\ 0 &amp; 0 &amp; 1 \\end{array} \\right) "</code></pre>
+<code class="sourceCode R"><span><span class="va">way2</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"TeXForm"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">way2</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "\\left( \\begin{array}{ccc} 1 &amp; 0 &amp;  - a \\\\ 0 &amp; 1 &amp;  - a \\\\ 0 &amp; 0 &amp; 1 \\end{array} \\right) "</span></span></code></pre>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">way3</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"PrettyForm"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">way3</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Result of PrettyForm() must be printed</span></code></pre></div>
-<pre><code>## 
-## /                         \
-## | ( 1 ) ( 0 ) ( -( a ) )  |
-## |                         |
-## | ( 0 ) ( 1 ) ( -( a ) )  |
-## |                         |
-## | ( 0 ) ( 0 ) ( 1 )       |
-## \                         /</code></pre>
+<code class="sourceCode R"><span><span class="va">way3</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"PrettyForm"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">way3</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Result of PrettyForm() must be printed</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## /                         \</span></span>
+<span><span class="co">## | ( 1 ) ( 0 ) ( -( a ) )  |</span></span>
+<span><span class="co">## |                         |</span></span>
+<span><span class="co">## | ( 0 ) ( 1 ) ( -( a ) )  |</span></span>
+<span><span class="co">## |                         |</span></span>
+<span><span class="co">## | ( 0 ) ( 0 ) ( 1 )       |</span></span>
+<span><span class="co">## \                         /</span></span></code></pre>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">way4</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">way4</span></code></pre></div>
-<pre><code>## [1] "{{1,0,-a},{0,1,-a},{0,0,1}}"</code></pre>
+<code class="sourceCode R"><span><span class="va">way4</span> <span class="op">&lt;-</span> <span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">way4</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{{1,0,-a},{0,1,-a},{0,0,1}}"</span></span></code></pre>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">way4</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,] "1"  "0"  "-a"
-## [2,] "0"  "1"  "-a"
-## [3,] "0"  "0"  "1"</code></pre>
+<code class="sourceCode R"><span><span class="va">way4</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,] "1"  "0"  "-a"</span></span>
+<span><span class="co">## [2,] "0"  "1"  "-a"</span></span>
+<span><span class="co">## [3,] "0"  "0"  "1"</span></span></code></pre>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">way4</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<pre><code>##      [,1] [,2] [,3]
-## [1,] 1    0    -a  
-## [2,] 0    1    -a  
-## [3,] 0    0    1</code></pre>
-<p>Say we want to subset it to only consider a submatrix. To do that, we can use <code>R</code>’s facilities:</p>
+<code class="sourceCode R"><span><span class="va">way4</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3]</span></span>
+<span><span class="co">## [1,] 1    0    -a  </span></span>
+<span><span class="co">## [2,] 0    1    -a  </span></span>
+<span><span class="co">## [3,] 0    0    1</span></span></code></pre>
+<p>Say we want to subset it to only consider a submatrix. To do that, we
+can use <code>R</code>’s facilities:</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">A_inv_yac</span> <span class="op">&lt;-</span> <span class="va">way4</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">Bchr</span> <span class="op">&lt;-</span> <span class="va">A_inv_yac</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
-<span class="va">Bchr</span></code></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,] "1"  "-a"
-## [2,] "0"  "1"</code></pre>
+<code class="sourceCode R"><span><span class="va">A_inv_yac</span> <span class="op">&lt;-</span> <span class="va">way4</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">Bchr</span> <span class="op">&lt;-</span> <span class="va">A_inv_yac</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">Bchr</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2]</span></span>
+<span><span class="co">## [1,] "1"  "-a"</span></span>
+<span><span class="co">## [2,] "0"  "1"</span></span></code></pre>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Bchr</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/as_y.html">as_y</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{{1, -a}, {0, 1}}"</code></pre>
+<code class="sourceCode R"><span><span class="va">Bchr</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/as_y.html">as_y</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{{1, -a}, {0, 1}}"</span></span></code></pre>
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Bchr</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/as_y.html">as_y</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Inverse"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,] "1"  "a" 
-## [2,] "0"  "1"</code></pre>
+<code class="sourceCode R"><span><span class="va">Bchr</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/as_y.html">as_y</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Inverse"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="../reference/as_r.html">as_r</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2]</span></span>
+<span><span class="co">## [1,] "1"  "a" </span></span>
+<span><span class="co">## [2,] "0"  "1"</span></span></code></pre>
 </div>
 </div>
-<div id="yacas-variables" class="section level1">
-<h1 class="hasAnchor">
-<a href="#yacas-variables" class="anchor"></a><code>yacas</code> variables</h1>
-<p><code>yacas</code> also has variables. They are assigned by <code>:=</code>.</p>
+<div class="section level2">
+<h2 id="yacas-variables">
+<code>yacas</code> variables<a class="anchor" aria-label="anchor" href="#yacas-variables"></a>
+</h2>
+<p><code>yacas</code> also has variables. They are assigned by
+<code>:=</code>.</p>
 <p>Consider this example:</p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"poly := (x-3)*(x+2)"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "(x-3)*(x+2)"</code></pre>
-<p>If the output is not necessary, it can be suppressed by using <code><a href="../reference/yac_silent.html">yac_silent()</a></code> instead of <code><a href="../reference/yac_str.html">yac_str()</a></code>:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"poly := (x-3)*(x+2)"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "(x-3)*(x+2)"</span></span></code></pre>
+<p>If the output is not necessary, it can be suppressed by using
+<code><a href="../reference/yac_silent.html">yac_silent()</a></code> instead of <code><a href="../reference/yac_str.html">yac_str()</a></code>:</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_silent.html">yac_silent</a></span><span class="op">(</span><span class="st">"poly := (x-3)*(x+2)"</span><span class="op">)</span></code></pre></div>
-<p>We can now list <code>yacas</code> variables (<code>I</code> is the imaginary unit):</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_silent.html">yac_silent</a></span><span class="op">(</span><span class="st">"poly := (x-3)*(x+2)"</span><span class="op">)</span></span></code></pre></div>
+<p>We can now list <code>yacas</code> variables (<code>I</code> is the
+imaginary unit):</p>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Variables()"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{poly,j,rformBitwiseOps,I,TeXForm'FuncPrec}"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Variables()"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{poly,rformBitwiseOps,I,TeXForm'FuncPrec,j}"</span></span></code></pre>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Expand(poly)"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "x^2-x-6"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Expand(poly)"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "x^2-x-6"</span></span></code></pre>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="st">"poly"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Expand"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "x^2-x-6"</code></pre>
+<code class="sourceCode R"><span><span class="st">"poly"</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Expand"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "x^2-x-6"</span></span></code></pre>
 </div>
-<div id="sums" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sums" class="anchor"></a>Sums</h1>
-<p>Yacas can sum an expression. The syntax is <code>Sum(var, from, to, body)</code> as described in the <a href="https://yacas.readthedocs.io/en/latest/reference_manual/calc.html#Sum">yacas documentation of <code>Sum()</code></a>. For example we can sum <span class="math inline">\(a^k\)</span> for <span class="math inline">\(k = 0\)</span> to <span class="math inline">\(k = n\)</span> as follows:</p>
+<div class="section level2">
+<h2 id="sums">Sums<a class="anchor" aria-label="anchor" href="#sums"></a>
+</h2>
+<p>Yacas can sum an expression. The syntax is
+<code>Sum(var, from, to, body)</code> as described in the <a href="https://yacas.readthedocs.io/en/latest/reference_manual/calc.html#Sum" class="external-link">yacas
+documentation of <code>Sum()</code></a>. For example we can sum <span class="math inline">\(a^k\)</span> for <span class="math inline">\(k =
+0\)</span> to <span class="math inline">\(k = n\)</span> as follows:</p>
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Sum(k, 0, n, a^k)"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "(1-a^(n+1))/(1-a)"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Sum(k, 0, n, a^k)"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "(1-a^(n+1))/(1-a)"</span></span></code></pre>
 </div>
-<div id="limits" class="section level1">
-<h1 class="hasAnchor">
-<a href="#limits" class="anchor"></a>Limits</h1>
-<p>Yacas can also take the limit of an expression. The syntax is <code>Limit(var, val) expr</code> as described in the <a href="https://yacas.readthedocs.io/en/latest/reference_manual/calc.html#Limit">yacas documentation of <code>Limit()</code></a>. For example we can take the limit of <span class="math inline">\((1+(1/n))^n\)</span> for <span class="math inline">\(n \to \infty\)</span> as follows:</p>
+<div class="section level2">
+<h2 id="limits">Limits<a class="anchor" aria-label="anchor" href="#limits"></a>
+</h2>
+<p>Yacas can also take the limit of an expression. The syntax is
+<code>Limit(var, val) expr</code> as described in the <a href="https://yacas.readthedocs.io/en/latest/reference_manual/calc.html#Limit" class="external-link">yacas
+documentation of <code>Limit()</code></a>. For example we can take the
+limit of <span class="math inline">\((1+(1/n))^n\)</span> for <span class="math inline">\(n \to \infty\)</span> as follows:</p>
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"Limit(n, Infinity) (1+(1/n))^n"</span>
-<span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Exp(1)"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"Limit(n, Infinity) (1+(1/n))^n"</span></span>
+<span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Exp(1)"</span></span></code></pre>
 <div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span></code></pre></div>
-<pre><code>## expression(exp(1))</code></pre>
-<p>This can also be used to illustrate taking derivatives, e.g. the derivative of sine:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">cmd</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression(exp(1))</span></span></code></pre>
+<p>This can also be used to illustrate taking derivatives, e.g. the
+derivative of sine:</p>
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Limit(h, 0) (Sin(x+h)-Sin(x))/h"</span><span class="op">)</span> </code></pre></div>
-<pre><code>## [1] "Cos(x)"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="st">"Limit(h, 0) (Sin(x+h)-Sin(x))/h"</span><span class="op">)</span> </span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Cos(x)"</span></span></code></pre>
 </div>
-<div id="solving-equations" class="section level1">
-<h1 class="hasAnchor">
-<a href="#solving-equations" class="anchor"></a>Solving equations</h1>
-<p>Say we want to find roots of <code>poly</code>. First note that the equality in <code>yacas</code> is <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code>. Then:</p>
+<div class="section level2">
+<h2 id="solving-equations">Solving equations<a class="anchor" aria-label="anchor" href="#solving-equations"></a>
+</h2>
+<p>Say we want to find roots of <code>poly</code>. First note that the
+equality in <code>yacas</code> is <code>==</code>. Then:</p>
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"Solve(poly == 0, x)"</span>
-<span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{x==(-2),x==3}"</code></pre>
-<p>Note that the default in yacas’s <code>Solve()</code> is to find roots if no equality sign is provided:</p>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"Solve(poly == 0, x)"</span></span>
+<span><span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{x==(-2),x==3}"</span></span></code></pre>
+<p>Note that the default in yacas’s <code>Solve()</code> is to find
+roots if no equality sign is provided:</p>
 <div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"Solve(poly, x)"</span>
-<span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{x==(-2),x==3}"</code></pre>
-<p>If we want the solution without the variable name <code>x</code> and the equality symbol <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code>, we can use <code>Ryacas</code> helper function <code><a href="../reference/y_rmvars.html">y_rmvars()</a></code>:</p>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="st">"Solve(poly, x)"</span></span>
+<span><span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{x==(-2),x==3}"</span></span></code></pre>
+<p>If we want the solution without the variable name <code>x</code> and
+the equality symbol <code>==</code>, we can use <code>Ryacas</code>
+helper function <code><a href="../reference/y_rmvars.html">y_rmvars()</a></code>:</p>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span></code></pre></div>
-<pre><code>## [1] "Solve(poly, x)"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Solve(poly, x)"</span></span></code></pre>
 <div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{-2,3}"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{-2,3}"</span></span></code></pre>
 <div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## expression(c(-2, 3))</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression(c(-2, 3))</span></span></code></pre>
 <p>We can also use <code><a href="../reference/y_fn.html">y_fn()</a></code>:</p>
 <div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="st">"poly == 0"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Solve"</span>, <span class="st">"x"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Solve(poly == 0, x)"</code></pre>
+<code class="sourceCode R"><span><span class="st">"poly == 0"</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Solve"</span>, <span class="st">"x"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Solve(poly == 0, x)"</span></span></code></pre>
 <div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="st">"poly"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Solve"</span>, <span class="st">"x"</span><span class="op">)</span> <span class="co"># default is == 0</span></code></pre></div>
-<pre><code>## [1] "Solve(poly, x)"</code></pre>
+<code class="sourceCode R"><span><span class="st">"poly"</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Solve"</span>, <span class="st">"x"</span><span class="op">)</span> <span class="co"># default is == 0</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Solve(poly, x)"</span></span></code></pre>
 <div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="st">"poly == 0"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Solve"</span>, <span class="st">"x"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "{-2,3}"</code></pre>
+<code class="sourceCode R"><span><span class="st">"poly == 0"</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_fn.html">y_fn</a></span><span class="op">(</span><span class="st">"Solve"</span>, <span class="st">"x"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/y_rmvars.html">y_rmvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/yac_str.html">yac_str</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{-2,3}"</span></span></code></pre>
 </div>
-<div id="case-gradient-and-hessian-for-a-function" class="section level1">
-<h1 class="hasAnchor">
-<a href="#case-gradient-and-hessian-for-a-function" class="anchor"></a>Case: gradient and Hessian for a function</h1>
+<div class="section level2">
+<h2 id="case-gradient-and-hessian-for-a-function">Case: gradient and Hessian for a function<a class="anchor" aria-label="anchor" href="#case-gradient-and-hessian-for-a-function"></a>
+</h2>
 <p>Say we have a function:</p>
 <div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="fl">2</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">3</span><span class="op">*</span><span class="va">y</span> <span class="op">+</span> <span class="va">y</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span>
-<span class="va">f_body</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/body.html">body</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
-<span class="va">f_body</span></code></pre></div>
-<pre><code>## 2 * x^2 + 3 * y + y * x^2</code></pre>
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="fl">2</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">3</span><span class="op">*</span><span class="va">y</span> <span class="op">+</span> <span class="va">y</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span></span>
+<span><span class="va">f_body</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/body.html" class="external-link">body</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="va">f_body</span></span></code></pre></div>
+<pre><code><span><span class="co">## 2 * x^2 + 3 * y + y * x^2</span></span></code></pre>
 <div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">f_body_chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">as.expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/body.html">body</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">f_body_chr</span></code></pre></div>
-<pre><code>## [1] "2 * x^2 + 3 * y + y * x^2"</code></pre>
+<code class="sourceCode R"><span><span class="va">f_body_chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">as.expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/body.html" class="external-link">body</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">f_body_chr</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "2 * x^2 + 3 * y + y * x^2"</span></span></code></pre>
 <div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># or:</span>
-<span class="co"># f_body_chr &lt;- "2 * x^2 + 3 * y + y * x^2"</span>
-<span class="co"># f &lt;- function(x, y) NULL</span>
-<span class="co"># body(f) &lt;- parse(text = f_body_chr, keep.source = FALSE)</span></code></pre></div>
-<p>The gradient can be found using <code>yacas</code> (<code>D(x) expr</code> is the derivative of <code>expr</code> with respect to <code>x</code>):</p>
+<code class="sourceCode R"><span><span class="co"># or:</span></span>
+<span><span class="co"># f_body_chr &lt;- "2 * x^2 + 3 * y + y * x^2"</span></span>
+<span><span class="co"># f &lt;- function(x, y) NULL</span></span>
+<span><span class="co"># body(f) &lt;- parse(text = f_body_chr, keep.source = FALSE)</span></span></code></pre></div>
+<p>The gradient can be found using <code>yacas</code>
+(<code>D(x) expr</code> is the derivative of <code>expr</code> with
+respect to <code>x</code>):</p>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"{ D(x) "</span>, <span class="va">f_body_chr</span>, <span class="st">", D(y) "</span>, <span class="va">f_body_chr</span>, <span class="st">" }"</span><span class="op">)</span>
-<span class="va">cmd_g</span></code></pre></div>
-<pre><code>## [1] "{ D(x) 2 * x^2 + 3 * y + y * x^2, D(y) 2 * x^2 + 3 * y + y * x^2 }"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"{ D(x) "</span>, <span class="va">f_body_chr</span>, <span class="st">", D(y) "</span>, <span class="va">f_body_chr</span>, <span class="st">" }"</span><span class="op">)</span></span>
+<span><span class="va">cmd_g</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "{ D(x) 2 * x^2 + 3 * y + y * x^2, D(y) 2 * x^2 + 3 * y + y * x^2 }"</span></span></code></pre>
 <div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g_body</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">cmd_g</span><span class="op">)</span>
-<span class="va">g_body</span></code></pre></div>
-<pre><code>## expression(c(4 * x + y * 2 * x, x^2 + 3))</code></pre>
+<code class="sourceCode R"><span><span class="va">g_body</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">cmd_g</span><span class="op">)</span></span>
+<span><span class="va">g_body</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression(c(4 * x + y * 2 * x, x^2 + 3))</span></span></code></pre>
 <div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="cn">NULL</span>
-<span class="fu"><a href="https://rdrr.io/r/base/body.html">body</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">g_body</span>
-<span class="va">g</span></code></pre></div>
-<pre><code>## function (x, y) 
-## c(4 * x + y * 2 * x, x^2 + 3)</code></pre>
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="cn">NULL</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/body.html" class="external-link">body</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">g_body</span></span>
+<span><span class="va">g</span></span></code></pre></div>
+<pre><code><span><span class="co">## function (x, y) </span></span>
+<span><span class="co">## c(4 * x + y * 2 * x, x^2 + 3)</span></span></code></pre>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">g</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 24  7</code></pre>
+<code class="sourceCode R"><span><span class="fu">g</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 24  7</span></span></code></pre>
 <p>The Hessian matrix can also be found using <code>yacas</code>:</p>
 <div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cmd_H</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"HessianMatrix("</span>, <span class="va">f_body_chr</span>, <span class="st">", {x, y})"</span><span class="op">)</span>
-<span class="va">cmd_H</span></code></pre></div>
-<pre><code>## [1] "HessianMatrix(2 * x^2 + 3 * y + y * x^2, {x, y})"</code></pre>
+<code class="sourceCode R"><span><span class="va">cmd_H</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"HessianMatrix("</span>, <span class="va">f_body_chr</span>, <span class="st">", {x, y})"</span><span class="op">)</span></span>
+<span><span class="va">cmd_H</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "HessianMatrix(2 * x^2 + 3 * y + y * x^2, {x, y})"</span></span></code></pre>
 <div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">H_body</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">cmd_H</span><span class="op">)</span>
-<span class="va">H_body</span></code></pre></div>
-<pre><code>## expression(rbind(c(2 * y + 4, 2 * x), c(2 * x, 0)))</code></pre>
+<code class="sourceCode R"><span><span class="va">H_body</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/yac_expr.html">yac_expr</a></span><span class="op">(</span><span class="va">cmd_H</span><span class="op">)</span></span>
+<span><span class="va">H_body</span></span></code></pre></div>
+<pre><code><span><span class="co">## expression(rbind(c(2 * y + 4, 2 * x), c(2 * x, 0)))</span></span></code></pre>
 <div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">H</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="cn">NULL</span>
-<span class="fu"><a href="https://rdrr.io/r/base/body.html">body</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">H_body</span>
-<span class="va">H</span></code></pre></div>
-<pre><code>## function (x, y) 
-## rbind(c(2 * y + 4, 2 * x), c(2 * x, 0))</code></pre>
+<code class="sourceCode R"><span><span class="va">H</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="cn">NULL</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/body.html" class="external-link">body</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">H_body</span></span>
+<span><span class="va">H</span></span></code></pre></div>
+<pre><code><span><span class="co">## function (x, y) </span></span>
+<span><span class="co">## rbind(c(2 * y + 4, 2 * x), c(2 * x, 0))</span></span></code></pre>
 <div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">H</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span></code></pre></div>
-<pre><code>##      [,1] [,2]
-## [1,]   12    4
-## [2,]    4    0</code></pre>
+<code class="sourceCode R"><span><span class="fu">H</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2]</span></span>
+<span><span class="co">## [1,]   12    4</span></span>
+<span><span class="co">## [2,]    4    0</span></span></code></pre>
 </div>
-<div id="ryacas-low-level-reference" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ryacas-low-level-reference" class="anchor"></a><code>Ryacas</code> low-level reference</h1>
+<div class="section level2">
+<h2 id="ryacas-low-level-reference">
+<code>Ryacas</code> low-level reference<a class="anchor" aria-label="anchor" href="#ryacas-low-level-reference"></a>
+</h2>
 <p>Principle:</p>
 <ul>
 <li>
-<code>yac_*(x)</code> functions evaluate/run <code>yacas</code> command <code>x</code>; the result varies depending on which of the functions used</li>
+<code>yac_*(x)</code> functions evaluate/run <code>yacas</code>
+command <code>x</code>; the result varies depending on which of the
+functions used</li>
 <li>
-<code>y_*(x)</code> various utility functions (not involving calls to <code>yacas</code>)</li>
+<code>y_*(x)</code> various utility functions (not involving calls
+to <code>yacas</code>)</li>
 </ul>
 <p>Reference:</p>
 <ul>
 <li>Evaluate <code>yacas</code> expressions
 <ul>
 <li>
-<code><a href="../reference/yac.html">yac(x, rettype = c("str", "expr", "silent"))</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string) and get result determined by <code>rettype</code> (default <code>"str"</code>).</li>
+<code>yac(x, rettype = c("str", "expr", "silent"))</code>: Evaluate
+<code>yacas</code> command <code>x</code> (a string) and get result
+determined by <code>rettype</code> (default <code>"str"</code>).</li>
 <li>
-<code><a href="../reference/yac_expr.html">yac_expr(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string) and get result as an <strong><code>R</code> expression</strong>.</li>
+<code>yac_expr(x)</code>: Evaluate <code>yacas</code> command
+<code>x</code> (a string) and get result as an <strong><code>R</code>
+expression</strong>.</li>
 <li>
-<code><a href="../reference/yac_silent.html">yac_silent(x)</a></code>: Evaluate <code>yacas</code> command <code>x</code> (a string) silently; useful for creating <code>yacas</code> variables. <strong>string/character</strong>.</li>
+<code>yac_silent(x)</code>: Evaluate <code>yacas</code> command
+<code>x</code> (a string) silently; useful for creating
+<code>yacas</code> variables. <strong>string/character</strong>.</li>
 <li>
-<code><a href="../reference/yac_str.html">yac_str(x)</a></code>: Same as <code><a href="../reference/yac_expr.html">yac_expr()</a></code>, but get result as <strong>string/character</strong>.</li>
+<code>yac_str(x)</code>: Same as <code><a href="../reference/yac_expr.html">yac_expr()</a></code>, but get
+result as <strong>string/character</strong>.</li>
 </ul>
 </li>
 <li>Helper functions
 <ul>
 <li>
-<code><a href="../reference/as_y.html">as_y(x)</a></code>: Convert <code>R</code> character matrix <code>x</code> to a <code>yacas</code> representation</li>
+<code>as_y(x)</code>: Convert <code>R</code> character matrix
+<code>x</code> to a <code>yacas</code> representation</li>
 <li>
-<code><a href="../reference/as_r.html">as_r(x)</a></code>: Convert a <code>yacas</code> representation <code>x</code> to an <code>R</code> object</li>
+<code>as_r(x)</code>: Convert a <code>yacas</code> representation
+<code>x</code> to an <code>R</code> object</li>
 <li>
-<code><a href="../reference/y_fn.html">y_fn(x, fn, ...)</a></code>: Helper function to prepare a call for <code>yacas</code>, e.g. <code><a href="../reference/y_fn.html">y_fn("x^2 - 1", "Factor")</a></code> is gives <code>"Factor(x^2 - 1)"</code>; <code>...</code> are additional arguments: <code><a href="../reference/y_fn.html">y_fn(x, fn, ...)</a></code> gives <code>fn(x, ...)</code>
+<code>y_fn(x, fn, ...)</code>: Helper function to prepare a call for
+<code>yacas</code>, e.g. <code>y_fn("x^2 - 1", "Factor")</code> is gives
+<code>"Factor(x^2 - 1)"</code>; <code>...</code> are additional
+arguments: <code>y_fn(x, fn, ...)</code> gives
+<code>fn(x, ...)</code>
 </li>
 <li>
-<code><a href="../reference/y_rmvars.html">y_rmvars(x)</a></code>: Removes variables such that <code>{x == 2}</code> instead gets <code>{2}</code>; remember to call <code>yacas</code> with e.g. <code><a href="../reference/yac_str.html">yac_str()</a></code> or <code><a href="../reference/yac_expr.html">yac_expr()</a></code>
+<code>y_rmvars(x)</code>: Removes variables such that
+<code>{x == 2}</code> instead gets <code>{2}</code>; remember to call
+<code>yacas</code> with e.g. <code><a href="../reference/yac_str.html">yac_str()</a></code> or
+<code><a href="../reference/yac_expr.html">yac_expr()</a></code>
 </li>
 <li>
-<code><a href="../reference/y_print.html">y_print(x)</a></code>: Pretty print yacas strings, e.g. a yacas matrix</li>
+<code>y_print(x)</code>: Pretty print yacas strings, e.g. a yacas
+matrix</li>
 </ul>
 </li>
 <li>Lower level functions
 <ul>
 <li>
-<code>yac_core(x)</code>: Evaluate <code>yacas</code> command <code>x</code> (a string) and get both result and side effects; used in the implementation of <code><a href="../reference/yac_expr.html">yac_expr()</a></code>, <code><a href="../reference/yac_silent.html">yac_silent()</a></code>, and <code><a href="../reference/yac_str.html">yac_str()</a></code>
+<code>yac_core(x)</code>: Evaluate <code>yacas</code> command
+<code>x</code> (a string) and get both result and side effects; used in
+the implementation of <code><a href="../reference/yac_expr.html">yac_expr()</a></code>,
+<code><a href="../reference/yac_silent.html">yac_silent()</a></code>, and <code><a href="../reference/yac_str.html">yac_str()</a></code>
 </li>
 </ul>
 </li>
@@ -550,11 +630,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
+  <p></p>
+<p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -562,6 +644,8 @@
 
   
 
+
+  
 
   </body>
 </html>

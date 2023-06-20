@@ -180,13 +180,24 @@ ex6.yac_symbol2 <- eval(
 )
 test_that("Equal to matrix multiplication", {
   expect_true(
-    all.equal(
+    isTRUE(all.equal(
       ex6.default,
       ex6.yac_symbol,
+    )
+  ))
+  expect_true(
+    isTRUE(all.equal(
+      ex6.default,
       ex6.yac_symbol2,
+    )
+    ))
+  
+  expect_true(
+    isTRUE(all.equal(
+      ex6.default,
       G %*% G %*% G %*% G
     )
-  )
+    ))
 })
 
 # Example 7
@@ -198,12 +209,22 @@ ex7.yac_symbol2 <- eval(
 )
 test_that("Identity Matrix", {
   expect_true(
-    all.equal(
+    isTRUE(all.equal(
       ex7.default,
-      ex7.yac_symbol,
-      ex7.yac_symbol2,
+      ex7.yac_symbol
+    ))
+  )
+  expect_true(
+    isTRUE(all.equal(
+      ex7.default,
+      ex7.yac_symbol2
+    ))
+  )
+  expect_true(
+    isTRUE(all.equal(
+      ex7.default,
       diag(dim(G)[1])
-    )
+    ))
   )
 })
 
@@ -216,13 +237,23 @@ ex8.yac_symbol2 <- eval(
 )
 test_that("G", {
   expect_true(
-    all.equal(
+    isTRUE(all.equal(
       ex8.default,
-      ex8.yac_symbol,
-      ex8.yac_symbol2,
+      ex8.yac_symbol
+    )
+  ))
+  expect_true(
+    isTRUE(all.equal(
+      ex8.default,
+      ex8.yac_symbol2
+    )
+    ))
+  expect_true(
+    isTRUE(all.equal(
+      ex8.default,
       G
     )
-  )
+    ))
 })
 
 # Example 9
@@ -235,13 +266,23 @@ ex9.yac_symbol2 <- eval(
 )
 test_that("Negative power", {
   expect_true(
-    all.equal(
+    isTRUE(all.equal(
       ex9.default,
-      ex9.yac_symbol,
-      ex9.yac_symbol2,
+      ex9.yac_symbol
+    )
+  ))
+  expect_true(
+    isTRUE(all.equal(
+      ex9.default,
+      ex9.yac_symbol2
+    )
+    ))
+  expect_true(
+    isTRUE(all.equal(
+      ex9.default,
       InverseG %*% InverseG %*% InverseG %*% InverseG
     )
-  )
+    ))
 })
 
 # Example 10
@@ -253,13 +294,23 @@ ex10.yac_symbol2 <- eval(
 )
 test_that("Inverse", {
   expect_true(
-    all.equal(
+    isTRUE(all.equal(
       ex10.default,
-      ex10.yac_symbol,
-      ex10.yac_symbol2,
+      ex10.yac_symbol
+    )
+  ))
+  expect_true(
+    isTRUE(all.equal(
+      ex10.default,
+      ex10.yac_symbol2
+    )
+    ))
+  expect_true(
+    isTRUE(all.equal(
+      ex10.default,
       InverseG
     )
-  )
+    ))
 })
 
 # Errors
@@ -302,12 +353,17 @@ ex11.default <- vec(G)
 ex11.yac_symbol <- as_r(vec(ysym(G)))
 test_that("vec numeric", {
   expect_true(
-    all.equal(
+    isTRUE(all.equal(
       ex11.default,
-      ex11.yac_symbol,
+      ex11.yac_symbol
+    )
+  ))
+  expect_true(
+    isTRUE(all.equal(
+      ex11.default,
       as.vector(G)
     )
-  )
+    ))
 })
 
 # Example 12

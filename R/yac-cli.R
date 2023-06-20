@@ -13,7 +13,7 @@
 #' `\[1\] CommandLine(1) : User interrupted calculation` is returned. E.g.
 #' Taylor(x,0,5) 1/(1+x) will work, but Taylor(x,0,12) 1/(1+x) is likely to
 #' take too long.
-#' @references \url{http://yacas.sourceforge.net}
+#' @references \url{https://yacas.sourceforge.io/}
 #' @keywords symbolmath
 #' @examples
 #' 

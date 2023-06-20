@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Ryacas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.5</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/r-cas/ryacas/">
+  <a href="https://github.com/r-cas/ryacas/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,12 +93,14 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>The structure of the concentration and covariance matrix in a naive Bayes model</h1>
-                        <h4 class="author">Mikkel Meyer Andersen and Søren Højsgaard</h4>
+      <h1 data-toc-skip>The structure of the concentration and
+covariance matrix in a naive Bayes model</h1>
+                        <h4 data-toc-skip class="author">Mikkel Meyer
+Andersen and Søren Højsgaard</h4>
             
-            <h4 class="date">2021-02-10</h4>
+            <h4 data-toc-skip class="date">2023-01-16</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/master/vignettes/latent-variable-model.Rmd"><code>vignettes/latent-variable-model.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/r-cas/ryacas/blob/HEAD/vignettes/latent-variable-model.Rmd" class="external-link"><code>vignettes/latent-variable-model.Rmd</code></a></small>
       <div class="hidden name"><code>latent-variable-model.Rmd</code></div>
 
     </div>
@@ -110,71 +108,95 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas">Ryacas</a></span><span class="op">)</span></code></pre></div>
-<div id="naive-bayes-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#naive-bayes-model" class="anchor"></a>Naive Bayes model</h2>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-cas/ryacas" class="external-link">Ryacas</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="naive-bayes-model">Naive Bayes model<a class="anchor" aria-label="anchor" href="#naive-bayes-model"></a>
+</h2>
 <p>Consider this model: <span class="math display">\[
 x_i = a x_0 + e_i, \quad i=1, \dots, 4
-\]</span> and <span class="math inline">\(x_0=e_0\)</span>. All terms <span class="math inline">\(e_0, \dots, e_3\)</span> are independent and <span class="math inline">\(N(0,1)\)</span> distributed. Let <span class="math inline">\(e=(e_0, \dots, e_3)\)</span> and <span class="math inline">\(x=(x_0, \dots x_3)\)</span>. Isolating error terms gives that <span class="math display">\[
- e = L_1 x
-\]</span> where <span class="math inline">\(L_1\)</span> has the form</p>
+\]</span> and <span class="math inline">\(x_0=e_0\)</span>. All terms
+<span class="math inline">\(e_0, \dots, e_3\)</span> are independent and
+<span class="math inline">\(N(0,1)\)</span> distributed. Let <span class="math inline">\(e=(e_0, \dots, e_3)\)</span> and <span class="math inline">\(x=(x_0, \dots x_3)\)</span>. Isolating error terms
+gives that <span class="math display">\[
+e = L_1 x
+\]</span> where <span class="math inline">\(L_1\)</span> has the
+form</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">L1chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>
-<span class="va">L1chr</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"-a"</span>
-<span class="va">L1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">L1chr</span><span class="op">)</span>
-<span class="va">L1</span></code></pre></div>
-<pre><code>## {{ 1,  0,  0,  0},
-##  {-a,  1,  0,  0},
-##  {-a,  0,  1,  0},
-##  {-a,  0,  0,  1}}</code></pre>
-<p>If error terms have variance <span class="math inline">\(1\)</span> then <span class="math inline">\(\mathbf{Var}(e)=L \mathbf{Var}(x) L'\)</span> so the covariance matrix is <span class="math inline">\(V1=\mathbf{Var}(x) = L^- (L^-)'\)</span> while the concentration matrix (the inverse covariances matrix) is <span class="math inline">\(K=L' L\)</span>.</p>
+<code class="sourceCode R"><span><span class="va">L1chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">L1chr</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"-a"</span></span>
+<span><span class="va">L1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">L1chr</span><span class="op">)</span></span>
+<span><span class="va">L1</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{ 1,  0,  0,  0},</span></span>
+<span><span class="co">##  {-a,  1,  0,  0},</span></span>
+<span><span class="co">##  {-a,  0,  1,  0},</span></span>
+<span><span class="co">##  {-a,  0,  0,  1}}</span></span></code></pre>
+<p>If error terms have variance <span class="math inline">\(1\)</span>
+then <span class="math inline">\(\mathbf{Var}(e)=L \mathbf{Var}(x)
+L'\)</span> so the covariance matrix is <span class="math inline">\(V1=\mathbf{Var}(x) = L^- (L^-)'\)</span> while
+the concentration matrix (the inverse covariances matrix) is <span class="math inline">\(K=L' L\)</span>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">L1inv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">L1</span><span class="op">)</span>
-<span class="va">K1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L1</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">L1</span>
-<span class="va">V1</span> <span class="op">&lt;-</span> <span class="va">L1inv</span> <span class="op">%*%</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L1inv</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">L1inv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">L1</span><span class="op">)</span></span>
+<span><span class="va">K1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L1</span><span class="op">)</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="va">L1</span></span>
+<span><span class="va">V1</span> <span class="op">&lt;-</span> <span class="va">L1inv</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L1inv</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span>
-  <span class="st">"\\begin{align} 
-    K_1 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">K1</span><span class="op">)</span>, <span class="st">" \\\\ 
-   V_1 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">V1</span><span class="op">)</span>, <span class="st">" 
-  \\end{align}"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[\begin{align} 
-    K_1 &amp;= \left( \begin{array}{cccc} 3 a ^{2} + 1 &amp;  - a &amp;  - a &amp;  - a \\  - a &amp; 1 &amp; 0 &amp; 0 \\  - a &amp; 0 &amp; 1 &amp; 0 \\  - a &amp; 0 &amp; 0 &amp; 1 \end{array} \right) \\ 
-   V_1 &amp;= \left( \begin{array}{cccc} 1 &amp; a &amp; a &amp; a \\ a &amp; a ^{2} + 1 &amp; a ^{2} &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} + 1 &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} &amp; a ^{2} + 1 \end{array} \right) 
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span></span>
+<span>  <span class="st">"\\begin{align} </span></span>
+<span><span class="st">    K_1 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">K1</span><span class="op">)</span>, <span class="st">" \\\\ </span></span>
+<span><span class="st">   V_1 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">V1</span><span class="op">)</span>, <span class="st">" </span></span>
+<span><span class="st">  \\end{align}"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
+<p><span class="math display">\[\begin{align}
+    K_1 &amp;= \left( \begin{array}{cccc} 3 a ^{2} + 1 &amp;  - a
+&amp;  - a &amp;  - a \\  - a &amp; 1 &amp; 0 &amp; 0 \\  - a &amp; 0
+&amp; 1 &amp; 0 \\  - a &amp; 0 &amp; 0 &amp; 1 \end{array} \right) \\
+   V_1 &amp;= \left( \begin{array}{cccc} 1 &amp; a &amp; a &amp; a \\ a
+&amp; a ^{2} + 1 &amp; a ^{2} &amp; a ^{2} \\ a &amp; a ^{2} &amp; a
+^{2} + 1 &amp; a ^{2} \\ a &amp; a ^{2} &amp; a ^{2} &amp; a ^{2} + 1
+\end{array} \right)
   \end{align}\]</span></p>
 <p>Slightly more elaborate:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">L2chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>
-<span class="va">L2chr</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"-a1"</span>, <span class="st">"-a2"</span>, <span class="st">"-a3"</span><span class="op">)</span>
-<span class="va">L2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">L2chr</span><span class="op">)</span>
-<span class="va">L2</span></code></pre></div>
-<pre><code>## {{  1,   0,   0,   0},
-##  {-a1,   1,   0,   0},
-##  {-a2,   0,   1,   0},
-##  {-a3,   0,   0,   1}}</code></pre>
+<code class="sourceCode R"><span><span class="va">L2chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">L2chr</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-a1"</span>, <span class="st">"-a2"</span>, <span class="st">"-a3"</span><span class="op">)</span></span>
+<span><span class="va">L2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">L2chr</span><span class="op">)</span></span>
+<span><span class="va">L2</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{  1,   0,   0,   0},</span></span>
+<span><span class="co">##  {-a1,   1,   0,   0},</span></span>
+<span><span class="co">##  {-a2,   0,   1,   0},</span></span>
+<span><span class="co">##  {-a3,   0,   0,   1}}</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Vechr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>
-<span class="va">Vechr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"w1"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span><span class="op">)</span>
-<span class="va">Ve</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">Vechr</span><span class="op">)</span>
-<span class="va">Ve</span></code></pre></div>
-<pre><code>## {{w1,  0,  0,  0},
-##  { 0, w2,  0,  0},
-##  { 0,  0, w2,  0},
-##  { 0,  0,  0, w2}}</code></pre>
+<code class="sourceCode R"><span><span class="va">Vechr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/diag.html">diag</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">Vechr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"w1"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span>, <span class="st">"w2"</span><span class="op">)</span></span>
+<span><span class="va">Ve</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ysym.html">ysym</a></span><span class="op">(</span><span class="va">Vechr</span><span class="op">)</span></span>
+<span><span class="va">Ve</span></span></code></pre></div>
+<pre><code><span><span class="co">## {{w1,  0,  0,  0},</span></span>
+<span><span class="co">##  { 0, w2,  0,  0},</span></span>
+<span><span class="co">##  { 0,  0, w2,  0},</span></span>
+<span><span class="co">##  { 0,  0,  0, w2}}</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">L2inv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">L2</span><span class="op">)</span>
-<span class="va">K2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L2</span><span class="op">)</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">Ve</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">L2</span>
-<span class="va">V2</span> <span class="op">&lt;-</span> <span class="va">L2inv</span> <span class="op">%*%</span> <span class="va">Ve</span> <span class="op">%*%</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L2inv</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">L2inv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">L2</span><span class="op">)</span></span>
+<span><span class="va">K2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L2</span><span class="op">)</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">Ve</span><span class="op">)</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="va">L2</span></span>
+<span><span class="va">V2</span> <span class="op">&lt;-</span> <span class="va">L2inv</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="va">Ve</span> <span class="op"><a href="../reference/grapes-times-grapes.html">%*%</a></span> <span class="fu"><a href="../reference/t.html">t</a></span><span class="op">(</span><span class="va">L2inv</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span>
-  <span class="st">"\\begin{align} 
-    K_2 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">K2</span><span class="op">)</span>, <span class="st">" \\\\ 
-   V_2 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">V2</span><span class="op">)</span>, <span class="st">" 
-  \\end{align}"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[\begin{align} 
-    K_2 &amp;= \left( \begin{array}{cccc} \frac{1}{w_{1}}  + \frac{a_{1} ^{2}}{w_{2}}  + \frac{a_{2} ^{2}}{w_{2}}  + \frac{a_{3} ^{2}}{w_{2}}  &amp; \frac{ - a_{1}}{w_{2}}  &amp; \frac{ - a_{2}}{w_{2}}  &amp; \frac{ - a_{3}}{w_{2}}  \\ \frac{ - a_{1}}{w_{2}}  &amp; \frac{1}{w_{2}}  &amp; 0 &amp; 0 \\ \frac{ - a_{2}}{w_{2}}  &amp; 0 &amp; \frac{1}{w_{2}}  &amp; 0 \\ \frac{ - a_{3}}{w_{2}}  &amp; 0 &amp; 0 &amp; \frac{1}{w_{2}}  \end{array} \right) \\ 
-   V_2 &amp;= \left( \begin{array}{cccc} w_{1} &amp; w_{1} a_{1} &amp; w_{1} a_{2} &amp; w_{1} a_{3} \\ a_{1} w_{1} &amp; w_{1} a_{1} ^{2} + w_{2} &amp; a_{1} w_{1} a_{2} &amp; a_{1} w_{1} a_{3} \\ a_{2} w_{1} &amp; a_{2} w_{1} a_{1} &amp; w_{1} a_{2} ^{2} + w_{2} &amp; a_{2} w_{1} a_{3} \\ a_{3} w_{1} &amp; a_{3} w_{1} a_{1} &amp; a_{3} w_{1} a_{2} &amp; w_{1} a_{3} ^{2} + w_{2} \end{array} \right) 
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span></span>
+<span>  <span class="st">"\\begin{align} </span></span>
+<span><span class="st">    K_2 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">K2</span><span class="op">)</span>, <span class="st">" \\\\ </span></span>
+<span><span class="st">   V_2 &amp;= "</span>, <span class="fu"><a href="../reference/tex.html">tex</a></span><span class="op">(</span><span class="va">V2</span><span class="op">)</span>, <span class="st">" </span></span>
+<span><span class="st">  \\end{align}"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
+<p><span class="math display">\[\begin{align}
+    K_2 &amp;= \left( \begin{array}{cccc} \frac{1}{w_{1}}  + \frac{a_{1}
+^{2}}{w_{2}}  + \frac{a_{2} ^{2}}{w_{2}}  + \frac{a_{3}
+^{2}}{w_{2}}  &amp; \frac{ - a_{1}}{w_{2}}  &amp; \frac{ -
+a_{2}}{w_{2}}  &amp; \frac{ - a_{3}}{w_{2}}  \\ \frac{ -
+a_{1}}{w_{2}}  &amp; \frac{1}{w_{2}}  &amp; 0 &amp; 0 \\ \frac{ -
+a_{2}}{w_{2}}  &amp; 0 &amp; \frac{1}{w_{2}}  &amp; 0 \\ \frac{ -
+a_{3}}{w_{2}}  &amp; 0 &amp; 0 &amp; \frac{1}{w_{2}}  \end{array}
+\right) \\
+   V_2 &amp;= \left( \begin{array}{cccc} w_{1} &amp; w_{1} a_{1} &amp;
+w_{1} a_{2} &amp; w_{1} a_{3} \\ a_{1} w_{1} &amp; w_{1} a_{1} ^{2} +
+w_{2} &amp; a_{1} w_{1} a_{2} &amp; a_{1} w_{1} a_{3} \\ a_{2} w_{1}
+&amp; a_{2} w_{1} a_{1} &amp; w_{1} a_{2} ^{2} + w_{2} &amp; a_{2} w_{1}
+a_{3} \\ a_{3} w_{1} &amp; a_{3} w_{1} a_{1} &amp; a_{3} w_{1} a_{2}
+&amp; w_{1} a_{3} ^{2} + w_{2} \end{array} \right)
   \end{align}\]</span></p>
 </div>
   </div>
@@ -190,11 +212,13 @@ x_i = a x_0 + e_i, \quad i=1, \dots, 4
 
 
       <footer><div class="copyright">
-  <p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
+  <p></p>
+<p>Developed by Mikkel Meyer Andersen, Rob Goedman, Gabor Grothendieck, Søren Højsgaard, Grzegorz Mazur, Ayal Pinkus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -202,6 +226,8 @@ x_i = a x_0 + e_i, \quad i=1, \dots, 4
 
   
 
+
+  
 
   </body>
 </html>

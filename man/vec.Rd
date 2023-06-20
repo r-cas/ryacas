@@ -2,9 +2,12 @@
 % Please edit documentation in R/linalg.R
 \name{vec}
 \alias{vec}
+\alias{vec.default}
 \title{Vectorize}
 \usage{
 vec(x, ...)
+
+\method{vec}{default}(x, ...)
 }
 \arguments{
 \item{x}{If \code{yac_symbol} treat as such, else call \code{\link[base:vector]{base::as.vector()}}.}

@@ -157,5 +157,9 @@ std::string& rtrim(std::string& s)
 
 APPLY PATCHES!
 
+###########################
+08
+###########################
 
+Add #include <cstdint> to Ryacas/src/yacas/include/yacas/anumber.h
 
