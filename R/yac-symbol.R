@@ -358,6 +358,11 @@ tex.yac_symbol <- function(x) {
   return(v)
 }
 
+#' Matrix product of two matrices
+#' 
+#' @param x matrix
+#' @param y matrix
+#' 
 #' @export
 matrix_product <- function(x, y){
   stopifnot(methods::is(x, "yac_symbol"))

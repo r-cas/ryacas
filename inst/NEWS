@@ -1,3 +1,8 @@
+Changes in version 1.1.6
+
+o In src/yacas/include/yacas replaced utf8.h and utf8/ with current yacas version f1dd07484c1867c3a733dd47b6a027065eea8ee4
+o CRAN fixes
+
 Changes in version 1.1.5
 
 o Minor fix (7fc83aaa9c714084133d4d7cc6811780096a1e7b)
